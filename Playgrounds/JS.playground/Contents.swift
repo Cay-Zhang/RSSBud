@@ -4,8 +4,13 @@ import JavaScriptCore
 var str = "Hello, playground"
 let context = JSContext()
 
-guard let path = Bundle.main.path(forResource: "radar-rules", ofType: "js") else { fatalError() }
-let code = try! String(contentsOfFile: path)
+context?.exceptionHandler = { _, value in
+    guard let value = value else { return }
+    print(value)
+}
+
+//guard let path = Bundle.main.path(forResource: "radar-rules", ofType: "js") else { fatalError() }
+//let code = try! String(contentsOfFile: path)
 
 //context?.evaluateScript(code)
 //context?.evaluateScript("rules['bilibili.com']._name")
@@ -29,20 +34,12 @@ extension URLComponents {
     }
 }
 
-let urlComponents = URLComponents(string: "https://space.bilibili.com/10330740/?share_source=copy_link&share_medium=ipad&bbid=3b10a683cd17ff81cc0d8f235a5b3058&ts=1594015458")!
+extension JSContext {
+    func evaluateScript(fileNamed fileName: String) -> JSValue! {
+        guard let path = Bundle.main.path(forResource: fileName, ofType: "js") else { fatalError() }
+        let code = try! String(contentsOfFile: path)
+        return evaluateScript(code)
+    }
+}
 
-guard let domain = urlComponents.domain,
-      let subdomain = urlComponents.subdomain
-else { fatalError() }
-
-
-domain
-subdomain
-
-context?.evaluateScript("""
-    const parser = new DOMParser();
-    const document = parser.parseFromString(html, 'text/html');
-    """
-)
-
-context?.exception
+context?.evaluateScript(fileNamed: "utils")
