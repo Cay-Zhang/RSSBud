@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		EEB7579524B2B7C600F26CF7 /* URL+Expansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* URL+Expansion.swift */; };
 		EEB7579924B3084A00F26CF7 /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */; };
 		EEB7579A24B3084A00F26CF7 /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */; };
+		EEB7579D24B311B300F26CF7 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = EEB7579C24B311B300F26CF7 /* Regex */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEB7579D24B311B300F26CF7 /* Regex in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +126,9 @@
 			dependencies = (
 			);
 			name = iOS;
+			packageProductDependencies = (
+				EEB7579C24B311B300F26CF7 /* Regex */,
+			);
 			productName = iOS;
 			productReference = EEB7577924B2B6E700F26CF7 /* RSSBud.app */;
 			productType = "com.apple.product-type.application";
@@ -171,6 +176,9 @@
 				Base,
 			);
 			mainGroup = EEB7576C24B2B6E600F26CF7;
+			packageReferences = (
+				EEB7579B24B311B300F26CF7 /* XCRemoteSwiftPackageReference "Regex" */,
+			);
 			productRefGroup = EEB7577A24B2B6E700F26CF7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -461,6 +469,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EEB7579B24B311B300F26CF7 /* XCRemoteSwiftPackageReference "Regex" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/crossroadlabs/Regex.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EEB7579C24B311B300F26CF7 /* Regex */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EEB7579B24B311B300F26CF7 /* XCRemoteSwiftPackageReference "Regex" */;
+			productName = Regex;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EEB7576D24B2B6E600F26CF7 /* Project object */;
 }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import Regex
 
 struct ContentView: View {
     
@@ -47,6 +48,16 @@ struct ContentView: View {
                 }.padding(20)
                 .background(Color.accentColor)
                 .clipShape(Capsule())
+                
+                if let url = viewModel.addToInoreaderURL {
+                    Link(destination: url) {
+                        Text("Add to Inoreader")
+                            .foregroundColor(.white)
+                            .padding(20)
+                            .background(Color.accentColor)
+                            .clipShape(Capsule())
+                    }
+                }
             }
             
             TextField("Keep Title", text: queryItemBinding(for: "filter_title"))
@@ -79,7 +90,7 @@ struct ContentView: View {
 
 extension ContentView {
     class ViewModel: ObservableObject {
-        @Published var originalURL: URL? = URL(string: "https://medium.com/better-programming/ios-13-rich-link-previews-with-swiftui-e61668fa2c69")
+        @Published var originalURL: URL? = nil
         @Published var derivedURL: URL? = nil
         @Published var queryItems: [URLQueryItem] = []
         @Published var isProcessing: Bool = false
@@ -101,6 +112,7 @@ extension ContentView {
                 }, receiveValue: { [weak self] url in
                     withAnimation {
                         self?.originalURL = url
+                        print("Original URL: \(url)")
                         self?.derivedURL = self?.derive(from: url)
                     }
                 }
@@ -122,6 +134,12 @@ extension ContentView {
                 } else {
                     return nil
                 }
+            } else if originalComponents.host == "www.youtube.com", let channelID = #"\/(user|channel)\/([^\/]+)"#.r?.findFirst(in: originalComponents.path)?.group(at: 2) {
+//                let id = originalComponents.path.dropFirst(6)
+                let path = "/youtube/channel/\(channelID)"
+                var derivedComponents = baseComponents
+                derivedComponents.path = path
+                return derivedComponents.url
             } else {
                 return nil
             }
@@ -132,6 +150,14 @@ extension ContentView {
                   var components = URLComponents(url: derivedURL, resolvingAgainstBaseURL: false)
             else { return nil }
             components.queryItems = self.queryItems
+            return components.url
+        }
+        
+        var addToInoreaderURL: URL? {
+            guard let finalURL = finalURL,
+                  var components = URLComponents(string: "https://www.inoreader.com")
+            else { return nil }
+            components.queryItems = [URLQueryItem(name: "add_feed", value: finalURL.absoluteString)]
             return components.url
         }
         
