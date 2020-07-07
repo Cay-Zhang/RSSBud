@@ -43,10 +43,10 @@ function parseRules(rules) {
 }
 
 function getPageRSSHub(data) {
-    const { url, html } = data;
+    const { url, host, path, html } = data;
     const rules = parseRules(data.rules);
 
-    const parsedDomain = psl.parse(new URL(url).hostname);
+    const parsedDomain = psl.parse(host);
     if (parsedDomain && parsedDomain.domain) {
         const subdomain = parsedDomain.subdomain;
         const domain = parsedDomain.domain;
@@ -72,7 +72,7 @@ function getPageRSSHub(data) {
                                         handler: index,
                                     },
                                 ]);
-                                const result = router.recognize(new URL(url).pathname.replace(/\/$/, ''));
+                                const result = router.recognize(path.replace(/\/$/, ''));
                                 if (result && result[0]) {
                                     recognized.push(result[0]);
                                 }
@@ -85,7 +85,7 @@ function getPageRSSHub(data) {
                                     handler: index,
                                 },
                             ]);
-                            const result = router.recognize(new URL(url).pathname.replace(/\/$/, ''));
+                            const result = router.recognize(path.replace(/\/$/, ''));
                             if (result && result[0]) {
                                 recognized.push(result[0]);
                             }

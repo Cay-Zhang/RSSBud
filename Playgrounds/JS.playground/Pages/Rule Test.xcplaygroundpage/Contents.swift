@@ -28,10 +28,13 @@ context.evaluateScript(fileNamed: "utils")
 
 // Prepare Test Data
 context.evaluateScript("""
-    getPageRSSHub({
+    var results = getPageRSSHub({
         url: "https://space.bilibili.com/10330740/?share_source=copy_link&share_medium=ipad&bbid=3b10a683cd17ff81cc0d8f235a5b3058&ts=1594085584",
+        host: "space.bilibili.com",
+        path: "/10330740/",
         html: "",
         rules: rules
     });
+    results[0].url
     """
 )
