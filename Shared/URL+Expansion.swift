@@ -29,3 +29,12 @@ extension URL {
             .replaceError(with: originalURL)
     }
 }
+
+extension URLComponents {
+    static func + (url: URLComponents, queryItems: [URLQueryItem]) -> URLComponents {
+        var result = url
+        result.queryItems = result.queryItems ?? []
+        result.queryItems!.append(contentsOf: queryItems)
+        return result
+    }
+}

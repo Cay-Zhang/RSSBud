@@ -18,6 +18,8 @@ extension JSContext {
 }
 
 enum Radar {
+    static var baseURL = URLComponents(string: "http://157.230.150.17:1200")!
+    
     private static let jsContext: JSContext = {
         let context = JSContext()!
 
@@ -71,12 +73,23 @@ enum Radar {
         }
     }
     
+    static func addToInoreaderURL(forFeedURL feedURL: URLComponents) -> URLComponents {
+        var url = URLComponents(string: "https://www.inoreader.com")!
+        url.queryItems = [URLQueryItem(name: "add_feed", value: feedURL.string!)]
+        return url
+    }
+    
 }
 
 extension Radar {
     struct DetectedFeed {
         var title: String
         var path: String
+        var url: URLComponents {
+            var result = Radar.baseURL
+            result.path = path
+            return result
+        }
     }
 }
 

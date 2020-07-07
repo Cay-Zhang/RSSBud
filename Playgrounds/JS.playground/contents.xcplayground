@@ -4,5 +4,6 @@
         <page name='Rule Test'/>
         <page name='Untitled Page'/>
         <page name='Radar Test'/>
+        <page name='URL Test'/>
     </pages>
 </playground>

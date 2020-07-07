@@ -14,59 +14,68 @@ struct ContentView: View {
     @ObservedObject var viewModel = ViewModel()
     
     var body: some View {
-        VStack(spacing: 50) {
-            // Original URL
-            VStack(spacing: 30) {
-                if let url = viewModel.originalURL {
-                    LinkPresentation(previewURL: url)
-                } else {
-                    Text("No Original URL")
-                }
-                
-                HStack(spacing: 20) {
-                    if viewModel.isProcessing {
-                        ProgressView()
-                    }
-                    Button {
-                        if let url = UIPasteboard.general.url {
-                            viewModel.process(originalURL: url)
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 50) {
+                    // Original URL
+                    VStack(spacing: 30) {
+                        if let url = viewModel.originalURL {
+                            LinkPresentation(previewURL: url)
+                                .frame(height: 200)
+                        } else {
+                            Text("No Original URL")
                         }
-                    } label: {
-                        Text("Read from Clipboard").foregroundColor(.white)
-                    }.padding(20).background(Color.accentColor).clipShape(Capsule())
-                }
-            }
-            
-            // Derived URL
-            VStack(spacing: 30) {
-                Text(viewModel.finalURL?.absoluteString ?? "No Derived URL")
-                
-                Button {
-                    viewModel.finalURL.map { UIPasteboard.general.url = $0 }
-                } label: {
-                    Text("Copy").foregroundColor(.white)
-                }.padding(20)
-                .background(Color.accentColor)
-                .clipShape(Capsule())
-                
-                if let url = viewModel.addToInoreaderURL {
-                    Link(destination: url) {
-                        Text("Add to Inoreader")
-                            .foregroundColor(.white)
-                            .padding(20)
-                            .background(Color.accentColor)
-                            .clipShape(Capsule())
+                        
+                        HStack(spacing: 20) {
+                            if viewModel.isProcessing {
+                                ProgressView()
+                            }
+                            Button {
+                                if let url = UIPasteboard.general.url {
+                                    viewModel.process(originalURL: url)
+                                } else if let url = UIPasteboard.general.string?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed).flatMap(URL.init(string:)) {
+                                    viewModel.process(originalURL: url)
+                                }
+                            } label: {
+                                Text("Read from Clipboard").foregroundColor(.white)
+                            }.padding(20).background(Color.accentColor).clipShape(Capsule())
+                        }
                     }
-                }
-            }
-            
-            TextField("Keep Title", text: queryItemBinding(for: "filter_title"))
-                .font(.title2)
-            
-            TextField("Remove Title", text: queryItemBinding(for: "filterout_title"))
-                .font(.title2)
-        }.padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
+                    // Derived URL
+                    VStack(spacing: 30) {
+                        ForEach(viewModel.detectedFeeds, id: \.title) { feed in
+                            VStack(spacing: 10.0) {
+                                Text(feed.title)
+                                Text(feed.url.string ?? "URL Conversion Failed")
+                                
+                                HStack {
+                                    Button {
+                                        (feed.url + viewModel.queryItems).url.map { UIPasteboard.general.url = $0 }
+                                    } label: {
+                                        Label("Copy", systemImage: "doc.on.doc.fill")
+                                    }
+                                    
+                                    if let url = Radar.addToInoreaderURL(forFeedURL: feed.url + viewModel.queryItems).url {
+                                        Link(destination: url) {
+                                            Label("Add to Inoreader", systemImage: "arrowshape.turn.up.right.fill")
+                                        }
+                                    }
+                                }
+                            }.padding(15)
+                            .background(Color.secondary.opacity(0.5))
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        }
+                    }.listStyle(InsetListStyle())
+                    
+                    TextField("Keep Title", text: queryItemBinding(for: "filter_title"))
+                        .font(.title2)
+                    
+                    TextField("Remove Title", text: queryItemBinding(for: "filterout_title"))
+                        .font(.title2)
+                }.padding(20)
+            }.navigationTitle("RSSBud")
+        }
     }
     
     func queryItemBinding(for name: String) -> Binding<String> {
@@ -91,12 +100,14 @@ struct ContentView: View {
 extension ContentView {
     class ViewModel: ObservableObject {
         @Published var originalURL: URL? = nil
-        @Published var derivedURL: URL? = nil
+        @Published var detectedFeeds: [Radar.DetectedFeed]
         @Published var queryItems: [URLQueryItem] = []
         @Published var isProcessing: Bool = false
         var cancelBag = Set<AnyCancellable>()
         
-        let baseComponents = URLComponents(string: "http://157.230.150.17:1200")!
+        init(detectedFeeds: [Radar.DetectedFeed] = []) {
+            self.detectedFeeds = detectedFeeds
+        }
         
         func process(originalURL: URL) {
 //            guard self.originalURL != originalURL else { return }
@@ -104,68 +115,49 @@ extension ContentView {
                 self.originalURL = originalURL
                 self.isProcessing = true
             }
-            originalURL.expanding().receive(on: DispatchQueue.main).sink(
-                receiveCompletion: { [weak self] _ in
-                    withAnimation {
-                        self?.isProcessing = false
-                    }
-                }, receiveValue: { [weak self] url in
+            
+            let expandingURL = originalURL.expanding().share()
+            
+            expandingURL.receive(on: DispatchQueue.main)
+                .sink { [weak self] url in
+                    print("Original URL: \(url)")
                     withAnimation {
                         self?.originalURL = url
-                        print("Original URL: \(url)")
-                        self?.derivedURL = self?.derive(from: url)
                     }
-                }
-            ).store(in: &cancelBag)
-        }
-        
-        func derive(from url: URL) -> URL? {
-            guard let originalComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-                return nil
-            }
+                }.store(in: &cancelBag)
             
-            if originalComponents.host == "space.bilibili.com" {
-                if let id = Int(originalComponents.path.trimmingCharacters(in: ["/"])) {
-                    print(id)
-                    let path = "/bilibili/user/video/\(id)"
-                    var derivedComponents = baseComponents
-                    derivedComponents.path = path
-                    return derivedComponents.url
-                } else {
-                    return nil
-                }
-            } else if originalComponents.host == "www.youtube.com", let channelID = #"\/(user|channel)\/([^\/]+)"#.r?.findFirst(in: originalComponents.path)?.group(at: 2) {
-//                let id = originalComponents.path.dropFirst(6)
-                let path = "/youtube/channel/\(channelID)"
-                var derivedComponents = baseComponents
-                derivedComponents.path = path
-                return derivedComponents.url
-            } else {
-                return nil
-            }
-        }
-        
-        var finalURL: URL? {
-            guard let derivedURL = derivedURL,
-                  var components = URLComponents(url: derivedURL, resolvingAgainstBaseURL: false)
-            else { return nil }
-            components.queryItems = self.queryItems
-            return components.url
-        }
-        
-        var addToInoreaderURL: URL? {
-            guard let finalURL = finalURL,
-                  var components = URLComponents(string: "https://www.inoreader.com")
-            else { return nil }
-            components.queryItems = [URLQueryItem(name: "add_feed", value: finalURL.absoluteString)]
-            return components.url
+            expandingURL
+                .flatMap { url in
+                    Radar.detecting(url: url)
+                }.receive(on: DispatchQueue.main)
+                .sink { [weak self] completion in
+                    switch completion {
+                    case .finished:
+                        withAnimation {
+                            self?.isProcessing = false
+                        }
+                    case .failure(let error):
+                        print(error)
+                        fatalError()
+                    }
+                } receiveValue: { [weak self] feeds in
+                    withAnimation {
+                        self?.detectedFeeds = feeds
+                    }
+                }.store(in: &cancelBag)
         }
         
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
+    
+    static let viewModel = ContentView.ViewModel(detectedFeeds: [
+        Radar.DetectedFeed(title: "当前视频评论", path: "/bilibili/video/reply/BV15z411v7zt"),
+        Radar.DetectedFeed(title: "当前视频评论", path: "/bilibili/video/reply/BV15z411v7zt")
+    ])
+    
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: viewModel)
     }
 }
