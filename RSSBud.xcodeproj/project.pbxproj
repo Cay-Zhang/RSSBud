@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
+		EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
+		EE000A8D24B41E1000979B1A /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
+		EE000A8E24B41E1000979B1A /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
+		EE000A8F24B41E1000979B1A /* route-recognizer.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8824B41E1000979B1A /* route-recognizer.js */; };
+		EE000A9024B41E1000979B1A /* route-recognizer.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8824B41E1000979B1A /* route-recognizer.js */; };
+		EE000A9124B41E1000979B1A /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8924B41E1000979B1A /* utils.js */; };
+		EE000A9224B41E1000979B1A /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8924B41E1000979B1A /* utils.js */; };
+		EE000A9324B41E1000979B1A /* psl.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8A24B41E1000979B1A /* psl.min.js */; };
+		EE000A9424B41E1000979B1A /* psl.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8A24B41E1000979B1A /* psl.min.js */; };
+		EE000A9624B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
+		EE000A9724B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
 		EEB7578524B2B6E700F26CF7 /* RSSBudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */; };
 		EEB7578624B2B6E700F26CF7 /* RSSBudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */; };
 		EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577324B2B6E600F26CF7 /* ContentView.swift */; };
@@ -21,6 +33,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EE000A8624B41E1000979B1A /* radar-rules.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "radar-rules.js"; sourceTree = "<group>"; };
+		EE000A8724B41E1000979B1A /* route-recognizer.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "route-recognizer.min.js"; sourceTree = "<group>"; };
+		EE000A8824B41E1000979B1A /* route-recognizer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "route-recognizer.js"; sourceTree = "<group>"; };
+		EE000A8924B41E1000979B1A /* utils.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = utils.js; sourceTree = "<group>"; };
+		EE000A8A24B41E1000979B1A /* psl.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = psl.min.js; sourceTree = "<group>"; };
+		EE000A9524B41E9600979B1A /* Radar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radar.swift; sourceTree = "<group>"; };
 		EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBudApp.swift; sourceTree = "<group>"; };
 		EEB7577324B2B6E600F26CF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EEB7577424B2B6E700F26CF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,6 +71,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EE000A7624B41CAA00979B1A /* Radar */ = {
+			isa = PBXGroup;
+			children = (
+				EE000A8A24B41E1000979B1A /* psl.min.js */,
+				EE000A8624B41E1000979B1A /* radar-rules.js */,
+				EE000A8824B41E1000979B1A /* route-recognizer.js */,
+				EE000A8724B41E1000979B1A /* route-recognizer.min.js */,
+				EE000A8924B41E1000979B1A /* utils.js */,
+				EE000A9524B41E9600979B1A /* Radar.swift */,
+			);
+			path = Radar;
+			sourceTree = "<group>";
+		};
 		EEB7576C24B2B6E600F26CF7 = {
 			isa = PBXGroup;
 			children = (
@@ -67,6 +98,7 @@
 		EEB7577124B2B6E600F26CF7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				EE000A7624B41CAA00979B1A /* Radar */,
 				EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */,
 				EEB7577324B2B6E600F26CF7 /* ContentView.swift */,
 				EEB7577424B2B6E700F26CF7 /* Assets.xcassets */,
@@ -194,7 +226,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE000A9324B41E1000979B1A /* psl.min.js in Resources */,
+				EE000A9124B41E1000979B1A /* utils.js in Resources */,
+				EE000A8D24B41E1000979B1A /* route-recognizer.min.js in Resources */,
 				EEB7578924B2B6E700F26CF7 /* Assets.xcassets in Resources */,
+				EE000A8F24B41E1000979B1A /* route-recognizer.js in Resources */,
+				EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +239,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE000A9424B41E1000979B1A /* psl.min.js in Resources */,
+				EE000A9224B41E1000979B1A /* utils.js in Resources */,
+				EE000A8E24B41E1000979B1A /* route-recognizer.min.js in Resources */,
 				EEB7578A24B2B6E700F26CF7 /* Assets.xcassets in Resources */,
+				EE000A9024B41E1000979B1A /* route-recognizer.js in Resources */,
+				EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +259,7 @@
 				EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */,
 				EEB7578524B2B6E700F26CF7 /* RSSBudApp.swift in Sources */,
 				EEB7579924B3084A00F26CF7 /* LinkPresentation.swift in Sources */,
+				EE000A9624B41E9600979B1A /* Radar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +271,7 @@
 				EEB7578824B2B6E700F26CF7 /* ContentView.swift in Sources */,
 				EEB7578624B2B6E700F26CF7 /* RSSBudApp.swift in Sources */,
 				EEB7579A24B3084A00F26CF7 /* LinkPresentation.swift in Sources */,
+				EE000A9724B41E9600979B1A /* Radar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

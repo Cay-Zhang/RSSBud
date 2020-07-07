@@ -3,5 +3,6 @@
     <pages>
         <page name='Rule Test'/>
         <page name='Untitled Page'/>
+        <page name='Radar Test'/>
     </pages>
 </playground>
