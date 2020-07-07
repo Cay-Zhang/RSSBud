@@ -5,7 +5,7 @@ extension JSContext {
     func evaluateScript(fileNamed fileName: String) -> JSValue! {
         guard let path = Bundle.main.path(forResource: fileName, ofType: "js") else { fatalError() }
         let code = try! String(contentsOfFile: path)
-        return evaluateScript(code)
+        return evaluateScript(code, withSourceURL: URL(string: path))
     }
 }
 
@@ -36,5 +36,24 @@ context.evaluateScript("""
         rules: rules
     });
     results[0].url
+    """
+)
+
+context.evaluateScript("""
+    var results = getPageRSSHub({
+        url: "https://matters.news/@mh111000/comments",
+        host: "matters.news",
+        path: "/@mh111000/comments/",
+        html: "",
+        rules: rules
+    });
+    results[0].url
+    """
+)
+
+context.evaluateScript("""
+    params = { id: '@mh111000' };
+    const uid = params.id.replace('@', '');
+    uid ? `/matters/author/${uid}` : '';
     """
 )

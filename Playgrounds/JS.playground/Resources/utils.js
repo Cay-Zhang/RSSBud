@@ -2,10 +2,11 @@ function ruleHandler(rule, params, url, html, success, fail) {
     const run = () => {
         let reaultWithParams;
         if (typeof rule.target === 'function') {
-            const parser = new DOMParser();
-            const document = parser.parseFromString(html, 'text/html');
+//            const parser = new DOMParser();
+//            const document = parser.parseFromString(html, 'text/html');
             try {
-                reaultWithParams = rule.target(params, url, document);
+                // reaultWithParams = rule.target(params, url, document);
+                reaultWithParams = rule.target(params, url);
             } catch (error) {
                 console.warn(error);
                 reaultWithParams = '';
