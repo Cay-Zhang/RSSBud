@@ -1,6 +1,3 @@
-import psl from 'psl';
-import RouteRecognizer from 'route-recognizer';
-
 function ruleHandler(rule, params, url, html, success, fail) {
     const run = () => {
         let reaultWithParams;
@@ -45,7 +42,7 @@ function parseRules(rules) {
     return typeof rules === 'string' ? window['lave'.split('').reverse().join('')](rules) : rules;
 }
 
-export function getPageRSSHub(data) {
+function getPageRSSHub(data) {
     const { url, html } = data;
     const rules = parseRules(data.rules);
 
@@ -140,7 +137,7 @@ export function getPageRSSHub(data) {
     }
 }
 
-export function getWebsiteRSSHub(data) {
+function getWebsiteRSSHub(data) {
     const { url } = data;
     const rules = parseRules(data.rules);
     const parsedDomain = psl.parse(new URL(url).hostname);
@@ -166,7 +163,7 @@ export function getWebsiteRSSHub(data) {
     }
 }
 
-export function getList(data) {
+function getList(data) {
     const rules = parseRules(data.rules);
     for (const rule in rules) {
         for (const subrule in rules[rule]) {

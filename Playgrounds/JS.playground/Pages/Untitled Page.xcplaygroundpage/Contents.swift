@@ -42,4 +42,26 @@ extension JSContext {
     }
 }
 
+context?.evaluateScript(fileNamed: "psl.min")
+context?.evaluateScript("""
+    var parsed = psl.parse('a.b.c.d.foo.com');
+    parsed.domain
+    """
+)
+
+context?.evaluateScript(fileNamed: "route-recognizer.min")
+context?.evaluateScript("""
+    var router = new RouteRecognizer();
+    router.add([
+      { path: "/admin", handler: 'admin' },
+      { path: "/posts", handler: 'posts' }
+    ]);
+    var result = router.recognize("/admin/posts");
+    """
+)
+context?.evaluateScript("router")
+context?.evaluateScript("result")
+context?.evaluateScript("result[0].handler")
+
+
 context?.evaluateScript(fileNamed: "utils")
