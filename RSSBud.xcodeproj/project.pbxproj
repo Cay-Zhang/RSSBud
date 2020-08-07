@@ -25,6 +25,13 @@
 		EE7CD91224DD547200FAA837 /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
 		EE7CD91324DD547200FAA837 /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
 		EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
+		EE7CD91724DD6E6B00FAA837 /* url.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91624DD6E6B00FAA837 /* url.js */; };
+		EE7CD91824DD6E6B00FAA837 /* url.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91624DD6E6B00FAA837 /* url.js */; };
+		EE7CD91924DD6E6B00FAA837 /* url.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91624DD6E6B00FAA837 /* url.js */; };
+		EE7CD91B24DD6EEF00FAA837 /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
+		EE7CD91C24DD6EEF00FAA837 /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
+		EE7CD91D24DD6EEF00FAA837 /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
+		EE7CD91E24DD6FA000FAA837 /* URL+Expansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* URL+Expansion.swift */; };
 		EEB7578524B2B6E700F26CF7 /* RSSBudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */; };
 		EEB7578624B2B6E700F26CF7 /* RSSBudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */; };
 		EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577324B2B6E600F26CF7 /* ContentView.swift */; };
@@ -59,6 +66,8 @@
 		EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSBudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE7CD90824DD541100FAA837 /* RSSBudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBudTests.swift; sourceTree = "<group>"; };
 		EE7CD90A24DD541100FAA837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE7CD91624DD6E6B00FAA837 /* url.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = url.js; sourceTree = "<group>"; };
+		EE7CD91A24DD6EEF00FAA837 /* url.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = url.min.js; sourceTree = "<group>"; };
 		EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBudApp.swift; sourceTree = "<group>"; };
 		EEB7577324B2B6E600F26CF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EEB7577424B2B6E700F26CF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -106,6 +115,8 @@
 				EE000A8624B41E1000979B1A /* radar-rules.js */,
 				EE000A8824B41E1000979B1A /* route-recognizer.js */,
 				EE000A8724B41E1000979B1A /* route-recognizer.min.js */,
+				EE7CD91624DD6E6B00FAA837 /* url.js */,
+				EE7CD91A24DD6EEF00FAA837 /* url.min.js */,
 				EE000A8924B41E1000979B1A /* utils.js */,
 				EE000A9524B41E9600979B1A /* Radar.swift */,
 			);
@@ -299,7 +310,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE7CD91924DD6E6B00FAA837 /* url.js in Resources */,
 				EE7CD91324DD547200FAA837 /* route-recognizer.min.js in Resources */,
+				EE7CD91D24DD6EEF00FAA837 /* url.min.js in Resources */,
 				EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */,
 				EE7CD91124DD547200FAA837 /* psl.min.js in Resources */,
 				EE7CD91024DD547200FAA837 /* utils.js in Resources */,
@@ -312,9 +325,11 @@
 			files = (
 				EE000A9324B41E1000979B1A /* psl.min.js in Resources */,
 				EE000A9124B41E1000979B1A /* utils.js in Resources */,
+				EE7CD91B24DD6EEF00FAA837 /* url.min.js in Resources */,
 				EE000A8D24B41E1000979B1A /* route-recognizer.min.js in Resources */,
 				EEB7578924B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A8F24B41E1000979B1A /* route-recognizer.js in Resources */,
+				EE7CD91724DD6E6B00FAA837 /* url.js in Resources */,
 				EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,9 +340,11 @@
 			files = (
 				EE000A9424B41E1000979B1A /* psl.min.js in Resources */,
 				EE000A9224B41E1000979B1A /* utils.js in Resources */,
+				EE7CD91C24DD6EEF00FAA837 /* url.min.js in Resources */,
 				EE000A8E24B41E1000979B1A /* route-recognizer.min.js in Resources */,
 				EEB7578A24B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A9024B41E1000979B1A /* route-recognizer.js in Resources */,
+				EE7CD91824DD6E6B00FAA837 /* url.js in Resources */,
 				EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE7CD91E24DD6FA000FAA837 /* URL+Expansion.swift in Sources */,
 				EE7CD91224DD547200FAA837 /* Radar.swift in Sources */,
 				EE7CD90924DD541100FAA837 /* RSSBudTests.swift in Sources */,
 			);

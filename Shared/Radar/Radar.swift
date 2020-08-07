@@ -29,6 +29,7 @@ enum Radar {
         }
 
         // Load Dependencies
+        _ = context.evaluateScript(fileNamed: "url.min")
         _ = context.evaluateScript(fileNamed: "psl.min")
         _ = context.evaluateScript(fileNamed: "route-recognizer.min")
 
