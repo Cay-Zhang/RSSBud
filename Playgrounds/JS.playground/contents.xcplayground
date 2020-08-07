@@ -5,5 +5,6 @@
         <page name='Untitled Page'/>
         <page name='Radar Test'/>
         <page name='URL Test'/>
+        <page name='JSON Test'/>
     </pages>
 </playground>

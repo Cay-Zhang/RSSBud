@@ -40,36 +40,29 @@ enum Radar {
         return context
     }()
     
-    static func detecting(url: URL) -> Future<[DetectedFeed], DetectionError> {
+    static func detecting(url: URLComponents) -> Future<[DetectedFeed], DetectionError> {
         Future { promise in
             guard let host = url.host else { promise(.failure(.hostNotFound(url: url))); return }
             
-            let results = Radar.jsContext.evaluateScript("""
-                getPageRSSHub({
-                    url: "\(url.absoluteString)",
-                    host: "\(host)",
-                    path: "\(url.path)",
-                    html: "",
-                    rules: rules
-                });
-                """
-            )?.toArray() as? [[String : Any]]
-            
-            let feeds = results.map { (dicts: [[String : Any]]) -> [DetectedFeed] in
-                dicts.compactMap { (dict: [String : Any]) -> DetectedFeed? in
-                    if let title = dict["title"] as? String, let path = dict["path"] as? String {
-                        return DetectedFeed(title: title, path: path)
-                    } else {
-                        return nil
-                    }
-                }
+            let result = Result<[DetectedFeed], Error> {
+                let jsonString = Radar.jsContext.evaluateScript("""
+                    JSON.stringify(getPageRSSHub({
+                        url: "\(url.string ?? "")",
+                        host: "\(host)",
+                        path: "\(url.path)",
+                        html: "",
+                        rules: rules
+                    }));
+                    """
+                )!.toString()!
+                let data = jsonString.data(using: .utf8)!
+                return try JSONDecoder().decode([Radar.DetectedFeed].self, from: data)
+            }.mapError {
+                DetectionError.decodingFailure(error: $0 as! DecodingError)
             }
             
-            if let feeds = feeds {
-                promise(.success(feeds))
-            } else {
-                promise(.failure(.noResults))
-            }
+            promise(result)
+            
         }
     }
     
@@ -82,20 +75,35 @@ enum Radar {
 }
 
 extension Radar {
-    struct DetectedFeed {
+    struct DetectedFeed: Codable {
         var title: String
+        var _url: String = ""
         var path: String
+        var _isDocs: Bool?
+        
         var url: URLComponents {
             var result = Radar.baseURL
             result.path = path
             return result
+        }
+        
+        var isDocs: Bool {
+            _isDocs == .some(true)
+        }
+        
+        enum CodingKeys: String, CodingKey {
+            case title
+            case _url = "url"
+            case path
+            case _isDocs = "isDocs"
         }
     }
 }
 
 extension Radar {
     enum DetectionError: Error {
-        case hostNotFound(url: URL)
+        case hostNotFound(url: URLComponents)
+        case decodingFailure(error: DecodingError)
         case noResults
     }
 }

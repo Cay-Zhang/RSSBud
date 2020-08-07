@@ -19,6 +19,12 @@
 		EE000A9424B41E1000979B1A /* psl.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8A24B41E1000979B1A /* psl.min.js */; };
 		EE000A9624B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
 		EE000A9724B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
+		EE7CD90924DD541100FAA837 /* RSSBudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7CD90824DD541100FAA837 /* RSSBudTests.swift */; };
+		EE7CD91024DD547200FAA837 /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8924B41E1000979B1A /* utils.js */; };
+		EE7CD91124DD547200FAA837 /* psl.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8A24B41E1000979B1A /* psl.min.js */; };
+		EE7CD91224DD547200FAA837 /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
+		EE7CD91324DD547200FAA837 /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
+		EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EEB7578524B2B6E700F26CF7 /* RSSBudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */; };
 		EEB7578624B2B6E700F26CF7 /* RSSBudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */; };
 		EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577324B2B6E600F26CF7 /* ContentView.swift */; };
@@ -33,6 +39,16 @@
 		EEF0A68024B4730E0038A301 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = EEF0A67F24B4730E0038A301 /* Regex */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		EE7CD90B24DD541100FAA837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEB7576D24B2B6E600F26CF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EEB7577824B2B6E700F26CF7;
+			remoteInfo = iOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		EE000A8624B41E1000979B1A /* radar-rules.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "radar-rules.js"; sourceTree = "<group>"; };
 		EE000A8724B41E1000979B1A /* route-recognizer.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "route-recognizer.min.js"; sourceTree = "<group>"; };
@@ -40,6 +56,9 @@
 		EE000A8924B41E1000979B1A /* utils.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = utils.js; sourceTree = "<group>"; };
 		EE000A8A24B41E1000979B1A /* psl.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = psl.min.js; sourceTree = "<group>"; };
 		EE000A9524B41E9600979B1A /* Radar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radar.swift; sourceTree = "<group>"; };
+		EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSBudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE7CD90824DD541100FAA837 /* RSSBudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBudTests.swift; sourceTree = "<group>"; };
+		EE7CD90A24DD541100FAA837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBudApp.swift; sourceTree = "<group>"; };
 		EEB7577324B2B6E600F26CF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EEB7577424B2B6E700F26CF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,6 +73,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		EE7CD90324DD541100FAA837 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EEB7577624B2B6E700F26CF7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -86,6 +112,15 @@
 			path = Radar;
 			sourceTree = "<group>";
 		};
+		EE7CD90724DD541100FAA837 /* RSSBudTests */ = {
+			isa = PBXGroup;
+			children = (
+				EE7CD90824DD541100FAA837 /* RSSBudTests.swift */,
+				EE7CD90A24DD541100FAA837 /* Info.plist */,
+			);
+			path = RSSBudTests;
+			sourceTree = "<group>";
+		};
 		EEB7576C24B2B6E600F26CF7 = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +128,7 @@
 				EEB7577124B2B6E600F26CF7 /* Shared */,
 				EEB7577B24B2B6E700F26CF7 /* iOS */,
 				EEB7578224B2B6E700F26CF7 /* macOS */,
+				EE7CD90724DD541100FAA837 /* RSSBudTests */,
 				EEB7577A24B2B6E700F26CF7 /* Products */,
 				EEF0A67E24B4730E0038A301 /* Frameworks */,
 			);
@@ -116,6 +152,7 @@
 			children = (
 				EEB7577924B2B6E700F26CF7 /* RSSBud.app */,
 				EEB7578124B2B6E700F26CF7 /* RSSBud.app */,
+				EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,6 +192,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		EE7CD90524DD541100FAA837 /* RSSBudTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE7CD90D24DD541100FAA837 /* Build configuration list for PBXNativeTarget "RSSBudTests" */;
+			buildPhases = (
+				EE7CD90224DD541100FAA837 /* Sources */,
+				EE7CD90324DD541100FAA837 /* Frameworks */,
+				EE7CD90424DD541100FAA837 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EE7CD90C24DD541100FAA837 /* PBXTargetDependency */,
+			);
+			name = RSSBudTests;
+			productName = RSSBudTests;
+			productReference = EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		EEB7577824B2B6E700F26CF7 /* iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EEB7578D24B2B6E700F26CF7 /* Build configuration list for PBXNativeTarget "iOS" */;
@@ -204,6 +259,10 @@
 				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
+					EE7CD90524DD541100FAA837 = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = EEB7577824B2B6E700F26CF7;
+					};
 					EEB7577824B2B6E700F26CF7 = {
 						CreatedOnToolsVersion = 12.0;
 					};
@@ -230,11 +289,23 @@
 			targets = (
 				EEB7577824B2B6E700F26CF7 /* iOS */,
 				EEB7578024B2B6E700F26CF7 /* macOS */,
+				EE7CD90524DD541100FAA837 /* RSSBudTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		EE7CD90424DD541100FAA837 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE7CD91324DD547200FAA837 /* route-recognizer.min.js in Resources */,
+				EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */,
+				EE7CD91124DD547200FAA837 /* psl.min.js in Resources */,
+				EE7CD91024DD547200FAA837 /* utils.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EEB7577724B2B6E700F26CF7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -264,6 +335,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		EE7CD90224DD541100FAA837 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE7CD91224DD547200FAA837 /* Radar.swift in Sources */,
+				EE7CD90924DD541100FAA837 /* RSSBudTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EEB7577524B2B6E700F26CF7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -290,7 +370,60 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		EE7CD90C24DD541100FAA837 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EEB7577824B2B6E700F26CF7 /* iOS */;
+			targetProxy = EE7CD90B24DD541100FAA837 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		EE7CD90E24DD541100FAA837 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LCFCZ68733;
+				INFOPLIST_FILE = RSSBudTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cayZ.RSSBudTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSSBud.app/RSSBud";
+			};
+			name = Debug;
+		};
+		EE7CD90F24DD541100FAA837 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LCFCZ68733;
+				INFOPLIST_FILE = RSSBudTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cayZ.RSSBudTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSSBud.app/RSSBud";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		EEB7578B24B2B6E700F26CF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -498,6 +631,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EE7CD90D24DD541100FAA837 /* Build configuration list for PBXNativeTarget "RSSBudTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE7CD90E24DD541100FAA837 /* Debug */,
+				EE7CD90F24DD541100FAA837 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		EEB7577024B2B6E600F26CF7 /* Build configuration list for PBXProject "RSSBud" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

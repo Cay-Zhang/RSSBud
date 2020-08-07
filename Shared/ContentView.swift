@@ -19,7 +19,7 @@ struct ContentView: View {
                 VStack(spacing: 50) {
                     // Original URL
                     VStack(spacing: 30) {
-                        if let url = viewModel.originalURL {
+                        if let url = viewModel.originalURL?.url {
                             LinkPresentation(previewURL: url)
                                 .frame(height: 200)
                         } else {
@@ -31,9 +31,9 @@ struct ContentView: View {
                                 ProgressView()
                             }
                             Button {
-                                if let url = UIPasteboard.general.url {
+                                if let url = UIPasteboard.general.url?.components {
                                     viewModel.process(originalURL: url)
-                                } else if let url = UIPasteboard.general.string?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed).flatMap(URL.init(string:)) {
+                                } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
                                     viewModel.process(originalURL: url)
                                 }
                             } label: {
@@ -99,7 +99,7 @@ struct ContentView: View {
 
 extension ContentView {
     class ViewModel: ObservableObject {
-        @Published var originalURL: URL? = nil
+        @Published var originalURL: URLComponents? = nil
         @Published var detectedFeeds: [Radar.DetectedFeed]
         @Published var queryItems: [URLQueryItem] = []
         @Published var isProcessing: Bool = false
@@ -109,8 +109,8 @@ extension ContentView {
             self.detectedFeeds = detectedFeeds
         }
         
-        func process(originalURL: URL) {
-//            guard self.originalURL != originalURL else { return }
+        func process(originalURL: URLComponents) {
+            //            guard self.originalURL != originalURL else { return }
             withAnimation {
                 self.originalURL = originalURL
                 self.isProcessing = true
