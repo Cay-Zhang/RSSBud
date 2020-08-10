@@ -5,7 +5,7 @@
 //  Created by Cay Zhang on 2020/7/6.
 //
 
-import Foundation
+import SwiftUI
 import JavaScriptCore
 import Combine
 
@@ -18,11 +18,18 @@ extension JSContext {
 }
 
 enum Radar {
-    static var baseURL = URLComponents(string: "http://157.230.150.17:1200")!
+    
+    static var defaultBaseURLString: String = "example.com"
+    
+    @AppStorage("baseURLString") static var baseURLString: String = Radar.defaultBaseURLString
+    
+    static var baseURL: URLComponents {
+        URLComponents(string: baseURLString)!
+    }
     
     private static let jsContext: JSContext = {
         let context = JSContext()!
-
+        
         context.exceptionHandler = { _, value in
             guard let value = value else { return }
             print(value)

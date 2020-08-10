@@ -21,9 +21,14 @@ class RSSBudTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    func testDefaultBaseURLValidation() {
+        XCTAssertNotNil(
+            URLComponents(string: Radar.defaultBaseURLString),
+            "Default base URL is invalid."
+        )
+    }
+    
     func testBilibiliSpace() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
         let expectation = XCTestExpectation(description: "Detect the 2 feeds from the url.")
         
         let urlString = "https://space.bilibili.com/53456"

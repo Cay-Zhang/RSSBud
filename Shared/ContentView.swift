@@ -12,6 +12,7 @@ import Regex
 struct ContentView: View {
     
     @ObservedObject var viewModel = ViewModel()
+    @State var isSettingsViewPresented = false
     
     var body: some View {
         NavigationView {
@@ -75,6 +76,18 @@ struct ContentView: View {
                         .font(.title2)
                 }.padding(20)
             }.navigationTitle("RSSBud")
+            .toolbar {
+                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                    Button {
+                        isSettingsViewPresented.toggle()
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .frame(width: 40, height: 40)
+                    }
+                }
+            }.sheet(isPresented: $isSettingsViewPresented) {
+                SettingsView()
+            }
         }
     }
     
