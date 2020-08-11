@@ -10,6 +10,8 @@
 
 > 🚧 该项目目前处于初期开发阶段，但基础功能已经可用。
 
+[Telegram 群](https://t.me/RSSBud_Discussion) | [Telegram 频道](https://t.me/RSSBud)
+
 ## 功能
 - [x] 识别并转换剪贴板 URL (几乎支持所有 RSSHub Radar 的规则)
 - [x] 快速订阅到 Inoreader
