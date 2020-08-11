@@ -17,7 +17,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 50) {
+                VStack(spacing: 30) {
                     // Original URL
                     VStack(spacing: 30) {
                         if let url = viewModel.originalURL?.url {
@@ -38,8 +38,8 @@ struct ContentView: View {
                                     viewModel.process(originalURL: url)
                                 }
                             } label: {
-                                Text("Read from Clipboard").foregroundColor(.white)
-                            }.padding(20).background(Color.accentColor).clipShape(Capsule())
+                                Label("Read from Clipboard", systemImage: "arrow.up.doc.on.clipboard")
+                            }.buttonStyle(RoundedRectangleButtonStyle())
                         }
                     }
                     
@@ -47,24 +47,30 @@ struct ContentView: View {
                     VStack(spacing: 30) {
                         ForEach(viewModel.detectedFeeds, id: \.title) { feed in
                             VStack(spacing: 10.0) {
-                                Text(feed.title)
-                                Text(feed.url.string ?? "URL Conversion Failed")
+                                Text(feed.title).fontWeight(.semibold)
+                                    .padding(.horizontal, 15)
+                                Text((feed.url + viewModel.queryItems).string ?? "URL Conversion Failed")
+                                    .padding(.horizontal, 15)
                                 
-                                HStack {
+                                HStack(spacing: 0) {
                                     Button {
                                         (feed.url + viewModel.queryItems).url.map { UIPasteboard.general.url = $0 }
                                     } label: {
                                         Label("Copy", systemImage: "doc.on.doc.fill")
-                                    }
+                                    }.buttonStyle(RoundedRectangleButtonStyle())
                                     
                                     if let url = Radar.addToInoreaderURL(forFeedURL: feed.url + viewModel.queryItems).url {
-                                        Link(destination: url) {
-                                            Label("Add to Inoreader", systemImage: "arrowshape.turn.up.right.fill")
-                                        }
+                                        Button {
+                                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                        } label: {
+                                            Label("Inoreader", systemImage: "arrowshape.turn.up.right.fill")
+                                        }.buttonStyle(RoundedRectangleButtonStyle())
                                     }
-                                }
-                            }.padding(15)
-                            .background(Color.secondary.opacity(0.5))
+                                }.padding(.horizontal, 4)
+                            }.padding(.top, 15)
+                            .padding(.bottom, 4)
+                            .frame(maxWidth: .infinity)
+                            .background(Color(UIColor.secondarySystemFill))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                         }
                     }.listStyle(InsetListStyle())

@@ -27,7 +27,7 @@ enum Radar {
         URLComponents(string: baseURLString)!
     }
     
-    private static let jsContext: JSContext = {
+    static let jsContext: JSContext = {
         let context = JSContext()!
         
         context.exceptionHandler = { _, value in

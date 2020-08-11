@@ -12,9 +12,9 @@ class RSSBudTests: XCTestCase {
 
     var cancelBag = Set<AnyCancellable>()
     
-    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        let _ = Radar.jsContext
     }
 
     override func tearDownWithError() throws {
@@ -29,20 +29,25 @@ class RSSBudTests: XCTestCase {
     }
     
     func testBilibiliSpace() throws {
-        let expectation = XCTestExpectation(description: "Detect the 2 feeds from the url.")
-        
-        let urlString = "https://space.bilibili.com/53456"
-        let url = URLComponents(autoPercentEncoding: urlString)!
-        
-        Radar.detecting(url: url)
-            .sink { _ in
-                
-            } receiveValue: { feeds in
-                XCTAssertEqual(feeds.count, 2, "Unexpected feed count.")
-                expectation.fulfill()
-            }.store(in: &self.cancelBag)
-        
-        wait(for: [expectation], timeout: 3.0)
+        measureMetrics([.wallClockTime], automaticallyStartMeasuring: false) {
+            let expectation = XCTestExpectation(description: "Detect the 2 feeds from the url.")
+            
+            let urlString = "https://space.bilibili.com/53456"
+            let url = URLComponents(autoPercentEncoding: urlString)!
+            
+            startMeasuring()
+            
+            Radar.detecting(url: url)
+                .sink { _ in
+                    
+                } receiveValue: { feeds in
+                    self.stopMeasuring()
+                    XCTAssertEqual(feeds.count, 2, "Unexpected feed count.")
+                    expectation.fulfill()
+                }.store(in: &self.cancelBag)
+            
+            wait(for: [expectation], timeout: 3.0)
+        }
     }
 
     func testBilibiliVideo() {
@@ -60,13 +65,6 @@ class RSSBudTests: XCTestCase {
             }.store(in: &self.cancelBag)
         
         wait(for: [expectation], timeout: 3.0)
-    }
-    
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
     }
 
 }
