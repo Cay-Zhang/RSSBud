@@ -85,6 +85,8 @@
 		EEB7579324B2B7C600F26CF7 /* URL+Expansion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Expansion.swift"; sourceTree = "<group>"; };
 		EEB7579724B2EA9100F26CF7 /* JS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = JS.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPresentation.swift; sourceTree = "<group>"; };
+		EEC4A4F024E2B8C4005041CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		EEC4A4F224E2B9A8005041CA /* RSSBud.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RSSBud.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,11 +143,13 @@
 		EEB7576C24B2B6E600F26CF7 = {
 			isa = PBXGroup;
 			children = (
+				EEC4A4F024E2B8C4005041CA /* README.md */,
 				EEB7579624B2EA6D00F26CF7 /* Playgrounds */,
 				EEB7577124B2B6E600F26CF7 /* Shared */,
 				EEB7577B24B2B6E700F26CF7 /* iOS */,
 				EEB7578224B2B6E700F26CF7 /* macOS */,
 				EE7CD90724DD541100FAA837 /* RSSBudTests */,
+				EEC4A4F124E2B91A005041CA /* Readme Assets */,
 				EEB7577A24B2B6E700F26CF7 /* Products */,
 				EEF0A67E24B4730E0038A301 /* Frameworks */,
 			);
@@ -199,6 +203,14 @@
 				EEB7579724B2EA9100F26CF7 /* JS.playground */,
 			);
 			path = Playgrounds;
+			sourceTree = "<group>";
+		};
+		EEC4A4F124E2B91A005041CA /* Readme Assets */ = {
+			isa = PBXGroup;
+			children = (
+				EEC4A4F224E2B9A8005041CA /* RSSBud.jpg */,
+			);
+			path = "Readme Assets";
 			sourceTree = "<group>";
 		};
 		EEF0A67E24B4730E0038A301 /* Frameworks */ = {

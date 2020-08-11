@@ -12,6 +12,10 @@
 
 [Telegram 群](https://t.me/RSSBud_Discussion) | [Telegram 频道](https://t.me/RSSBud)
 
+<p align=center>
+<img src="Readme Assets/RSSBud.jpg" align=center width="375" align=center>
+</p>
+
 ## 功能
 - [x] 识别并转换剪贴板 URL (几乎支持所有 RSSHub Radar 的规则)
 - [x] 快速订阅到 Inoreader
