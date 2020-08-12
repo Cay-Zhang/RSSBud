@@ -12,6 +12,7 @@ import Regex
 struct ContentView: View {
     
     var openURL: (URLComponents) -> Void = { _ in }
+    var done: (() -> Void)? = nil
     @ObservedObject var viewModel = ViewModel()
     @State var isSettingsViewPresented = false
     
@@ -84,6 +85,14 @@ struct ContentView: View {
                 }.padding(20)
             }.navigationTitle("RSSBud")
             .toolbar {
+                ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                    if let done = done {
+                        Button(action: done) {
+                            Text("Done").fontWeight(.semibold)
+                        }
+                    }
+                }
+                
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                     Button {
                         isSettingsViewPresented.toggle()
