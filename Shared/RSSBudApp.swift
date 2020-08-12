@@ -11,7 +11,13 @@ import SwiftUI
 struct RSSBudApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(openURL: { urlComponents in
+                guard let url = urlComponents.url else {
+                    assertionFailure("URL conversion failed.")
+                    return
+                }
+                UIApplication.shared.open(url)
+            })
         }
     }
 }

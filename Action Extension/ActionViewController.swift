@@ -9,12 +9,15 @@ import UIKit
 import SwiftUI
 import MobileCoreServices
 
-class ActionViewController: UIHostingController<AnyView> {
+class ActionViewController: UIHostingController<ContentView> {
 
     // override designated initializer
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         let contentView = ContentView()
-        super.init(rootView: AnyView(contentView))
+        super.init(rootView: contentView)
+        rootView.openURL = { [weak self] url in
+            self?.open(url: url)
+        }
     }
 
     @objc required dynamic init?(coder aDecoder: NSCoder) {

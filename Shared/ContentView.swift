@@ -11,6 +11,7 @@ import Regex
 
 struct ContentView: View {
     
+    var openURL: (URLComponents) -> Void = { _ in }
     @ObservedObject var viewModel = ViewModel()
     @State var isSettingsViewPresented = false
     
@@ -59,9 +60,9 @@ struct ContentView: View {
                                         Label("Copy", systemImage: "doc.on.doc.fill")
                                     }.buttonStyle(RoundedRectangleButtonStyle())
                                     
-                                    if let url = Radar.addToInoreaderURL(forFeedURL: feed.url + viewModel.queryItems).url {
+                                    if let url = Radar.addToInoreaderURL(forFeedURL: feed.url + viewModel.queryItems) {
                                         Button {
-//                                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                            openURL(url)
                                         } label: {
                                             Label("Inoreader", systemImage: "arrowshape.turn.up.right.fill")
                                         }.buttonStyle(RoundedRectangleButtonStyle())
