@@ -47,6 +47,10 @@
 		EEB7579924B3084A00F26CF7 /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */; };
 		EEB7579A24B3084A00F26CF7 /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */; };
 		EEB7579D24B311B300F26CF7 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = EEB7579C24B311B300F26CF7 /* Regex */; };
+		EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEC4A4FC24E3D032005041CA /* Media.xcassets */; };
+		EEC4A4FF24E3D032005041CA /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A4FE24E3D032005041CA /* ActionViewController.swift */; };
+		EEC4A50224E3D032005041CA /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEC4A50024E3D032005041CA /* MainInterface.storyboard */; };
+		EEC4A50624E3D032005041CA /* Action Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EEC4A4FA24E3D032005041CA /* Action Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EEF0A68024B4730E0038A301 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = EEF0A67F24B4730E0038A301 /* Regex */; };
 /* End PBXBuildFile section */
 
@@ -58,7 +62,28 @@
 			remoteGlobalIDString = EEB7577824B2B6E700F26CF7;
 			remoteInfo = iOS;
 		};
+		EEC4A50424E3D032005041CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEB7576D24B2B6E600F26CF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EEC4A4F924E3D032005041CA;
+			remoteInfo = "Action Extension";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EEC4A50724E3D032005041CA /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				EEC4A50624E3D032005041CA /* Action Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		EE000A8624B41E1000979B1A /* radar-rules.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "radar-rules.js"; sourceTree = "<group>"; };
@@ -87,6 +112,11 @@
 		EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPresentation.swift; sourceTree = "<group>"; };
 		EEC4A4F024E2B8C4005041CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		EEC4A4F224E2B9A8005041CA /* RSSBud.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RSSBud.jpg; sourceTree = "<group>"; };
+		EEC4A4FA24E3D032005041CA /* Action Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Action Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEC4A4FC24E3D032005041CA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		EEC4A4FE24E3D032005041CA /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
+		EEC4A50124E3D032005041CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		EEC4A50324E3D032005041CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +140,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEF0A68024B4730E0038A301 /* Regex in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEC4A4F724E3D032005041CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +187,7 @@
 				EEB7578224B2B6E700F26CF7 /* macOS */,
 				EE7CD90724DD541100FAA837 /* RSSBudTests */,
 				EEC4A4F124E2B91A005041CA /* Readme Assets */,
+				EEC4A4FB24E3D032005041CA /* Action Extension */,
 				EEB7577A24B2B6E700F26CF7 /* Products */,
 				EEF0A67E24B4730E0038A301 /* Frameworks */,
 			);
@@ -176,6 +214,7 @@
 				EEB7577924B2B6E700F26CF7 /* RSSBud.app */,
 				EEB7578124B2B6E700F26CF7 /* RSSBud.app */,
 				EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */,
+				EEC4A4FA24E3D032005041CA /* Action Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -213,6 +252,17 @@
 			path = "Readme Assets";
 			sourceTree = "<group>";
 		};
+		EEC4A4FB24E3D032005041CA /* Action Extension */ = {
+			isa = PBXGroup;
+			children = (
+				EEC4A4FC24E3D032005041CA /* Media.xcassets */,
+				EEC4A4FE24E3D032005041CA /* ActionViewController.swift */,
+				EEC4A50024E3D032005041CA /* MainInterface.storyboard */,
+				EEC4A50324E3D032005041CA /* Info.plist */,
+			);
+			path = "Action Extension";
+			sourceTree = "<group>";
+		};
 		EEF0A67E24B4730E0038A301 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,10 +298,12 @@
 				EEB7577524B2B6E700F26CF7 /* Sources */,
 				EEB7577624B2B6E700F26CF7 /* Frameworks */,
 				EEB7577724B2B6E700F26CF7 /* Resources */,
+				EEC4A50724E3D032005041CA /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EEC4A50524E3D032005041CA /* PBXTargetDependency */,
 			);
 			name = iOS;
 			packageProductDependencies = (
@@ -281,6 +333,23 @@
 			productReference = EEB7578124B2B6E700F26CF7 /* RSSBud.app */;
 			productType = "com.apple.product-type.application";
 		};
+		EEC4A4F924E3D032005041CA /* Action Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EEC4A50A24E3D032005041CA /* Build configuration list for PBXNativeTarget "Action Extension" */;
+			buildPhases = (
+				EEC4A4F624E3D032005041CA /* Sources */,
+				EEC4A4F724E3D032005041CA /* Frameworks */,
+				EEC4A4F824E3D032005041CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Action Extension";
+			productName = "Action Extension";
+			productReference = EEC4A4FA24E3D032005041CA /* Action Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -298,6 +367,9 @@
 						CreatedOnToolsVersion = 12.0;
 					};
 					EEB7578024B2B6E700F26CF7 = {
+						CreatedOnToolsVersion = 12.0;
+					};
+					EEC4A4F924E3D032005041CA = {
 						CreatedOnToolsVersion = 12.0;
 					};
 				};
@@ -321,6 +393,7 @@
 				EEB7577824B2B6E700F26CF7 /* iOS */,
 				EEB7578024B2B6E700F26CF7 /* macOS */,
 				EE7CD90524DD541100FAA837 /* RSSBudTests */,
+				EEC4A4F924E3D032005041CA /* Action Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -369,6 +442,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EEC4A4F824E3D032005041CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */,
+				EEC4A50224E3D032005041CA /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -410,6 +492,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EEC4A4F624E3D032005041CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEC4A4FF24E3D032005041CA /* ActionViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -418,7 +508,23 @@
 			target = EEB7577824B2B6E700F26CF7 /* iOS */;
 			targetProxy = EE7CD90B24DD541100FAA837 /* PBXContainerItemProxy */;
 		};
+		EEC4A50524E3D032005041CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EEC4A4F924E3D032005041CA /* Action Extension */;
+			targetProxy = EEC4A50424E3D032005041CA /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EEC4A50024E3D032005041CA /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EEC4A50124E3D032005041CA /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		EE7CD90E24DD541100FAA837 /* Debug */ = {
@@ -580,6 +686,7 @@
 		EEB7578E24B2B6E700F26CF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -602,6 +709,7 @@
 		EEB7578F24B2B6E700F26CF7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -670,6 +778,49 @@
 			};
 			name = Release;
 		};
+		EEC4A50824E3D032005041CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LCFCZ68733;
+				INFOPLIST_FILE = "Action Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cayZ.RSSBud.Action-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EEC4A50924E3D032005041CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LCFCZ68733;
+				INFOPLIST_FILE = "Action Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cayZ.RSSBud.Action-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -705,6 +856,15 @@
 			buildConfigurations = (
 				EEB7579124B2B6E700F26CF7 /* Debug */,
 				EEB7579224B2B6E700F26CF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EEC4A50A24E3D032005041CA /* Build configuration list for PBXNativeTarget "Action Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEC4A50824E3D032005041CA /* Debug */,
+				EEC4A50924E3D032005041CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
