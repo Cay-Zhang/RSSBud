@@ -61,7 +61,7 @@ struct ContentView: View {
                                     
                                     if let url = Radar.addToInoreaderURL(forFeedURL: feed.url + viewModel.queryItems).url {
                                         Button {
-                                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//                                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
                                         } label: {
                                             Label("Inoreader", systemImage: "arrowshape.turn.up.right.fill")
                                         }.buttonStyle(RoundedRectangleButtonStyle())

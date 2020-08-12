@@ -6,13 +6,23 @@
 //
 
 import UIKit
+import SwiftUI
 import MobileCoreServices
 
-class ActionViewController: UIViewController {
+class ActionViewController: UIHostingController<AnyView> {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // override designated initializer
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        let contentView = ContentView()
+        super.init(rootView: AnyView(contentView))
+    }
+
+    @objc required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // Get the item[s] we're handling from the extension context.
         
         // For example, look for an image and place it into an image view.
@@ -45,11 +55,11 @@ class ActionViewController: UIViewController {
 //        }
     }
 
-    @IBAction func done() {
-        // Return any edited content to the host app.
-        // This template doesn't do anything, so we just echo the passed in items.
-        self.extensionContext!.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
-    }
+//    @IBAction func done() {
+//        // Return any edited content to the host app.
+//        // This template doesn't do anything, so we just echo the passed in items.
+//        self.extensionContext!.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
+//    }
 
     func open(url urlComponents: URLComponents) {
         guard let url = urlComponents.url else {
@@ -64,8 +74,8 @@ class ActionViewController: UIViewController {
         _ = responder?.perform(selector, with: url)
     }
 
-    @IBAction func tap(_ sender: UIButton) {
-        open(url: URLComponents(string: "https://www.google.com")!)
-    }
+//    @IBAction func tap(_ sender: UIButton) {
+//        open(url: URLComponents(string: "https://www.google.com")!)
+//    }
     
 }
