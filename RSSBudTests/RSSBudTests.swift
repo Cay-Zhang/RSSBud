@@ -23,7 +23,7 @@ class RSSBudTests: XCTestCase {
 
     func testDefaultBaseURLValidation() {
         XCTAssertNotNil(
-            URLComponents(string: Radar.defaultBaseURLString),
+            URLComponents(string: Radar.defaultBaseURLString)?.host,
             "Default base URL is invalid."
         )
     }

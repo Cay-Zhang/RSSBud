@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @AppStorage("baseURLString") var storedBaseURLString: String = Radar.defaultBaseURLString
+    @AppStorage("baseURLString", store: UserDefaults(suiteName: RSSBud.appGroupContainerName)) var storedBaseURLString: String = Radar.defaultBaseURLString
     @State var baseURLString: String
     @State var isAlertPresented = false
     
@@ -24,7 +24,7 @@ struct SettingsView: View {
                     "Base URL",
                     text: $baseURLString,
                     onCommit: {
-                        if URLComponents(string: baseURLString) != nil {
+                        if URLComponents(string: baseURLString)?.host != nil {
                             storedBaseURLString = baseURLString
                         } else {
                             isAlertPresented = true

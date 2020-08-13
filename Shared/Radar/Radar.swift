@@ -19,9 +19,9 @@ extension JSContext {
 
 enum Radar {
     
-    static var defaultBaseURLString: String = "example.com"
+    static var defaultBaseURLString: String = "https://example.com"
     
-    @AppStorage("baseURLString") static var baseURLString: String = Radar.defaultBaseURLString
+    @AppStorage("baseURLString", store: RSSBud.userDefaults) static var baseURLString: String = Radar.defaultBaseURLString
     
     static var baseURL: URLComponents {
         URLComponents(string: baseURLString)!
