@@ -7,9 +7,12 @@
 
 import UIKit
 import SwiftUI
+import Combine
 import MobileCoreServices
 
 class ActionViewController: UIHostingController<ContentView> {
+    
+    var cancelBag = Set<AnyCancellable>()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         let contentView = ContentView()
@@ -29,27 +32,38 @@ class ActionViewController: UIHostingController<ContentView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        var urlFound = false
-        for item in self.extensionContext!.inputItems as! [NSExtensionItem] {
-            for provider in item.attachments! {
-                print(provider.registeredTypeIdentifiers)
+        let extensionItems = self.extensionContext!.inputItems as! [NSExtensionItem]
+        
+        extensionItems.publisher
+            .flatMap { item in
+                item.attachments!.publisher
+            }.print()
+            .flatMap { (provider: NSItemProvider) -> Future<URLComponents?, Never> in
+                
                 if provider.canLoadObject(ofClass: URL.self) {
-                    _ = provider.loadObject(ofClass: URL.self) { [weak self] url, error in
-                        guard let url = url?.components else {
-                            fatalError()
-                        }
-                        OperationQueue.main.addOperation {
-                            self?.rootView.viewModel.process(originalURL: url)
+                    
+                    return Future { promise in
+                        _ = provider.loadObject(ofClass: URL.self) { url, error in
+                            promise(.success(url?.components))
                         }
                     }
                     
-                    urlFound = true
-                    break
+                } else {
+                    
+                    return Future { promise in
+                        provider.loadItem(forTypeIdentifier: kUTTypePlainText as String, options: nil) { string, error in
+                            promise(.success((string as? String).flatMap(URLComponents.init(autoPercentEncoding:))))
+                        }
+                    }
+                    
                 }
-            }
-            
-            if urlFound { break }
-        }
+                
+            }.compactMap { $0 }
+            .first()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] url in
+                self?.rootView.viewModel.process(originalURL: url)
+            }.store(in: &self.cancelBag)
     }
     
     func open(url urlComponents: URLComponents) {
