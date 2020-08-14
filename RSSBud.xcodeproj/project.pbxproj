@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -35,19 +35,35 @@
 		EE7CD91B24DD6EEF00FAA837 /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
 		EE7CD91C24DD6EEF00FAA837 /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
 		EE7CD91D24DD6EEF00FAA837 /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
-		EE7CD91E24DD6FA000FAA837 /* URL+Expansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* URL+Expansion.swift */; };
-		EEB7578524B2B6E700F26CF7 /* RSSBudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */; };
-		EEB7578624B2B6E700F26CF7 /* RSSBudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */; };
+		EE7CD91E24DD6FA000FAA837 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* Extensions.swift */; };
+		EEB7578524B2B6E700F26CF7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* App.swift */; };
+		EEB7578624B2B6E700F26CF7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* App.swift */; };
 		EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577324B2B6E600F26CF7 /* ContentView.swift */; };
 		EEB7578824B2B6E700F26CF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577324B2B6E600F26CF7 /* ContentView.swift */; };
 		EEB7578924B2B6E700F26CF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEB7577424B2B6E700F26CF7 /* Assets.xcassets */; };
 		EEB7578A24B2B6E700F26CF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEB7577424B2B6E700F26CF7 /* Assets.xcassets */; };
-		EEB7579424B2B7C600F26CF7 /* URL+Expansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* URL+Expansion.swift */; };
-		EEB7579524B2B7C600F26CF7 /* URL+Expansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* URL+Expansion.swift */; };
+		EEB7579424B2B7C600F26CF7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* Extensions.swift */; };
+		EEB7579524B2B7C600F26CF7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* Extensions.swift */; };
 		EEB7579924B3084A00F26CF7 /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */; };
 		EEB7579A24B3084A00F26CF7 /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */; };
-		EEB7579D24B311B300F26CF7 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = EEB7579C24B311B300F26CF7 /* Regex */; };
-		EEF0A68024B4730E0038A301 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = EEF0A67F24B4730E0038A301 /* Regex */; };
+		EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEC4A4FC24E3D032005041CA /* Media.xcassets */; };
+		EEC4A4FF24E3D032005041CA /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A4FE24E3D032005041CA /* ActionViewController.swift */; };
+		EEC4A50624E3D032005041CA /* Action Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EEC4A4FA24E3D032005041CA /* Action Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EEC4A50B24E3E26D005041CA /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
+		EEC4A50C24E3E26D005041CA /* psl.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8A24B41E1000979B1A /* psl.min.js */; };
+		EEC4A50E24E3E26D005041CA /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8924B41E1000979B1A /* utils.js */; };
+		EEC4A50F24E3E26D005041CA /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
+		EEC4A51024E3E26D005041CA /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
+		EEC4A51224E3E26D005041CA /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
+		EEC4A51324E3E287005041CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577324B2B6E600F26CF7 /* ContentView.swift */; };
+		EEC4A51424E3E29A005041CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* Extensions.swift */; };
+		EEC4A51524E3E29D005041CA /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */; };
+		EEC4A51624E3E29F005041CA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EEAB524E152D20006ED53 /* SettingsView.swift */; };
+		EEC4A51724E3E2A2005041CA /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* ButtonStyle.swift */; };
+		EEC4A51B24E516D8005041CA /* RSSBud.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A51A24E516D8005041CA /* RSSBud.swift */; };
+		EEC4A51C24E516D8005041CA /* RSSBud.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A51A24E516D8005041CA /* RSSBud.swift */; };
+		EEC4A51D24E516D8005041CA /* RSSBud.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A51A24E516D8005041CA /* RSSBud.swift */; };
+		EEC4A51E24E516D8005041CA /* RSSBud.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A51A24E516D8005041CA /* RSSBud.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +74,28 @@
 			remoteGlobalIDString = EEB7577824B2B6E700F26CF7;
 			remoteInfo = iOS;
 		};
+		EEC4A50424E3D032005041CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEB7576D24B2B6E600F26CF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EEC4A4F924E3D032005041CA;
+			remoteInfo = "Action Extension";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EEC4A50724E3D032005041CA /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				EEC4A50624E3D032005041CA /* Action Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		EE000A8624B41E1000979B1A /* radar-rules.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "radar-rules.js"; sourceTree = "<group>"; };
@@ -74,7 +111,7 @@
 		EE7CD90A24DD541100FAA837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE7CD91624DD6E6B00FAA837 /* url.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = url.js; sourceTree = "<group>"; };
 		EE7CD91A24DD6EEF00FAA837 /* url.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = url.min.js; sourceTree = "<group>"; };
-		EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBudApp.swift; sourceTree = "<group>"; };
+		EEB7577224B2B6E600F26CF7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EEB7577324B2B6E600F26CF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EEB7577424B2B6E700F26CF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EEB7577924B2B6E700F26CF7 /* RSSBud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSBud.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,11 +119,18 @@
 		EEB7578124B2B6E700F26CF7 /* RSSBud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSBud.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEB7578324B2B6E700F26CF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEB7578424B2B6E700F26CF7 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
-		EEB7579324B2B7C600F26CF7 /* URL+Expansion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Expansion.swift"; sourceTree = "<group>"; };
+		EEB7579324B2B7C600F26CF7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		EEB7579724B2EA9100F26CF7 /* JS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = JS.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPresentation.swift; sourceTree = "<group>"; };
 		EEC4A4F024E2B8C4005041CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		EEC4A4F224E2B9A8005041CA /* RSSBud.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RSSBud.jpg; sourceTree = "<group>"; };
+		EEC4A4FA24E3D032005041CA /* Action Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Action Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEC4A4FC24E3D032005041CA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		EEC4A4FE24E3D032005041CA /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
+		EEC4A50324E3D032005041CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEC4A51824E42D61005041CA /* RSSBud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RSSBud.entitlements; sourceTree = "<group>"; };
+		EEC4A51924E5122F005041CA /* Action Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Action Extension.entitlements"; sourceTree = "<group>"; };
+		EEC4A51A24E516D8005041CA /* RSSBud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBud.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +145,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEB7579D24B311B300F26CF7 /* Regex in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,7 +152,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEF0A68024B4730E0038A301 /* Regex in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEC4A4F724E3D032005041CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +199,7 @@
 				EEB7578224B2B6E700F26CF7 /* macOS */,
 				EE7CD90724DD541100FAA837 /* RSSBudTests */,
 				EEC4A4F124E2B91A005041CA /* Readme Assets */,
+				EEC4A4FB24E3D032005041CA /* Action Extension */,
 				EEB7577A24B2B6E700F26CF7 /* Products */,
 				EEF0A67E24B4730E0038A301 /* Frameworks */,
 			);
@@ -158,11 +208,12 @@
 		EEB7577124B2B6E600F26CF7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				EEC4A51A24E516D8005041CA /* RSSBud.swift */,
+				EEB7577224B2B6E600F26CF7 /* App.swift */,
 				EE000A7624B41CAA00979B1A /* Radar */,
-				EEB7577224B2B6E600F26CF7 /* RSSBudApp.swift */,
 				EEB7577324B2B6E600F26CF7 /* ContentView.swift */,
 				EEB7577424B2B6E700F26CF7 /* Assets.xcassets */,
-				EEB7579324B2B7C600F26CF7 /* URL+Expansion.swift */,
+				EEB7579324B2B7C600F26CF7 /* Extensions.swift */,
 				EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */,
 				EE3EEAB524E152D20006ED53 /* SettingsView.swift */,
 				EE1ABF0E24E182E200996C06 /* ButtonStyle.swift */,
@@ -176,6 +227,7 @@
 				EEB7577924B2B6E700F26CF7 /* RSSBud.app */,
 				EEB7578124B2B6E700F26CF7 /* RSSBud.app */,
 				EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */,
+				EEC4A4FA24E3D032005041CA /* Action Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -183,6 +235,7 @@
 		EEB7577B24B2B6E700F26CF7 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				EEC4A51824E42D61005041CA /* RSSBud.entitlements */,
 				EEB7577C24B2B6E700F26CF7 /* Info.plist */,
 			);
 			path = iOS;
@@ -211,6 +264,17 @@
 				EEC4A4F224E2B9A8005041CA /* RSSBud.jpg */,
 			);
 			path = "Readme Assets";
+			sourceTree = "<group>";
+		};
+		EEC4A4FB24E3D032005041CA /* Action Extension */ = {
+			isa = PBXGroup;
+			children = (
+				EEC4A51924E5122F005041CA /* Action Extension.entitlements */,
+				EEC4A4FC24E3D032005041CA /* Media.xcassets */,
+				EEC4A4FE24E3D032005041CA /* ActionViewController.swift */,
+				EEC4A50324E3D032005041CA /* Info.plist */,
+			);
+			path = "Action Extension";
 			sourceTree = "<group>";
 		};
 		EEF0A67E24B4730E0038A301 /* Frameworks */ = {
@@ -248,14 +312,15 @@
 				EEB7577524B2B6E700F26CF7 /* Sources */,
 				EEB7577624B2B6E700F26CF7 /* Frameworks */,
 				EEB7577724B2B6E700F26CF7 /* Resources */,
+				EEC4A50724E3D032005041CA /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EEC4A50524E3D032005041CA /* PBXTargetDependency */,
 			);
 			name = iOS;
 			packageProductDependencies = (
-				EEB7579C24B311B300F26CF7 /* Regex */,
 			);
 			productName = iOS;
 			productReference = EEB7577924B2B6E700F26CF7 /* RSSBud.app */;
@@ -275,11 +340,27 @@
 			);
 			name = macOS;
 			packageProductDependencies = (
-				EEF0A67F24B4730E0038A301 /* Regex */,
 			);
 			productName = macOS;
 			productReference = EEB7578124B2B6E700F26CF7 /* RSSBud.app */;
 			productType = "com.apple.product-type.application";
+		};
+		EEC4A4F924E3D032005041CA /* Action Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EEC4A50A24E3D032005041CA /* Build configuration list for PBXNativeTarget "Action Extension" */;
+			buildPhases = (
+				EEC4A4F624E3D032005041CA /* Sources */,
+				EEC4A4F724E3D032005041CA /* Frameworks */,
+				EEC4A4F824E3D032005041CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Action Extension";
+			productName = "Action Extension";
+			productReference = EEC4A4FA24E3D032005041CA /* Action Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -300,6 +381,9 @@
 					EEB7578024B2B6E700F26CF7 = {
 						CreatedOnToolsVersion = 12.0;
 					};
+					EEC4A4F924E3D032005041CA = {
+						CreatedOnToolsVersion = 12.0;
+					};
 				};
 			};
 			buildConfigurationList = EEB7577024B2B6E600F26CF7 /* Build configuration list for PBXProject "RSSBud" */;
@@ -312,7 +396,6 @@
 			);
 			mainGroup = EEB7576C24B2B6E600F26CF7;
 			packageReferences = (
-				EEB7579B24B311B300F26CF7 /* XCRemoteSwiftPackageReference "Regex" */,
 			);
 			productRefGroup = EEB7577A24B2B6E700F26CF7 /* Products */;
 			projectDirPath = "";
@@ -321,6 +404,7 @@
 				EEB7577824B2B6E700F26CF7 /* iOS */,
 				EEB7578024B2B6E700F26CF7 /* macOS */,
 				EE7CD90524DD541100FAA837 /* RSSBudTests */,
+				EEC4A4F924E3D032005041CA /* Action Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -369,6 +453,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EEC4A4F824E3D032005041CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEC4A50F24E3E26D005041CA /* radar-rules.js in Resources */,
+				EEC4A51224E3E26D005041CA /* url.min.js in Resources */,
+				EEC4A50B24E3E26D005041CA /* route-recognizer.min.js in Resources */,
+				EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */,
+				EEC4A50C24E3E26D005041CA /* psl.min.js in Resources */,
+				EEC4A50E24E3E26D005041CA /* utils.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -376,8 +473,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE7CD91E24DD6FA000FAA837 /* URL+Expansion.swift in Sources */,
+				EE7CD91E24DD6FA000FAA837 /* Extensions.swift in Sources */,
 				EE7CD91224DD547200FAA837 /* Radar.swift in Sources */,
+				EEC4A51D24E516D8005041CA /* RSSBud.swift in Sources */,
 				EE7CD90924DD541100FAA837 /* RSSBudTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,9 +484,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEB7579424B2B7C600F26CF7 /* URL+Expansion.swift in Sources */,
+				EEB7579424B2B7C600F26CF7 /* Extensions.swift in Sources */,
 				EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */,
-				EEB7578524B2B6E700F26CF7 /* RSSBudApp.swift in Sources */,
+				EEC4A51B24E516D8005041CA /* RSSBud.swift in Sources */,
+				EEB7578524B2B6E700F26CF7 /* App.swift in Sources */,
 				EE3EEAB624E152D20006ED53 /* SettingsView.swift in Sources */,
 				EEB7579924B3084A00F26CF7 /* LinkPresentation.swift in Sources */,
 				EE000A9624B41E9600979B1A /* Radar.swift in Sources */,
@@ -400,13 +499,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEB7579524B2B7C600F26CF7 /* URL+Expansion.swift in Sources */,
+				EEB7579524B2B7C600F26CF7 /* Extensions.swift in Sources */,
 				EEB7578824B2B6E700F26CF7 /* ContentView.swift in Sources */,
-				EEB7578624B2B6E700F26CF7 /* RSSBudApp.swift in Sources */,
+				EEC4A51C24E516D8005041CA /* RSSBud.swift in Sources */,
+				EEB7578624B2B6E700F26CF7 /* App.swift in Sources */,
 				EE3EEAB724E152D20006ED53 /* SettingsView.swift in Sources */,
 				EEB7579A24B3084A00F26CF7 /* LinkPresentation.swift in Sources */,
 				EE000A9724B41E9600979B1A /* Radar.swift in Sources */,
 				EE1ABF1024E182E200996C06 /* ButtonStyle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEC4A4F624E3D032005041CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEC4A51024E3E26D005041CA /* Radar.swift in Sources */,
+				EEC4A51424E3E29A005041CA /* Extensions.swift in Sources */,
+				EEC4A51E24E516D8005041CA /* RSSBud.swift in Sources */,
+				EEC4A4FF24E3D032005041CA /* ActionViewController.swift in Sources */,
+				EEC4A51624E3E29F005041CA /* SettingsView.swift in Sources */,
+				EEC4A51324E3E287005041CA /* ContentView.swift in Sources */,
+				EEC4A51524E3E29D005041CA /* LinkPresentation.swift in Sources */,
+				EEC4A51724E3E2A2005041CA /* ButtonStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,6 +532,11 @@
 			isa = PBXTargetDependency;
 			target = EEB7577824B2B6E700F26CF7 /* iOS */;
 			targetProxy = EE7CD90B24DD541100FAA837 /* PBXContainerItemProxy */;
+		};
+		EEC4A50524E3D032005041CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EEC4A4F924E3D032005041CA /* Action Extension */;
+			targetProxy = EEC4A50424E3D032005041CA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -580,8 +700,10 @@
 		EEB7578E24B2B6E700F26CF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iOS/RSSBud.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LCFCZ68733;
 				ENABLE_PREVIEWS = YES;
@@ -602,8 +724,10 @@
 		EEB7578F24B2B6E700F26CF7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iOS/RSSBud.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LCFCZ68733;
 				ENABLE_PREVIEWS = YES;
@@ -670,6 +794,51 @@
 			};
 			name = Release;
 		};
+		EEC4A50824E3D032005041CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Action Extension/Action Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LCFCZ68733;
+				INFOPLIST_FILE = "Action Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cayZ.RSSBud.Action-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EEC4A50924E3D032005041CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Action Extension/Action Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LCFCZ68733;
+				INFOPLIST_FILE = "Action Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cayZ.RSSBud.Action-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -709,31 +878,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		EEC4A50A24E3D032005041CA /* Build configuration list for PBXNativeTarget "Action Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEC4A50824E3D032005041CA /* Debug */,
+				EEC4A50924E3D032005041CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		EEB7579B24B311B300F26CF7 /* XCRemoteSwiftPackageReference "Regex" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/crossroadlabs/Regex.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		EEB7579C24B311B300F26CF7 /* Regex */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EEB7579B24B311B300F26CF7 /* XCRemoteSwiftPackageReference "Regex" */;
-			productName = Regex;
-		};
-		EEF0A67F24B4730E0038A301 /* Regex */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EEB7579B24B311B300F26CF7 /* XCRemoteSwiftPackageReference "Regex" */;
-			productName = Regex;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EEB7576D24B2B6E600F26CF7 /* Project object */;
 }

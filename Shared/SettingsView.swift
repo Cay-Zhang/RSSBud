@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
-    @AppStorage("baseURLString") var storedBaseURLString: String = Radar.defaultBaseURLString
+    var storedBaseURL = RSSBud.BaseURL()
     @State var baseURLString: String
     @State var isAlertPresented = false
     
     init() {
-        _baseURLString = State(wrappedValue: _storedBaseURLString.wrappedValue)
+        _baseURLString = State(wrappedValue: storedBaseURL.string)
     }
     
     var body: some View {
@@ -24,8 +23,8 @@ struct SettingsView: View {
                     "Base URL",
                     text: $baseURLString,
                     onCommit: {
-                        if URLComponents(string: baseURLString) != nil {
-                            storedBaseURLString = baseURLString
+                        if storedBaseURL.validate(string: baseURLString) {
+                            storedBaseURL.string = baseURLString
                         } else {
                             isAlertPresented = true
                         }
