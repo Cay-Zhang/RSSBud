@@ -19,14 +19,6 @@ extension JSContext {
 
 enum Radar {
     
-    static var defaultBaseURLString: String = "https://example.com"
-    
-    @AppStorage("baseURLString", store: RSSBud.userDefaults) static var baseURLString: String = Radar.defaultBaseURLString
-    
-    static var baseURL: URLComponents {
-        URLComponents(string: baseURLString)!
-    }
-    
     static let jsContext: JSContext = {
         let context = JSContext()!
         
@@ -88,12 +80,6 @@ extension Radar {
         var _url: String = ""
         var path: String
         var _isDocs: Bool?
-        
-        var url: URLComponents {
-            var result = Radar.baseURL
-            result.path = path
-            return result
-        }
         
         var isDocs: Bool {
             _isDocs == .some(true)

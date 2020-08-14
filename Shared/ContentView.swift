@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Combine
-import Regex
 
 struct ContentView: View {
     
@@ -15,6 +14,9 @@ struct ContentView: View {
     var done: (() -> Void)? = nil
     @ObservedObject var viewModel = ViewModel()
     @State var isSettingsViewPresented = false
+    
+    // Be sure to access it in body in order to subscribe to it.
+    @RSSBud.BaseURL var baseURL
     
     var body: some View {
         NavigationView {
@@ -51,17 +53,17 @@ struct ContentView: View {
                             VStack(spacing: 10.0) {
                                 Text(feed.title).fontWeight(.semibold)
                                     .padding(.horizontal, 15)
-                                Text((feed.url + viewModel.queryItems).string ?? "URL Conversion Failed")
+                                Text(url(for: feed).string ?? "URL Conversion Failed")
                                     .padding(.horizontal, 15)
                                 
                                 HStack(spacing: 0) {
                                     Button {
-                                        (feed.url + viewModel.queryItems).url.map { UIPasteboard.general.url = $0 }
+                                        url(for: feed).url.map { UIPasteboard.general.url = $0 }
                                     } label: {
                                         Label("Copy", systemImage: "doc.on.doc.fill")
                                     }.buttonStyle(RoundedRectangleButtonStyle())
                                     
-                                    if let url = Radar.addToInoreaderURL(forFeedURL: feed.url + viewModel.queryItems) {
+                                    if let url = Radar.addToInoreaderURL(forFeedURL: url(for: feed)) {
                                         Button {
                                             openURL(url)
                                         } label: {
@@ -105,6 +107,10 @@ struct ContentView: View {
                 SettingsView()
             }
         }
+    }
+    
+    func url(for feed: Radar.DetectedFeed) -> URLComponents {
+        baseURL.replacing(path: feed.path).appending(queryItems: viewModel.queryItems)
     }
     
     func queryItemBinding(for name: String) -> Binding<String> {

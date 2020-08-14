@@ -21,16 +21,23 @@ extension URLComponents {
 }
 
 extension URLComponents {
-    static func + (url: URLComponents, queryItems: [URLQueryItem]) -> URLComponents {
-        var result = url
-        result.queryItems = result.queryItems ?? []
-        result.queryItems!.append(contentsOf: queryItems)
-        return result
-    }
     
     init?(autoPercentEncoding string: String) {
         guard let encodedString = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed.union([" "])) else { return nil }
         self.init(string: encodedString)
+    }
+    
+    func replacing(path: String) -> URLComponents {
+        var copy = self
+        copy.path = path
+        return copy
+    }
+    
+    func appending(queryItems: [URLQueryItem]) -> URLComponents {
+        var copy = self
+        copy.queryItems = self.queryItems ?? []
+        copy.queryItems!.append(contentsOf: queryItems)
+        return copy
     }
 }
 
