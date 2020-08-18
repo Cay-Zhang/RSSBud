@@ -30,17 +30,18 @@ struct FeedView: View {
             Text(rsshubURL().string ?? "URL Conversion Failed")
                 .padding(.horizontal, 15)
             
-            HStack(spacing: 0) {
+            HStack(spacing: 8) {
                 Button {
                     rsshubURL().url.map { UIPasteboard.general.url = $0 }
                 } label: {
                     Label("Copy", systemImage: "doc.on.doc.fill")
-                }.buttonStyle(RoundedRectangleButtonStyle())
+                        .roundedRectangleBackground()
+                }.buttonStyle(SquashableButtonStyle())
                 
                 integrationButton
-            }.padding(.horizontal, 4)
+            }.padding(.horizontal, 8)
         }.padding(.top, 15)
-        .padding(.bottom, 4)
+        .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
         .background(Color(UIColor.secondarySystemFill))
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
@@ -52,7 +53,8 @@ struct FeedView: View {
                 openURL(url)
             } label: {
                 Label(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill")
-            }.buttonStyle(RoundedRectangleButtonStyle())
+                    .roundedRectangleBackground()
+            }.buttonStyle(SquashableButtonStyle())
         } else {
             Menu {
                 ForEach(integrations) { key in
@@ -63,10 +65,8 @@ struct FeedView: View {
                     }
                 }
             } label: {
-                Button { } label: {
-                    Label("Integrations", systemImage: "ellipsis")
-                }.buttonStyle(RoundedRectangleButtonStyle())
-            }
+                Label("Integrations", systemImage: "ellipsis")
+            }.roundedRectangleBackground()
         }
     }
     

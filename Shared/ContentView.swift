@@ -40,7 +40,8 @@ struct ContentView: View {
                                 }
                             } label: {
                                 Label("Read from Clipboard", systemImage: "arrow.up.doc.on.clipboard")
-                            }.buttonStyle(RoundedRectangleButtonStyle())
+                                    .roundedRectangleBackground()
+                            }.buttonStyle(SquashableButtonStyle())
                         }
                     }
                     
