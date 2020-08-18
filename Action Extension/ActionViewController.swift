@@ -12,10 +12,11 @@ import MobileCoreServices
 
 class ActionViewController: UIHostingController<ContentView> {
     
+    var contentViewModel = ContentView.ViewModel()
     var cancelBag = Set<AnyCancellable>()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        let contentView = ContentView()
+        let contentView = ContentView(viewModel: contentViewModel)
         super.init(rootView: contentView)
         rootView.openURL = { [weak self] url in
             self?.open(url: url)
@@ -29,8 +30,8 @@ class ActionViewController: UIHostingController<ContentView> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         let extensionItems = self.extensionContext!.inputItems as! [NSExtensionItem]
         
@@ -61,8 +62,8 @@ class ActionViewController: UIHostingController<ContentView> {
             }.compactMap { $0 }
             .first()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] url in
-                self?.rootView.viewModel.process(originalURL: url)
+            .sink { [weak viewModel = contentViewModel] url in
+                viewModel?.process(originalURL: url)
             }.store(in: &self.cancelBag)
     }
     

@@ -12,6 +12,8 @@ struct SettingsView: View {
     @State var baseURLString: String
     @State var isAlertPresented = false
     
+    @Integration var integrations
+    
     init() {
         _baseURLString = State(wrappedValue: storedBaseURL.string)
     }
@@ -19,16 +21,28 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                TextField(
-                    "Base URL",
-                    text: $baseURLString,
-                    onCommit: {
-                        if storedBaseURL.validate(string: baseURLString) {
-                            storedBaseURL.string = baseURLString
-                        } else {
-                            isAlertPresented = true
+                Section(header: Text("RSSHub")) {
+                    TextField(
+                        "Base URL",
+                        text: $baseURLString,
+                        onCommit: {
+                            if storedBaseURL.validate(string: baseURLString) {
+                                storedBaseURL.string = baseURLString
+                            } else {
+                                isAlertPresented = true
+                            }
                         }
-                    }
+                    )
+                }
+                
+                NavigationLink("Integrations", destination:
+                    List(selection: $integrations) {
+                        ForEach(Integration.Key.allCases) { key in
+                            Text(key.rawValue).tag(key)
+                        }
+                    }.listStyle(InsetListStyle())
+                    .navigationTitle("Integrations")
+                    .environment(\.editMode, .constant(.active))
                 )
             }.navigationTitle("Settings")
         }.alert(isPresented: $isAlertPresented) {

@@ -15,9 +15,6 @@ struct ContentView: View {
     @ObservedObject var viewModel = ViewModel()
     @State var isSettingsViewPresented = false
     
-    // Be sure to access it in body in order to subscribe to it.
-    @RSSBud.BaseURL var baseURL
-    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -48,36 +45,11 @@ struct ContentView: View {
                     }
                     
                     // Derived URL
-                    VStack(spacing: 30) {
+                    LazyVStack(spacing: 30) {
                         ForEach(viewModel.detectedFeeds, id: \.title) { feed in
-                            VStack(spacing: 10.0) {
-                                Text(feed.title).fontWeight(.semibold)
-                                    .padding(.horizontal, 15)
-                                Text(url(for: feed).string ?? "URL Conversion Failed")
-                                    .padding(.horizontal, 15)
-                                
-                                HStack(spacing: 0) {
-                                    Button {
-                                        url(for: feed).url.map { UIPasteboard.general.url = $0 }
-                                    } label: {
-                                        Label("Copy", systemImage: "doc.on.doc.fill")
-                                    }.buttonStyle(RoundedRectangleButtonStyle())
-                                    
-                                    if let url = Radar.addToInoreaderURL(forFeedURL: url(for: feed)) {
-                                        Button {
-                                            openURL(url)
-                                        } label: {
-                                            Label("Inoreader", systemImage: "arrowshape.turn.up.right.fill")
-                                        }.buttonStyle(RoundedRectangleButtonStyle())
-                                    }
-                                }.padding(.horizontal, 4)
-                            }.padding(.top, 15)
-                            .padding(.bottom, 4)
-                            .frame(maxWidth: .infinity)
-                            .background(Color(UIColor.secondarySystemFill))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                            FeedView(feed: feed, contentViewModel: viewModel, openURL: openURL)
                         }
-                    }.listStyle(InsetListStyle())
+                    }
                     
                     TextField("Keep Title", text: queryItemBinding(for: "filter_title"))
                         .font(.title2)
@@ -100,17 +72,13 @@ struct ContentView: View {
                         isSettingsViewPresented.toggle()
                     } label: {
                         Image(systemName: "gearshape.fill")
-                            .frame(width: 40, height: 40)
+//                            .frame(width: 40, height: 40)
                     }
                 }
             }.sheet(isPresented: $isSettingsViewPresented) {
                 SettingsView()
             }
-        }
-    }
-    
-    func url(for feed: Radar.DetectedFeed) -> URLComponents {
-        baseURL.replacing(path: feed.path).appending(queryItems: viewModel.queryItems)
+        }.environmentObject(viewModel)
     }
     
     func queryItemBinding(for name: String) -> Binding<String> {
