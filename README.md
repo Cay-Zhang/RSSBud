@@ -19,7 +19,8 @@
 - [ ] 检测适用于网站的 RSSHub 源
 - [x] 读取剪贴板 URL
 - [x] 分享菜单插件 (Action Extension)
-- [x] 快速订阅到 Inoreader
+- [x] 快速订阅到 Reeder, Fiery Feeds 和系统默认 RSS 阅读器
+- [x] 快速订阅到 Feedly, Inoreader, Feedbin, The Old Reader, Feeds Pub 网页端
 - [x] 自定义通用参数
 - [x] 自定义 RSSHub 域名
 - [ ] 规则热更新
