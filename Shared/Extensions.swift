@@ -33,6 +33,12 @@ extension URLComponents {
         return copy
     }
     
+    func replacing(scheme: String) -> URLComponents {
+        var copy = self
+        copy.scheme = scheme
+        return copy
+    }
+    
     func appending(queryItems: [URLQueryItem]) -> URLComponents {
         var copy = self
         copy.queryItems = self.queryItems ?? []
