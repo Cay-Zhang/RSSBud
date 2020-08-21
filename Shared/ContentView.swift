@@ -69,11 +69,19 @@ struct ContentView: View {
                 }
                 
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                    Button {
-                        isSettingsViewPresented.toggle()
-                    } label: {
-                        Image(systemName: "gearshape.fill")
-//                            .frame(width: 40, height: 40)
+                    HStack {
+                        #if DEBUG
+                        Button {
+                            viewModel.process(originalURL: URLComponents(string: "https://space.bilibili.com/17404347/")!)
+                        } label: {
+                            Image(systemName: "hammer.fill")
+                        }
+                        #endif
+                        Button {
+                            isSettingsViewPresented.toggle()
+                        } label: {
+                            Image(systemName: "gearshape.fill")
+                        }
                     }
                 }
             }.sheet(isPresented: $isSettingsViewPresented) {
