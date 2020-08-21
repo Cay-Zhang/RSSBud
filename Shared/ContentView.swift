@@ -52,11 +52,7 @@ struct ContentView: View {
                         }
                     }
                     
-                    TextField("Keep Title", text: queryItemBinding(for: "filter_title"))
-                        .font(.title2)
-                    
-                    TextField("Remove Title", text: queryItemBinding(for: "filterout_title"))
-                        .font(.title2)
+                    QueryEditor(queryItems: $viewModel.queryItems)
                 }.padding(20)
             }.navigationTitle("RSSBud")
             .toolbar {
@@ -88,24 +84,6 @@ struct ContentView: View {
                 SettingsView()
             }
         }.environmentObject(viewModel)
-    }
-    
-    func queryItemBinding(for name: String) -> Binding<String> {
-        Binding(get: {
-            viewModel.queryItems.first(where: { $0.name == name })?.value ?? ""
-        }, set: { newValue in
-            if newValue.isEmpty {
-                if let index = viewModel.queryItems.firstIndex(where: { $0.name == name }) {
-                    viewModel.queryItems.remove(at: index)
-                }
-            } else {
-                if let index = viewModel.queryItems.firstIndex(where: { $0.name == name }) {
-                    viewModel.queryItems[index].value = newValue
-                } else {
-                    viewModel.queryItems.append(URLQueryItem(name: name, value: newValue))
-                }
-            }
-        })
     }
 }
 
