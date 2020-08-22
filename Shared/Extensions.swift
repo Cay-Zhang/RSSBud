@@ -5,7 +5,7 @@
 //  Created by Cay Zhang on 2020/7/5.
 //
 
-import Foundation
+import SwiftUI
 import Combine
 
 extension URLComponents {
@@ -45,10 +45,29 @@ extension URLComponents {
         copy.queryItems!.append(contentsOf: queryItems)
         return copy
     }
+    
+    mutating func omitEmptyQueryItems() {
+        queryItems = (queryItems?.filter { !($0.value?.isEmpty ?? true) })
+            .flatMap { $0.isEmpty ? nil : $0 }
+    }
+    
+    func omittingEmptyQueryItems() -> URLComponents {
+        var copy = self
+        copy.omitEmptyQueryItems()
+        return copy
+    }
 }
 
 extension URL {
     var components: URLComponents? {
         URLComponents(url: self, resolvingAgainstBaseURL: false)
+    }
+}
+
+extension View {
+    func foreground<Overlay: View>(_ overlay: Overlay) -> some View {
+        self.opacity(0.0)
+            .overlay(overlay)
+            .mask(self)
     }
 }

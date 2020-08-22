@@ -16,7 +16,10 @@ struct FeedView: View {
     @RSSBud.BaseURL var baseURL
     
     func rsshubURL() -> URLComponents {
-        baseURL.replacing(path: feed.path).appending(queryItems: contentViewModel.queryItems)
+        baseURL
+            .replacing(path: feed.path)
+            .appending(queryItems: contentViewModel.queryItems)
+            .omittingEmptyQueryItems()
     }
     
     func integrationURL(for integrationKey: Integration.Key) -> URLComponents? {
@@ -25,10 +28,12 @@ struct FeedView: View {
     
     var body: some View {
         VStack(spacing: 10.0) {
-            Text(feed.title).fontWeight(.semibold)
+            Text(feed.title)
+                .fontWeight(.semibold)
                 .padding(.horizontal, 15)
-            Text(rsshubURL().string ?? "URL Conversion Failed")
-                .padding(.horizontal, 15)
+            
+//            Text(rsshubURL().string ?? "URL Conversion Failed")
+//                .padding(.horizontal, 15)
             
             HStack(spacing: 8) {
                 Button {
