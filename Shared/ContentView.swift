@@ -24,8 +24,6 @@ struct ContentView: View {
                         if let url = viewModel.originalURL?.url {
                             LinkPresentation(previewURL: url)
                                 .frame(height: 200)
-                        } else {
-                            Text("No Original URL")
                         }
                         
                         HStack(spacing: 20) {
@@ -46,7 +44,7 @@ struct ContentView: View {
                     }
                     
                     // Derived URL
-                    LazyVStack(spacing: 30) {
+                    LazyVStack(spacing: 16) {
                         ForEach(viewModel.detectedFeeds, id: \.title) { feed in
                             FeedView(feed: feed, contentViewModel: viewModel, openURL: openURL)
                         }

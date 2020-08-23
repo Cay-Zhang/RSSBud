@@ -39,11 +39,21 @@ struct QueryEditor: View {
                 }
             } label: {
                 Label("Add Query Item", systemImage: "plus")
-                    .font(Font.body.weight(.semibold))
+                    .padding(.horizontal)
+                    .roundedRectangleBackground()
+//                    .font(Font.body.weight(.semibold))
             }.frame(maxWidth: .infinity, alignment: .trailing)
             
             ForEach(queryItems, id: \.name) { item in
-                GroupBox(label: label(forQueryItemNamed: item.name)) {
+                GroupBox(label:
+                    HStack {
+                        label(forQueryItemNamed: item.name)
+                        Spacer()
+                        Button(action: removeQueryItemAction(name: item.name)) {
+                            Image(systemName: "trash.fill")
+                        }
+                    }
+                ) {
                     TextField("Value", text: queryItemBinding(for: item.name))
                 }.contextMenu {
                     Button(action: removeQueryItemAction(name: item.name)) {
@@ -113,7 +123,11 @@ struct QueryEditor: View {
         case "limit":
             return Label("Limit Entry Count", systemImage: "number")
         default:
-            return Label(name, systemImage: "plus")
+            return Label {
+                Text(verbatim: name).foregroundColor(.secondary)
+            } icon: {
+                Image(systemName: "ellipsis")
+            }
         }
     }
 }
@@ -136,7 +150,8 @@ extension QueryEditor {
 struct QueryEditor_Previews: PreviewProvider {
     
     @State static var queryItems: [URLQueryItem] = [
-        URLQueryItem(name: "filterout_description", value: "test")
+        URLQueryItem(name: "filterout_description", value: "test"),
+        URLQueryItem(name: "custom", value: "11111")
     ]
     
     static var previews: some View {
