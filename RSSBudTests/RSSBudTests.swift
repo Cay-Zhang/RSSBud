@@ -66,5 +66,23 @@ class RSSBudTests: XCTestCase {
         
         wait(for: [expectation], timeout: 3.0)
     }
+    
+    func testQQEgame() {
+        
+        let expectation = XCTestExpectation(description: "Detect the feed from the url.")
+        
+        let urlString = "https://egame.qq.com/526905271"
+        let url = URLComponents(autoPercentEncoding: urlString)!
+        
+        Radar.detecting(url: url)
+            .sink { _ in
+                
+            } receiveValue: { feeds in
+                XCTAssertEqual(feeds.count, 1, "Unexpected feed count.")
+                expectation.fulfill()
+            }.store(in: &self.cancelBag)
+        
+        wait(for: [expectation], timeout: 3.0)
+    }
 
 }
