@@ -66,12 +66,6 @@ enum Radar {
         }
     }
     
-    static func addToInoreaderURL(forFeedURL feedURL: URLComponents) -> URLComponents {
-        var url = URLComponents(string: "https://www.inoreader.com")!
-        url.queryItems = [URLQueryItem(name: "add_feed", value: feedURL.string!)]
-        return url
-    }
-    
 }
 
 extension Radar {

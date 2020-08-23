@@ -63,7 +63,7 @@ class ActionViewController: UIHostingController<ContentView> {
             .first()
             .receive(on: DispatchQueue.main)
             .sink { [weak viewModel = contentViewModel] url in
-                viewModel?.process(originalURL: url)
+                viewModel?.process(url: url)
             }.store(in: &self.cancelBag)
     }
     
