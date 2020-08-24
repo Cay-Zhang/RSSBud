@@ -14,7 +14,7 @@ class RSSBudTests: XCTestCase {
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        let _ = Radar.jsContext
+        let _ = RSSHub.Radar.jsContext
     }
 
     override func tearDownWithError() throws {
@@ -23,7 +23,7 @@ class RSSBudTests: XCTestCase {
 
     func testDefaultBaseURLValidation() {
         XCTAssert(
-            RSSBud.BaseURL().validate(string: RSSBud.defaultBaseURLString),
+            RSSHub.BaseURL().validate(string: RSSHub.defaultBaseURLString),
             "Default base URL is invalid."
         )
     }
@@ -37,7 +37,7 @@ class RSSBudTests: XCTestCase {
             
             startMeasuring()
             
-            Radar.detecting(url: url)
+            RSSHub.Radar.detecting(url: url)
                 .sink { _ in
                     
                 } receiveValue: { feeds in
@@ -56,7 +56,7 @@ class RSSBudTests: XCTestCase {
         let urlString = "https://www.bilibili.com/video/BV1qK4y1v7yQ?p=2"
         let url = URLComponents(autoPercentEncoding: urlString)!
         
-        Radar.detecting(url: url)
+        RSSHub.Radar.detecting(url: url)
             .sink { _ in
                 
             } receiveValue: { feeds in
@@ -74,7 +74,7 @@ class RSSBudTests: XCTestCase {
         let urlString = "https://egame.qq.com/526905271"
         let url = URLComponents(autoPercentEncoding: urlString)!
         
-        Radar.detecting(url: url)
+        RSSHub.Radar.detecting(url: url)
             .sink { _ in
                 
             } receiveValue: { feeds in

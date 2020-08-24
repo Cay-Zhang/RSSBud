@@ -8,23 +8,6 @@
 import SwiftUI
 
 enum RSSBud {
-    static let appGroupContainerName: String = "group.me.cayZ.RSSBud"
-    static let userDefaults: UserDefaults = UserDefaults(suiteName: appGroupContainerName)!
-    static var defaultBaseURLString: String = "https://example.com"
-}
-
-extension RSSBud {
-    @propertyWrapper struct BaseURL: DynamicProperty {
-        @AppStorage("baseURLString", store: RSSBud.userDefaults) var string: String = RSSBud.defaultBaseURLString
-        
-        var wrappedValue: URLComponents {
-            get {
-                URLComponents(string: string)!
-            }
-        }
-        
-        func validate(string: String) -> Bool {
-            URLComponents(string: string)?.host != nil
-        }
-    }
+    static let appGroupIdentifier: String = "group.me.cayZ.RSSBud"
+    static let userDefaults: UserDefaults = UserDefaults(suiteName: appGroupIdentifier)!
 }

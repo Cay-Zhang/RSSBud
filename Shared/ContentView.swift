@@ -87,15 +87,15 @@ struct ContentView: View {
 
 extension ContentView {
     class ViewModel: ObservableObject {
-        @RSSBud.BaseURL var baseURL
+        @RSSHub.BaseURL var baseURL
         
         @Published var originalURL: URLComponents? = nil
-        @Published var detectedFeeds: [Radar.DetectedFeed]
+        @Published var detectedFeeds: [RSSHub.Radar.DetectedFeed]
         @Published var queryItems: [URLQueryItem] = []
         @Published var isProcessing: Bool = false
         var cancelBag = Set<AnyCancellable>()
         
-        init(detectedFeeds: [Radar.DetectedFeed] = []) {
+        init(detectedFeeds: [RSSHub.Radar.DetectedFeed] = []) {
             self.detectedFeeds = detectedFeeds
         }
         
@@ -105,7 +105,7 @@ extension ContentView {
                     URLQueryItem(name: item.name, value: item.value?.removingPercentEncoding)
                 }
                 withAnimation {
-                    detectedFeeds = [Radar.DetectedFeed(title: "Current URL", path: url.path)]
+                    detectedFeeds = [RSSHub.Radar.DetectedFeed(title: "Current URL", path: url.path)]
                     queryItems = items ?? []
                 }
             } else {
@@ -126,7 +126,7 @@ extension ContentView {
                 
                 expandingURL
                     .flatMap { url in
-                        Radar.detecting(url: url)
+                        RSSHub.Radar.detecting(url: url)
                     }.receive(on: DispatchQueue.main)
                     .sink { [weak self] completion in
                         switch completion {
@@ -152,8 +152,8 @@ extension ContentView {
 struct ContentView_Previews: PreviewProvider {
     
     static let viewModel = ContentView.ViewModel(detectedFeeds: [
-        Radar.DetectedFeed(title: "当前视频评论", path: "/bilibili/video/reply/BV15z411v7zt"),
-        Radar.DetectedFeed(title: "当前视频评论", path: "/bilibili/video/reply/BV15z411v7zt")
+        RSSHub.Radar.DetectedFeed(title: "当前视频评论", path: "/bilibili/video/reply/BV15z411v7zt"),
+        RSSHub.Radar.DetectedFeed(title: "当前视频评论", path: "/bilibili/video/reply/BV15z411v7zt")
     ])
     
     static var previews: some View {

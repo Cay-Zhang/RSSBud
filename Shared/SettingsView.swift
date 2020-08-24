@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    var storedBaseURL = RSSBud.BaseURL()
+    var storedBaseURL = RSSHub.BaseURL()
     @State var baseURLString: String
     @State var isAlertPresented = false
     
@@ -33,6 +33,10 @@ struct SettingsView: View {
                             }
                         }
                     )
+                    
+                    Button("Refresh Rules") {
+                        RSSHub.Radar.refreshRules()
+                    }
                 }
                 
                 NavigationLink("Integrations", destination:
