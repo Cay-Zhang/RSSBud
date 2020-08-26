@@ -32,32 +32,6 @@ extension RSSHub {
             return url
         }()
         
-        static let localRulesURL: URL = directoryURL.appendingPathComponent("radar-rules.js", isDirectory: false)
-        
-        static func refreshRules() {
-            URLSession.shared.dataTaskPublisher(for: URL(string: "https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@master/assets/radar-rules.js")!)
-                .compactMap { output in
-                    String(data: output.data, encoding: .utf8)
-                }.sink { _ in
-                    
-                } receiveValue: { string in
-                    
-                    do {
-                        try storeRules(string: "var rules = " + string)
-                        print("Rules stored")
-                        jsContext.evaluateScript("var rules = " + string)
-                        print("Rules loaded")
-                    } catch {
-                        print(error)
-                    }
-                    
-                }.store(in: &cancelBag)
-        }
-        
-        static func storeRules(string: String) throws {
-            try string.write(to: localRulesURL, atomically: true, encoding: .utf8)
-        }
-        
         static let jsContext: JSContext = {
             let context = JSContext()!
             
@@ -72,13 +46,7 @@ extension RSSHub {
             _ = context.evaluateScript(fileNamed: "route-recognizer.min")
 
             // Load Rules
-            if FileManager.default.fileExists(atPath: localRulesURL.path) {
-                print("Loading local rules")
-                _ = context.evaluateScript(try! String(contentsOf: localRulesURL, encoding: .utf8))
-            } else {
-                print("Loading bundled rules")
-                _ = context.evaluateScript(fileNamed: "radar-rules")
-            }
+            _ = context.evaluateScript(rulesCenter.rules)
             
             // Load Utils
             _ = context.evaluateScript(fileNamed: "utils")
@@ -111,8 +79,6 @@ extension RSSHub {
             }
         }
         
-        static var cancelBag: Set<AnyCancellable> = []
-        
     }
 }
 
@@ -141,5 +107,69 @@ extension RSSHub.Radar {
         case hostNotFound(url: URLComponents)
         case decodingFailure(error: DecodingError)
         case noResults
+    }
+}
+
+extension RSSHub.Radar {
+    
+    static let rulesCenter = RulesCenter()
+    
+    class RulesCenter: ObservableObject {
+        
+        @Published var isRefreshing: Bool = false
+        
+        var cancelBag = Set<AnyCancellable>()
+        
+        lazy var localRulesURL: URL = RSSHub.Radar.directoryURL.appendingPathComponent("radar-rules.js", isDirectory: false)
+        
+        lazy var rules: String = {
+            
+            if FileManager.default.fileExists(atPath: self.localRulesURL.path),
+               let string = try? String(contentsOf: localRulesURL, encoding: .utf8) {
+                print("Loading local rules")
+                return string
+            } else {
+                print("Loading bundled rules")
+                return bundledRules()
+            }
+            
+        }()
+        
+        func setRules(_ string: String) {
+            // Var
+            self.rules = string
+            // jscontext
+            _ = RSSHub.Radar.jsContext.evaluateScript(string)
+            // local
+            try? string.write(to: localRulesURL, atomically: true, encoding: .utf8)
+        }
+        
+        func fetchRemoteRules() {
+            withAnimation { isRefreshing = true }
+            
+            remoteRules()
+                .sink { completion in
+                    
+                } receiveValue: { [weak self] string in
+                    self?.setRules(string)
+                    DispatchQueue.main.async {
+                        withAnimation {
+                            self?.isRefreshing = false
+                        }
+                    }
+                }.store(in: &self.cancelBag)
+        }
+        
+        func remoteRules() -> Publishers.CompactMap<URLSession.DataTaskPublisher, String> {
+            URLSession.shared.dataTaskPublisher(for: URL(string: "https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@master/assets/radar-rules.js")!)
+                .compactMap { output in
+                    String(data: output.data, encoding: .utf8)
+                }.map { "var rules = " + $0 }
+        }
+        
+        func bundledRules() -> String {
+            guard let path = Bundle.main.path(forResource: "radar-rules", ofType: "js") else { fatalError() }
+            return try! String(contentsOfFile: path)
+        }
     }
 }

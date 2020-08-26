@@ -84,5 +84,17 @@ class RSSBudTests: XCTestCase {
         
         wait(for: [expectation], timeout: 3.0)
     }
+    
+    func testRSSHubRadarRulesConsistency() {
+        let expectation = XCTestExpectation(description: "Remote rules are equal to bundled rules.")
+        
+        RSSHub.Radar.rulesCenter.remoteRules()
+            .sink { _ in } receiveValue: { remoteRules in
+                XCTAssertEqual(remoteRules, RSSHub.Radar.rulesCenter.bundledRules(), "Remote rules and bundled rules are different.")
+                expectation.fulfill()
+            }.store(in: &self.cancelBag)
+        
+        wait(for: [expectation], timeout: 3.0)
+    }
 
 }
