@@ -16,20 +16,20 @@
 
 ## 功能
 - [x] 检测适用于网页 (或 App 内分享) 的 RSSHub 源 (几乎支持所有 RSSHub Radar 的规则)
-- [ ] 检测适用于网站的 RSSHub 源
 - [x] 读取剪贴板 URL
 - [x] 分享菜单插件 (Action Extension)
 - [x] 快速订阅到 Reeder, Fiery Feeds 和系统默认 RSS 阅读器
 - [x] 快速订阅到 Feedly, Inoreader, Feedbin, The Old Reader, Feeds Pub 网页端
 - [x] 自定义通用参数
 - [x] 自定义 RSSHub 域名
-- [ ] 规则热更新
+- [x] 自动更新 RSSHub Radar 规则
+- [ ] 检测适用于网站的 RSSHub 源
 - [ ] 主动搜寻 RSS 源
 
 ## 使用 Xcode 安装
 [安装](https://developer.apple.com/download/) 并打开最新版的 **Xcode 12 beta**，打开下面的 URL 克隆仓库，在设置好开发者信息之后即可在实机/虚拟机上运行。记得先在右上角设置中填写 RSSHub 域名。
 
-> 若要使用分享菜单插件 (Action Extension)，请在 iOS 和 Action Extension 这两个 Target 中设置你自己的 App Group 并修改 `RSSBud.appGroupContainerName`。
+> 若要使用分享菜单插件 (Action Extension)，请在 iOS 和 Action Extension 这两个 Target 中设置你自己的 App Group 并修改 `RSSBud.appGroupIdentifier`。
 
 ```
 xcode://clone?repo=https%3A%2F%2Fgithub.com%2FCay-Zhang%2FRSSBud
