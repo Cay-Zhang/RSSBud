@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BackgroundTasks
 
 extension RSSBud {
     
@@ -13,6 +14,15 @@ extension RSSBud {
     struct App: SwiftUI.App {
         
         @StateObject var contentViewModel = ContentView.ViewModel()
+        
+        init() {
+            BGTaskScheduler.shared.register(forTaskWithIdentifier: RSSHub.Radar.rulesCenter.remoteRulesFetchTaskIdentifier, using: nil) { task in
+                print("Running task...")
+                RSSHub.Radar.rulesCenter.fetchRemoteRules(withAppRefreshTask: task as! BGAppRefreshTask)
+                RSSHub.Radar.rulesCenter.scheduleRemoteRulesFetchTask()
+            }
+            RSSHub.Radar.rulesCenter.scheduleRemoteRulesFetchTask()
+        }
         
         var body: some Scene {
             WindowGroup {

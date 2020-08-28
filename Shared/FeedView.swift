@@ -9,11 +9,11 @@ import SwiftUI
 
 struct FeedView: View {
     
-    var feed: Radar.DetectedFeed
+    var feed: RSSHub.Radar.DetectedFeed
     var contentViewModel: ContentView.ViewModel
     var openURL: (URLComponents) -> Void = { _ in }
     @Integration var integrations
-    @RSSBud.BaseURL var baseURL
+    @RSSHub.BaseURL var baseURL
     
     func rsshubURL() -> URLComponents {
         baseURL
