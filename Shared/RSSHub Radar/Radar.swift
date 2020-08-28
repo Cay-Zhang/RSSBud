@@ -8,6 +8,7 @@
 import SwiftUI
 import JavaScriptCore
 import Combine
+import BackgroundTasks
 
 extension JSContext {
     func evaluateScript(fileNamed fileName: String) -> JSValue! {
@@ -39,12 +40,12 @@ extension RSSHub {
                 guard let value = value else { return }
                 print(value)
             }
-
+            
             // Load Dependencies
             _ = context.evaluateScript(fileNamed: "url.min")
             _ = context.evaluateScript(fileNamed: "psl.min")
             _ = context.evaluateScript(fileNamed: "route-recognizer.min")
-
+            
             // Load Rules
             _ = context.evaluateScript(rulesCenter.rules)
             
@@ -116,9 +117,9 @@ extension RSSHub.Radar {
     
     class RulesCenter: ObservableObject {
         
-        @Published var isRefreshing: Bool = false
+        let remoteRulesFetchTaskIdentifier = "me.cayZ.RSSBud.fetchRemoteRSSHubRadarRules"
         
-        var cancelBag = Set<AnyCancellable>()
+        @Published var isFetchingRemoteRules: Bool = false
         
         lazy var localRulesURL: URL = RSSHub.Radar.directoryURL.appendingPathComponent("radar-rules.js", isDirectory: false)
         
@@ -135,6 +136,10 @@ extension RSSHub.Radar {
             
         }()
         
+        @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) var _lastRemoteRulesFetchDate: Double?
+        
+        var cancelBag = Set<AnyCancellable>()
+        
         func setRules(_ string: String) {
             // Var
             self.rules = string
@@ -145,7 +150,7 @@ extension RSSHub.Radar {
         }
         
         func fetchRemoteRules() {
-            withAnimation { isRefreshing = true }
+            withAnimation { isFetchingRemoteRules = true }
             
             remoteRules()
                 .sink { completion in
@@ -154,10 +159,62 @@ extension RSSHub.Radar {
                     self?.setRules(string)
                     DispatchQueue.main.async {
                         withAnimation {
-                            self?.isRefreshing = false
+                            self?.isFetchingRemoteRules = false
+                            self?.lastRemoteRulesFetchDate = Date()
                         }
                     }
                 }.store(in: &self.cancelBag)
+        }
+        
+        var lastRemoteRulesFetchDate: Date? {
+            get { _lastRemoteRulesFetchDate.map(Date.init(timeIntervalSinceReferenceDate:)) }
+            set { _lastRemoteRulesFetchDate = newValue?.timeIntervalSinceReferenceDate }
+        }
+        
+        func fetchRemoteRules(withAppRefreshTask task: BGAppRefreshTask) {
+            task.expirationHandler = {
+                task.setTaskCompleted(success: false)
+                self.cancelBag = []
+            }
+            
+            DispatchQueue.main.sync {
+                withAnimation { self.isFetchingRemoteRules = true }
+            }
+            
+            remoteRules()
+                .sink { completion in
+                    if case .failure(_) = completion {
+                        task.setTaskCompleted(success: false)
+                    }
+                } receiveValue: { [weak self] string in
+                    self?.setRules(string)
+                    DispatchQueue.main.async {
+                        withAnimation {
+                            self?.isFetchingRemoteRules = false
+                            self?.lastRemoteRulesFetchDate = Date()
+                        }
+                        print("Task completed.")
+                        task.setTaskCompleted(success: true)
+                    }
+                }.store(in: &self.cancelBag)
+        }
+        
+        func scheduleRemoteRulesFetchTask() {
+            let earliestBeginDate: Date
+            if !isFetchingRemoteRules, let date = lastRemoteRulesFetchDate {
+                earliestBeginDate = date.addingTimeInterval(5 * 60 * 60)
+            } else {
+                earliestBeginDate = Date(timeIntervalSinceNow: 5 * 60 * 60)
+            }
+            
+            print("Scheduling task...")
+            let taskRequest = BGAppRefreshTaskRequest(identifier: remoteRulesFetchTaskIdentifier)
+            taskRequest.earliestBeginDate = earliestBeginDate
+            do {
+                try BGTaskScheduler.shared.submit(taskRequest)
+            } catch {
+                print("Unable to submit task: \(error.localizedDescription)")
+            }
         }
         
         func remoteRules() -> Publishers.CompactMap<URLSession.DataTaskPublisher, String> {
