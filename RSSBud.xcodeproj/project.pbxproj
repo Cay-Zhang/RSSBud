@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C270114250B5BC300595BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C270113250B5BC300595BCE /* LaunchScreen.storyboard */; };
 		1C58359E24EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
 		1C58359F24EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
 		1C5835A024EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
@@ -112,6 +113,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1C270113250B5BC300595BCE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1C58359D24EA8D9100FB8523 /* Integration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integration.swift; sourceTree = "<group>"; };
 		1C8221A324EAA73900E139F3 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryEditor.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 			children = (
 				EEC4A51824E42D61005041CA /* RSSBud.entitlements */,
 				EEB7577C24B2B6E700F26CF7 /* Info.plist */,
+				1C270113250B5BC300595BCE /* LaunchScreen.storyboard */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				EE000A9324B41E1000979B1A /* psl.min.js in Resources */,
 				EE000A9124B41E1000979B1A /* utils.js in Resources */,
 				EE7CD91B24DD6EEF00FAA837 /* url.min.js in Resources */,
+				1C270114250B5BC300595BCE /* LaunchScreen.storyboard in Resources */,
 				EE000A8D24B41E1000979B1A /* route-recognizer.min.js in Resources */,
 				EEB7578924B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A8F24B41E1000979B1A /* route-recognizer.js in Resources */,
@@ -741,7 +745,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOS/RSSBud.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LCFCZ68733;
+				DEVELOPMENT_TEAM = 459NR5CZG8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -749,7 +753,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cayZ.RSSBud;
+				MARKETING_VERSION = 0.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.CayZhang.RSSBud;
 				PRODUCT_NAME = RSSBud;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -765,7 +770,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOS/RSSBud.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LCFCZ68733;
+				DEVELOPMENT_TEAM = 459NR5CZG8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -773,7 +778,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cayZ.RSSBud;
+				MARKETING_VERSION = 0.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.CayZhang.RSSBud;
 				PRODUCT_NAME = RSSBud;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -799,7 +805,8 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.16;
-				PRODUCT_BUNDLE_IDENTIFIER = cayZ.RSSBud;
+				MARKETING_VERSION = 0.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.CayZhang.RSSBud;
 				PRODUCT_NAME = RSSBud;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
@@ -823,7 +830,8 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.16;
-				PRODUCT_BUNDLE_IDENTIFIER = cayZ.RSSBud;
+				MARKETING_VERSION = 0.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.CayZhang.RSSBud;
 				PRODUCT_NAME = RSSBud;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
@@ -834,8 +842,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Action Extension/Action Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LCFCZ68733;
+				DEVELOPMENT_TEAM = 459NR5CZG8;
 				INFOPLIST_FILE = "Action Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -843,8 +852,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "cayZ.RSSBud.Action-Extension";
+				MARKETING_VERSION = 0.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.CayZhang.RSSBud.ActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -856,8 +867,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Action Extension/Action Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LCFCZ68733;
+				DEVELOPMENT_TEAM = 459NR5CZG8;
 				INFOPLIST_FILE = "Action Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -865,8 +877,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "cayZ.RSSBud.Action-Extension";
+				MARKETING_VERSION = 0.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.CayZhang.RSSBud.ActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;

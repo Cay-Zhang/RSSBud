@@ -8,6 +8,6 @@
 import SwiftUI
 
 enum RSSBud {
-    static let appGroupIdentifier: String = "group.me.cayZ.RSSBud"
+    static let appGroupIdentifier: String = "group.me.CayZhang.RSSBud"
     static let userDefaults: UserDefaults = UserDefaults(suiteName: appGroupIdentifier)!
 }

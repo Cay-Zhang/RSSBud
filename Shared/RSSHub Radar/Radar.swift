@@ -117,7 +117,7 @@ extension RSSHub.Radar {
     
     class RulesCenter: ObservableObject {
         
-        let remoteRulesFetchTaskIdentifier = "me.cayZ.RSSBud.fetchRemoteRSSHubRadarRules"
+        let remoteRulesFetchTaskIdentifier = "me.CayZhang.RSSBud.fetchRemoteRSSHubRadarRules"
         
         @Published var isFetchingRemoteRules: Bool = false
         
