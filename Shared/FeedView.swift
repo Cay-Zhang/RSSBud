@@ -23,7 +23,7 @@ struct FeedView: View {
     }
     
     func integrationURL(for integrationKey: Integration.Key) -> URLComponents? {
-        Integration.url(forAdding: rsshubURL(), to: integrationKey)
+        _integrations.url(forAdding: rsshubURL(), to: integrationKey)
     }
     
     var body: some View {

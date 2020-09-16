@@ -20,7 +20,7 @@ struct SettingsView: View {
         set { _lastRemoteRulesFetchDate = newValue?.timeIntervalSinceReferenceDate }
     }
     
-    @Integration var integrations
+    
     
     init() {
         _baseURLString = State(wrappedValue: storedBaseURL.string)
@@ -76,24 +76,48 @@ struct SettingsView: View {
                     }
                 }
                 
-                
-                    
-                
-                
-                NavigationLink("Integrations", destination:
-                    List(selection: $integrations) {
-                        ForEach(Integration.Key.allCases) { key in
-                            Text(key.rawValue).tag(key)
-                        }
-                    }.listStyle(InsetListStyle())
-                    .navigationTitle("Integrations")
-                    .environment(\.editMode, .constant(.active))
-                )
+                NavigationLink("Integrations", destination: IntegrationSettingsView())
             }.navigationTitle("Settings")
         }
         .alert(isPresented: $isAlertPresented) {
             Alert(title: Text("Base URL is invalid."))
         }
+    }
+}
+
+struct IntegrationSettingsView: View {
+    
+    @Integration var integrations
+    
+    var body: some View {
+        List(selection: $integrations) {
+            ForEach(Integration.Key.allCases) { key in
+                switch key {
+                case .tinyTinyRSS:
+                    VStack(alignment: .leading, spacing: 2.0) {
+                        Text(key.rawValue)
+                        TextField("Base URL", text: _integrations.$ttrssBaseURLString)
+                            .foregroundColor(.secondary)
+                    }.tag(key)
+                case .miniflux:
+                    VStack(alignment: .leading, spacing: 2.0) {
+                        Text(key.rawValue)
+                        TextField("Base URL", text: _integrations.$minifluxBaseURLString)
+                            .foregroundColor(.secondary)
+                    }.tag(key)
+                case .freshRSS:
+                    VStack(alignment: .leading, spacing: 2.0) {
+                        Text(key.rawValue)
+                        TextField("Base URL", text: _integrations.$freshRSSBaseURLString)
+                            .foregroundColor(.secondary)
+                    }.tag(key)
+                default:
+                    Text(key.rawValue).tag(key)
+                }
+            }
+        }.listStyle(InsetGroupedListStyle())
+        .navigationTitle("Integrations")
+        .environment(\.editMode, .constant(.active))
     }
 }
 
@@ -114,6 +138,10 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             SettingsView()
+            
+            NavigationView {
+                IntegrationSettingsView()
+            }
             
             NavigationView {
                 RSSHub.Radar.RulesEditor()
