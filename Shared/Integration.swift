@@ -11,9 +11,9 @@ import SwiftUI
 @propertyWrapper struct Integration: DynamicProperty {
     @AppStorage("integrations", store: RSSBud.userDefaults) var integrationKeys: String = Key.reeder.rawValue + "\n" + Key.inoreader.rawValue
     
-    @AppStorage("ttrssBaseURL", store: RSSBud.userDefaults) var ttrssBaseURLString: String = "https://example.com:181"
-    @AppStorage("minifluxBaseURL", store: RSSBud.userDefaults) var minifluxBaseURLString: String = "https://example.com"
-    @AppStorage("freshRSSBaseURL", store: RSSBud.userDefaults) var freshRSSBaseURLString: String = "https://example.com"
+    @AppStorage("ttrssBaseURL", store: RSSBud.userDefaults) var ttrssBaseURLString: String = "https://tt-rss.example.com"
+    @AppStorage("minifluxBaseURL", store: RSSBud.userDefaults) var minifluxBaseURLString: String = "https://miniflux.example.com"
+    @AppStorage("freshRSSBaseURL", store: RSSBud.userDefaults) var freshRSSBaseURLString: String = "https://fresh-rss.example.com"
     
     var wrappedValue: [Key] {
         get {

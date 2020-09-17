@@ -31,18 +31,12 @@ struct SettingsView: View {
             Form {
                 Section(header: Text("RSSHub Radar")) {
                     HStack {
-                        Text("Base URL")
+                        Text("RSSHub URL")
                         Spacer()
-                        TextField(
-                            "Base URL",
-                            text: $baseURLString,
-                            onCommit: {
-                                if storedBaseURL.validate(string: baseURLString) {
-                                    storedBaseURL.string = baseURLString
-                                } else {
-                                    isAlertPresented = true
-                                }
-                            }
+                        ValidatedTextField(
+                            "RSSHub URL",
+                            text: storedBaseURL.$string,
+                            validation: storedBaseURL.validate(string:)
                         ).foregroundColor(.secondary)
                         .keyboardType(.URL)
                         .disableAutocorrection(true)
@@ -89,6 +83,10 @@ struct IntegrationSettingsView: View {
     
     @Integration var integrations
     
+    func validate(urlString: String) -> Bool {
+        URLComponents(string: urlString)?.host != nil
+    }
+    
     var body: some View {
         List(selection: $integrations) {
             ForEach(Integration.Key.allCases) { key in
@@ -96,20 +94,26 @@ struct IntegrationSettingsView: View {
                 case .tinyTinyRSS:
                     VStack(alignment: .leading, spacing: 2.0) {
                         Text(key.rawValue)
-                        TextField("Base URL", text: _integrations.$ttrssBaseURLString)
+                        ValidatedTextField("App URL", text: _integrations.$ttrssBaseURLString, validation: validate(urlString:))
                             .foregroundColor(.secondary)
+                            .keyboardType(.URL)
+                            .disableAutocorrection(true)
                     }.tag(key)
                 case .miniflux:
                     VStack(alignment: .leading, spacing: 2.0) {
                         Text(key.rawValue)
-                        TextField("Base URL", text: _integrations.$minifluxBaseURLString)
+                        ValidatedTextField("App URL", text: _integrations.$minifluxBaseURLString, validation: validate(urlString:))
                             .foregroundColor(.secondary)
+                            .keyboardType(.URL)
+                            .disableAutocorrection(true)
                     }.tag(key)
                 case .freshRSS:
                     VStack(alignment: .leading, spacing: 2.0) {
                         Text(key.rawValue)
-                        TextField("Base URL", text: _integrations.$freshRSSBaseURLString)
+                        ValidatedTextField("App URL", text: _integrations.$freshRSSBaseURLString, validation: validate(urlString:))
                             .foregroundColor(.secondary)
+                            .keyboardType(.URL)
+                            .disableAutocorrection(true)
                     }.tag(key)
                 default:
                     Text(key.rawValue).tag(key)
