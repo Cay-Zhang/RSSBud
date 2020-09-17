@@ -70,4 +70,19 @@ extension View {
             .overlay(overlay)
             .mask(self)
     }
+    
+    func alert(_ _alert: Binding<Alert?>) -> some View {
+        
+        let _isPresented: Binding<Bool> = Binding(get: {
+            _alert.wrappedValue != nil
+        }, set: { newValue in
+            if !newValue {
+                _alert.wrappedValue = nil
+            }
+        })
+        
+        return self.alert(isPresented: _isPresented) {
+            _alert.wrappedValue!
+        }
+    }
 }

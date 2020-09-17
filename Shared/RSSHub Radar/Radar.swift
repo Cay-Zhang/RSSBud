@@ -107,7 +107,15 @@ extension RSSHub.Radar {
     enum DetectionError: Error {
         case hostNotFound(url: URLComponents)
         case decodingFailure(error: DecodingError)
-        case noResults
+        
+        var localizedDescription: String {
+            switch self {
+            case .hostNotFound(let url):
+                return "Host not found in URL \"\(url)\"."
+            case .decodingFailure(let error):
+                return error.localizedDescription
+            }
+        }
     }
 }
 

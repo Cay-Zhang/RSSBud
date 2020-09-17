@@ -65,8 +65,13 @@ struct ContentView: View {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                     HStack {
                         #if DEBUG
-                        Button {
-                            viewModel.process(url: URLComponents(string: "https://space.bilibili.com/17404347/")!)
+                        Menu {
+                            Button("Analyze") {
+                                viewModel.process(url: URLComponents(string: "https://space.bilibili.com/17404347/")!)
+                            }
+                            Button("Error") {
+                                viewModel.process(url: URLComponents(string: "example.com")!)
+                            }
                         } label: {
                             Image(systemName: "hammer.fill")
                         }
@@ -82,6 +87,7 @@ struct ContentView: View {
                 SettingsView()
             }
         }.environmentObject(viewModel)
+        .alert($viewModel.alert)
     }
 }
 
@@ -93,6 +99,8 @@ extension ContentView {
         @Published var detectedFeeds: [RSSHub.Radar.DetectedFeed]
         @Published var queryItems: [URLQueryItem] = []
         @Published var isProcessing: Bool = false
+        @Published var alert: Alert? = nil
+        
         var cancelBag = Set<AnyCancellable>()
         
         init(detectedFeeds: [RSSHub.Radar.DetectedFeed] = []) {
@@ -112,9 +120,10 @@ extension ContentView {
                 withAnimation {
                     self.originalURL = url
                     self.isProcessing = true
+                    self.detectedFeeds = []
                 }
                 
-                let expandingURL = url.expanding().share()
+                let expandingURL = url.expanding().makeConnectable()
                 
                 expandingURL.receive(on: DispatchQueue.main)
                     .sink { [weak self] url in
@@ -136,13 +145,18 @@ extension ContentView {
                             }
                         case .failure(let error):
                             print(error)
-                            fatalError()
+                            withAnimation {
+                                self?.isProcessing = false
+                                self?.alert = Alert(title: Text("An Error Occurred"), message: Text(verbatim: error.localizedDescription))
+                            }
                         }
                     } receiveValue: { [weak self] feeds in
                         withAnimation {
                             self?.detectedFeeds = feeds
                         }
                     }.store(in: &cancelBag)
+                
+                expandingURL.connect().store(in: &cancelBag)
             }
         }
         
