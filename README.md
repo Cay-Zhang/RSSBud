@@ -27,7 +27,9 @@
 - [ ] 主动搜寻 RSS 源
 
 ## 参与公测
-请加 [Telegram 群](https://t.me/RSSBud_Discussion) 获取相关信息。
+[TestFlight Public Link](https://testflight.apple.com/join/rjCVzzHP)
+
+欢迎加入 [Telegram 群](https://t.me/RSSBud_Discussion) 进行反馈。
 
 > 记得先右上角设置 RSSHub 域名和快速订阅选项。
 
