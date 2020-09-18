@@ -123,40 +123,30 @@ extension ContentView {
                     self.detectedFeeds = []
                 }
                 
-                let expandingURL = url.expanding().makeConnectable()
-                
-                expandingURL.receive(on: DispatchQueue.main)
-                    .sink { [weak self] url in
-                        print("Original URL: \(url)")
-                        withAnimation {
-                            self?.originalURL = url
-                        }
-                    }.store(in: &cancelBag)
-                
-                expandingURL
+                url.expanding()
+                    .prepend(url)
                     .flatMap { url in
                         RSSHub.Radar.detecting(url: url)
-                    }.receive(on: DispatchQueue.main)
-                    .sink { [weak self] completion in
+                    }.first { feeds in !feeds.isEmpty }
+                    .receive(on: DispatchQueue.main)
+                    .sink { [unowned self] completion in
                         switch completion {
                         case .finished:
                             withAnimation {
-                                self?.isProcessing = false
+                                self.isProcessing = false
                             }
                         case .failure(let error):
                             print(error)
                             withAnimation {
-                                self?.isProcessing = false
-                                self?.alert = Alert(title: Text("An Error Occurred"), message: Text(verbatim: error.localizedDescription))
+                                self.isProcessing = false
+                                self.alert = Alert(title: Text("An Error Occurred"), message: Text(verbatim: error.localizedDescription))
                             }
                         }
-                    } receiveValue: { [weak self] feeds in
+                    } receiveValue: { [unowned self] feeds in
                         withAnimation {
-                            self?.detectedFeeds = feeds
+                            self.detectedFeeds = feeds
                         }
                     }.store(in: &cancelBag)
-                
-                expandingURL.connect().store(in: &cancelBag)
             }
         }
         
