@@ -54,7 +54,7 @@ function getPageRSSHub(data) {
         if (rules[domain]) {
             let rule = rules[domain][subdomain || '.'];
             if (!rule) {
-                if (subdomain === 'www') {
+                if (subdomain === 'www' || subdomain === 'mobile' || subdomain === 'm') {
                     rule = rules[domain]['.'];
                 } else if (!subdomain) {
                     rule = rules[domain].www;
