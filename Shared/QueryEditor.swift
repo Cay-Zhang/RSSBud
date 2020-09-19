@@ -40,8 +40,7 @@ struct QueryEditor: View {
             } label: {
                 Label("Add Query Item", systemImage: "plus")
                     .padding(.horizontal)
-                    .roundedRectangleBackground()
-//                    .font(Font.body.weight(.semibold))
+                    .roundedRectangleBackground(color: .secondarySystemBackground)
             }.frame(maxWidth: .infinity, alignment: .trailing)
             
             ForEach(queryItems, id: \.name) { item in

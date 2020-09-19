@@ -48,7 +48,7 @@ struct FeedView: View {
         }.padding(.top, 15)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
-        .background(Color(UIColor.secondarySystemFill))
+        .background(Color(UIColor.secondarySystemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
     

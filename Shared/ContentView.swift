@@ -38,15 +38,20 @@ struct ContentView: View {
                                 }
                             } label: {
                                 Label("Read from Clipboard", systemImage: "arrow.up.doc.on.clipboard")
-                                    .roundedRectangleBackground()
+                                    .roundedRectangleBackground(color: .secondarySystemBackground)
                             }.buttonStyle(SquashableButtonStyle())
                         }
                     }
                     
-                    // Derived URL
-                    LazyVStack(spacing: 16) {
-                        ForEach(viewModel.detectedFeeds, id: \.title) { feed in
-                            FeedView(feed: feed, contentViewModel: viewModel, openURL: openURL)
+                    if let feeds = viewModel.detectedFeeds {
+                        if !feeds.isEmpty {
+                            LazyVStack(spacing: 16) {
+                                ForEach(feeds, id: \.title) { feed in
+                                    FeedView(feed: feed, contentViewModel: viewModel, openURL: openURL)
+                                }
+                            }
+                        } else {
+                            NothingFoundView(url: viewModel.originalURL, openURL: openURL)
                         }
                     }
                     
@@ -72,6 +77,9 @@ struct ContentView: View {
                             Button("Error") {
                                 viewModel.process(url: URLComponents(string: "example.com")!)
                             }
+                            Button("Nothing Found") {
+                                viewModel.process(url: URLComponents(string: "https://www.baidu.com/")!)
+                            }
                         } label: {
                             Image(systemName: "hammer.fill")
                         }
@@ -96,14 +104,14 @@ extension ContentView {
         @RSSHub.BaseURL var baseURL
         
         @Published var originalURL: URLComponents? = nil
-        @Published var detectedFeeds: [RSSHub.Radar.DetectedFeed]
+        @Published var detectedFeeds: [RSSHub.Radar.DetectedFeed]? = nil
         @Published var queryItems: [URLQueryItem] = []
         @Published var isProcessing: Bool = false
         @Published var alert: Alert? = nil
         
         var cancelBag = Set<AnyCancellable>()
         
-        init(detectedFeeds: [RSSHub.Radar.DetectedFeed] = []) {
+        init(detectedFeeds: [RSSHub.Radar.DetectedFeed]? = nil) {
             self.detectedFeeds = detectedFeeds
         }
         
@@ -120,7 +128,6 @@ extension ContentView {
                 withAnimation {
                     self.originalURL = url
                     self.isProcessing = true
-                    self.detectedFeeds = []
                 }
                 
                 url.expanding()
@@ -128,6 +135,7 @@ extension ContentView {
                     .flatMap { url in
                         RSSHub.Radar.detecting(url: url)
                     }.first { feeds in !feeds.isEmpty }
+                    .replaceEmpty(with: [])
                     .receive(on: DispatchQueue.main)
                     .sink { [unowned self] completion in
                         switch completion {
@@ -139,6 +147,7 @@ extension ContentView {
                             print(error)
                             withAnimation {
                                 self.isProcessing = false
+                                self.detectedFeeds = nil
                                 self.alert = Alert(title: Text("An Error Occurred"), message: Text(verbatim: error.localizedDescription))
                             }
                         }
@@ -150,6 +159,55 @@ extension ContentView {
             }
         }
         
+    }
+}
+
+struct NothingFoundView: View {
+    
+    var url: URLComponents?
+    var openURL: (URLComponents) -> Void = { _ in }
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "bookmark.slash.fill")
+                .imageScale(.large)
+                .font(.system(size: 24, weight: .semibold, design: .default))
+                .foregroundColor(.accentColor)
+            Text("Nothing Found")
+                .font(.system(size: 24, weight: .semibold, design: .default))
+            if let urlString = url?.string {
+                Text(verbatim: urlString)
+                    .foregroundColor(.secondary)
+            }
+            Button {
+                openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
+            } label: {
+                Label("See What's Supported", systemImage: "text.book.closed.fill")
+                    .roundedRectangleBackground()
+            }.buttonStyle(SquashableButtonStyle())
+            Button {
+                openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
+            } label: {
+                Label("Submit New Rules", systemImage: "link.badge.plus")
+                    .roundedRectangleBackground()
+            }.buttonStyle(SquashableButtonStyle())
+            
+            
+            Divider()
+            
+            Text("Can be detected by RSSHub Radar?").fontWeight(.semibold)
+            Button {
+                openURL(URLComponents(string: "https://t.me/RSSBud_Discussion")!)
+            } label: {
+                Label("Contact Developer", systemImage: "hammer.fill")
+                    .roundedRectangleBackground()
+            }.buttonStyle(SquashableButtonStyle())
+        }.padding(.horizontal, 8)
+        .padding(.top, 20)
+        .padding(.bottom, 8)
+        .frame(maxWidth: .infinity, idealHeight: 200)
+        .background(Color(UIColor.secondarySystemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 }
 

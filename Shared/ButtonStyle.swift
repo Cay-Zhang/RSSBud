@@ -16,12 +16,12 @@ struct SquashableButtonStyle: ButtonStyle {
 }
 
 extension View {
-    func roundedRectangleBackground() -> some View {
+    func roundedRectangleBackground(color uiColor: UIColor = .tertiarySystemBackground) -> some View {
         self.font(Font.body.weight(.semibold))
             .foregroundColor(.accentColor)
             .padding(.vertical, 10)
             .frame(maxWidth: .infinity)
-            .background(Color(UIColor.tertiarySystemFill))
+            .background(Color(uiColor))
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 }
