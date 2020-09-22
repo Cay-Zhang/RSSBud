@@ -70,7 +70,7 @@ struct FeedView: View {
                     }
                 }
             } label: {
-                Label("Integrations", systemImage: "ellipsis")
+                Label("Subscribe", systemImage: "ellipsis")
             }.roundedRectangleBackground()
         }
     }

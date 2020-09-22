@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  RSSBud
+
+  Created by Cay Zhang on 2020/9/22.
+  
+*/
+
+"Read from Clipboard" = "从剪贴板读取";
+"Updated %@ ago" = "%@前更新";
+"Update Rules Now" = "立即更新";
+"Updating Rules..." = "正在更新...";
+"Rules" = "规则";
+"Settings" = "设置";
+"Quick Subscriptions" = "一键订阅";
+"Subscribe" = "订阅";
+"Copy" = "复制";
+"Add Parameter" = "添加参数";
+"Include..." = "仅保留...";
+"Exclude..." = "去掉...";
+"Delete" = "删除";
+
+"Nothing Found" = "真的一滴也没有了 (/TДT)/";
+"See What's Supported" = "看看支持什么规则";
+"Submit New Rules" = "提交的新的规则";
+"Can be detected by RSSHub Radar?" = "与 RSSHub Radar 的结果不一致？";
+"Contact Developer" = "联系开发者";
+
+"filter" = "仅保留匹配的标题或描述";
+"filter_title" = "仅保留匹配的标题";
+"filter_description" = "仅保留匹配的描述";
+"filter_author" = "仅保留匹配的作者";
+"filter_time" = "仅保留最近 (秒)";
+"filterout" = "去掉匹配的标题或描述";
+"filterout_title" = "去掉匹配的标题";
+"filterout_description" = "去掉匹配的描述";
+"filterout_author" = "去掉匹配的作者";
+"filter_case_sensitive" = "大小写敏感";
+"limit" = "限制条目数";

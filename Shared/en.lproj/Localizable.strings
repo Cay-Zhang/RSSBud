@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  RSSBud
+
+  Created by Cay Zhang on 2020/9/22.
+  
+*/
+
+"Read from Clipboard" = "Read from Clipboard";
+"Updated %@ ago" = "Updated %@ ago";
+"Update Rules Now" = "Update Rules Now";
+"Updating Rules..." = "Updating Rules...";
+"Rules" = "Rules";
+"Settings" = "Settings";
+"Quick Subscriptions" = "Quick Subscriptions";
+"Subscribe" = "Subscribe";
+"Copy" = "Copy";
+"Add Parameter" = "Add Parameter";
+"Include..." = "Include...";
+"Exclude..." = "Exclude...";
+"Delete" = "Delete";
+
+"Nothing Found" = "Nothing Found";
+"See What's Supported" = "See What's Supported";
+"Submit New Rules" = "Submit New Rules";
+"Can be detected by RSSHub Radar?" = "Can be detected by RSSHub Radar?";
+"Contact Developer" = "Contact Developer";
+
+"filter" = "Include Titles and Descriptions";
+"filter_title" = "Include Titles";
+"filter_description" = "Include Descriptions";
+"filter_author" = "Include Authors";
+"filter_time" = "Include Recent (Seconds)";
+"filterout" = "Exclude Titles and Descriptions";
+"filterout_title" = "Exclude Titles";
+"filterout_description" = "Exclude Descriptions";
+"filterout_author" = "Exclude Authors";
+"filter_case_sensitive" = "Case Sensitivity";
+"limit" = "Limit Entry Count";

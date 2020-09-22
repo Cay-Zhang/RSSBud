@@ -22,7 +22,7 @@ struct QueryEditor: View {
                             label(forQueryItemNamed: name)
                         }.environment(\.isEnabled, !currentQueryItemNames.contains(name))
                     }
-                } label: { Label("Include", systemImage: "line.horizontal.3.decrease.circle.fill") }
+                } label: { Label("Include...", systemImage: "line.horizontal.3.decrease.circle.fill") }
                 
                 Menu {
                     ForEach(QueryEditor.filterOutQueryItemNames, id: \.self) { name in
@@ -30,7 +30,7 @@ struct QueryEditor: View {
                             label(forQueryItemNamed: name)
                         }.environment(\.isEnabled, !currentQueryItemNames.contains(name))
                     }
-                } label: { Label("Exclude", systemImage: "line.horizontal.3.decrease.circle") }
+                } label: { Label("Exclude...", systemImage: "line.horizontal.3.decrease.circle") }
                 
                 ForEach(QueryEditor.otherQueryItemNames, id: \.self) { name in
                     Button(action: addQueryItemAction(name: name)) {
@@ -38,7 +38,7 @@ struct QueryEditor: View {
                     }.environment(\.isEnabled, !currentQueryItemNames.contains(name))
                 }
             } label: {
-                Label("Add Query Item", systemImage: "plus")
+                Label("Add Parameter", systemImage: "plus")
                     .padding(.horizontal)
                     .roundedRectangleBackground(color: .secondarySystemBackground)
             }.frame(maxWidth: .infinity, alignment: .trailing)
@@ -98,29 +98,29 @@ struct QueryEditor: View {
     func label(forQueryItemNamed name: String) -> some View {
         switch name {
         case "filter":
-            return Label("Include Titles and Descriptions", systemImage: "line.horizontal.3.decrease.circle.fill")
+            return Label("filter", systemImage: "line.horizontal.3.decrease.circle.fill")
         case "filter_title":
-            return Label("Include Titles", systemImage: "line.horizontal.3.decrease.circle.fill")
+            return Label("filter_title", systemImage: "line.horizontal.3.decrease.circle.fill")
         case "filter_description":
-            return Label("Include Descriptions", systemImage: "line.horizontal.3.decrease.circle.fill")
+            return Label("filter_description", systemImage: "line.horizontal.3.decrease.circle.fill")
         case "filter_author":
-            return Label("Include Authors", systemImage: "person.crop.circle.fill.badge.checkmark")
+            return Label("filter_author", systemImage: "person.crop.circle.fill.badge.checkmark")
         case "filter_time":
-            return Label("Include Recent (Seconds)", systemImage: "clock.fill")
+            return Label("filter_time", systemImage: "clock.fill")
         
         case "filterout":
-            return Label("Exclude Titles and Descriptions", systemImage: "line.horizontal.3.decrease.circle")
+            return Label("filterout", systemImage: "line.horizontal.3.decrease.circle")
         case "filterout_title":
-            return Label("Exclude Titles", systemImage: "line.horizontal.3.decrease.circle")
+            return Label("filterout_title", systemImage: "line.horizontal.3.decrease.circle")
         case "filterout_description":
-            return Label("Exclude Descriptions", systemImage: "line.horizontal.3.decrease.circle")
+            return Label("filterout_description", systemImage: "line.horizontal.3.decrease.circle")
         case "filterout_author":
-            return Label("Exclude Authors", systemImage: "person.crop.circle.badge.xmark")
+            return Label("filterout_author", systemImage: "person.crop.circle.badge.xmark")
         
         case "filter_case_sensitive":
-            return Label("Case Sensitivity", systemImage: "textformat")
+            return Label("filter_case_sensitive", systemImage: "textformat")
         case "limit":
-            return Label("Limit Entry Count", systemImage: "number")
+            return Label("limit", systemImage: "number")
         default:
             return Label {
                 Text(verbatim: name).foregroundColor(.secondary)

@@ -48,7 +48,7 @@ struct SettingsView: View {
                             Text("Rules")
                             Spacer()
                             if let date = lastRemoteRulesFetchDate {
-                                (Text("Updated ") +  Text(date, style: .relative) + Text(" ago"))
+                                Text("Updated \(date, style: .relative) ago")
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -56,7 +56,7 @@ struct SettingsView: View {
                     
                     HStack {
                         Button(
-                            rulesCenter.isFetchingRemoteRules ? "Fetching Remote Rules" : "Update Rules Now"
+                            rulesCenter.isFetchingRemoteRules ? "Updating Rules..." : "Update Rules Now"
                         ) {
                             rulesCenter.fetchRemoteRules()
                             rulesCenter.scheduleRemoteRulesFetchTask()
@@ -70,7 +70,7 @@ struct SettingsView: View {
                     }
                 }
                 
-                NavigationLink("Integrations", destination: IntegrationSettingsView())
+                NavigationLink("Quick Subscriptions", destination: IntegrationSettingsView())
             }.navigationTitle("Settings")
         }
         .alert(isPresented: $isAlertPresented) {
@@ -120,7 +120,7 @@ struct IntegrationSettingsView: View {
                 }
             }
         }.listStyle(InsetGroupedListStyle())
-        .navigationTitle("Integrations")
+        .navigationTitle("Quick Subscriptions")
         .environment(\.editMode, .constant(.active))
     }
 }
