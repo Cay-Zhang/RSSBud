@@ -52,9 +52,8 @@ struct QueryEditor: View {
                             Image(systemName: "trash.fill")
                         }
                     }
-                ) {
-                    TextField("Value", text: queryItemBinding(for: item.name))
-                }.contextMenu {
+                ) { groupBoxContent(forQueryItem: item) }
+                .contextMenu {
                     Button(action: removeQueryItemAction(name: item.name)) {
                         Label("Delete", systemImage: "trash.fill")
                     }
@@ -63,11 +62,36 @@ struct QueryEditor: View {
         }
     }
     
+    @ViewBuilder func groupBoxContent(forQueryItem item: URLQueryItem) -> some View {
+        let queryItemValueBinding = queryItemBinding(for: item.name)
+        
+        switch item.name {
+        case "filter_time":
+            TextField("Time Interval", text: queryItemValueBinding)
+                .keyboardType(.decimalPad)
+        case "opencc":
+            TextField("OpenCC Configuration", text: queryItemValueBinding)
+        case "filter_case_sensitive":
+            Toggle("Sensitive", isOn: Binding(get: {
+                queryItemValueBinding.wrappedValue != "false"
+            }, set: { newValue in
+                queryItemValueBinding.wrappedValue = newValue.description
+            }))
+        case "limit":
+            TextField("Max Entry Count", text: queryItemValueBinding)
+                .keyboardType(.numberPad)
+        case _ where item.name.starts(with: "filter"):
+            TextField("Regular Expression", text: queryItemValueBinding)
+        default:
+            TextField("Value", text: queryItemValueBinding)
+        }
+    }
+    
     func addQueryItemAction(name: String) -> () -> Void {
         return {
             withAnimation {
                 if !queryItems.contains(where: { $0.name == name }) {
-                    queryItems.append(URLQueryItem(name: name, value: ""))
+                    queryItems.append(URLQueryItem(name: name, value: QueryEditor.defaultValue(forQueryItemNamed: name)))
                 }
             }
         }
@@ -147,6 +171,18 @@ extension QueryEditor {
         "filter_case_sensitive",
         "limit"
     ]
+}
+
+extension QueryEditor {
+    static let customDefaultValues: [String : String] = [
+        "opencc" : "s2t",
+        "filter_case_sensitive" : "true",
+        "limit" : "10"
+    ]
+    
+    static func defaultValue(forQueryItemNamed name: String) -> String {
+        customDefaultValues[name, default: ""]
+    }
 }
 
 struct QueryEditor_Previews: PreviewProvider {

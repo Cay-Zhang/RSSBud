@@ -39,3 +39,10 @@
 "opencc" = "简繁体转换";
 "filter_case_sensitive" = "大小写敏感";
 "limit" = "限制条目数";
+
+"Time Interval" = "时长";
+"OpenCC Configuration" = "OpenCC 配置";
+"Sensitive" = "敏感";
+"Max Entry Count" = "最大条目数";
+"Regular Expression" = "正则表达式";
+"Value" = "值";

@@ -39,3 +39,10 @@
 "opencc" = "Chinese Conversion";
 "filter_case_sensitive" = "Case Sensitivity";
 "limit" = "Limit Entry Count";
+
+"Time Interval" = "Time Interval";
+"OpenCC Configuration" = "OpenCC Configuration";
+"Sensitive" = "Sensitive";
+"Max Entry Count" = "Max Entry Count";
+"Regular Expression" = "Regular Expression";
+"Value" = "Value";
