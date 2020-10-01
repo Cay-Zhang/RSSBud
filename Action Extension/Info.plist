@@ -47,6 +47,8 @@
 		</dict>
 		<key>NSExtensionPrincipalClass</key>
 		<string>$(PRODUCT_MODULE_NAME).ActionViewController</string>
+        <key>NSExtensionActionWantsFullScreenPresentation</key>
+        <true/>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.ui-services</string>
 	</dict>
