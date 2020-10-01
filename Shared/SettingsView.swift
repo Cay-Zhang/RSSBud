@@ -20,8 +20,6 @@ struct SettingsView: View {
         set { _lastRemoteRulesFetchDate = newValue?.timeIntervalSinceReferenceDate }
     }
     
-    
-    
     init() {
         _baseURLString = State(wrappedValue: storedBaseURL.string)
     }
@@ -72,7 +70,7 @@ struct SettingsView: View {
                 
                 NavigationLink("Quick Subscriptions", destination: IntegrationSettingsView())
             }.navigationTitle("Settings")
-        }
+        }.listStyle(InsetGroupedListStyle())
         .alert(isPresented: $isAlertPresented) {
             Alert(title: Text("Base URL is invalid."))
         }
@@ -119,8 +117,7 @@ struct IntegrationSettingsView: View {
                     Text(key.rawValue).tag(key)
                 }
             }
-        }.listStyle(InsetGroupedListStyle())
-        .navigationTitle("Quick Subscriptions")
+        }.navigationTitle("Quick Subscriptions")
         .environment(\.editMode, .constant(.active))
     }
 }

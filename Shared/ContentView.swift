@@ -15,87 +15,109 @@ struct ContentView: View {
     @ObservedObject var viewModel = ViewModel()
     @State var isSettingsViewPresented = false
     
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(spacing: 30) {
-                    // Original URL
+        HStack(spacing: 0) {
+            NavigationView {
+                ScrollView {
                     VStack(spacing: 30) {
-                        if let url = viewModel.originalURL?.url {
-                            LinkPresentation(previewURL: url)
-                                .frame(height: 200)
+                        // Original URL
+                        VStack(spacing: 30) {
+                            if let url = viewModel.originalURL?.url {
+                                LinkPresentation(previewURL: url)
+                                    .frame(height: 200)
+                            }
+                            
+                            HStack(spacing: 20) {
+                                if viewModel.isProcessing {
+                                    ProgressView()
+                                }
+                                Button {
+                                    if let url = UIPasteboard.general.url?.components {
+                                        viewModel.process(url: url)
+                                    } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
+                                        viewModel.process(url: url)
+                                    }
+                                } label: {
+                                    Label("Read from Clipboard", systemImage: "arrow.up.doc.on.clipboard")
+                                        .roundedRectangleBackground(color: .secondarySystemBackground)
+                                }.buttonStyle(SquashableButtonStyle())
+                            }
                         }
                         
-                        HStack(spacing: 20) {
-                            if viewModel.isProcessing {
-                                ProgressView()
-                            }
-                            Button {
-                                if let url = UIPasteboard.general.url?.components {
-                                    viewModel.process(url: url)
-                                } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
-                                    viewModel.process(url: url)
+                        if let feeds = viewModel.detectedFeeds {
+                            if !feeds.isEmpty {
+                                LazyVStack(spacing: 16) {
+                                    ForEach(feeds, id: \.title) { feed in
+                                        FeedView(feed: feed, contentViewModel: viewModel, openURL: openURL)
+                                    }
                                 }
-                            } label: {
-                                Label("Read from Clipboard", systemImage: "arrow.up.doc.on.clipboard")
-                                    .roundedRectangleBackground(color: .secondarySystemBackground)
-                            }.buttonStyle(SquashableButtonStyle())
-                        }
-                    }
-                    
-                    if let feeds = viewModel.detectedFeeds {
-                        if !feeds.isEmpty {
-                            LazyVStack(spacing: 16) {
-                                ForEach(feeds, id: \.title) { feed in
-                                    FeedView(feed: feed, contentViewModel: viewModel, openURL: openURL)
-                                }
+                            } else {
+                                NothingFoundView(url: viewModel.originalURL, openURL: openURL)
                             }
-                        } else {
-                            NothingFoundView(url: viewModel.originalURL, openURL: openURL)
                         }
-                    }
-                    
-                    QueryEditor(queryItems: $viewModel.queryItems)
-                }.padding(20)
-            }.navigationTitle("RSSBud")
-            .toolbar {
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-                    if let done = done {
-                        Button(action: done) {
-                            Text("Done").fontWeight(.semibold)
+                        
+                        if horizontalSizeClass != .regular {
+                            QueryEditor(queryItems: $viewModel.queryItems)
                         }
-                    }
-                }
-                
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                    HStack {
-                        #if DEBUG
-                        Menu {
-                            Button("Analyze") {
-                                viewModel.process(url: URLComponents(string: "https://space.bilibili.com/17404347/")!)
-                            }
-                            Button("Error") {
-                                viewModel.process(url: URLComponents(string: "example.com")!)
-                            }
-                            Button("Nothing Found") {
-                                viewModel.process(url: URLComponents(string: "https://www.baidu.com/")!)
-                            }
-                        } label: {
-                            Image(systemName: "hammer.fill")
-                        }
-                        #endif
-                        Button {
-                            isSettingsViewPresented.toggle()
-                        } label: {
-                            Image(systemName: "gearshape.fill")
-                        }
-                    }
-                }
-            }.sheet(isPresented: $isSettingsViewPresented) {
-                SettingsView()
+                    }.padding(20)
+                }.navigationTitle("RSSBud")
+                .toolbar(content: toolbarContent)
             }
-        }.environmentObject(viewModel)
+            
+            if horizontalSizeClass == .regular {
+                Divider()
+                
+                NavigationView {
+                    ScrollView {
+                        QueryEditor(queryItems: $viewModel.queryItems)
+                            .padding(20)
+                            .navigationTitle(Text("Parameters"))
+                    }
+                }
+            }
+        }.navigationViewStyle(StackNavigationViewStyle())
+        .environmentObject(viewModel)
         .alert($viewModel.alert)
+        .sheet(isPresented: $isSettingsViewPresented) {
+            SettingsView()
+        }
+    }
+    
+    @ToolbarContentBuilder func toolbarContent() -> some ToolbarContent {
+        ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+            if let done = done {
+                Button(action: done) {
+                    Text("Done").fontWeight(.semibold)
+                }
+            }
+        }
+        
+        ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+            HStack {
+                #if DEBUG
+                Menu {
+                    Button("Analyze") {
+                        viewModel.process(url: URLComponents(string: "https://space.bilibili.com/17404347/")!)
+                    }
+                    Button("Error") {
+                        viewModel.process(url: URLComponents(string: "example.com")!)
+                    }
+                    Button("Nothing Found") {
+                        viewModel.process(url: URLComponents(string: "https://www.baidu.com/")!)
+                    }
+                } label: {
+                    Image(systemName: "hammer.fill")
+                }
+                #endif
+                Button {
+                    isSettingsViewPresented.toggle()
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                }
+            }
+        }
     }
 }
 
