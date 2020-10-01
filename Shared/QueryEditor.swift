@@ -117,6 +117,8 @@ struct QueryEditor: View {
         case "filterout_author":
             return Label("filterout_author", systemImage: "person.crop.circle.badge.xmark")
         
+        case "opencc":
+            return Label("opencc", systemImage: "arrow.2.squarepath")
         case "filter_case_sensitive":
             return Label("filter_case_sensitive", systemImage: "textformat")
         case "limit":
@@ -141,6 +143,7 @@ extension QueryEditor {
     ]
     
     static let otherQueryItemNames: [String] = [
+        "opencc",
         "filter_case_sensitive",
         "limit"
     ]

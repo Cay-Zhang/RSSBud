@@ -36,5 +36,6 @@
 "filterout_title" = "Exclude Titles";
 "filterout_description" = "Exclude Descriptions";
 "filterout_author" = "Exclude Authors";
+"opencc" = "Chinese Conversion";
 "filter_case_sensitive" = "Case Sensitivity";
 "limit" = "Limit Entry Count";
