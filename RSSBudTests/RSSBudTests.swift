@@ -30,7 +30,7 @@ class RSSBudTests: XCTestCase {
     
     func testBilibiliSpace() throws {
         measureMetrics([.wallClockTime], automaticallyStartMeasuring: false) {
-            let expectation = XCTestExpectation(description: "Detect the 2 feeds from the url.")
+            let expectation = XCTestExpectation(description: "Detect the 8 feeds from the url.")
             
             let urlString = "https://space.bilibili.com/53456"
             let url = URLComponents(autoPercentEncoding: urlString)!
@@ -42,7 +42,7 @@ class RSSBudTests: XCTestCase {
                     
                 } receiveValue: { feeds in
                     self.stopMeasuring()
-                    XCTAssertEqual(feeds.count, 2, "Unexpected feed count.")
+                    XCTAssertEqual(feeds.count, 8, "Unexpected feed count.")
                     expectation.fulfill()
                 }.store(in: &self.cancelBag)
             
