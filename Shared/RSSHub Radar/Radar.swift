@@ -162,7 +162,9 @@ extension RSSHub.Radar {
             
             remoteRules()
                 .sink { completion in
-                    
+                    if case let .failure(error) = completion {
+                        print(error)
+                    }
                 } receiveValue: { [weak self] string in
                     self?.setRules(string)
                     DispatchQueue.main.async {
@@ -225,11 +227,28 @@ extension RSSHub.Radar {
             }
         }
         
-        func remoteRules() -> Publishers.CompactMap<URLSession.DataTaskPublisher, String> {
-            URLSession.shared.dataTaskPublisher(for: URL(string: "https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@master/assets/radar-rules.js")!)
-                .compactMap { output in
-                    String(data: output.data, encoding: .utf8)
-                }.map { "var rules = " + $0 }
+        func remoteRules() -> AnyPublisher<String, URLError> {
+            let urls = ["https://raw.githubusercontent.com/DIYgod/RSSHub/master/assets/radar-rules.js", "https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@master/assets/radar-rules.js"]
+                .compactMap(URL.init(string:))
+            
+            return urls
+                .enumerated()
+                .publisher
+                .flatMap(maxPublishers: .max(1)) { tuple -> AnyPublisher<String, URLError> in
+                    let (index, url) = tuple
+                    return URLSession.shared.dataTaskPublisher(for: url)
+                        .compactMap { output in
+                            String(data: output.data, encoding: .utf8)
+                        }.map { "var rules = " + $0 }
+                        .catch { (error: URLError) -> AnyPublisher<String, URLError> in
+                            if index == urls.count - 1 {
+                                return Fail(outputType: String.self, failure: error).eraseToAnyPublisher()
+                            } else {
+                                return Empty(completeImmediately: true).eraseToAnyPublisher()
+                            }
+                        }.eraseToAnyPublisher()
+                }.first()
+                .eraseToAnyPublisher()
         }
         
         func bundledRules() -> String {
