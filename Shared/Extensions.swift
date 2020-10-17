@@ -33,6 +33,15 @@ extension URLComponents {
         return copy
     }
     
+    func appending(path: String) -> URLComponents {
+        var copy = self
+        if let lastCharacter = copy.path.last, lastCharacter == "/" {
+            copy.path.removeLast()
+        }
+        copy.path += path
+        return copy
+    }
+    
     func replacing(scheme: String) -> URLComponents {
         var copy = self
         copy.scheme = scheme

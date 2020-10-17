@@ -75,15 +75,15 @@ import SwiftUI
         
         case .tinyTinyRSS:
             return ttrssBaseURL?
-                .replacing(path: "/public.php")
+                .appending(path: "/public.php")
                 .appending(queryItems: [URLQueryItem(name: "op", value: "subscribe"), URLQueryItem(name: "feed_url", value: feedURL.string)])
         case .miniflux:
             return minifluxBaseURL?
-                .replacing(path: "/bookmarklet")
+                .appending(path: "/bookmarklet")
                 .appending(queryItems: [URLQueryItem(name: "uri", value: feedURL.string)])
         case .freshRSS:
             return freshRSSBaseURL?
-                .replacing(path: "/i/")
+                .appending(path: "/i/")
                 .appending(queryItems: [
                     URLQueryItem(name: "c", value: "feed"),
                     URLQueryItem(name: "a", value: "add"),

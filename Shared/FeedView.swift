@@ -17,7 +17,7 @@ struct FeedView: View {
     
     func rsshubURL() -> URLComponents {
         baseURL
-            .replacing(path: feed.path)
+            .appending(path: feed.path)
             .appending(queryItems: contentViewModel.queryItems)
             .omittingEmptyQueryItems()
     }
