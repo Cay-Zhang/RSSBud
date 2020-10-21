@@ -19,7 +19,7 @@
 - [x] 移动端 URL 适配 (自动展开、常见移动子域名适配)
 - [x] 读取剪贴板 URL
 - [x] 分享菜单插件 (Action Extension)
-- [x] 快速订阅到 Reeder, Fiery Feeds 和系统默认 RSS 阅读器
+- [x] 快速订阅到 Reeder, Fiery Feeds, Ego Reader 和系统默认 RSS 阅读器
 - [x] 快速订阅到 Tiny Tiny RSS, Miniflux, Fresh RSS, Feedly, Inoreader, Feedbin, The Old Reader, Feeds Pub 网页端
 - [x] 自定义通用参数
 - [x] 自定义 RSSHub 域名

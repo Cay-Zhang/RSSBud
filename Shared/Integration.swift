@@ -36,6 +36,12 @@ import SwiftUI
         switch key {
         case .systemDefaultReader:
             return feedURL.replacing(scheme: "feed")
+        case .egoReader:
+            return feedURL.string
+                .map { [URLQueryItem(name: "url", value: $0)] }
+                .flatMap {
+                    URLComponents(string: "egoreader://subscribe")?.appending(queryItems: $0)
+                }
         case .reeder:
             return feedURL.replacing(scheme: "reeder")
         case .fieryFeeds:
@@ -97,6 +103,7 @@ import SwiftUI
 extension Integration {
     enum Key: String, Identifiable, Hashable, CaseIterable {
         case systemDefaultReader = "Default"
+        case egoReader = "Ego Reader"
         case reeder = "Reeder"
         case fieryFeeds = "Fiery Feeds"
         
@@ -116,14 +123,14 @@ extension Integration {
 
 extension Integration {
     var ttrssBaseURL: URLComponents? {
-        get { URLComponents.init(string: ttrssBaseURLString) }
+        get { URLComponents(string: ttrssBaseURLString) }
     }
     
     var minifluxBaseURL: URLComponents? {
-        get { URLComponents.init(string: minifluxBaseURLString) }
+        get { URLComponents(string: minifluxBaseURLString) }
     }
     
     var freshRSSBaseURL: URLComponents? {
-        get { URLComponents.init(string: freshRSSBaseURLString) }
+        get { URLComponents(string: freshRSSBaseURLString) }
     }
 }
