@@ -37,11 +37,13 @@
 "filterout_title" = "去掉匹配的标题";
 "filterout_description" = "去掉匹配的描述";
 "filterout_author" = "去掉匹配的作者";
+"mode" = "提取全文";
 "opencc" = "简繁体转换";
 "filter_case_sensitive" = "大小写敏感";
 "limit" = "限制条目数";
 
 "Time Interval" = "时长";
+"Enabled" = "开启";
 "OpenCC Configuration" = "OpenCC 配置";
 "Sensitive" = "敏感";
 "Max Entry Count" = "最大条目数";

@@ -69,6 +69,12 @@ struct QueryEditor: View {
         case "filter_time":
             TextField("Time Interval", text: queryItemValueBinding)
                 .keyboardType(.decimalPad)
+        case "mode":
+            Toggle("Enabled", isOn: Binding(get: {
+                queryItemValueBinding.wrappedValue == "fulltext"
+            }, set: { newValue in
+                queryItemValueBinding.wrappedValue = newValue ? "fulltext" : ""
+            }))
         case "opencc":
             TextField("OpenCC Configuration", text: queryItemValueBinding)
         case "filter_case_sensitive":
@@ -141,6 +147,8 @@ struct QueryEditor: View {
         case "filterout_author":
             return Label("filterout_author", systemImage: "person.crop.circle.badge.xmark")
         
+        case "mode":
+            return Label("mode", systemImage: "doc.text.fill.viewfinder")
         case "opencc":
             return Label("opencc", systemImage: "arrow.2.squarepath")
         case "filter_case_sensitive":
@@ -167,6 +175,7 @@ extension QueryEditor {
     ]
     
     static let otherQueryItemNames: [String] = [
+        "mode",
         "opencc",
         "filter_case_sensitive",
         "limit"
@@ -175,6 +184,7 @@ extension QueryEditor {
 
 extension QueryEditor {
     static let customDefaultValues: [String : String] = [
+        "mode" : "fulltext",
         "opencc" : "s2t",
         "filter_case_sensitive" : "true",
         "limit" : "10"

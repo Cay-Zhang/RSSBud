@@ -37,11 +37,13 @@
 "filterout_title" = "Exclude Titles";
 "filterout_description" = "Exclude Descriptions";
 "filterout_author" = "Exclude Authors";
+"mode" = "Parse Fulltext";
 "opencc" = "Chinese Conversion";
 "filter_case_sensitive" = "Case Sensitivity";
 "limit" = "Limit Entry Count";
 
 "Time Interval" = "Time Interval";
+"Enabled" = "Enabled";
 "OpenCC Configuration" = "OpenCC Configuration";
 "Sensitive" = "Sensitive";
 "Max Entry Count" = "Max Entry Count";
