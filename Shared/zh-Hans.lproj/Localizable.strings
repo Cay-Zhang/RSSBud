@@ -41,11 +41,13 @@
 "opencc" = "简繁体转换";
 "filter_case_sensitive" = "大小写敏感";
 "limit" = "限制条目数";
+"tgiv" = "Telegram 即时预览";
 
 "Time Interval" = "时长";
 "Enabled" = "开启";
 "OpenCC Configuration" = "OpenCC 配置";
 "Sensitive" = "敏感";
 "Max Entry Count" = "最大条目数";
+"Template Hash" = "模板哈希值";
 "Regular Expression" = "正则表达式";
 "Value" = "值";

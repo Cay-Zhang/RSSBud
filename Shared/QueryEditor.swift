@@ -86,6 +86,10 @@ struct QueryEditor: View {
         case "limit":
             TextField("Max Entry Count", text: queryItemValueBinding)
                 .keyboardType(.numberPad)
+        case "tgiv":
+            TextField("Template Hash", text: queryItemValueBinding)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
         case _ where item.name.starts(with: "filter"):
             TextField("Regular Expression", text: queryItemValueBinding)
         default:
@@ -155,6 +159,8 @@ struct QueryEditor: View {
             return Label("filter_case_sensitive", systemImage: "textformat")
         case "limit":
             return Label("limit", systemImage: "number")
+        case "tgiv":
+            return Label("tgiv", systemImage: "paperplane.fill")
         default:
             return Label {
                 Text(verbatim: name).foregroundColor(.secondary)
@@ -178,7 +184,8 @@ extension QueryEditor {
         "mode",
         "opencc",
         "filter_case_sensitive",
-        "limit"
+        "limit",
+        "tgiv"
     ]
 }
 
