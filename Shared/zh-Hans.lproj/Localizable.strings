@@ -42,6 +42,7 @@
 "filter_case_sensitive" = "大小写敏感";
 "limit" = "限制条目数";
 "tgiv" = "Telegram 即时预览";
+"scihub" = "Sci-Hub 链接";
 
 "Time Interval" = "时长";
 "Enabled" = "开启";

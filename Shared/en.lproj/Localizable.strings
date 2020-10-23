@@ -42,6 +42,7 @@
 "filter_case_sensitive" = "Case Sensitivity";
 "limit" = "Limit Entry Count";
 "tgiv" = "Telegram Instant View";
+"scihub" = "Sci-Hub Link";
 
 "Time Interval" = "Time Interval";
 "Enabled" = "Enabled";

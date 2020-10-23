@@ -90,6 +90,12 @@ struct QueryEditor: View {
             TextField("Template Hash", text: queryItemValueBinding)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
+        case "scihub":
+            Toggle("Enabled", isOn: Binding(get: {
+                !queryItemValueBinding.wrappedValue.isEmpty
+            }, set: { newValue in
+                queryItemValueBinding.wrappedValue = newValue ? "true" : ""
+            }))
         case _ where item.name.starts(with: "filter"):
             TextField("Regular Expression", text: queryItemValueBinding)
         default:
@@ -161,6 +167,8 @@ struct QueryEditor: View {
             return Label("limit", systemImage: "number")
         case "tgiv":
             return Label("tgiv", systemImage: "paperplane.fill")
+        case "scihub":
+            return Label("scihub", systemImage: "books.vertical.fill")
         default:
             return Label {
                 Text(verbatim: name).foregroundColor(.secondary)
@@ -185,7 +193,8 @@ extension QueryEditor {
         "opencc",
         "filter_case_sensitive",
         "limit",
-        "tgiv"
+        "tgiv",
+        "scihub"
     ]
 }
 
@@ -194,7 +203,8 @@ extension QueryEditor {
         "mode" : "fulltext",
         "opencc" : "s2t",
         "filter_case_sensitive" : "true",
-        "limit" : "10"
+        "limit" : "10",
+        "scihub" : "true"
     ]
     
     static func defaultValue(forQueryItemNamed name: String) -> String {
