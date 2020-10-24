@@ -64,19 +64,27 @@ extension OnboardingView {
                     .resizable()
                     .frame(width: 100, height: 100, alignment: .center)
                     .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                
                 Text("Welcome!")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
-                WideButton("Learn more about RSSHub", systemImage: "info.circle.fill") {
-                    openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
-                }
+                Text(verbatim: "RSSBud is an open-source auxiliary app for RSSHub. He can help you quickly discover and subscribe to RSS feeds of different websites.")
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(5)
+                    .padding(.horizontal, 8)
                 
-                WideButton("Submit New Rules", systemImage: "link.badge.plus") {
-                    openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
-                }
-                
-                WideButton("Next", systemImage: "link.badge.plus", withAnimation: OnboardingView.transitionAnimation) {
-                    currentPage = .rssHubURL
+                VStack(spacing: 8) {
+                    WideButton("Learn more about RSSHub", systemImage: "info.circle.fill") {
+                        openURL(URLComponents(string: "https://docs.rsshub.app/en/")!)
+                    }
+                    
+                    WideButton("All about RSS", systemImage: "list.star") {
+                        openURL(URLComponents(string: "https://github.com/AboutRSS/ALL-about-RSS")!)
+                    }
+                    
+                    WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                        currentPage = .rssHubURL
+                    }
                 }
             }.padding(.top, 20)
             .padding(.bottom, 8)
