@@ -15,6 +15,7 @@ struct ContentView: View {
     @ObservedObject var viewModel = ViewModel()
     @State var isSettingsViewPresented = false
     
+    @AppStorage("isOnboarding", store: RSSBud.userDefaults) var isOnboarding: Bool = true
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     var body: some View {
@@ -22,44 +23,48 @@ struct ContentView: View {
             NavigationView {
                 ScrollView {
                     VStack(spacing: 30) {
-                        // Original URL
-                        VStack(spacing: 30) {
-                            if let url = viewModel.originalURL?.url {
-                                LinkPresentation(previewURL: url)
-                                    .frame(height: 200)
+                        if isOnboarding {
+                            OnboardingView(openURL: openURL)
+                        } else {
+                            // Original URL
+                            VStack(spacing: 30) {
+                                if let url = viewModel.originalURL?.url {
+                                    LinkPresentation(previewURL: url)
+                                        .frame(height: 200)
+                                }
+                                
+                                HStack(spacing: 20) {
+                                    if viewModel.isProcessing {
+                                        ProgressView()
+                                    }
+                                    Button {
+                                        if let url = UIPasteboard.general.url?.components {
+                                            viewModel.process(url: url)
+                                        } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
+                                            viewModel.process(url: url)
+                                        }
+                                    } label: {
+                                        Label("Read from Clipboard", systemImage: "arrow.up.doc.on.clipboard")
+                                            .roundedRectangleBackground(color: .secondarySystemBackground)
+                                    }.buttonStyle(SquashableButtonStyle())
+                                }
                             }
                             
-                            HStack(spacing: 20) {
-                                if viewModel.isProcessing {
-                                    ProgressView()
-                                }
-                                Button {
-                                    if let url = UIPasteboard.general.url?.components {
-                                        viewModel.process(url: url)
-                                    } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
-                                        viewModel.process(url: url)
+                            if let feeds = viewModel.detectedFeeds {
+                                if !feeds.isEmpty {
+                                    LazyVStack(spacing: 16) {
+                                        ForEach(feeds, id: \.title) { feed in
+                                            FeedView(feed: feed, contentViewModel: viewModel, openURL: openURL)
+                                        }
                                     }
-                                } label: {
-                                    Label("Read from Clipboard", systemImage: "arrow.up.doc.on.clipboard")
-                                        .roundedRectangleBackground(color: .secondarySystemBackground)
-                                }.buttonStyle(SquashableButtonStyle())
-                            }
-                        }
-                        
-                        if let feeds = viewModel.detectedFeeds {
-                            if !feeds.isEmpty {
-                                LazyVStack(spacing: 16) {
-                                    ForEach(feeds, id: \.title) { feed in
-                                        FeedView(feed: feed, contentViewModel: viewModel, openURL: openURL)
-                                    }
+                                } else {
+                                    NothingFoundView(url: viewModel.originalURL, openURL: openURL)
                                 }
-                            } else {
-                                NothingFoundView(url: viewModel.originalURL, openURL: openURL)
                             }
-                        }
-                        
-                        if horizontalSizeClass != .regular {
-                            QueryEditor(queryItems: $viewModel.queryItems)
+                            
+                            if horizontalSizeClass != .regular {
+                                QueryEditor(queryItems: $viewModel.queryItems)
+                            }
                         }
                     }.padding(20)
                 }.navigationTitle("RSSBud")
