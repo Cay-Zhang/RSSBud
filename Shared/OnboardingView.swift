@@ -17,11 +17,11 @@ struct OnboardingView: View {
         switch currentPage {
         case .welcome:
             Welcome(currentPage: $currentPage, openURL: openURL)
-                .transition(AnyTransition.opacity)
+                .transition(OnboardingView.transition)
                 .zIndex(1)
         case .rssHubURL:
             RSSHubURL(currentPage: $currentPage)
-                .transition(AnyTransition.opacity)
+                .transition(OnboardingView.transition)
                 .zIndex(2)
         }
     }
@@ -39,6 +39,14 @@ struct OnboardingView: View {
 }
 
 extension OnboardingView {
+    
+    static let transition: AnyTransition = AnyTransition.asymmetric(
+        insertion: AnyTransition.move(edge: .trailing),
+        removal: AnyTransition.scale(scale: 0.7)
+            .combined(with: AnyTransition.opacity)
+    )
+    
+    static let transitionAnimation: Animation = .spring(dampingFraction: 0.85)
     
     enum Page {
         case welcome
@@ -74,7 +82,9 @@ extension OnboardingView {
                 }.buttonStyle(SquashableButtonStyle())
                 
                 Button {
-                    withAnimation { currentPage = .rssHubURL }
+                    withAnimation(OnboardingView.transitionAnimation) {
+                        currentPage = .rssHubURL
+                    }
                 } label: {
                     Label("Next", systemImage: "link.badge.plus")
                         .roundedRectangleBackground()
@@ -98,19 +108,13 @@ extension OnboardingView {
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
                 Button {
-//                    openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
+                    withAnimation(OnboardingView.transitionAnimation) {
+                        currentPage = .welcome
+                    }
                 } label: {
-                    Label("Learn more about RSSHub", systemImage: "info.circle.fill")
+                    Label("Back", systemImage: "link.badge.plus")
                         .roundedRectangleBackground()
                 }.buttonStyle(SquashableButtonStyle())
-                Button {
-//                    openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
-                } label: {
-                    Label("Submit New Rules", systemImage: "link.badge.plus")
-                        .roundedRectangleBackground()
-                }.buttonStyle(SquashableButtonStyle())
-                
-                Divider()
             }.padding(.top, 20)
             .padding(.bottom, 8)
         }
@@ -120,8 +124,11 @@ extension OnboardingView {
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            OnboardingView()
-                .navigationTitle("Test")
+            ScrollView {
+                OnboardingView()
+                    .padding(20)
+                    .navigationTitle("Onboarding")
+            }
         }
     }
 }
