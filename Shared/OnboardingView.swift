@@ -67,28 +67,17 @@ extension OnboardingView {
                 Text("Welcome!")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
-                Button {
+                WideButton("Learn more about RSSHub", systemImage: "info.circle.fill") {
                     openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
-                } label: {
-                    Label("Learn more about RSSHub", systemImage: "info.circle.fill")
-                        .roundedRectangleBackground()
-                }.buttonStyle(SquashableButtonStyle())
+                }
                 
-                Button {
+                WideButton("Submit New Rules", systemImage: "link.badge.plus") {
                     openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
-                } label: {
-                    Label("Submit New Rules", systemImage: "link.badge.plus")
-                        .roundedRectangleBackground()
-                }.buttonStyle(SquashableButtonStyle())
+                }
                 
-                Button {
-                    withAnimation(OnboardingView.transitionAnimation) {
-                        currentPage = .rssHubURL
-                    }
-                } label: {
-                    Label("Next", systemImage: "link.badge.plus")
-                        .roundedRectangleBackground()
-                }.buttonStyle(SquashableButtonStyle())
+                WideButton("Next", systemImage: "link.badge.plus", withAnimation: OnboardingView.transitionAnimation) {
+                    currentPage = .rssHubURL
+                }
             }.padding(.top, 20)
             .padding(.bottom, 8)
         }
@@ -104,17 +93,13 @@ extension OnboardingView {
                     .resizable()
                     .frame(width: 100, height: 100, alignment: .center)
                     .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                
                 Text("Page 2")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
-                Button {
-                    withAnimation(OnboardingView.transitionAnimation) {
-                        currentPage = .welcome
-                    }
-                } label: {
-                    Label("Back", systemImage: "link.badge.plus")
-                        .roundedRectangleBackground()
-                }.buttonStyle(SquashableButtonStyle())
+                WideButton("Back", systemImage: "link.badge.plus", withAnimation: OnboardingView.transitionAnimation) {
+                    currentPage = .welcome
+                }
             }.padding(.top, 20)
             .padding(.bottom, 8)
         }

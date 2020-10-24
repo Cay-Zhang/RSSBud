@@ -43,8 +43,8 @@
 		EE000A9424B41E1000979B1A /* psl.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8A24B41E1000979B1A /* psl.min.js */; };
 		EE000A9624B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
 		EE000A9724B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
-		EE1ABF0F24E182E200996C06 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* ButtonStyle.swift */; };
-		EE1ABF1024E182E200996C06 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* ButtonStyle.swift */; };
+		EE1ABF0F24E182E200996C06 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* WideButton.swift */; };
+		EE1ABF1024E182E200996C06 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* WideButton.swift */; };
 		EE3EEAB624E152D20006ED53 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EEAB524E152D20006ED53 /* SettingsView.swift */; };
 		EE3EEAB724E152D20006ED53 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EEAB524E152D20006ED53 /* SettingsView.swift */; };
 		EE7CD90924DD541100FAA837 /* RSSBudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7CD90824DD541100FAA837 /* RSSBudTests.swift */; };
@@ -83,7 +83,7 @@
 		EEC4A51424E3E29A005041CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* Extensions.swift */; };
 		EEC4A51524E3E29D005041CA /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */; };
 		EEC4A51624E3E29F005041CA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EEAB524E152D20006ED53 /* SettingsView.swift */; };
-		EEC4A51724E3E2A2005041CA /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* ButtonStyle.swift */; };
+		EEC4A51724E3E2A2005041CA /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* WideButton.swift */; };
 		EEC4A51B24E516D8005041CA /* RSSBud.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A51A24E516D8005041CA /* RSSBud.swift */; };
 		EEC4A51C24E516D8005041CA /* RSSBud.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A51A24E516D8005041CA /* RSSBud.swift */; };
 		EEC4A51D24E516D8005041CA /* RSSBud.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A51A24E516D8005041CA /* RSSBud.swift */; };
@@ -137,7 +137,7 @@
 		EE000A8924B41E1000979B1A /* utils.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = utils.js; sourceTree = "<group>"; };
 		EE000A8A24B41E1000979B1A /* psl.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = psl.min.js; sourceTree = "<group>"; };
 		EE000A9524B41E9600979B1A /* Radar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radar.swift; sourceTree = "<group>"; };
-		EE1ABF0E24E182E200996C06 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		EE1ABF0E24E182E200996C06 /* WideButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideButton.swift; sourceTree = "<group>"; };
 		EE3EEAB524E152D20006ED53 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSBudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE7CD90824DD541100FAA837 /* RSSBudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBudTests.swift; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 				EEB7579324B2B7C600F26CF7 /* Extensions.swift */,
 				EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */,
 				EE3EEAB524E152D20006ED53 /* SettingsView.swift */,
-				EE1ABF0E24E182E200996C06 /* ButtonStyle.swift */,
+				EE1ABF0E24E182E200996C06 /* WideButton.swift */,
 				1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */,
 				1C3221A225192F6A00CD9F56 /* Localizable.strings */,
 			);
@@ -544,7 +544,7 @@
 				EEB7579924B3084A00F26CF7 /* LinkPresentation.swift in Sources */,
 				EE000A9624B41E9600979B1A /* Radar.swift in Sources */,
 				1CA2079B24F3DEAC00C6EDD5 /* RSSHub.swift in Sources */,
-				EE1ABF0F24E182E200996C06 /* ButtonStyle.swift in Sources */,
+				EE1ABF0F24E182E200996C06 /* WideButton.swift in Sources */,
 				1CDB36C82544566D002E84D8 /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -565,7 +565,7 @@
 				EEB7579A24B3084A00F26CF7 /* LinkPresentation.swift in Sources */,
 				EE000A9724B41E9600979B1A /* Radar.swift in Sources */,
 				1CA2079C24F3DEAC00C6EDD5 /* RSSHub.swift in Sources */,
-				EE1ABF1024E182E200996C06 /* ButtonStyle.swift in Sources */,
+				EE1ABF1024E182E200996C06 /* WideButton.swift in Sources */,
 				1CDB36C92544566D002E84D8 /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -586,7 +586,7 @@
 				EEC4A51324E3E287005041CA /* ContentView.swift in Sources */,
 				EEC4A51524E3E29D005041CA /* LinkPresentation.swift in Sources */,
 				1CA2079E24F3DEAC00C6EDD5 /* RSSHub.swift in Sources */,
-				EEC4A51724E3E2A2005041CA /* ButtonStyle.swift in Sources */,
+				EEC4A51724E3E2A2005041CA /* WideButton.swift in Sources */,
 				1CDB36CA2544566D002E84D8 /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -37,16 +37,14 @@ struct ContentView: View {
                                     if viewModel.isProcessing {
                                         ProgressView()
                                     }
-                                    Button {
+                                    
+                                    WideButton("Read from Clipboard", systemImage: "arrow.up.doc.on.clipboard") {
                                         if let url = UIPasteboard.general.url?.components {
                                             viewModel.process(url: url)
                                         } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
                                             viewModel.process(url: url)
                                         }
-                                    } label: {
-                                        Label("Read from Clipboard", systemImage: "arrow.up.doc.on.clipboard")
-                                            .roundedRectangleBackground(color: .secondarySystemBackground)
-                                    }.buttonStyle(SquashableButtonStyle())
+                                    }
                                 }
                             }
                             
@@ -206,29 +204,22 @@ struct NothingFoundView: View {
                 Text(verbatim: urlString)
                     .foregroundColor(.secondary)
             }
-            Button {
-                openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
-            } label: {
-                Label("See What's Supported", systemImage: "text.book.closed.fill")
-                    .roundedRectangleBackground()
-            }.buttonStyle(SquashableButtonStyle())
-            Button {
-                openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
-            } label: {
-                Label("Submit New Rules", systemImage: "link.badge.plus")
-                    .roundedRectangleBackground()
-            }.buttonStyle(SquashableButtonStyle())
             
+            WideButton("See What's Supported", systemImage: "text.book.closed.fill") {
+                openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
+            }
+            
+            WideButton("Submit New Rules", systemImage: "link.badge.plus") {
+                openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
+            }
             
             Divider()
             
             Text("Can be detected by RSSHub Radar?").fontWeight(.semibold)
-            Button {
+            
+            WideButton("Contact Developer", systemImage: "hammer.fill") {
                 openURL(URLComponents(string: "https://t.me/RSSBud_Discussion")!)
-            } label: {
-                Label("Contact Developer", systemImage: "hammer.fill")
-                    .roundedRectangleBackground()
-            }.buttonStyle(SquashableButtonStyle())
+            }
         }.padding(.horizontal, 8)
         .padding(.top, 20)
         .padding(.bottom, 8)

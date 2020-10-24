@@ -36,12 +36,9 @@ struct FeedView: View {
 //                .padding(.horizontal, 15)
             
             HStack(spacing: 8) {
-                Button {
+                WideButton("Copy", systemImage: "doc.on.doc.fill") {
                     rsshubURL().url.map { UIPasteboard.general.url = $0 }
-                } label: {
-                    Label("Copy", systemImage: "doc.on.doc.fill")
-                        .roundedRectangleBackground()
-                }.buttonStyle(SquashableButtonStyle())
+                }
                 
                 integrationButton
             }.padding(.horizontal, 8)
@@ -54,12 +51,9 @@ struct FeedView: View {
     
     @ViewBuilder var integrationButton: some View {
         if integrations.count == 1, let url = integrationURL(for: integrations[0]) {
-            Button {
+            WideButton(Label(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill")) {
                 openURL(url)
-            } label: {
-                Label(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill")
-                    .roundedRectangleBackground()
-            }.buttonStyle(SquashableButtonStyle())
+            }
         } else {
             Menu {
                 ForEach(integrations) { key in
