@@ -19,8 +19,8 @@ struct OnboardingView: View {
             Welcome(currentPage: $currentPage, openURL: openURL)
                 .transition(OnboardingView.transition)
                 .zIndex(1)
-        case .rssHubURL:
-            RSSHubURL(currentPage: $currentPage)
+        case .userInfo:
+            UserInfo(currentPage: $currentPage)
                 .transition(OnboardingView.transition)
                 .zIndex(2)
         }
@@ -50,7 +50,7 @@ extension OnboardingView {
     
     enum Page {
         case welcome
-        case rssHubURL
+        case userInfo
     }
     
     struct Welcome: View {
@@ -83,7 +83,7 @@ extension OnboardingView {
                     }
                     
                     WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
-                        currentPage = .rssHubURL
+                        currentPage = .userInfo
                     }
                 }
             }.padding(.top, 20)
@@ -91,19 +91,35 @@ extension OnboardingView {
         }
     }
     
-    struct RSSHubURL: View {
+    struct UserInfo: View {
         
         @Binding var currentPage: Page
         
+        var rssHubBaseURL = RSSHub.BaseURL()
+        
         var body: some View {
             VStack(spacing: 16) {
-                Image("Icon")
-                    .resizable()
-                    .frame(width: 100, height: 100, alignment: .center)
-                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                Text("RSSHub App URL")
+                    .fontWeight(.semibold)
                 
-                Text("Page 2")
-                    .font(.system(size: 24, weight: .semibold, design: .default))
+                ValidatedTextField(
+                    "RSSHub App URL",
+                    text: rssHubBaseURL.$string,
+                    validation: rssHubBaseURL.validate(string:)
+                ).foregroundColor(.primary)
+                .keyboardType(.URL)
+                .disableAutocorrection(true)
+                .padding(.horizontal, 10)
+                .roundedRectangleBackground()
+                
+                Divider()
+                
+                Text("Quick Subscription")
+                    .fontWeight(.semibold)
+                
+                IntegrationSettingsView()
+                    .frame(height: 564)
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 
                 WideButton("Back", systemImage: "link.badge.plus", withAnimation: OnboardingView.transitionAnimation) {
                     currentPage = .welcome
@@ -118,10 +134,10 @@ struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ScrollView {
-                OnboardingView()
+                OnboardingView(currentPage: .userInfo)
                     .padding(20)
                     .navigationTitle("Onboarding")
             }
-        }
+        }.colorScheme(.dark)
     }
 }
