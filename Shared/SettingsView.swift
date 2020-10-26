@@ -68,7 +68,10 @@ struct SettingsView: View {
                     }
                 }
                 
-                NavigationLink("Quick Subscriptions", destination: IntegrationSettingsView())
+                NavigationLink(
+                    "Quick Subscriptions",
+                    destination: IntegrationSettingsView().navigationTitle("Quick Subscriptions")
+                )
             }.navigationTitle("Settings")
         }.listStyle(InsetGroupedListStyle())
         .alert(isPresented: $isAlertPresented) {
@@ -117,8 +120,7 @@ struct IntegrationSettingsView: View {
                     Text(key.rawValue).tag(key)
                 }
             }
-        }.navigationTitle("Quick Subscriptions")
-        .environment(\.editMode, .constant(.active))
+        }.environment(\.editMode, .constant(.active))
     }
 }
 
