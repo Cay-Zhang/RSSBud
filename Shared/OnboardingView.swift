@@ -68,7 +68,7 @@ extension OnboardingView {
                 Text("Welcome!")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
-                Text(verbatim: "RSSBud is an open-source auxiliary app for RSSHub. He can help you quickly discover and subscribe to RSS feeds of different websites.")
+                Text(verbatim: "RSSBud can help you quickly discover and subscribe to RSS feeds of different websites, especially those provided by RSSHub.")
                     .multilineTextAlignment(.center)
                     .lineSpacing(5)
                     .padding(.horizontal, 8)
