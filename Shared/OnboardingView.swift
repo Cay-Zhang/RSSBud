@@ -10,8 +10,9 @@ import SwiftUI
 struct OnboardingView: View {
     
     var openURL: (URLComponents) -> Void = { _ in }
-    
     @State var currentPage: Page = .welcome
+    
+    @Namespace var namespace
     
     @ViewBuilder var currentPageView: some View {
         switch currentPage {
@@ -35,6 +36,7 @@ struct OnboardingView: View {
                 .padding(.horizontal, 8)
                 .frame(maxWidth: .infinity)
         }.clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .environment(\.namespace, namespace)
     }
 }
 
@@ -46,7 +48,7 @@ extension OnboardingView {
             .combined(with: AnyTransition.opacity)
     )
     
-    static let transitionAnimation: Animation = .spring(dampingFraction: 0.85)
+    static let transitionAnimation: Animation = Animation.spring(dampingFraction: 0.85)
     
     enum Page {
         case welcome
@@ -57,6 +59,8 @@ extension OnboardingView {
         
         @Binding var currentPage: Page
         var openURL: (URLComponents) -> Void = { _ in }
+        
+        @Environment(\.namespace) var namespace
         
         var body: some View {
             VStack(spacing: 16) {
@@ -84,7 +88,7 @@ extension OnboardingView {
                     
                     WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .userInfo
-                    }
+                    }.matchedGeometryEffect(id: "Next", in: namespace)
                 }
             }.padding(.top, 20)
             .padding(.bottom, 8)
@@ -95,10 +99,16 @@ extension OnboardingView {
         
         @Binding var currentPage: Page
         
+        @Environment(\.namespace) var namespace
         var rssHubBaseURL = RSSHub.BaseURL()
         
         var body: some View {
             VStack(spacing: 16) {
+                
+                WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                    currentPage = .userInfo
+                }.matchedGeometryEffect(id: "Next", in: namespace)
+                
                 Text("RSSHub App URL")
                     .fontWeight(.semibold)
                 
@@ -134,7 +144,7 @@ struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ScrollView {
-                OnboardingView(currentPage: .userInfo)
+                OnboardingView(currentPage: .welcome)
                     .padding(20)
                     .navigationTitle("Onboarding")
             }
