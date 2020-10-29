@@ -24,10 +24,14 @@ struct OnboardingView: View {
             Discover(currentPage: $currentPage, openURL: openURL)
                 .transition(OnboardingView.transition)
                 .zIndex(2)
+        case .subscribe:
+            Subscribe(currentPage: $currentPage, openURL: openURL)
+                .transition(OnboardingView.transition)
+                .zIndex(3)
         case .userInfo:
             UserInfo(currentPage: $currentPage)
                 .transition(OnboardingView.transition)
-                .zIndex(3)
+                .zIndex(4)
         }
     }
     
@@ -57,6 +61,7 @@ extension OnboardingView {
     enum Page {
         case welcome
         case discover
+        case subscribe
         case userInfo
     }
     
@@ -144,6 +149,52 @@ extension OnboardingView {
                     }
                     
                     WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                        currentPage = .subscribe
+                    }.matchedGeometryEffect(id: "Next", in: namespace)
+                }
+            }.padding(.top, 20)
+            .padding(.bottom, 8)
+        }
+    }
+    
+    struct Subscribe: View {
+        
+        @Binding var currentPage: Page
+        var openURL: (URLComponents) -> Void = { _ in }
+        
+        @Environment(\.namespace) var namespace
+        
+        var body: some View {
+            VStack(spacing: 16) {
+                Image(systemName: "arrowshape.turn.up.right.fill")
+                    .font(.system(size: 24, weight: .semibold, design: .default))
+                    .foregroundColor(.accentColor)
+                    .frame(width: 70, height: 70)
+                    .background(Color(UIColor.tertiarySystemBackground))
+                    .clipShape(Circle())
+                
+                Text("Subscribe")
+                    .font(.system(size: 24, weight: .semibold, design: .default))
+                
+                Text(verbatim: "RSSBud offers one-tap subscription to these RSS readers and services.")
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 8)
+                
+                Text(verbatim: "Please select the ones you use.")
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 8)
+                
+                IntegrationSettingsView(backgroundColor: Color(UIColor.tertiarySystemBackground))
+                    .frame(height: 263)
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    .background(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 3)
+                    ).padding(.horizontal, 1.5)
+                
+                VStack(spacing: 8) {
+                    WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .userInfo
                     }.matchedGeometryEffect(id: "Next", in: namespace)
                 }
@@ -201,7 +252,7 @@ struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ScrollView {
-                OnboardingView(currentPage: .discover)
+                OnboardingView(currentPage: .subscribe)
                     .padding(20)
                     .navigationTitle("Onboarding")
             }
