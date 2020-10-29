@@ -9,6 +9,7 @@ import SwiftUI
 
 enum RSSHub {
     static var defaultBaseURLString: String = "https://rsshub.example.com"
+    static var officialDemoBaseURLString: String = "https://rsshub.app"
 }
 
 extension RSSHub {

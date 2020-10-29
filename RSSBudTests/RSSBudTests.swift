@@ -21,10 +21,14 @@ class RSSBudTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testDefaultBaseURLValidation() {
+    func testBaseURLValidation() {
         XCTAssert(
             RSSHub.BaseURL().validate(string: RSSHub.defaultBaseURLString),
             "Default base URL is invalid."
+        )
+        XCTAssert(
+            RSSHub.BaseURL().validate(string: RSSHub.officialDemoBaseURLString),
+            "Official demo's base URL is invalid."
         )
     }
     
