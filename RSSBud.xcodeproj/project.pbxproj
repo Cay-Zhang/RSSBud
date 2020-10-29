@@ -31,6 +31,7 @@
 		1CDB36C82544566D002E84D8 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB36C72544566D002E84D8 /* OnboardingView.swift */; };
 		1CDB36C92544566D002E84D8 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB36C72544566D002E84D8 /* OnboardingView.swift */; };
 		1CDB36CA2544566D002E84D8 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB36C72544566D002E84D8 /* OnboardingView.swift */; };
+		1CDB36F0254AEA74002E84D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEB7577424B2B6E700F26CF7 /* Assets.xcassets */; };
 		EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EE000A8D24B41E1000979B1A /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
@@ -508,6 +509,7 @@
 				1C3221A025192F6A00CD9F56 /* Localizable.strings in Resources */,
 				EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */,
 				EEC4A50C24E3E26D005041CA /* psl.min.js in Resources */,
+				1CDB36F0254AEA74002E84D8 /* Assets.xcassets in Resources */,
 				EEC4A50E24E3E26D005041CA /* utils.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
