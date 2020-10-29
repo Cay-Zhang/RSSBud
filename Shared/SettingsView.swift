@@ -81,6 +81,7 @@ struct SettingsView: View {
 }
 
 struct IntegrationSettingsView: View {
+    var backgroundColor: Color? = nil
     
     @Integration var integrations
     
@@ -119,8 +120,9 @@ struct IntegrationSettingsView: View {
                 default:
                     Text(key.rawValue).tag(key)
                 }
-            }
-        }.environment(\.editMode, .constant(.active))
+            }.listRowBackground(backgroundColor)
+        }.background(backgroundColor)
+        .environment(\.editMode, .constant(.active))
     }
 }
 
