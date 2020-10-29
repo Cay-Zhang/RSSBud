@@ -20,10 +20,14 @@ struct OnboardingView: View {
             Welcome(currentPage: $currentPage, openURL: openURL)
                 .transition(OnboardingView.transition)
                 .zIndex(1)
+        case .discover:
+            Discover(currentPage: $currentPage, openURL: openURL)
+                .transition(OnboardingView.transition)
+                .zIndex(2)
         case .userInfo:
             UserInfo(currentPage: $currentPage)
                 .transition(OnboardingView.transition)
-                .zIndex(2)
+                .zIndex(3)
         }
     }
     
@@ -52,6 +56,7 @@ extension OnboardingView {
     
     enum Page {
         case welcome
+        case discover
         case userInfo
     }
     
@@ -74,7 +79,6 @@ extension OnboardingView {
                 
                 Text(verbatim: "RSSBud can help you quickly discover and subscribe to RSS feeds of different websites, especially those provided by RSSHub.")
                     .multilineTextAlignment(.center)
-                    .lineSpacing(5)
                     .padding(.horizontal, 8)
                 
                 VStack(spacing: 8) {
@@ -84,6 +88,59 @@ extension OnboardingView {
                     
                     WideButton("All about RSS", systemImage: "list.star") {
                         openURL(URLComponents(string: "https://github.com/AboutRSS/ALL-about-RSS")!)
+                    }
+                    
+                    WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                        currentPage = .discover
+                    }.matchedGeometryEffect(id: "Next", in: namespace)
+                }
+            }.padding(.top, 20)
+            .padding(.bottom, 8)
+        }
+    }
+    
+    struct Discover: View {
+        
+        @Binding var currentPage: Page
+        var openURL: (URLComponents) -> Void = { _ in }
+        
+        @Environment(\.namespace) var namespace
+        
+        var body: some View {
+            VStack(spacing: 16) {
+                
+                
+                HStack(spacing: -10) {
+                    let sideLength: CGFloat = 70
+                    Image(systemName: "square.and.arrow.up.fill")
+                        .font(.system(size: 24, weight: .semibold, design: .default))
+                        .foregroundColor(.accentColor)
+                        .frame(width: sideLength, height: sideLength)
+                        .background(Color(UIColor.tertiarySystemBackground))
+                        .clipShape(Circle())
+                    Image(systemName: "doc.on.clipboard.fill")
+                        .font(.system(size: 24, weight: .semibold, design: .default))
+                        .foregroundColor(.accentColor)
+                        .frame(width: sideLength, height: sideLength)
+                        .background(Color(UIColor.tertiarySystemBackground))
+                        .clipShape(Circle())
+                }
+                
+                Text("Discover")
+                    .font(.system(size: 24, weight: .semibold, design: .default))
+                
+                Text(verbatim: "RSSBud discovers RSS feeds by analyzing a website link according to a set of rules.")
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 8)
+                
+                Text(verbatim: "Preferably you would share the link to RSSBud using the system share sheet. But in case you only have the option to copy the link, you can also have him read your clipboard for it.")
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 8)
+                
+                VStack(spacing: 8) {
+                    WideButton("See What's Supported", systemImage: "text.book.closed.fill") {
+                        openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
                     }
                     
                     WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
@@ -144,7 +201,7 @@ struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ScrollView {
-                OnboardingView(currentPage: .welcome)
+                OnboardingView(currentPage: .discover)
                     .padding(20)
                     .navigationTitle("Onboarding")
             }
