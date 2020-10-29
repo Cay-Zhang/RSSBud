@@ -16,6 +16,9 @@ class ActionViewController: UIHostingController<ContentView> {
     var cancelBag = Set<AnyCancellable>()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        // temp workaround for list background
+        UITableView.appearance().backgroundColor = UIColor.clear
+        
         let contentView = ContentView(viewModel: contentViewModel)
         super.init(rootView: contentView)
         rootView.openURL = { [weak self] url in

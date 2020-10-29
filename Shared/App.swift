@@ -22,6 +22,9 @@ extension RSSBud {
                 RSSHub.Radar.rulesCenter.scheduleRemoteRulesFetchTask()
             }
             RSSHub.Radar.rulesCenter.scheduleRemoteRulesFetchTask()
+            
+            // temp workaround for list background
+            UITableView.appearance().backgroundColor = UIColor.clear
         }
         
         var body: some Scene {
