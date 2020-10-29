@@ -28,10 +28,14 @@ struct OnboardingView: View {
             Subscribe(currentPage: $currentPage, openURL: openURL)
                 .transition(OnboardingView.transition)
                 .zIndex(3)
+        case .rssHubInstance:
+            RSSHubInstance(currentPage: $currentPage, openURL: openURL)
+                .transition(OnboardingView.transition)
+                .zIndex(4)
         case .userInfo:
             UserInfo(currentPage: $currentPage)
                 .transition(OnboardingView.transition)
-                .zIndex(4)
+                .zIndex(5)
         }
     }
     
@@ -62,6 +66,7 @@ extension OnboardingView {
         case welcome
         case discover
         case subscribe
+        case rssHubInstance
         case userInfo
     }
     
@@ -195,9 +200,74 @@ extension OnboardingView {
                 
                 VStack(spacing: 8) {
                     WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
-                        currentPage = .userInfo
+                        currentPage = .rssHubInstance
                     }.matchedGeometryEffect(id: "Next", in: namespace)
                 }
+            }.padding(.top, 20)
+            .padding(.bottom, 8)
+        }
+    }
+    
+    struct RSSHubInstance: View {
+        @State var isEnteringRSSHubBaseURL: Bool = false
+        @Binding var currentPage: Page
+        var openURL: (URLComponents) -> Void = { _ in }
+        
+        @Environment(\.namespace) var namespace
+        var rssHubBaseURL = RSSHub.BaseURL()
+        
+        var body: some View {
+            VStack(spacing: 16) {
+                Image("Icon")
+                    .resizable()
+                    .frame(width: 100, height: 100, alignment: .center)
+                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                
+                Text("RSSHub Instance")
+                    .font(.system(size: 24, weight: .semibold, design: .default))
+                
+                Text(verbatim: "You are encouraged to host your own RSSHub instance for better usability. The official demo instance may be unreliable due to anti-crawler policies of some websites.")
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 8)
+                
+                if isEnteringRSSHubBaseURL {
+                    VStack(spacing: 16) {
+                        Text(verbatim: "Please enter the URL of the instance.")
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 8)
+                        
+                        ValidatedTextField(
+                            "RSSHub App URL",
+                            text: rssHubBaseURL.$string,
+                            validation: rssHubBaseURL.validate(string:)
+                        ).foregroundColor(.primary)
+                        .keyboardType(.URL)
+                        .disableAutocorrection(true)
+                        .padding(.horizontal, 10)
+                        .roundedRectangleBackground()
+                        
+                        WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                            currentPage = .userInfo
+                        }.matchedGeometryEffect(id: "Next", in: namespace)
+                    }.transition(OnboardingView.transition)
+                } else {
+                    VStack(spacing: 8) {
+                        WideButton("Learn more about Deployment", systemImage: "info.circle.fill") {
+                            openURL(URLComponents(string: "https://docs.rsshub.app/en/")!)
+                        }
+                        
+                        WideButton("Use My Own Instance", systemImage: "lock.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
+                            isEnteringRSSHubBaseURL = true
+                        }
+                        
+                        WideButton("Use Official Demo", systemImage: "exclamationmark.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
+                            rssHubBaseURL.string = RSSHub.officialDemoBaseURLString
+                            currentPage = .userInfo
+                        }.accentColor(.red)
+                    }.transition(OnboardingView.transition)
+                }
+                
             }.padding(.top, 20)
             .padding(.bottom, 8)
         }
@@ -252,7 +322,7 @@ struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ScrollView {
-                OnboardingView(currentPage: .subscribe)
+                OnboardingView(currentPage: .rssHubInstance)
                     .padding(20)
                     .navigationTitle("Onboarding")
             }
