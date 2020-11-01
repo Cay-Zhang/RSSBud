@@ -38,7 +38,7 @@ struct ContentView: View {
                                         ProgressView()
                                     }
                                     
-                                    WideButton("Read from Clipboard", systemImage: "arrow.up.doc.on.clipboard") {
+                                    WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground) {
                                         if let url = UIPasteboard.general.url?.components {
                                             viewModel.process(url: url)
                                         } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
