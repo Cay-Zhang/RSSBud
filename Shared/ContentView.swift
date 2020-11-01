@@ -226,7 +226,7 @@ struct NothingFoundView: View {
         }.padding(.horizontal, 8)
         .padding(.top, 20)
         .padding(.bottom, 8)
-        .frame(maxWidth: .infinity, idealHeight: 200)
+        .frame(maxWidth: .infinity)
         .background(Color(UIColor.secondarySystemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
