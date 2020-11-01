@@ -110,6 +110,9 @@ struct ContentView: View {
                     Button("Nothing Found") {
                         viewModel.process(url: URLComponents(string: "https://www.baidu.com/")!)
                     }
+                    Button("Toggle Onboarding") {
+                        withAnimation(OnboardingView.transitionAnimation) { isOnboarding.toggle() }
+                    }
                 } label: {
                     Image(systemName: "hammer.fill")
                 }
