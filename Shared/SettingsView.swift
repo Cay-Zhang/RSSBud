@@ -14,6 +14,8 @@ struct SettingsView: View {
     
     @ObservedObject var rulesCenter = RSSHub.Radar.rulesCenter
     @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) var _lastRemoteRulesFetchDate: Double?
+    @AppStorage("isOnboarding", store: RSSBud.userDefaults) var isOnboarding: Bool = true
+    @Environment(\.presentationMode) var presentationMode
     
     var lastRemoteRulesFetchDate: Date? {
         get { _lastRemoteRulesFetchDate.map(Date.init(timeIntervalSinceReferenceDate:)) }
@@ -27,45 +29,17 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("RSSHub Radar")) {
-                    HStack {
-                        Text("RSSHub URL")
-                        Spacer()
-                        ValidatedTextField(
-                            "RSSHub URL",
-                            text: storedBaseURL.$string,
-                            validation: storedBaseURL.validate(string:)
-                        ).foregroundColor(.secondary)
-                        .keyboardType(.URL)
-                        .disableAutocorrection(true)
-                        .multilineTextAlignment(.trailing)
-                    }
-                    
-                    NavigationLink(destination: RSSHub.Radar.RulesEditor()) {
-                        HStack {
-                            Text("Rules")
-                            Spacer()
-                            if let date = lastRemoteRulesFetchDate {
-                                Text("Updated \(date, style: .relative) ago")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                    
-                    HStack {
-                        Button(
-                            rulesCenter.isFetchingRemoteRules ? "Updating Rules..." : "Update Rules Now"
-                        ) {
-                            rulesCenter.fetchRemoteRules()
-                            rulesCenter.scheduleRemoteRulesFetchTask()
-                        }.environment(\.isEnabled, !rulesCenter.isFetchingRemoteRules)
-                        
-                        Spacer()
-                        
-                        if rulesCenter.isFetchingRemoteRules {
-                            ProgressView()
-                        }
-                    }
+                HStack {
+                    Text("RSSHub URL")
+                    Spacer()
+                    ValidatedTextField(
+                        "RSSHub URL",
+                        text: storedBaseURL.$string,
+                        validation: storedBaseURL.validate(string:)
+                    ).foregroundColor(.secondary)
+                    .keyboardType(.URL)
+                    .disableAutocorrection(true)
+                    .multilineTextAlignment(.trailing)
                 }
                 
                 NavigationLink(
@@ -73,6 +47,39 @@ struct SettingsView: View {
                     destination: IntegrationSettingsView(backgroundColor: Color(UIColor.systemGroupedBackground))
                         .navigationTitle("Quick Subscriptions")
                 )
+                
+                NavigationLink(destination: RSSHub.Radar.RulesEditor()) {
+                    HStack {
+                        Text("Rules")
+                        Spacer()
+                        if let date = lastRemoteRulesFetchDate {
+                            Text("Updated \(date, style: .relative) ago")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+                
+                HStack {
+                    Button(
+                        rulesCenter.isFetchingRemoteRules ? "Updating Rules..." : "Update Rules Now"
+                    ) {
+                        rulesCenter.fetchRemoteRules()
+                        rulesCenter.scheduleRemoteRulesFetchTask()
+                    }.environment(\.isEnabled, !rulesCenter.isFetchingRemoteRules)
+                    
+                    Spacer()
+                    
+                    if rulesCenter.isFetchingRemoteRules {
+                        ProgressView()
+                    }
+                }
+                
+                Button(isOnboarding ? "Skip Introduction" : "Restart Introduction") {
+                    withAnimation(OnboardingView.transitionAnimation) {
+                        isOnboarding.toggle()
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
             }.navigationTitle("Settings")
             .background(
                 Color(UIColor.systemGroupedBackground)
