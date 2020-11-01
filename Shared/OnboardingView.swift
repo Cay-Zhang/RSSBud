@@ -32,6 +32,10 @@ struct OnboardingView: View {
             RSSHubInstance(currentPage: $currentPage, openURL: openURL)
                 .transition(OnboardingView.transition)
                 .zIndex(4)
+        case .support:
+            Support(currentPage: $currentPage, openURL: openURL)
+                .transition(OnboardingView.transition)
+                .zIndex(5)
         }
     }
     
@@ -63,6 +67,7 @@ extension OnboardingView {
         case discover
         case subscribe
         case rssHubInstance
+        case support
     }
     
     struct Welcome: View {
@@ -243,7 +248,7 @@ extension OnboardingView {
                         .roundedRectangleBackground()
                         
                         WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
-//                            currentPage = .userInfo
+                            currentPage = .support
                         }.matchedGeometryEffect(id: "Next", in: namespace)
                     }.transition(OnboardingView.transition)
                 } else {
@@ -258,11 +263,65 @@ extension OnboardingView {
                         
                         WideButton("Use Official Demo", systemImage: "exclamationmark.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
                             rssHubBaseURL.string = RSSHub.officialDemoBaseURLString
-//                            currentPage = .userInfo
+                            currentPage = .support
                         }.accentColor(.red)
                     }.transition(OnboardingView.transition)
                 }
                 
+            }.padding(.top, 20)
+            .padding(.bottom, 8)
+        }
+    }
+    
+    struct Support: View {
+        
+        @Binding var currentPage: Page
+        var openURL: (URLComponents) -> Void = { _ in }
+        
+        @AppStorage("isOnboarding", store: RSSBud.userDefaults) var isOnboarding: Bool = true
+        @Environment(\.namespace) var namespace
+        
+        var body: some View {
+            VStack(spacing: 16) {
+                Image("Icon")
+                    .resizable()
+                    .frame(width: 100, height: 100, alignment: .center)
+                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                
+                Text("Support RSSBud")
+                    .font(.system(size: 24, weight: .semibold, design: .default))
+                
+                Text(verbatim: "RSSBud is open source and completely free under the MIT license. Your support is crucial to our development.")
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 8)
+                
+                VStack(spacing: 8) {
+                    WideButton("Star on GitHub!", systemImage: "star.fill") {
+                        openURL(URLComponents(string: "https://github.com/Cay-Zhang/RSSBud")!)
+                    }.accentColor(.yellow)
+                    
+                    WideButton("Join Telegram Discussion", systemImage: "paperplane.fill") {
+                        openURL(URLComponents(string: "https://t.me/RSSBud_Discussion")!)
+                    }
+                    
+                    WideButton("Submit New Rules", systemImage: "link.badge.plus") {
+                        openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
+                    }
+                    
+                    WideButton("Donate to RSSBud", systemImage: "yensign.circle.fill") {
+                        openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
+                    }.environment(\.isEnabled, false)
+                    
+                    HStack(spacing: 8) {
+                        WideButton("Start Over", systemImage: "arrow.left", withAnimation: OnboardingView.transitionAnimation) {
+                            currentPage = .welcome
+                        }
+                        
+                        WideButton("Done", systemImage: "checkmark", withAnimation: OnboardingView.transitionAnimation) {
+                            isOnboarding = false
+                        }
+                    }
+                }
             }.padding(.top, 20)
             .padding(.bottom, 8)
         }
@@ -273,7 +332,7 @@ struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ScrollView {
-                OnboardingView(currentPage: .rssHubInstance)
+                OnboardingView(currentPage: .support)
                     .padding(20)
                     .navigationTitle("Onboarding")
             }
