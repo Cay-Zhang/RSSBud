@@ -32,10 +32,6 @@ struct OnboardingView: View {
             RSSHubInstance(currentPage: $currentPage, openURL: openURL)
                 .transition(OnboardingView.transition)
                 .zIndex(4)
-        case .userInfo:
-            UserInfo(currentPage: $currentPage)
-                .transition(OnboardingView.transition)
-                .zIndex(5)
         }
     }
     
@@ -67,7 +63,6 @@ extension OnboardingView {
         case discover
         case subscribe
         case rssHubInstance
-        case userInfo
     }
     
     struct Welcome: View {
@@ -248,7 +243,7 @@ extension OnboardingView {
                         .roundedRectangleBackground()
                         
                         WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
-                            currentPage = .userInfo
+//                            currentPage = .userInfo
                         }.matchedGeometryEffect(id: "Next", in: namespace)
                     }.transition(OnboardingView.transition)
                 } else {
@@ -263,55 +258,11 @@ extension OnboardingView {
                         
                         WideButton("Use Official Demo", systemImage: "exclamationmark.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
                             rssHubBaseURL.string = RSSHub.officialDemoBaseURLString
-                            currentPage = .userInfo
+//                            currentPage = .userInfo
                         }.accentColor(.red)
                     }.transition(OnboardingView.transition)
                 }
                 
-            }.padding(.top, 20)
-            .padding(.bottom, 8)
-        }
-    }
-    
-    struct UserInfo: View {
-        
-        @Binding var currentPage: Page
-        
-        @Environment(\.namespace) var namespace
-        var rssHubBaseURL = RSSHub.BaseURL()
-        
-        var body: some View {
-            VStack(spacing: 16) {
-                
-                WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
-                    currentPage = .userInfo
-                }.matchedGeometryEffect(id: "Next", in: namespace)
-                
-                Text("RSSHub App URL")
-                    .fontWeight(.semibold)
-                
-                ValidatedTextField(
-                    "RSSHub App URL",
-                    text: rssHubBaseURL.$string,
-                    validation: rssHubBaseURL.validate(string:)
-                ).foregroundColor(.primary)
-                .keyboardType(.URL)
-                .disableAutocorrection(true)
-                .padding(.horizontal, 10)
-                .roundedRectangleBackground()
-                
-                Divider()
-                
-                Text("Quick Subscription")
-                    .fontWeight(.semibold)
-                
-                IntegrationSettingsView()
-                    .frame(height: 564)
-                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                
-                WideButton("Back", systemImage: "link.badge.plus", withAnimation: OnboardingView.transitionAnimation) {
-                    currentPage = .welcome
-                }
             }.padding(.top, 20)
             .padding(.bottom, 8)
         }
