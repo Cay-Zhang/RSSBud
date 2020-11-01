@@ -70,9 +70,14 @@ struct SettingsView: View {
                 
                 NavigationLink(
                     "Quick Subscriptions",
-                    destination: IntegrationSettingsView().navigationTitle("Quick Subscriptions")
+                    destination: IntegrationSettingsView(backgroundColor: Color(UIColor.systemGroupedBackground))
+                        .navigationTitle("Quick Subscriptions")
                 )
             }.navigationTitle("Settings")
+            .background(
+                Color(UIColor.systemGroupedBackground)
+                    .ignoresSafeArea()
+            )
         }.listStyle(InsetGroupedListStyle())
         .alert(isPresented: $isAlertPresented) {
             Alert(title: Text("Base URL is invalid."))
@@ -81,6 +86,7 @@ struct SettingsView: View {
 }
 
 struct IntegrationSettingsView: View {
+    var rowBackgroundColor: Color? = nil
     var backgroundColor: Color? = nil
     
     @Integration var integrations
@@ -120,8 +126,8 @@ struct IntegrationSettingsView: View {
                 default:
                     Text(key.rawValue).tag(key)
                 }
-            }.listRowBackground(backgroundColor)
-        }.background(backgroundColor)
+            }.listRowBackground(rowBackgroundColor)
+        }.background(backgroundColor?.ignoresSafeArea())
         .environment(\.editMode, .constant(.active))
     }
 }

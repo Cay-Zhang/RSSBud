@@ -191,13 +191,15 @@ extension OnboardingView {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
-                IntegrationSettingsView(backgroundColor: Color(UIColor.tertiarySystemBackground))
-                    .frame(height: 263)
-                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                    .background(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .stroke(Color.gray.opacity(0.5), lineWidth: 3)
-                    ).padding(.horizontal, 1.5)
+                IntegrationSettingsView(
+                    rowBackgroundColor: Color(UIColor.tertiarySystemBackground),
+                    backgroundColor: Color(UIColor.tertiarySystemBackground)
+                ).frame(height: 263)
+                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(Color.gray.opacity(0.5), lineWidth: 3)
+                ).padding(.horizontal, 1.5)
                 
                 VStack(spacing: 8) {
                     WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
