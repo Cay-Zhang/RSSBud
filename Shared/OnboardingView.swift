@@ -49,6 +49,7 @@ struct OnboardingView: View {
                 .frame(maxWidth: .infinity)
         }.clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         .environment(\.namespace, namespace)
+        .transition(OnboardingView.transition)
     }
 }
 
@@ -62,7 +63,7 @@ extension OnboardingView {
     
     static let transitionAnimation: Animation = Animation.spring(dampingFraction: 0.85)
     
-    enum Page {
+    enum Page: CaseIterable {
         case welcome
         case discover
         case subscribe
@@ -84,7 +85,7 @@ extension OnboardingView {
                     .frame(width: 100, height: 100, alignment: .center)
                     .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                 
-                Text("Welcome!")
+                Text("Welcome")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
                 Text(verbatim: "RSSBud can help you quickly discover and subscribe to RSS feeds of different websites, especially those provided by RSSHub.")
@@ -92,11 +93,11 @@ extension OnboardingView {
                     .padding(.horizontal, 8)
                 
                 VStack(spacing: 8) {
-                    WideButton("Learn more about RSSHub", systemImage: "info.circle.fill") {
+                    WideButton("Learn More About RSSHub", systemImage: "info.circle.fill") {
                         openURL(URLComponents(string: "https://docs.rsshub.app/en/")!)
                     }
                     
-                    WideButton("All about RSS", systemImage: "list.star") {
+                    WideButton("All About RSS", systemImage: "list.star") {
                         openURL(URLComponents(string: "https://github.com/AboutRSS/ALL-about-RSS")!)
                     }
                     
@@ -253,7 +254,7 @@ extension OnboardingView {
                     }.transition(OnboardingView.transition)
                 } else {
                     VStack(spacing: 8) {
-                        WideButton("Learn more about Deployment", systemImage: "info.circle.fill") {
+                        WideButton("Learn More About Deployment", systemImage: "info.circle.fill") {
                             openURL(URLComponents(string: "https://docs.rsshub.app/en/")!)
                         }
                         
@@ -332,10 +333,12 @@ struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ScrollView {
-                OnboardingView(currentPage: .support)
-                    .padding(20)
-                    .navigationTitle("Onboarding")
-            }
+                LazyVStack(spacing: 20) {
+                    ForEach(OnboardingView.Page.allCases, id: \.self) { page in
+                        OnboardingView(currentPage: page)
+                    }
+                }.padding(.horizontal, 20)
+            }.navigationTitle("Onboarding")
         }.colorScheme(.dark)
     }
 }
