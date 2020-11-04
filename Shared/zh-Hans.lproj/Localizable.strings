@@ -55,6 +55,8 @@
 
 "Onboarding Next" = "下一步";
 "Onboarding Start Over" = "重新开始";
+"Onboarding Restart" = "重启新手引导";
+"Onboarding Skip" = "跳过新手引导";
 
 "Onboarding Page 1 Title" = "欢迎";
 "Onboarding Page 1 Body" = "RSSBud 可以帮助你快速发现和订阅网站的 RSS 源。目前，RSSBud 仅支持由 RSSHub 生成的 RSS 源。";

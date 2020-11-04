@@ -74,7 +74,7 @@ struct SettingsView: View {
                     }
                 }
                 
-                Button(isOnboarding ? "Skip Introduction" : "Restart Introduction") {
+                Button(isOnboarding ? "Onboarding Skip" : "Onboarding Restart") {
                     withAnimation(OnboardingView.transitionAnimation) {
                         isOnboarding.toggle()
                         presentationMode.wrappedValue.dismiss()
