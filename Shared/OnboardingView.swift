@@ -85,10 +85,10 @@ extension OnboardingView {
                     .frame(width: 100, height: 100, alignment: .center)
                     .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                 
-                Text("Welcome")
+                Text("Onboarding Page 1 Title")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
-                Text(verbatim: "RSSBud can help you quickly discover and subscribe to RSS feeds of different websites, especially those provided by RSSHub.")
+                Text("Onboarding Page 1 Body")
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
@@ -101,7 +101,7 @@ extension OnboardingView {
                         openURL(URLComponents(string: "https://github.com/AboutRSS/ALL-about-RSS")!)
                     }
                     
-                    WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                    WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .discover
                     }.matchedGeometryEffect(id: "Next", in: namespace)
                 }

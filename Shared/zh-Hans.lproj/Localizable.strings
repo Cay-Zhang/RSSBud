@@ -52,3 +52,9 @@
 "Template Hash" = "模板哈希值";
 "Regular Expression" = "正则表达式";
 "Value" = "值";
+
+"Onboarding Next" = "下一步";
+
+"Onboarding Page 1 Title" = "欢迎";
+"Onboarding Page 1 Body" = "RSSBud 可以帮助你快速发现和订阅网站的 RSS 源。目前，RSSBud 仅支持由 RSSHub 生成的 RSS 源。";
+"Learn More About RSSHub" = "了解 RSSHub";
