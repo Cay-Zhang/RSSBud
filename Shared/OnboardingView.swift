@@ -226,16 +226,16 @@ extension OnboardingView {
                     .frame(width: 100, height: 100, alignment: .center)
                     .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                 
-                Text("RSSHub Instance")
+                Text("Onboarding Page 4 Title")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
-                Text(verbatim: "You are encouraged to host your own RSSHub instance for better usability. The official demo instance may be unreliable due to anti-crawler policies of some websites.")
+                Text("Onboarding Page 4 Body")
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
                 if isEnteringRSSHubBaseURL {
                     VStack(spacing: 16) {
-                        Text(verbatim: "Please enter the URL of the instance.")
+                        Text("Onboarding Page 4 Prompt")
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 8)
@@ -250,7 +250,7 @@ extension OnboardingView {
                         .padding(.horizontal, 10)
                         .roundedRectangleBackground()
                         
-                        WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                        WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                             currentPage = .support
                         }.matchedGeometryEffect(id: "Next", in: namespace)
                     }.transition(OnboardingView.transition)

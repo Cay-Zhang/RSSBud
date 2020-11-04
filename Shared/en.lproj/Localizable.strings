@@ -66,3 +66,10 @@
 "Onboarding Page 3 Title" = "Subscribe";
 "Onboarding Page 3 Body 1" = "RSSBud offers one-tap subscription to these RSS readers and services.";
 "Onboarding Page 3 Body 2" = "Please select the ones you use.";
+
+"Onboarding Page 4 Title" = "RSSHub Instance";
+"Onboarding Page 4 Body" = "You are encouraged to host your own RSSHub instance for better usability. The official demo instance may be unreliable due to anti-crawler policies of some websites.";
+"Learn More About Deployment" = "Learn More About Deployment";
+"Use My Own Instance" = "Use My Own Instance";
+"Use Official Demo" = "Use Official Demo";
+"Onboarding Page 4 Prompt" = "Please enter the URL of the instance.";
