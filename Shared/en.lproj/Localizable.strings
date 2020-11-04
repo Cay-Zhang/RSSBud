@@ -62,3 +62,7 @@
 "Onboarding Page 2 Title" = "Discover";
 "Onboarding Page 2 Body 1" = "RSSBud discovers RSS feeds by analyzing a website link according to a set of rules.";
 "Onboarding Page 2 Body 2" = "Preferably you would share the link to RSSBud using the system share sheet. But in case you only have the option to copy the link, you can also have him read your clipboard for it.";
+
+"Onboarding Page 3 Title" = "Subscribe";
+"Onboarding Page 3 Body 1" = "RSSBud offers one-tap subscription to these RSS readers and services.";
+"Onboarding Page 3 Body 2" = "Please select the ones you use.";

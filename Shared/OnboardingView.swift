@@ -179,14 +179,14 @@ extension OnboardingView {
                     .background(Color(UIColor.tertiarySystemBackground))
                     .clipShape(Circle())
                 
-                Text("Subscribe")
+                Text("Onboarding Page 3 Title")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
-                Text(verbatim: "RSSBud offers one-tap subscription to these RSS readers and services.")
+                Text("Onboarding Page 3 Body 1")
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
-                Text(verbatim: "Please select the ones you use.")
+                Text("Onboarding Page 3 Body 2")
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
@@ -202,7 +202,7 @@ extension OnboardingView {
                 ).padding(.horizontal, 1.5)
                 
                 VStack(spacing: 8) {
-                    WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                    WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .rssHubInstance
                     }.matchedGeometryEffect(id: "Next", in: namespace)
                 }
