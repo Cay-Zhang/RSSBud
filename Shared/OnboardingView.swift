@@ -333,14 +333,10 @@ extension OnboardingView {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            ScrollView {
-                LazyVStack(spacing: 20) {
-                    ForEach(OnboardingView.Page.allCases, id: \.self) { page in
-                        OnboardingView(currentPage: page)
-                    }
-                }.padding(.horizontal, 20)
-            }.navigationTitle("Onboarding")
+        ForEach(OnboardingView.Page.allCases, id: \.self) { page in
+            OnboardingView(currentPage: page)
+                .previewLayout(.sizeThatFits)
         }.colorScheme(.dark)
+        .environment(\.locale, Locale(identifier: "zh-CN"))
     }
 }
