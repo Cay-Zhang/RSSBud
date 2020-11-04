@@ -54,6 +54,7 @@
 "Value" = "值";
 
 "Onboarding Next" = "下一步";
+"Onboarding Start Over" = "重新开始";
 
 "Onboarding Page 1 Title" = "欢迎";
 "Onboarding Page 1 Body" = "RSSBud 可以帮助你快速发现和订阅网站的 RSS 源。目前，RSSBud 仅支持由 RSSHub 生成的 RSS 源。";
@@ -73,3 +74,9 @@
 "Use My Own Instance" = "使用自建实例";
 "Use Official Demo" = "使用官方实例";
 "Onboarding Page 4 Prompt" = "请输入实例的网址。";
+
+"Onboarding Page 5 Title" = "支持 RSSBud";
+"Onboarding Page 5 Body" = "RSSBud 在 MIT 协议下开源且完全免费。你的支持对我们很重要。";
+"Star on GitHub" = "在 GitHub 上星标本项目！";
+"Join Telegram Discussion" = "加入 Telegram 群组";
+"Donate to RSSBud" = "赞助 RSSBud";

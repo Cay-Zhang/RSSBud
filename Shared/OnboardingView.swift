@@ -291,15 +291,15 @@ extension OnboardingView {
                     .frame(width: 100, height: 100, alignment: .center)
                     .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                 
-                Text("Support RSSBud")
+                Text("Onboarding Page 5 Title")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
-                Text(verbatim: "RSSBud is open source and completely free under the MIT license. Your support is crucial to our development.")
+                Text("Onboarding Page 5 Body")
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
                 VStack(spacing: 8) {
-                    WideButton("Star on GitHub!", systemImage: "star.fill") {
+                    WideButton("Star on GitHub", systemImage: "star.fill") {
                         openURL(URLComponents(string: "https://github.com/Cay-Zhang/RSSBud")!)
                     }.accentColor(.yellow)
                     
@@ -316,7 +316,7 @@ extension OnboardingView {
                     }.environment(\.isEnabled, false)
                     
                     HStack(spacing: 8) {
-                        WideButton("Start Over", systemImage: "arrow.left", withAnimation: OnboardingView.transitionAnimation) {
+                        WideButton("Onboarding Start Over", systemImage: "arrow.left", withAnimation: OnboardingView.transitionAnimation) {
                             currentPage = .welcome
                         }
                         

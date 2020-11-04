@@ -54,6 +54,7 @@
 "Value" = "Value";
 
 "Onboarding Next" = "Next";
+"Onboarding Start Over" = "Start Over";
 
 "Onboarding Page 1 Title" = "Welcome";
 "Onboarding Page 1 Body" = "RSSBud can help you quickly discover and subscribe to RSS feeds of different websites, especially those provided by RSSHub.";
@@ -73,3 +74,9 @@
 "Use My Own Instance" = "Use My Own Instance";
 "Use Official Demo" = "Use Official Demo";
 "Onboarding Page 4 Prompt" = "Please enter the URL of the instance.";
+
+"Onboarding Page 5 Title" = "Support RSSBud";
+"Onboarding Page 5 Body" = "RSSBud is open source and completely free under the MIT license. Your support is crucial to our development.";
+"Star on GitHub" = "Star on GitHub!";
+"Join Telegram Discussion" = "Join Telegram Discussion";
+"Donate to RSSBud" = "Donate to RSSBud";
