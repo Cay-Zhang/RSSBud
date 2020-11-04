@@ -137,14 +137,14 @@ extension OnboardingView {
                         .clipShape(Circle())
                 }
                 
-                Text("Discover")
+                Text("Onboarding Page 2 Title")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
-                Text(verbatim: "RSSBud discovers RSS feeds by analyzing a website link according to a set of rules.")
+                Text("Onboarding Page 2 Body 1")
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
-                Text(verbatim: "Preferably you would share the link to RSSBud using the system share sheet. But in case you only have the option to copy the link, you can also have him read your clipboard for it.")
+                Text("Onboarding Page 2 Body 2")
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
@@ -154,7 +154,7 @@ extension OnboardingView {
                         openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
                     }
                     
-                    WideButton("Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                    WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .subscribe
                     }.matchedGeometryEffect(id: "Next", in: namespace)
                 }

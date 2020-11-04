@@ -58,3 +58,7 @@
 "Onboarding Page 1 Title" = "Welcome";
 "Onboarding Page 1 Body" = "RSSBud can help you quickly discover and subscribe to RSS feeds of different websites, especially those provided by RSSHub.";
 "Learn More About RSSHub" = "Learn More About RSSHub";
+
+"Onboarding Page 2 Title" = "Discover";
+"Onboarding Page 2 Body 1" = "RSSBud discovers RSS feeds by analyzing a website link according to a set of rules.";
+"Onboarding Page 2 Body 2" = "Preferably you would share the link to RSSBud using the system share sheet. But in case you only have the option to copy the link, you can also have him read your clipboard for it.";
