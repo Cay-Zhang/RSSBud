@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    var openURL: (URLComponents) -> Void = { _ in }
     var storedBaseURL = RSSHub.BaseURL()
     @State var baseURLString: String
     @State var isAlertPresented = false
@@ -22,8 +23,9 @@ struct SettingsView: View {
         set { _lastRemoteRulesFetchDate = newValue?.timeIntervalSinceReferenceDate }
     }
     
-    init() {
-        _baseURLString = State(wrappedValue: storedBaseURL.string)
+    init(openURL: @escaping (URLComponents) -> Void = { _ in }) {
+        self.openURL = openURL
+        self._baseURLString = State(wrappedValue: storedBaseURL.string)
     }
     
     var body: some View {

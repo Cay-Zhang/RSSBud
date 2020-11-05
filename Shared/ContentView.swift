@@ -84,7 +84,7 @@ struct ContentView: View {
         .environmentObject(viewModel)
         .alert($viewModel.alert)
         .sheet(isPresented: $isSettingsViewPresented) {
-            SettingsView()
+            SettingsView(openURL: openURL)
         }
     }
     
