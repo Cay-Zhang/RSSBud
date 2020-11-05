@@ -7,12 +7,6 @@
 */
 
 "Read From Clipboard" = "Read from Clipboard";
-"Updated %@ ago" = "Updated %@ ago";
-"Update Rules Now" = "Update Rules Now";
-"Updating Rules..." = "Updating Rules...";
-"Rules" = "Rules";
-"Settings" = "Settings";
-"Quick Subscriptions" = "Quick Subscriptions";
 "Subscribe" = "Subscribe";
 "Copy" = "Copy";
 "Parameters" = "Parameters";
@@ -21,6 +15,18 @@
 "Exclude..." = "Exclude...";
 "Delete" = "Delete";
 "Done" = "Done";
+
+"Settings" = "Settings";
+"Settings Section General" = "General";
+"Settings Section About" = "About";
+"Updated %@ ago" = "Updated %@ ago";
+"Update Rules Now" = "Update Rules Now";
+"Updating Rules..." = "Updating Rules...";
+"Rules" = "Rules";
+"Quick Subscriptions" = "Quick Subscriptions";
+"GitHub Repo Homepage" = "GitHub Repo Homepage";
+"Telegram Channel" = "Telegram Channel";
+"Telegram Group" = "Telegram Group";
 
 "Nothing Found" = "Nothing Found";
 "See What's Supported" = "See What's Supported";

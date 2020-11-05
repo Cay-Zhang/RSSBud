@@ -31,55 +31,75 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                HStack {
-                    Text("RSSHub URL")
-                    Spacer()
-                    ValidatedTextField(
-                        "RSSHub URL",
-                        text: storedBaseURL.$string,
-                        validation: storedBaseURL.validate(string:)
-                    ).foregroundColor(.secondary)
-                    .keyboardType(.URL)
-                    .disableAutocorrection(true)
-                    .multilineTextAlignment(.trailing)
-                }
-                
-                NavigationLink(
-                    "Quick Subscriptions",
-                    destination: IntegrationSettingsView(backgroundColor: Color(UIColor.systemGroupedBackground))
-                        .navigationTitle("Quick Subscriptions")
-                )
-                
-                NavigationLink(destination: RSSHub.Radar.RulesEditor()) {
+                Section(header: Text("Settings Section General")) {
                     HStack {
-                        Text("Rules")
+                        Text("RSSHub URL")
                         Spacer()
-                        if let date = lastRemoteRulesFetchDate {
-                            Text("Updated \(date, style: .relative) ago")
-                                .foregroundColor(.secondary)
+                        ValidatedTextField(
+                            "RSSHub URL",
+                            text: storedBaseURL.$string,
+                            validation: storedBaseURL.validate(string:)
+                        ).foregroundColor(.secondary)
+                        .keyboardType(.URL)
+                        .disableAutocorrection(true)
+                        .multilineTextAlignment(.trailing)
+                    }
+                    
+                    NavigationLink(
+                        "Quick Subscriptions",
+                        destination: IntegrationSettingsView(backgroundColor: Color(UIColor.systemGroupedBackground))
+                            .navigationTitle("Quick Subscriptions")
+                    )
+                    
+                    NavigationLink(destination: RSSHub.Radar.RulesEditor()) {
+                        HStack {
+                            Text("Rules")
+                            Spacer()
+                            if let date = lastRemoteRulesFetchDate {
+                                Text("Updated \(date, style: .relative) ago")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    
+                    HStack {
+                        Button(
+                            rulesCenter.isFetchingRemoteRules ? "Updating Rules..." : "Update Rules Now",
+                            systemImage: "arrow.clockwise"
+                        ) {
+                            rulesCenter.fetchRemoteRules()
+                            rulesCenter.scheduleRemoteRulesFetchTask()
+                        }.environment(\.isEnabled, !rulesCenter.isFetchingRemoteRules)
+                        
+                        Spacer()
+                        
+                        if rulesCenter.isFetchingRemoteRules {
+                            ProgressView()
                         }
                     }
                 }
                 
-                HStack {
-                    Button(
-                        rulesCenter.isFetchingRemoteRules ? "Updating Rules..." : "Update Rules Now"
-                    ) {
-                        rulesCenter.fetchRemoteRules()
-                        rulesCenter.scheduleRemoteRulesFetchTask()
-                    }.environment(\.isEnabled, !rulesCenter.isFetchingRemoteRules)
-                    
-                    Spacer()
-                    
-                    if rulesCenter.isFetchingRemoteRules {
-                        ProgressView()
+                Section(header: Text("Settings Section About")) {
+                    Button("GitHub Repo Homepage", systemImage: "star.fill") {
+                        openURL(URLComponents(string: "https://github.com/Cay-Zhang/RSSBud")!)
                     }
-                }
-                
-                Button(isOnboarding ? "Onboarding Skip" : "Onboarding Restart") {
-                    withAnimation(OnboardingView.transitionAnimation) {
-                        isOnboarding.toggle()
-                        presentationMode.wrappedValue.dismiss()
+                    
+                    Button("Telegram Channel", systemImage: "paperplane.fill") {
+                        openURL(URLComponents(string: "https://t.me/RSSBud")!)
+                    }
+                    
+                    Button("Telegram Group", systemImage: "paperplane.fill") {
+                        openURL(URLComponents(string: "https://t.me/RSSBud_Discussion")!)
+                    }
+                    
+                    Button(
+                        isOnboarding ? "Onboarding Skip" : "Onboarding Restart",
+                        systemImage: "newspaper.fill"
+                    ) {
+                        withAnimation(OnboardingView.transitionAnimation) {
+                            isOnboarding.toggle()
+                            presentationMode.wrappedValue.dismiss()
+                        }
                     }
                 }
             }.navigationTitle("Settings")
