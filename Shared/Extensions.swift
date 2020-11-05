@@ -110,3 +110,9 @@ extension EnvironmentValues {
         }
     }
 }
+
+extension Button {
+    init(_ titleKey: LocalizedStringKey, systemImage iconName: String, action: @escaping () -> Void) where Label == SwiftUI.Label<Text, Image> {
+        self.init(action: action, label: { Label(titleKey, systemImage: iconName) })
+    }
+}
