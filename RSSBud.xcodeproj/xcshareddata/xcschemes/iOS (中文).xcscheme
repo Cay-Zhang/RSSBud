@@ -26,8 +26,30 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      language = "zh-Hans"
+      region = "CN">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1C6E62942556BF48006087EF"
+               BuildableName = "PromoAssetGeneration.xctest"
+               BlueprintName = "PromoAssetGeneration"
+               ReferencedContainer = "container:RSSBud.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EE7CD90524DD541100FAA837"
+               BuildableName = "RSSBudTests.xctest"
+               BlueprintName = "RSSBudTests"
+               ReferencedContainer = "container:RSSBud.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

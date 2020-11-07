@@ -15,6 +15,7 @@
 		1C58359F24EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
 		1C5835A024EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
 		1C5835A124EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
+		1C6E62982556BF48006087EF /* PromoAssetGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */; };
 		1C8221A424EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
 		1C8221A524EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
 		1C8221A624EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
@@ -92,6 +93,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1C6E629A2556BF48006087EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEB7576D24B2B6E600F26CF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EEB7577824B2B6E700F26CF7;
+			remoteInfo = iOS;
+		};
 		EE7CD90B24DD541100FAA837 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EEB7576D24B2B6E600F26CF7 /* Project object */;
@@ -127,6 +135,9 @@
 		1C3221A125192F6A00CD9F56 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1C3221A725192F6E00CD9F56 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1C58359D24EA8D9100FB8523 /* Integration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integration.swift; sourceTree = "<group>"; };
+		1C6E62952556BF48006087EF /* PromoAssetGeneration.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PromoAssetGeneration.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoAssetGeneration.swift; sourceTree = "<group>"; };
+		1C6E62992556BF48006087EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C8221A324EAA73900E139F3 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryEditor.swift; sourceTree = "<group>"; };
 		1CA2079A24F3DEAC00C6EDD5 /* RSSHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSHub.swift; sourceTree = "<group>"; };
@@ -168,6 +179,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1C6E62922556BF48006087EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EE7CD90324DD541100FAA837 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -199,6 +217,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C6E62962556BF48006087EF /* PromoAssetGeneration */ = {
+			isa = PBXGroup;
+			children = (
+				1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */,
+				1C6E62992556BF48006087EF /* Info.plist */,
+			);
+			path = PromoAssetGeneration;
+			sourceTree = "<group>";
+		};
 		EE000A7624B41CAA00979B1A /* RSSHub Radar */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,6 +261,7 @@
 				EE7CD90724DD541100FAA837 /* RSSBudTests */,
 				EEC4A4F124E2B91A005041CA /* Readme Assets */,
 				EEC4A4FB24E3D032005041CA /* Action Extension */,
+				1C6E62962556BF48006087EF /* PromoAssetGeneration */,
 				EEB7577A24B2B6E700F26CF7 /* Products */,
 				EEF0A67E24B4730E0038A301 /* Frameworks */,
 			);
@@ -269,6 +297,7 @@
 				EEB7578124B2B6E700F26CF7 /* RSSBud.app */,
 				EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */,
 				EEC4A4FA24E3D032005041CA /* Action Extension.appex */,
+				1C6E62952556BF48006087EF /* PromoAssetGeneration.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -329,6 +358,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1C6E62942556BF48006087EF /* PromoAssetGeneration */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C6E629E2556BF48006087EF /* Build configuration list for PBXNativeTarget "PromoAssetGeneration" */;
+			buildPhases = (
+				1C6E62912556BF48006087EF /* Sources */,
+				1C6E62922556BF48006087EF /* Frameworks */,
+				1C6E62932556BF48006087EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1C6E629B2556BF48006087EF /* PBXTargetDependency */,
+			);
+			name = PromoAssetGeneration;
+			productName = PromoAssetGeneration;
+			productReference = 1C6E62952556BF48006087EF /* PromoAssetGeneration.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		EE7CD90524DD541100FAA837 /* RSSBudTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EE7CD90D24DD541100FAA837 /* Build configuration list for PBXNativeTarget "RSSBudTests" */;
@@ -410,9 +457,13 @@
 		EEB7576D24B2B6E600F26CF7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1200;
+				LastSwiftUpdateCheck = 1210;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
+					1C6E62942556BF48006087EF = {
+						CreatedOnToolsVersion = 12.1;
+						TestTargetID = EEB7577824B2B6E700F26CF7;
+					};
 					EE7CD90524DD541100FAA837 = {
 						CreatedOnToolsVersion = 12.0;
 						TestTargetID = EEB7577824B2B6E700F26CF7;
@@ -448,11 +499,19 @@
 				EEB7578024B2B6E700F26CF7 /* macOS */,
 				EE7CD90524DD541100FAA837 /* RSSBudTests */,
 				EEC4A4F924E3D032005041CA /* Action Extension */,
+				1C6E62942556BF48006087EF /* PromoAssetGeneration */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1C6E62932556BF48006087EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EE7CD90424DD541100FAA837 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -517,6 +576,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1C6E62912556BF48006087EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C6E62982556BF48006087EF /* PromoAssetGeneration.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EE7CD90224DD541100FAA837 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -596,6 +663,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1C6E629B2556BF48006087EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EEB7577824B2B6E700F26CF7 /* iOS */;
+			targetProxy = 1C6E629A2556BF48006087EF /* PBXContainerItemProxy */;
+		};
 		EE7CD90C24DD541100FAA837 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EEB7577824B2B6E700F26CF7 /* iOS */;
@@ -621,6 +693,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1C6E629C2556BF48006087EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 459NR5CZG8;
+				INFOPLIST_FILE = PromoAssetGeneration/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.CayZhang.RSSBud.PromoAssetGeneration;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = iOS;
+			};
+			name = Debug;
+		};
+		1C6E629D2556BF48006087EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 459NR5CZG8;
+				INFOPLIST_FILE = PromoAssetGeneration/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.CayZhang.RSSBud.PromoAssetGeneration;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = iOS;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		EE7CD90E24DD541100FAA837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -934,6 +1049,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1C6E629E2556BF48006087EF /* Build configuration list for PBXNativeTarget "PromoAssetGeneration" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C6E629C2556BF48006087EF /* Debug */,
+				1C6E629D2556BF48006087EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		EE7CD90D24DD541100FAA837 /* Build configuration list for PBXNativeTarget "RSSBudTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

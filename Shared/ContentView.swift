@@ -139,8 +139,10 @@ extension ContentView {
         
         var cancelBag = Set<AnyCancellable>()
         
-        init(detectedFeeds: [RSSHub.Radar.DetectedFeed]? = nil) {
+        init(originalURL: URLComponents? = nil, detectedFeeds: [RSSHub.Radar.DetectedFeed]? = nil, queryItems: [URLQueryItem] = []) {
+            self.originalURL = originalURL
             self.detectedFeeds = detectedFeeds
+            self.queryItems = queryItems
         }
         
         func process(url: URLComponents) {
