@@ -22,21 +22,30 @@ class PromoAssetGeneration: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testScreenshot1() throws {
         let app = XCUIApplication()
+        app.launchArguments = ["-promo-asset-generation", "1"]
         app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        _ = app.wait(for: .unknown, timeout: 2)
+        takeScreenshot(name: "Page 1")
     }
+    
+    func testScreenshot2() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-promo-asset-generation", "2"]
+        app.launch()
+        app.navigationBars["RSSBud"].buttons["gearshape.fill"].tap()
+        _ = app.wait(for: .unknown, timeout: 2)
+        takeScreenshot(name: "Page 2")
+    }
+}
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+extension PromoAssetGeneration {
+    func takeScreenshot(name: String? = nil) {
+        let fullScreenshot = XCUIScreen.main.screenshot()
+        let screenshot = XCTAttachment(screenshot: fullScreenshot, quality: .original)
+        screenshot.name = name ?? "\(name ?? "Untitled")-\(UIDevice.current.name).png"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
     }
 }
