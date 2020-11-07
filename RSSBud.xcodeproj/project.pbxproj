@@ -138,6 +138,7 @@
 		1C6E62952556BF48006087EF /* PromoAssetGeneration.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PromoAssetGeneration.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoAssetGeneration.swift; sourceTree = "<group>"; };
 		1C6E62992556BF48006087EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C6E62A4255706D7006087EF /* PRIVACY_POLICY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PRIVACY_POLICY.md; sourceTree = "<group>"; };
 		1C8221A324EAA73900E139F3 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryEditor.swift; sourceTree = "<group>"; };
 		1CA2079A24F3DEAC00C6EDD5 /* RSSHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSHub.swift; sourceTree = "<group>"; };
@@ -254,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				EEC4A4F024E2B8C4005041CA /* README.md */,
+				1C6E62A4255706D7006087EF /* PRIVACY_POLICY.md */,
 				EEB7579624B2EA6D00F26CF7 /* Playgrounds */,
 				EEB7577124B2B6E600F26CF7 /* Shared */,
 				EEB7577B24B2B6E700F26CF7 /* iOS */,
