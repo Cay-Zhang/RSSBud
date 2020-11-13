@@ -6,7 +6,7 @@
 <a href="https://github.com/Cay-Zhang/SwiftSpeech/blob/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square"></a>
 </p>
 
-> RSSBud 是一个 [RSSHub](https://github.com/DIYgod/RSSHub) 的辅助 iOS App，和 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 类似，他可以帮助你快速发现和订阅网站的 RSS。此外，他还支持编辑 RSSHub 的通用参数 (用于过滤等)。
+> RSSBud 是一个 [RSSHub](https://github.com/DIYgod/RSSHub) 的辅助 iOS App，和 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 类似，他可以帮助你快速发现和订阅网站的 RSS。此外，他还支持 RSSHub 的通用参数 (实现过滤、获取全文等功能)。
 
 [Telegram 群](https://t.me/RSSBud_Discussion) | [Telegram 频道](https://t.me/RSSBud)
 
@@ -19,6 +19,8 @@
 <a href="https://apps.apple.com/cn/app/rssbud/id1531443645?itsct=apps_box&amp;itscg=30200"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/zh-CN?size=250x83&amp;releaseDate=1605052800&h=3dc9b44d4b825017f8746f19cec2b07f" alt="Download on the App Store" width="200"></a>
 
 <img src="https://tools-qr-production.s3.amazonaws.com/output/apple-toolbox/dace82ddc6942d582d27ad4d2ba31d58/c6e9f5d0-cee7-4523-ac64-ca89de19e8dc.png" width="200">
+
+订阅 [Telegram 频道](https://t.me/RSSBud) 以获取更新信息。
 
 ## 功能
 - [x] 检测适用于网页 (或 App 内分享) 的 RSSHub 源 (几乎支持所有 RSSHub Radar 的规则)
@@ -33,21 +35,11 @@
 - [ ] 检测适用于网站的 RSSHub 源
 - [ ] 主动搜寻 RSS 源
 
-## 参与公测
-[TestFlight Public Link](https://testflight.apple.com/join/rjCVzzHP)
+## 参与 Beta 测试
+加入 [Telegram 群](https://t.me/RSSBud_Discussion) 以获得 Beta 测试详情。
 
-欢迎加入 [Telegram 群](https://t.me/RSSBud_Discussion) 进行反馈。
-
-> 记得先右上角设置 RSSHub 域名和快速订阅选项。
-
-## 使用 Xcode 12 编译
-[安装](https://developer.apple.com/download/) 并打开 **Xcode 12**，打开下面的 URL 克隆仓库，在设置好开发者信息之后即可在实机/虚拟机上运行。
-
-> 若要使用分享菜单插件 (Action Extension)，请在 iOS 和 Action Extension 这两个 Target 中设置你自己的 App Group 并修改 `RSSBud.appGroupIdentifier`。
-
-```
-xcode://clone?repo=https%3A%2F%2Fgithub.com%2FCay-Zhang%2FRSSBud
-```
+## 自行编译须知
+若要使用分享菜单插件 (Action Extension)，请在 iOS 和 Action Extension 这两个 Target 中设置你自己的 App Group 并修改 `RSSBud.appGroupIdentifier`。
 
 ## 规则
 RSSBud 和 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 使用同一份 [规则](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js)，且均支持自动更新。
