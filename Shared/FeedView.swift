@@ -64,8 +64,9 @@ struct FeedView: View {
                     }
                 }
             } label: {
-                Label("Subscribe", systemImage: "ellipsis")
-            }.roundedRectangleBackground()
+                Label("Subscribe", systemImage: "arrowshape.turn.up.right.fill")
+                    .roundedRectangleBackground()
+            }
         }
     }
     
