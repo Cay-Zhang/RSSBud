@@ -103,7 +103,7 @@ extension OnboardingView {
                     
                     WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .discover
-                    }.matchedGeometryEffect(id: "Next", in: namespace)
+                    }
                 }
             }.padding(.top, 20)
             .padding(.bottom, 8)
@@ -156,7 +156,7 @@ extension OnboardingView {
                     
                     WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .subscribe
-                    }.matchedGeometryEffect(id: "Next", in: namespace)
+                    }
                 }
             }.padding(.top, 20)
             .padding(.bottom, 8)
@@ -204,7 +204,7 @@ extension OnboardingView {
                 VStack(spacing: 8) {
                     WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .rssHubInstance
-                    }.matchedGeometryEffect(id: "Next", in: namespace)
+                    }
                 }
             }.padding(.top, 20)
             .padding(.bottom, 8)
@@ -252,7 +252,7 @@ extension OnboardingView {
                         
                         WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                             currentPage = .support
-                        }.matchedGeometryEffect(id: "Next", in: namespace)
+                        }
                     }.transition(OnboardingView.transition)
                 } else {
                     VStack(spacing: 8) {
