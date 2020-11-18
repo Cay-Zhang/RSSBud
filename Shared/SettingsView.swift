@@ -103,7 +103,15 @@ struct SettingsView: View {
                     }
                 }
             }.navigationTitle("Settings")
-            .background(
+            .toolbar {
+                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            }.background(
                 Color(UIColor.systemGroupedBackground)
                     .ignoresSafeArea()
             )
