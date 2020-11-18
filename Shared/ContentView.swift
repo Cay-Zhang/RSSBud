@@ -205,25 +205,25 @@ struct NothingFoundView: View {
                 .foregroundColor(.accentColor)
             Text("Nothing Found")
                 .font(.system(size: 24, weight: .semibold, design: .default))
-            if let urlString = url?.string {
-                Text(verbatim: urlString)
-                    .foregroundColor(.secondary)
+            if let urlString = url?.string?.removingPercentEncoding {
+                Menu {
+                    Button("Copy", systemImage: "doc.on.doc.fill") {
+                        UIPasteboard.general.url = url?.url
+                    }
+                } label: {
+                    Text(verbatim: urlString)
+                        .foregroundColor(.secondary)
+                }
             }
             
-            WideButton("See What's Supported", systemImage: "text.book.closed.fill") {
-                openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
-            }
-            
-            WideButton("Submit New Rules", systemImage: "link.badge.plus") {
-                openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
-            }
-            
-            Divider()
-            
-            Text("Can be detected by RSSHub Radar?").fontWeight(.semibold)
-            
-            WideButton("Contact Developer", systemImage: "hammer.fill") {
-                openURL(URLComponents(string: "https://t.me/RSSBud_Discussion")!)
+            VStack(spacing: 8) {
+                WideButton("See What's Supported", systemImage: "text.book.closed.fill") {
+                    openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
+                }
+                
+                WideButton("Submit New Rules", systemImage: "link.badge.plus") {
+                    openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
+                }
             }
         }.padding(.horizontal, 8)
         .padding(.top, 20)
@@ -242,7 +242,12 @@ struct ContentView_Previews: PreviewProvider {
     ])
     
     static var previews: some View {
-        ContentView(viewModel: viewModel)
+        Group {
+            ContentView(viewModel: viewModel)
+            
+            NothingFoundView(url: URLComponents(autoPercentEncoding: "https://www.baidu.com/s?word=你好")!)
+                .padding(.horizontal, 20)
+        }
     }
 }
 
