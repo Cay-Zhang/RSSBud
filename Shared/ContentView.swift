@@ -97,31 +97,29 @@ struct ContentView: View {
             }
         }
         
-        ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-            HStack {
-                #if DEBUG
-                Menu {
-                    Button("Analyze") {
-                        viewModel.process(url: URLComponents(string: "https://space.bilibili.com/17404347/")!)
-                    }
-                    Button("Error") {
-                        viewModel.process(url: URLComponents(string: "example.com")!)
-                    }
-                    Button("Nothing Found") {
-                        viewModel.process(url: URLComponents(string: "https://www.baidu.com/")!)
-                    }
-                    Button("Toggle Onboarding") {
-                        withAnimation(OnboardingView.transitionAnimation) { isOnboarding.toggle() }
-                    }
-                } label: {
-                    Image(systemName: "hammer.fill")
+        ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
+            #if DEBUG
+            Menu {
+                Button("Analyze") {
+                    viewModel.process(url: URLComponents(string: "https://space.bilibili.com/17404347/")!)
                 }
-                #endif
-                Button {
-                    isSettingsViewPresented.toggle()
-                } label: {
-                    Image(systemName: "gearshape.fill")
+                Button("Error") {
+                    viewModel.process(url: URLComponents(string: "example.com")!)
                 }
+                Button("Nothing Found") {
+                    viewModel.process(url: URLComponents(string: "https://www.baidu.com/")!)
+                }
+                Button("Toggle Onboarding") {
+                    withAnimation(OnboardingView.transitionAnimation) { isOnboarding.toggle() }
+                }
+            } label: {
+                Image(systemName: "hammer.fill")
+            }
+            #endif
+            Button {
+                isSettingsViewPresented.toggle()
+            } label: {
+                Image(systemName: "gearshape.fill")
             }
         }
     }
