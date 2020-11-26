@@ -42,6 +42,10 @@ extension URLComponents {
         return copy
     }
     
+    func prepending(_ prefix: String) -> URLComponents? {
+        return self.string.flatMap { URLComponents(string: prefix + $0) }
+    }
+    
     func replacing(scheme: String) -> URLComponents {
         var copy = self
         copy.scheme = scheme

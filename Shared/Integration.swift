@@ -35,7 +35,7 @@ import SwiftUI
     func url(forAdding feedURL: URLComponents, to key: Integration.Key) -> URLComponents? {
         switch key {
         case .systemDefaultReader:
-            return feedURL.replacing(scheme: "feed")
+            return feedURL.prepending("feed:")
         case .egoReader:
             return feedURL.string
                 .map { [URLQueryItem(name: "url", value: $0)] }
@@ -43,7 +43,7 @@ import SwiftUI
                     URLComponents(string: "egoreader://subscribe")?.appending(queryItems: $0)
                 }
         case .reeder:
-            return feedURL.replacing(scheme: "reeder")
+            return feedURL.prepending("reeder:")
         case .fieryFeeds:
             return feedURL.string
                 .flatMap {
