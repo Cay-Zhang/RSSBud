@@ -90,8 +90,6 @@ class RSSBudTests: XCTestCase {
     }
     
     func testMobileSubdomains() {
-        RSSHub.Radar.rulesCenter.setRules(RSSHub.Radar.rulesCenter.bundledRules())
-        
         let expectation1 = XCTestExpectation(description: "Detect the feed from the url containing a mobile subdomain.")
         let urlString1 = "https://m.zhaishuyuan.com/book/38082"
         let url1 = URLComponents(autoPercentEncoding: urlString1)!
@@ -122,9 +120,12 @@ class RSSBudTests: XCTestCase {
     func testRSSHubRadarRulesConsistency() {
         let expectation = XCTestExpectation(description: "Remote rules are equal to bundled rules.")
         
-        RSSHub.Radar.rulesCenter.remoteRules()
+        let path = Bundle.main.path(forResource: "radar-rules", ofType: "js")!
+        let bundledRules = try! String(contentsOfFile: path)
+        
+        RuleManager.shared.remoteRules()
             .sink { _ in } receiveValue: { remoteRules in
-                XCTAssertEqual(remoteRules, RSSHub.Radar.rulesCenter.bundledRules(), "Remote rules and bundled rules are different.")
+                XCTAssertEqual(remoteRules, bundledRules, "Remote rules and bundled rules are different.")
                 expectation.fulfill()
             }.store(in: &self.cancelBag)
         

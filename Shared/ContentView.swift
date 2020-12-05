@@ -141,6 +141,11 @@ extension ContentView {
             self.originalURL = originalURL
             self.detectedFeeds = detectedFeeds
             self.queryItems = queryItems
+            
+            RSSHub.Radar.onFinishReloadingRules
+                .sink { [weak self] in
+                    self?.originalURL.map { self?.process(url: $0) }
+                }.store(in: &cancelBag)
         }
         
         func process(url: URLComponents) {
