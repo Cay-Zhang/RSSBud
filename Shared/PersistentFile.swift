@@ -17,18 +17,18 @@ final class PersistentFile: ObservableObject {
     var source: DispatchSourceFileSystemObject!
 
     var content: String {
-        get { _string }
+        get { _content }
         set { try? newValue.write(to: url, atomically: true, encoding: .utf8) }
     }
     
     var contentPublisher: AnyPublisher<String, Never> {
-        $_string.eraseToAnyPublisher()
+        $_content.eraseToAnyPublisher()
     }
     
-    @Published var _string: String = ""
+    @Published var _content: String = ""
     
     init(url: URL, defaultContentURL: URL) throws {
-        print(url)
+        print("Persistent file: \(url)")
         self.url = url
         self.defaultContentURL = defaultContentURL
         try buildSource()
@@ -92,16 +92,12 @@ final class PersistentFile: ObservableObject {
     func read() throws {
         try fileHandle.seek(toOffset: 0)
         if let content = try fileHandle.readToEnd().flatMap({ String(data: $0, encoding: .utf8) }) {
-            print("Updated content (fileHandle): " + content)
-//            DispatchQueue.main.sync {
-                _string = content
-//            }
+            print("Read content (fileHandle): " + content.lazy.split(separator: "\n").prefix(5).joined(separator: "\n"))
+            _content = content
         } else {
             let content = try String(contentsOf: url, encoding: .utf8)
-            print("Updated content (String.init): " + content)
-            DispatchQueue.main.sync {
-                _string = content
-            }
+            print("Read content (String.init): " + content.lazy.split(separator: "\n").prefix(5).joined(separator: "\n"))
+            _content = content
         }
     }
 }
