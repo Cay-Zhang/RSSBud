@@ -13,7 +13,7 @@ struct SettingsView: View {
     @State var baseURLString: String
     @State var isAlertPresented = false
     
-    @ObservedObject var rulesCenter = RSSHub.Radar.rulesCenter
+    @ObservedObject var ruleManager = RuleManager.shared
     @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) var _lastRemoteRulesFetchDate: Double?
     @AppStorage("isOnboarding", store: RSSBud.userDefaults) var isOnboarding: Bool = true
     @Environment(\.presentationMode) var presentationMode
@@ -64,16 +64,16 @@ struct SettingsView: View {
                     
                     HStack {
                         Button(
-                            rulesCenter.isFetchingRemoteRules ? "Updating Rules..." : "Update Rules Now",
+                            ruleManager.isFetchingRemoteRules ? "Updating Rules..." : "Update Rules Now",
                             systemImage: "arrow.clockwise"
                         ) {
-                            rulesCenter.fetchRemoteRules()
-                            rulesCenter.scheduleRemoteRulesFetchTask()
-                        }.environment(\.isEnabled, !rulesCenter.isFetchingRemoteRules)
+                            ruleManager.fetchRemoteRules()
+                            ruleManager.scheduleRemoteRulesFetchTask()
+                        }.environment(\.isEnabled, !ruleManager.isFetchingRemoteRules)
                         
                         Spacer()
                         
-                        if rulesCenter.isFetchingRemoteRules {
+                        if ruleManager.isFetchingRemoteRules {
                             ProgressView()
                         }
                     }
@@ -171,7 +171,7 @@ struct IntegrationSettingsView: View {
 
 extension RSSHub.Radar {
     struct RulesEditor: View {
-        @State var rules: String = RSSHub.Radar.rulesCenter.rules
+        @State var rules: String = RSSHub.Radar.localRules.content
         
         var body: some View {
             TextEditor(text: $rules)
