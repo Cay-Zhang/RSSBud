@@ -120,3 +120,19 @@ extension Button {
         self.init(action: action, label: { Label(titleKey, systemImage: iconName) })
     }
 }
+
+extension DispatchSource.FileSystemEvent: CustomStringConvertible {
+    public var description: String {
+        var cases = [String]()
+        if contains(.all)     { cases.append("all") }
+        if contains(.attrib)  { cases.append("attrib") }
+        if contains(.delete)  { cases.append("delete") }
+        if contains(.extend)  { cases.append("extend") }
+        if contains(.funlock) { cases.append("funlock") }
+        if contains(.link)    { cases.append("link") }
+        if contains(.rename)  { cases.append("rename") }
+        if contains(.revoke)  { cases.append("revoke") }
+        if contains(.write)   { cases.append("write") }
+        return cases.joined(separator: ", ")
+    }
+}
