@@ -23,6 +23,7 @@ class RuleManager: ObservableObject {
     
     init() {
         RSSHub.Radar.localRules.contentPublisher
+            .dropFirst()
             .map { _ in Date() }
             .assign(to: \.lastRemoteRulesFetchDate, on: self)
             .store(in: &cancelBag)
