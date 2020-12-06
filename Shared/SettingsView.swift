@@ -59,6 +59,9 @@ struct SettingsView: View {
                             Text("Access Key")
                             Spacer()
                             SecureField("Access Key", text: rssHubAccessControl.$accessKey)
+                                .foregroundColor(.secondary)
+                                .disableAutocorrection(true)
+                                .multilineTextAlignment(.trailing)
                         }
                     }
                     
