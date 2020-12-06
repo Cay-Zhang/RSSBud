@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,6 +41,8 @@
 		1CE03F33257B7EC500F38061 /* RuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE03F31257B7EC500F38061 /* RuleManager.swift */; };
 		1CE03F34257B7EC500F38061 /* RuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE03F31257B7EC500F38061 /* RuleManager.swift */; };
 		1CE03F35257B7EC500F38061 /* RuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE03F31257B7EC500F38061 /* RuleManager.swift */; };
+		1CE03F56257C82E200F38061 /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 1CE03F55257C82E200F38061 /* Valet */; };
+		1CE03F5D257C8C9000F38061 /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 1CE03F5C257C8C9000F38061 /* Valet */; };
 		EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EE000A8D24B41E1000979B1A /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
@@ -208,6 +210,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CE03F56257C82E200F38061 /* Valet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +225,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CE03F5D257C8C9000F38061 /* Valet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +428,7 @@
 			);
 			name = iOS;
 			packageProductDependencies = (
+				1CE03F55257C82E200F38061 /* Valet */,
 			);
 			productName = iOS;
 			productReference = EEB7577924B2B6E700F26CF7 /* RSSBud.app */;
@@ -461,6 +466,9 @@
 			dependencies = (
 			);
 			name = "Action Extension";
+			packageProductDependencies = (
+				1CE03F5C257C8C9000F38061 /* Valet */,
+			);
 			productName = "Action Extension";
 			productReference = EEC4A4FA24E3D032005041CA /* Action Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -504,6 +512,7 @@
 			);
 			mainGroup = EEB7576C24B2B6E600F26CF7;
 			packageReferences = (
+				1CE03F54257C82E200F38061 /* XCRemoteSwiftPackageReference "Valet" */,
 			);
 			productRefGroup = EEB7577A24B2B6E700F26CF7 /* Products */;
 			projectDirPath = "";
@@ -1126,6 +1135,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1CE03F54257C82E200F38061 /* XCRemoteSwiftPackageReference "Valet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Square/Valet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1CE03F55257C82E200F38061 /* Valet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1CE03F54257C82E200F38061 /* XCRemoteSwiftPackageReference "Valet" */;
+			productName = Valet;
+		};
+		1CE03F5C257C8C9000F38061 /* Valet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1CE03F54257C82E200F38061 /* XCRemoteSwiftPackageReference "Valet" */;
+			productName = Valet;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EEB7576D24B2B6E600F26CF7 /* Project object */;
 }
