@@ -58,7 +58,7 @@ struct SettingsView: View {
                         HStack {
                             Text("Access Key")
                             Spacer()
-                            SecureField("Access Key", text: rssHubAccessControl.$unwrappedAccessKey)
+                            SecureField("Access Key", text: rssHubAccessControl.$accessKey)
                         }
                     }
                     

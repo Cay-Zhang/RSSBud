@@ -30,62 +30,36 @@ extension RSSHub {
     struct AccessControl: DynamicProperty {
         static let valetKey: String = "rssHubAccessKey"
         
-        /// The default access key can't be empty.
-        static let defaultAccessKey: String = "ILoveRSSHub"
-        
+        @AppStorage("isRSSHubAccessControlEnabled", store: RSSBud.userDefaults) var isAccessControlEnabled: Bool = false
+        @Binding var accessKey: String
         @State private var viewRefresher = false
-        @Binding var isAccessControlEnabled: Bool
-        @Binding var accessKey: String?
-        @Binding var unwrappedAccessKey: String
         
         init() {
-            _isAccessControlEnabled = .constant(false)
-            _accessKey = .constant(nil)
-            _unwrappedAccessKey = .constant("")
+            _accessKey = .constant("")
             update()
         }
         
         mutating func update() {
-            _accessKey = Binding<String?>(
+            _accessKey = Binding<String>(
                 get: { [_viewRefresher] in
                     let _ = _viewRefresher.wrappedValue
-                    return try? RSSBud.valet.string(forKey: AccessControl.valetKey)
+                    return (try? RSSBud.valet.string(forKey: AccessControl.valetKey)) ?? ""
                 }, set: { [_viewRefresher] newValue in
-                    if let newKey = newValue {
-                        try? RSSBud.valet.setString(newKey, forKey: AccessControl.valetKey)
+                    if !newValue.isEmpty {
+                        try? RSSBud.valet.setString(newValue, forKey: AccessControl.valetKey)
                     } else {
                         try? RSSBud.valet.removeObject(forKey: AccessControl.valetKey)
                     }
                     _viewRefresher.wrappedValue.toggle()
                 }
             )
-            
-            _isAccessControlEnabled = Binding<Bool>(
-                get: { [_accessKey] in
-                    _accessKey.wrappedValue != nil
-                }, set: { [_accessKey] newValue in
-                    withAnimation {
-                        if newValue && _accessKey.wrappedValue == nil {
-                            _accessKey.wrappedValue = AccessControl.defaultAccessKey
-                        } else if !newValue && _accessKey.wrappedValue != nil {
-                            _accessKey.wrappedValue = nil
-                        }
-                    }
-                }
-            )
-            
-            _unwrappedAccessKey = Binding<String>(
-                get: { [_accessKey] in
-                    _accessKey.wrappedValue ?? ""
-                }, set: { [_accessKey] newValue in
-                    _accessKey.wrappedValue = newValue
-                }
-            )
         }
         
-        func accessCode(for route: String) -> String? {
-            accessKey.map { key in
-                (route + key).md5()
+        func accessCodeQueryItem(for route: String) -> [URLQueryItem] {
+            if isAccessControlEnabled {
+                return [URLQueryItem(name: "code", value: (route + accessKey).md5())]
+            } else {
+                return []
             }
         }
     }
