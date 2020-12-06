@@ -17,6 +17,7 @@ struct SettingsView: View {
     @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) var _lastRemoteRulesFetchDate: Double?
     @AppStorage("isOnboarding", store: RSSBud.userDefaults) var isOnboarding: Bool = true
     @Environment(\.presentationMode) var presentationMode
+    var rssHubAccessControl = RSSHub.AccessControl()
     
     var lastRemoteRulesFetchDate: Date? {
         get { _lastRemoteRulesFetchDate.map(Date.init(timeIntervalSinceReferenceDate:)) }
@@ -50,6 +51,16 @@ struct SettingsView: View {
                         destination: IntegrationSettingsView(backgroundColor: Color(UIColor.systemGroupedBackground))
                             .navigationTitle("Quick Subscriptions")
                     )
+                    
+                    Toggle("Access Control", isOn: rssHubAccessControl.$isAccessControlEnabled.animation(.default))
+                    
+                    if rssHubAccessControl.isAccessControlEnabled {
+                        HStack {
+                            Text("Access Key")
+                            Spacer()
+                            SecureField("Access Key", text: rssHubAccessControl.$unwrappedAccessKey)
+                        }
+                    }
                     
                     NavigationLink(destination: RSSHub.Radar.RulesEditor()) {
                         HStack {
