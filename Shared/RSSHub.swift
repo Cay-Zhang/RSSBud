@@ -26,4 +26,41 @@ extension RSSHub {
             URLComponents(string: string)?.host != nil
         }
     }
+    
+    struct AccessControl: DynamicProperty {
+        static let valetKey: String = "rssHubAccessKey"
+        
+        @AppStorage("isRSSHubAccessControlEnabled", store: RSSBud.userDefaults) var isAccessControlEnabled: Bool = false
+        @Binding var accessKey: String
+        @State private var viewRefresher = false
+        
+        init() {
+            _accessKey = .constant("")
+            update()
+        }
+        
+        mutating func update() {
+            _accessKey = Binding<String>(
+                get: { [_viewRefresher] in
+                    let _ = _viewRefresher.wrappedValue
+                    return (try? RSSBud.valet.string(forKey: AccessControl.valetKey)) ?? ""
+                }, set: { [_viewRefresher] newValue in
+                    if !newValue.isEmpty {
+                        try? RSSBud.valet.setString(newValue, forKey: AccessControl.valetKey)
+                    } else {
+                        try? RSSBud.valet.removeObject(forKey: AccessControl.valetKey)
+                    }
+                    _viewRefresher.wrappedValue.toggle()
+                }
+            )
+        }
+        
+        func accessCodeQueryItem(for route: String) -> [URLQueryItem] {
+            if isAccessControlEnabled {
+                return [URLQueryItem(name: "code", value: (route + accessKey).md5())]
+            } else {
+                return []
+            }
+        }
+    }
 }

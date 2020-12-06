@@ -14,11 +14,12 @@ struct FeedView: View {
     var openURL: (URLComponents) -> Void = { _ in }
     @Integration var integrations
     @RSSHub.BaseURL var baseURL
+    var rssHubAccessControl = RSSHub.AccessControl()
     
     func rsshubURL() -> URLComponents {
         baseURL
             .appending(path: feed.path)
-            .appending(queryItems: contentViewModel.queryItems)
+            .appending(queryItems: contentViewModel.queryItems + rssHubAccessControl.accessCodeQueryItem(for: feed.path))
             .omittingEmptyQueryItems()
     }
     

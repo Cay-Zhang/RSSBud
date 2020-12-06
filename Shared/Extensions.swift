@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import CryptoKit
 
 extension URLComponents {
     func expanding() -> Publishers.ReplaceError<Publishers.Map<URLSession.DataTaskPublisher, URLComponents>> {
@@ -134,5 +135,12 @@ extension DispatchSource.FileSystemEvent: CustomStringConvertible {
         if contains(.revoke)  { cases.append("revoke") }
         if contains(.write)   { cases.append("write") }
         return cases.joined(separator: ", ")
+    }
+}
+
+extension String {
+    public func md5() -> String {
+        let digest = Insecure.MD5.hash(data: self.data(using: .utf8) ?? Data())
+        return digest.lazy.map { String(format: "%02hhx", $0) }.joined()
     }
 }
