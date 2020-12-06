@@ -79,7 +79,7 @@
 "Onboarding Page 3 Body 2" = "Please select the ones you use.";
 
 "Onboarding Page 4 Title" = "RSSHub Instance";
-"Onboarding Page 4 Body" = "You are encouraged to host your own RSSHub instance for better usability. The official demo instance may be unreliable due to anti-crawler policies of some websites.";
+"Onboarding Page 4 Body" = "You are encouraged to host your own RSSHub instance for better reliability. The official demo instance cannot ensure the usability for websites with strict anti-crawler policies.";
 "Learn More About Deployment" = "Learn More About Deployment";
 "Use My Own Instance" = "Use My Own Instance";
 "Use Official Demo" = "Use Official Demo";

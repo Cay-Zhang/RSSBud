@@ -79,7 +79,7 @@
 "Onboarding Page 3 Body 2" = "请在下方进行选择和配置。";
 
 "Onboarding Page 4 Title" = "RSSHub 实例";
-"Onboarding Page 4 Body" = "RSSBud 建议你自行部署 RSSHub 实例来提高稳定性。官方的演示实例可能会因为某些网站的反爬策略而不稳定。";
+"Onboarding Page 4 Body" = "RSSBud 建议你自行部署 RSSHub 实例来提高稳定性。对于许多反爬策略严格的网站，官方的演示实例无法确保其可用性。";
 "Learn More About Deployment" = "了解如何部署 RSSHub 实例";
 "Use My Own Instance" = "使用自建实例";
 "Use Official Demo" = "使用官方实例";

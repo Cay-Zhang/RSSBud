@@ -213,6 +213,7 @@ extension OnboardingView {
     
     struct RSSHubInstance: View {
         @State var isEnteringRSSHubBaseURL: Bool = false
+        @State var isUseOfficialDemoButtonShown: Bool = false
         @Binding var currentPage: Page
         var openURL: (URLComponents) -> Void = { _ in }
         
@@ -230,6 +231,7 @@ extension OnboardingView {
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
                 Text("Onboarding Page 4 Body")
+                    .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
@@ -264,15 +266,24 @@ extension OnboardingView {
                             isEnteringRSSHubBaseURL = true
                         }
                         
-                        WideButton("Use Official Demo", systemImage: "exclamationmark.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
-                            rssHubBaseURL.string = RSSHub.officialDemoBaseURLString
-                            currentPage = .support
-                        }.accentColor(.red)
+                        if isUseOfficialDemoButtonShown {
+                            WideButton("Use Official Demo", systemImage: "exclamationmark.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
+                                rssHubBaseURL.string = RSSHub.officialDemoBaseURLString
+                                currentPage = .support
+                            }.accentColor(.red)
+                        }
                     }.transition(OnboardingView.transition)
                 }
                 
             }.padding(.top, 20)
             .padding(.bottom, 8)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    if currentPage == .rssHubInstance {
+                        withAnimation(OnboardingView.transitionAnimation) { isUseOfficialDemoButtonShown = true }
+                    }
+                }
+            }
         }
     }
     
