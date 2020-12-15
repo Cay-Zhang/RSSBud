@@ -255,7 +255,7 @@ struct NothingFoundView: View {
                     openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
                 }
                 
-                if xCallbackContext.wrappedValue != nil {
+                if xCallbackContext.wrappedValue.cancel != nil {
                     WideButton(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
                 }
             }

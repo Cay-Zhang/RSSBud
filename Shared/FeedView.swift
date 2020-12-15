@@ -57,7 +57,7 @@ struct FeedView: View {
 //            Text(rsshubURL().string ?? "URL Conversion Failed")
 //                .padding(.horizontal, 15)
             
-            if xCallbackContext.wrappedValue != nil {
+            if xCallbackContext.wrappedValue.success != nil {
                 WideButton(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
                     .padding(.horizontal, 8)
             } else {
