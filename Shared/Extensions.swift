@@ -72,6 +72,14 @@ extension URLComponents {
     }
 }
 
+extension Array where Element == URLQueryItem {
+    subscript(name: String) -> String? {
+        get {
+            self.first(where: { $0.name == name })?.value
+        }
+    }
+}
+
 extension URL {
     var components: URLComponents? {
         URLComponents(url: self, resolvingAgainstBaseURL: false)
