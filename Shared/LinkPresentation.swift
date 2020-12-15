@@ -21,16 +21,17 @@ struct LinkPresentation: UIViewRepresentable {
     
     func updateUIView(_ view: LPLinkView, context: Context) {
         let provider = LPMetadataProvider()
-        provider.startFetchingMetadata(for: previewURL) { (metadata, error) in
+        provider.startFetchingMetadata(for: previewURL) { (result, _) in
             DispatchQueue.main.async {
-                if let md = metadata {
-                    view.metadata = md
-                } else if error != nil {
-                    let md = LPLinkMetadata()
-                    md.title = "Error"
-                    view.metadata = md
-                }
+                view.metadata = result ?? defaultMetadata()
             }
         }
+    }
+    
+    func defaultMetadata() -> LPLinkMetadata {
+        let metadata = LPLinkMetadata()
+        metadata.originalURL = previewURL
+        metadata.url = previewURL
+        return metadata
     }
 }
