@@ -9,6 +9,8 @@
 "Read From Clipboard" = "从剪贴板读取";
 "Subscribe" = "订阅";
 "Copy" = "复制";
+"Continue" = "继续";
+"Continue in %@" = "跳转到 %@ 继续";
 "Parameters" = "参数";
 "Add Parameter" = "添加参数";
 "Include..." = "仅保留...";
