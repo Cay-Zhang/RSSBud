@@ -72,6 +72,14 @@ extension URLComponents {
     }
 }
 
+extension Array where Element == URLQueryItem {
+    subscript(name: String) -> String? {
+        get {
+            self.first(where: { $0.name == name })?.value
+        }
+    }
+}
+
 extension URL {
     var components: URLComponents? {
         URLComponents(url: self, resolvingAgainstBaseURL: false)
@@ -142,5 +150,41 @@ extension String {
     public func md5() -> String {
         let digest = Insecure.MD5.hash(data: self.data(using: .utf8) ?? Data())
         return digest.lazy.map { String(format: "%02hhx", $0) }.joined()
+    }
+}
+
+struct XCallbackContext: Equatable, ExpressibleByNilLiteral {
+    var source: String?
+    var success: URLComponents?
+    var error: URLComponents?
+    var cancel: URLComponents?
+    
+    init(queryItems: [URLQueryItem]) {
+        source = queryItems["x-source"]
+        success = queryItems["x-success"].flatMap(URLComponents.init(string:))
+        error = queryItems["x-error"].flatMap(URLComponents.init(string:))
+        cancel = queryItems["x-cancel"].flatMap(URLComponents.init(string:))
+    }
+    
+    init(nilLiteral: ()) {
+        source = nil
+        success = nil
+        error = nil
+        cancel = nil
+    }
+}
+
+struct XCallbackContextEnvironmentKey: EnvironmentKey {
+    static var defaultValue: Binding<XCallbackContext> = .constant(nil)
+}
+
+extension EnvironmentValues {
+    var xCallbackContext: Binding<XCallbackContext> {
+        get {
+            self[XCallbackContextEnvironmentKey.self]
+        }
+        set {
+            self[XCallbackContextEnvironmentKey.self] = newValue
+        }
     }
 }

@@ -15,6 +15,8 @@ extension RSSBud {
         
         @StateObject var contentViewModel = ContentView.ViewModel()
         
+        @State var xCallbackContext: XCallbackContext = nil
+        
         init() {
             BGTaskScheduler.shared.register(forTaskWithIdentifier: RuleManager.shared.remoteRulesFetchTaskIdentifier, using: nil) { task in
                 print("Running task...")
@@ -45,7 +47,18 @@ extension RSSBud {
                         }
                         UIApplication.shared.open(url)
                     }, viewModel: contentViewModel
-                )
+                ).onOpenURL { url in
+                    guard let url = url.components else { return }
+                    print("Open url: \(url)")
+                    if url.path.lowercased().starts(with: "/analyze") {
+                        if let urlToAnalyze = url.queryItems?["url"].flatMap(URLComponents.init(string:)) {
+                            withAnimation {
+                                xCallbackContext = url.queryItems.map(XCallbackContext.init) ?? nil
+                                contentViewModel.process(url: urlToAnalyze)
+                            }
+                        }
+                    }
+                }.environment(\.xCallbackContext, $xCallbackContext)
             }
         }
     }

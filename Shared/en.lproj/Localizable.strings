@@ -9,6 +9,8 @@
 "Read From Clipboard" = "Read from Clipboard";
 "Subscribe" = "Subscribe";
 "Copy" = "Copy";
+"Continue" = "Continue";
+"Continue in %@" = "Continue in %@";
 "Parameters" = "Parameters";
 "Add Parameter" = "Add Parameter";
 "Include..." = "Include...";

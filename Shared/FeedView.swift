@@ -15,6 +15,7 @@ struct FeedView: View {
     @Integration var integrations
     @RSSHub.BaseURL var baseURL
     var rssHubAccessControl = RSSHub.AccessControl()
+    @Environment(\.xCallbackContext) var xCallbackContext: Binding<XCallbackContext>
     
     func rsshubURL() -> URLComponents {
         baseURL
@@ -27,6 +28,26 @@ struct FeedView: View {
         _integrations.url(forAdding: rsshubURL(), to: integrationKey)
     }
     
+    func continueXCallbackText() -> LocalizedStringKey {
+        if let source = xCallbackContext.wrappedValue.source {
+            return LocalizedStringKey("Continue in \(source)")
+        } else {
+            return LocalizedStringKey("Continue")
+        }
+    }
+    
+    func continueXCallback() {
+        let url = xCallbackContext
+            .wrappedValue
+            .success?
+            .appending(queryItems: [
+                URLQueryItem(name: "feed_title", value: feed.title),
+                URLQueryItem(name: "feed_url", value: rsshubURL().string)
+            ])
+        url.map(openURL)
+        xCallbackContext.wrappedValue = nil
+    }
+    
     var body: some View {
         VStack(spacing: 10.0) {
             Text(feed.title)
@@ -36,13 +57,19 @@ struct FeedView: View {
 //            Text(rsshubURL().string ?? "URL Conversion Failed")
 //                .padding(.horizontal, 15)
             
-            HStack(spacing: 8) {
-                WideButton("Copy", systemImage: "doc.on.doc.fill") {
-                    rsshubURL().url.map { UIPasteboard.general.url = $0 }
-                }
-                
-                integrationButton
-            }.padding(.horizontal, 8)
+            if xCallbackContext.wrappedValue != nil {
+                WideButton(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
+                    .padding(.horizontal, 8)
+            } else {
+                HStack(spacing: 8) {
+                    WideButton("Copy", systemImage: "doc.on.doc.fill") {
+                        rsshubURL().url.map { UIPasteboard.general.url = $0 }
+                    }
+                    
+                    integrationButton
+                }.padding(.horizontal, 8)
+            }
+            
         }.padding(.top, 15)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
