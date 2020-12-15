@@ -200,6 +200,24 @@ struct NothingFoundView: View {
     var url: URLComponents?
     var openURL: (URLComponents) -> Void = { _ in }
     
+    @Environment(\.xCallbackContext) var xCallbackContext: Binding<XCallbackContext>
+    
+    func continueXCallbackText() -> LocalizedStringKey {
+        if let source = xCallbackContext.wrappedValue.source {
+            return LocalizedStringKey("Continue in \(source)")
+        } else {
+            return LocalizedStringKey("Continue")
+        }
+    }
+    
+    func continueXCallback() {
+        let url = xCallbackContext
+            .wrappedValue
+            .cancel
+        url.map(openURL)
+        xCallbackContext.wrappedValue = nil
+    }
+    
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "bookmark.slash.fill")
@@ -226,6 +244,10 @@ struct NothingFoundView: View {
                 
                 WideButton("Submit New Rules", systemImage: "link.badge.plus") {
                     openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
+                }
+                
+                if xCallbackContext.wrappedValue != nil {
+                    WideButton(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
                 }
             }
         }.padding(.horizontal, 8)
