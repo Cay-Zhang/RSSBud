@@ -226,11 +226,15 @@ struct NothingFoundView: View {
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "bookmark.slash.fill")
-                .imageScale(.large)
                 .font(.system(size: 24, weight: .semibold, design: .default))
                 .foregroundColor(.accentColor)
+                .frame(width: 70, height: 70)
+                .background(Color(UIColor.tertiarySystemBackground))
+                .clipShape(Circle())
+            
             Text("Nothing Found")
                 .font(.system(size: 24, weight: .semibold, design: .default))
+            
             if let urlString = url?.string?.removingPercentEncoding {
                 Menu {
                     Button("Copy", systemImage: "doc.on.doc.fill") {
