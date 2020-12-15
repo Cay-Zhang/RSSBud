@@ -38,13 +38,7 @@ struct ContentView: View {
                                         ProgressView()
                                     }
                                     
-                                    WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground) {
-                                        if let url = UIPasteboard.general.url?.components {
-                                            viewModel.process(url: url)
-                                        } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
-                                            viewModel.process(url: url)
-                                        }
-                                    }
+                                    WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: readFromClipboard)
                                 }
                             }
                             
@@ -121,6 +115,17 @@ struct ContentView: View {
             } label: {
                 Image(systemName: "gearshape.fill")
             }
+        }
+    }
+}
+
+// MARK: - Methods
+extension ContentView {
+    func readFromClipboard() {
+        if let url = UIPasteboard.general.url?.components {
+            viewModel.process(url: url)
+        } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
+            viewModel.process(url: url)
         }
     }
 }
