@@ -144,3 +144,39 @@ extension String {
         return digest.lazy.map { String(format: "%02hhx", $0) }.joined()
     }
 }
+
+struct XCallbackContext: Equatable, ExpressibleByNilLiteral {
+    var source: String?
+    var success: URLComponents?
+    var error: URLComponents?
+    var cancel: URLComponents?
+    
+    init(queryItems: [URLQueryItem]) {
+        source = queryItems["x-source"]
+        success = queryItems["x-success"].flatMap(URLComponents.init(string:))
+        error = queryItems["x-error"].flatMap(URLComponents.init(string:))
+        cancel = queryItems["x-cancel"].flatMap(URLComponents.init(string:))
+    }
+    
+    init(nilLiteral: ()) {
+        source = nil
+        success = nil
+        error = nil
+        cancel = nil
+    }
+}
+
+struct XCallbackContextEnvironmentKey: EnvironmentKey {
+    static var defaultValue: Binding<XCallbackContext> = .constant(nil)
+}
+
+extension EnvironmentValues {
+    var xCallbackContext: Binding<XCallbackContext> {
+        get {
+            self[XCallbackContextEnvironmentKey.self]
+        }
+        set {
+            self[XCallbackContextEnvironmentKey.self] = newValue
+        }
+    }
+}
