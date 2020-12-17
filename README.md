@@ -32,11 +32,40 @@
 - [x] 自定义通用参数
 - [x] 自定义 RSSHub 域名
 - [x] 自动更新 RSSHub Radar 规则
+- [x] 访问控制 (自动生成 MD5 访问码)
+- [x] 支持 x-callback-url，可结合 "快捷指令" App 编写捷径实现各种强大功能 (详见 [捷径工坊](#捷径工坊) 和 [Scheme](#x-callback-url-scheme))
 - [ ] 检测适用于网站的 RSSHub 源
 - [ ] 主动搜寻 RSS 源
 
 ## 参与 Beta 测试
 加入 [Telegram 群](https://t.me/RSSBud_Discussion) 以获得 Beta 测试详情。
+
+## 捷径工坊
+如果 RSSBud 不支持你想要的 RSS 阅读器/服务，或者你想将 RSSBud 整合进你的工作流中，你可以编写捷径来满足你的需求。就从下面这些开始吧：
+
+[RSSBud 捷径起手式](https://www.icloud.com/shortcuts/55ca2d7e3ee748ceb27cb759bf23f622) by cayZ | RSSBud 捷径的模板，支持从分享菜单启动，变量都已设置好
+
+[用 RSSBud 分析并发送到 Telegram](https://www.icloud.com/shortcuts/c18bd2d4ef71427ab2b25f397a920067) by cayZ | 基于起手式，将分析结果发送到 Telegram，可以自定义消息模板和接受者用户名
+
+[用 RSSBud 分析并订阅到 Pocket Casts](https://www.icloud.com/shortcuts/1eb2893bd14743f3a85db1a8f1aa43c3) by cayZ | 基于起手式，将分析结果发送到 Pocket Casts (仅限播客 RSS)
+
+[扫描二维码并用 RSSBud 分析](https://www.icloud.com/shortcuts/0f95219b79b14afb92f299a8a2889baf) by cayZ | 扫描二维码，获取 URL，跳转 RSSBud 分析
+
+> 如果你觉得你写的捷径很 Cooooool，欢迎来 [Telegram 群](https://t.me/RSSBud_Discussion) 投稿！
+
+## X-callback-url Scheme
+RSSBud 实现了 [x-callback-url](http://x-callback-url.com/) 协议，它允许 iOS 和 Mac 开发者公开和记录他们向其他应用程序提供的 API 方法并返回数据。
+
+你可以打开如下的 URL 让 RSSBud 分析提供的 URL 并返回用户选择的 RSS 源：
+```
+rssbud://x-callback-url/analyze?url[&x-callback-parameters...]
+```
+
+#### 参数
+- **url** 你想要 RSSBud 分析的 URL
+#### x-success
+- **feed_title** 用户选择的 RSS 源的名称
+- **feed_url** 用户选择的 RSS 源的 URL
 
 ## 自行编译须知
 若要使用分享菜单插件 (Action Extension)，请在 iOS 和 Action Extension 这两个 Target 中设置你自己的 App Group 并修改 `RSSBud.appGroupIdentifier`。
