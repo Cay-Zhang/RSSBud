@@ -92,3 +92,6 @@
 "Star on GitHub" = "Star on GitHub!";
 "Join Telegram Discussion" = "Join Telegram Discussion";
 "Donate to RSSBud" = "Donate to RSSBud";
+
+"Shortcut Workshop" = "Shortcut Workshop";
+"Shortcut Workshop Introduction" = "If RSSBud doesn't support your RSS reader/service, or you want to integrate RSSBud into your workflow, you can write shortcuts utilizing RSSBud's support for x-callback-url to fulfill your needs. Let's start with the following ones!";

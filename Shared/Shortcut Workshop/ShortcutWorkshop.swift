@@ -102,7 +102,7 @@ struct ShortcutWorkshopView: View {
                 Image(systemName: "ellipsis.bubble.fill")
                     .font(Font.system(size: 24.0, weight: .medium, design: .default))
                 
-                Text("如果 RSSBud 不支持你想要的 RSS 阅读器/服务，或者你想将 RSSBud 整合进你的工作流中，你可以利用 RSSBud 对 x-callback-url 的支持，编写捷径来满足你的需求。就从下面这些开始吧！")
+                Text("Shortcut Workshop Introduction")
                     .fontWeight(.medium)
             }.padding(.horizontal)
             .padding(.top, 12)
