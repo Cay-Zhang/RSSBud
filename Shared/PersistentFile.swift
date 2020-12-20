@@ -37,6 +37,9 @@ final class PersistentFile: ObservableObject {
     
     func restoreDefaultIfNeeded() throws {
         if !FileManager.default.fileExists(atPath: url.path) {
+            if !FileManager.default.fileExists(atPath: url.deletingLastPathComponent().path) {
+                try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
+            }
             try FileManager.default.copyItem(at: defaultContentURL, to: url)
         }
     }
@@ -65,7 +68,7 @@ final class PersistentFile: ObservableObject {
     }
 
     deinit {
-        source.cancel()
+        source?.cancel()
     }
 
     func process(event: DispatchSource.FileSystemEvent) throws {
