@@ -1,0 +1,48 @@
+{
+    "shortcuts": [
+        {
+            "name": "用 RSSBud 分析并发送到 Telegram",
+            "iconSystemName": "paperplane.fill",
+            "isTemplate": false,
+            "author": "cayZ",
+            "url": {
+                "scheme": "https",
+                "host": "www.icloud.com",
+                "path": "/shortcuts/c18bd2d4ef71427ab2b25f397a920067"
+            }
+        },
+        {
+            "name": "用 RSSBud 分析并订阅到 Pocket Casts",
+            "iconSystemName": "waveform.path",
+            "isTemplate": false,
+            "author": "cayZ",
+            "url": {
+                "scheme": "https",
+                "host": "www.icloud.com",
+                "path": "/shortcuts/1eb2893bd14743f3a85db1a8f1aa43c3"
+            }
+        },
+        {
+            "name": "扫描二维码并用 RSSBud 分析",
+            "iconSystemName": "qrcode",
+            "isTemplate": false,
+            "author": "cayZ",
+            "url": {
+                "scheme": "https",
+                "host": "www.icloud.com",
+                "path": "/shortcuts/0f95219b79b14afb92f299a8a2889baf"
+            }
+        },
+        {
+            "name": "RSSBud 捷径起手式",
+            "iconSystemName": "plus",
+            "isTemplate": true,
+            "author": "cayZ",
+            "url": {
+                "scheme": "https",
+                "host": "www.icloud.com",
+                "path": "/shortcuts/55ca2d7e3ee748ceb27cb759bf23f622"
+            }
+        }
+    ]
+}

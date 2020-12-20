@@ -52,6 +52,11 @@ struct SettingsView: View {
                             .navigationTitle("Quick Subscriptions")
                     )
                     
+                    NavigationLink(
+                        "Shortcut Workshop",
+                        destination: ShortcutWorkshopView(openURL: openURL)
+                    )
+                    
                     Toggle("Access Control", isOn: rssHubAccessControl.$isAccessControlEnabled.animation(.default))
                     
                     if rssHubAccessControl.isAccessControlEnabled {

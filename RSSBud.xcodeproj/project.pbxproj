@@ -20,6 +20,12 @@
 		1C5835A024EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
 		1C5835A124EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
 		1C6E62982556BF48006087EF /* PromoAssetGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */; };
+		1C6EE75D258CA78900C645F0 /* shortcut-workshop.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C6EE761258CA78900C645F0 /* shortcut-workshop.json */; };
+		1C6EE75E258CA78900C645F0 /* shortcut-workshop.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C6EE761258CA78900C645F0 /* shortcut-workshop.json */; };
+		1C6EE75F258CA78900C645F0 /* shortcut-workshop.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C6EE761258CA78900C645F0 /* shortcut-workshop.json */; };
+		1C6EE76A258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EE769258CA97300C645F0 /* ShortcutWorkshop.swift */; };
+		1C6EE76B258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EE769258CA97300C645F0 /* ShortcutWorkshop.swift */; };
+		1C6EE76C258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EE769258CA97300C645F0 /* ShortcutWorkshop.swift */; };
 		1C8221A424EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
 		1C8221A524EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
 		1C8221A624EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
@@ -150,6 +156,9 @@
 		1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoAssetGeneration.swift; sourceTree = "<group>"; };
 		1C6E62992556BF48006087EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C6E62A4255706D7006087EF /* PRIVACY_POLICY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PRIVACY_POLICY.md; sourceTree = "<group>"; };
+		1C6EE760258CA78900C645F0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = "en.lproj/shortcut-workshop.json"; sourceTree = "<group>"; };
+		1C6EE767258CA79400C645F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "zh-Hans"; path = "zh-Hans.lproj/shortcut-workshop.json"; sourceTree = "<group>"; };
+		1C6EE769258CA97300C645F0 /* ShortcutWorkshop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutWorkshop.swift; sourceTree = "<group>"; };
 		1C8221A324EAA73900E139F3 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryEditor.swift; sourceTree = "<group>"; };
 		1CA2079A24F3DEAC00C6EDD5 /* RSSHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSHub.swift; sourceTree = "<group>"; };
@@ -241,6 +250,15 @@
 			path = PromoAssetGeneration;
 			sourceTree = "<group>";
 		};
+		1C6EE752258CA64300C645F0 /* Shortcut Workshop */ = {
+			isa = PBXGroup;
+			children = (
+				1C6EE761258CA78900C645F0 /* shortcut-workshop.json */,
+				1C6EE769258CA97300C645F0 /* ShortcutWorkshop.swift */,
+			);
+			path = "Shortcut Workshop";
+			sourceTree = "<group>";
+		};
 		EE000A7624B41CAA00979B1A /* RSSHub Radar */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +304,7 @@
 		EEB7577124B2B6E600F26CF7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				1C6EE752258CA64300C645F0 /* Shortcut Workshop */,
 				EEC4A51A24E516D8005041CA /* RSSBud.swift */,
 				1CA2079A24F3DEAC00C6EDD5 /* RSSHub.swift */,
 				1CE03F31257B7EC500F38061 /* RuleManager.swift */,
@@ -558,6 +577,7 @@
 				1C270114250B5BC300595BCE /* LaunchScreen.storyboard in Resources */,
 				EE000A8D24B41E1000979B1A /* route-recognizer.min.js in Resources */,
 				1C32219E25192F6A00CD9F56 /* Localizable.strings in Resources */,
+				1C6EE75D258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 				EEB7578924B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A8F24B41E1000979B1A /* route-recognizer.js in Resources */,
 				EE7CD91724DD6E6B00FAA837 /* url.js in Resources */,
@@ -573,6 +593,7 @@
 				EE000A9224B41E1000979B1A /* utils.js in Resources */,
 				EE7CD91C24DD6EEF00FAA837 /* url.min.js in Resources */,
 				EE000A8E24B41E1000979B1A /* route-recognizer.min.js in Resources */,
+				1C6EE75E258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 				1C32219F25192F6A00CD9F56 /* Localizable.strings in Resources */,
 				EEB7578A24B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A9024B41E1000979B1A /* route-recognizer.js in Resources */,
@@ -593,6 +614,7 @@
 				EEC4A50C24E3E26D005041CA /* psl.min.js in Resources */,
 				1CDB36F0254AEA74002E84D8 /* Assets.xcassets in Resources */,
 				EEC4A50E24E3E26D005041CA /* utils.js in Resources */,
+				1C6EE75F258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +650,7 @@
 			files = (
 				1C8221A424EAA73900E139F3 /* FeedView.swift in Sources */,
 				1CA2078D24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */,
+				1C6EE76A258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */,
 				EEB7579424B2B7C600F26CF7 /* Extensions.swift in Sources */,
 				EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */,
 				1C58359E24EA8D9100FB8523 /* Integration.swift in Sources */,
@@ -651,6 +674,7 @@
 			files = (
 				1C8221A524EAA73900E139F3 /* FeedView.swift in Sources */,
 				1CA2078E24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */,
+				1C6EE76B258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */,
 				EEB7579524B2B7C600F26CF7 /* Extensions.swift in Sources */,
 				EEB7578824B2B6E700F26CF7 /* ContentView.swift in Sources */,
 				1C58359F24EA8D9100FB8523 /* Integration.swift in Sources */,
@@ -674,6 +698,7 @@
 			files = (
 				1C8221A624EAA73900E139F3 /* FeedView.swift in Sources */,
 				1CA2078F24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */,
+				1C6EE76C258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */,
 				EEC4A51024E3E26D005041CA /* Radar.swift in Sources */,
 				EEC4A51424E3E29A005041CA /* Extensions.swift in Sources */,
 				1C5835A124EA8D9100FB8523 /* Integration.swift in Sources */,
@@ -719,6 +744,15 @@
 				1C3221A725192F6E00CD9F56 /* zh-Hans */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		1C6EE761258CA78900C645F0 /* shortcut-workshop.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1C6EE760258CA78900C645F0 /* en */,
+				1C6EE767258CA79400C645F0 /* zh-Hans */,
+			);
+			name = "shortcut-workshop.json";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
