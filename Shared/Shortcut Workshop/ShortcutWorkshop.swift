@@ -75,20 +75,44 @@ struct ShortcutWorkshopView: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 300, maximum: .infinity))], spacing: 10) {
-                ForEach(manager.workshop.shortcuts) { shortcut in
-                    Button {
-                        openURL(shortcut.url)
-                    } label: {
-                        ShortcutView(shortcut: shortcut)
-                    }.buttonStyle(SquashableButtonStyle())
+            LazyVStack(spacing: 16) {
+                introduction
+                
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 300, maximum: .infinity))], spacing: 10) {
+                    ForEach(manager.workshop.shortcuts) { shortcut in
+                        Button {
+                            openURL(shortcut.url)
+                        } label: {
+                            ShortcutView(shortcut: shortcut)
+                        }.buttonStyle(SquashableButtonStyle())
+                    }
                 }
-            }.padding(16)
+            }.padding(.horizontal, 16)
         }.navigationTitle("Shortcut Workshop")
         .background(
             Color(UIColor.systemGroupedBackground).ignoresSafeArea()
         )
     }
+    
+    var introduction: some View {
+        ZStack(alignment: .leading) {
+            Color(UIColor.secondarySystemGroupedBackground)
+            
+            VStack(alignment: .leading, spacing: 8.0) {
+                Image(systemName: "ellipsis.bubble.fill")
+                    .font(Font.system(size: 24.0, weight: .medium, design: .default))
+                
+                Text("如果 RSSBud 不支持你想要的 RSS 阅读器/服务，或者你想将 RSSBud 整合进你的工作流中，你可以利用 RSSBud 对 x-callback-url 的支持，编写捷径来满足你的需求。就从下面这些开始吧！")
+                    .fontWeight(.medium)
+            }.padding(.horizontal)
+            .padding(.top, 12)
+            .padding(.bottom, 15)
+            .background(Color(UIColor.secondarySystemGroupedBackground))
+        }.foregroundColor(.secondary)
+        .clipShape(RoundedRectangle(cornerRadius: 18.0, style: .continuous))
+        .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0.0, y: 2.0)
+    }
+    
 }
 
 struct ShortcutView: View {
@@ -149,6 +173,6 @@ struct ShortcutWorkshopView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ShortcutWorkshopView()
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }.preferredColorScheme(.dark).navigationViewStyle(StackNavigationViewStyle())
     }
 }
