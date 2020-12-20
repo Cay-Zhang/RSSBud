@@ -5,6 +5,7 @@
             "iconSystemName": "paperplane.fill",
             "isTemplate": false,
             "author": "cayZ",
+            "description": "将 RSSBud 分析结果发送到 Telegram，可以自定义消息模板和接受者用户名",
             "url": {
                 "scheme": "https",
                 "host": "www.icloud.com",
@@ -16,6 +17,7 @@
             "iconSystemName": "waveform.path",
             "isTemplate": false,
             "author": "cayZ",
+            "description": "将 RSSBud 分析结果发送到 Pocket Casts (仅限播客 RSS)",
             "url": {
                 "scheme": "https",
                 "host": "www.icloud.com",
@@ -27,6 +29,7 @@
             "iconSystemName": "qrcode",
             "isTemplate": false,
             "author": "cayZ",
+            "description": "扫描二维码，获取 URL，跳转 RSSBud 分析",
             "url": {
                 "scheme": "https",
                 "host": "www.icloud.com",
@@ -38,6 +41,7 @@
             "iconSystemName": "plus",
             "isTemplate": true,
             "author": "cayZ",
+            "description": "RSSBud 捷径的模板，支持从分享菜单启动，变量都已设置好",
             "url": {
                 "scheme": "https",
                 "host": "www.icloud.com",
