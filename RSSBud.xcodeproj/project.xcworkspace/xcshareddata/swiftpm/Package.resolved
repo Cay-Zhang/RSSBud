@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "BetterSafariView",
+        "repositoryURL": "https://github.com/stleamist/BetterSafariView",
+        "state": {
+          "branch": null,
+          "revision": "a4a8590a24f088ddb077815f49b62c71342c5869",
+          "version": "2.2.2"
+        }
+      },
+      {
         "package": "Valet",
         "repositoryURL": "https://github.com/Square/Valet",
         "state": {
