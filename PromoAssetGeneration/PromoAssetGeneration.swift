@@ -34,9 +34,19 @@ class PromoAssetGeneration: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-promo-asset-generation", "2"]
         app.launch()
-        app.navigationBars["RSSBud"].buttons["gearshape.fill"].tap()
+        app.navigationBars["RSSBud"].children(matching: .button).firstMatch.tap()
         _ = app.wait(for: .unknown, timeout: 2)
         takeScreenshot(name: "Page 2")
+    }
+    
+    func testScreenshot3() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-promo-asset-generation", "3"]
+        app.launch()
+        app.navigationBars["RSSBud"].children(matching: .button).firstMatch.tap()
+        app.tables.buttons["捷径工坊"].tap()
+        _ = app.wait(for: .unknown, timeout: 1)
+        takeScreenshot(name: "Page 3")
     }
 }
 
