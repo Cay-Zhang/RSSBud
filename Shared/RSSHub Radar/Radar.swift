@@ -51,14 +51,14 @@ extension RSSHub {
             
             // Load Dependencies
             _ = context.evaluateScript(fileNamed: "url.min")
-            _ = context.evaluateScript(fileNamed: "psl.min")
-            _ = context.evaluateScript(fileNamed: "route-recognizer.min")
+//            _ = context.evaluateScript(fileNamed: "psl.min")
+//            _ = context.evaluateScript(fileNamed: "route-recognizer.min")
             
             // Load Rules
             _ = context.evaluateScript(localRules.content)
             
             // Load Utils
-            _ = context.evaluateScript(fileNamed: "utils")
+            _ = context.evaluateScript(fileNamed: "radar.min")
             
             // Reload Rules on Changes
             localRules.contentPublisher
@@ -80,10 +80,8 @@ extension RSSHub {
                 
                 let result = Result<[DetectedFeed], Error> {
                     let jsonString = RSSHub.Radar.jsContext.evaluateScript("""
-                        JSON.stringify(getPageRSSHub({
+                        JSON.stringify(Radar.getPageRSSHub({
                             url: "\(url.string ?? "")",
-                            host: "\(host)",
-                            path: "\(url.path)",
                             html: "",
                             rules: rules
                         }));
