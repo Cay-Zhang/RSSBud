@@ -44,21 +44,33 @@ extension RSSHub {
         static let jsContext: JSContext = {
             let context = JSContext()!
             
-            context.exceptionHandler = { _, value in
-                guard let value = value else { return }
-                print(value)
+            context.exceptionHandler = { context, value in
+                guard let value = value,
+                      let stack = value.objectForKeyedSubscript("stack").toString(),
+                      let line = value.objectForKeyedSubscript("line").toString(),
+                      let column = value.objectForKeyedSubscript("column").toString()
+                else { assertionFailure("Can't get error info."); return }
+                print("Radar JSContext Error [\(line):\(column)]: \(value)\nTraceback:\n\(stack)")
             }
-            
-            // Load Dependencies
-            _ = context.evaluateScript(fileNamed: "url.min")
-            _ = context.evaluateScript(fileNamed: "psl.min")
-            _ = context.evaluateScript(fileNamed: "route-recognizer.min")
             
             // Load Rules
             _ = context.evaluateScript(localRules.content)
             
-            // Load Utils
-            _ = context.evaluateScript(fileNamed: "utils")
+            // Polyfills
+            context.setObject(context.globalObject, forKeyedSubscript: "window" as NSString)
+            
+            _ = context.evaluateScript("""
+                function setTimeout() { }
+                function clearTimeout() { }
+                function setInterval() { }
+                """)
+            
+            // Load Radar
+            _ = context.evaluateScript(fileNamed: "radar.min")
+            
+            _ = context.evaluateScript("""
+                const radar = require('radar');
+                """)
             
             // Reload Rules on Changes
             localRules.contentPublisher
@@ -74,30 +86,41 @@ extension RSSHub {
             return context
         }()
         
-        static func detecting(url: URLComponents) -> Future<[DetectedFeed], DetectionError> {
+        static func asyncExpandURLAndGetHTML(for urlComponents: URLComponents) -> AnyPublisher<(url: URLComponents, html: String?), Never> {
+            guard let url = urlComponents.url else { return Empty(completeImmediately: true).eraseToAnyPublisher() }
+            var request = URLRequest(url: url)
+            let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/605.1.12 (KHTML, like Gecko) Version/11.1 Safari/605.1.12"
+            request.addValue(userAgent, forHTTPHeaderField: "User-Agent")
+
+            return URLSession.shared.dataTaskPublisher(for: request)
+                .compactMap {
+                    let url = $0.response.url?.components ?? urlComponents
+                    let html = String(data: $0.data, encoding: .utf8)
+                        ?? String(data: $0.data, encoding: .ascii)
+                    return (url: url, html: html)
+                }.replaceError(with: (url: urlComponents, html: nil))
+                .eraseToAnyPublisher()
+        }
+        
+        static func detecting(url: URLComponents, html: String = "") -> AnyPublisher<[DetectedFeed], Error> {
             Future { promise in
-                guard let host = url.host else { promise(.failure(.hostNotFound(url: url))); return }
+                guard url.host != nil else { promise(.failure(DetectionError.hostNotFound(url: url))); return }
+                print(html)
                 
-                let result = Result<[DetectedFeed], Error> {
-                    let jsonString = RSSHub.Radar.jsContext.evaluateScript("""
-                        JSON.stringify(getPageRSSHub({
-                            url: "\(url.string ?? "")",
-                            host: "\(host)",
-                            path: "\(url.path)",
-                            html: "",
-                            rules: rules
-                        }));
-                        """
-                    )!.toString()!
-                    let data = jsonString.data(using: .utf8)!
-                    return try JSONDecoder().decode([RSSHub.Radar.DetectedFeed].self, from: data)
-                }.mapError {
-                    DetectionError.decodingFailure(error: $0 as! DecodingError)
-                }
+                RSSHub.Radar.jsContext.setObject(html, forKeyedSubscript: "html" as NSString)
                 
+                let jsonString = RSSHub.Radar.jsContext.evaluateScript("""
+                    JSON.stringify(radar.getPageRSSHub({
+                        url: "\(url.string ?? "")",
+                        html: html,
+                        rules: rules
+                    }));
+                    """
+                )!.toString()!
+                let data = jsonString.data(using: .utf8)!
+                let result = Result { try JSONDecoder().decode([RSSHub.Radar.DetectedFeed].self, from: data) }
                 promise(result)
-                
-            }
+            }.eraseToAnyPublisher()
         }
         
     }

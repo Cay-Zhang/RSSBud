@@ -19,6 +19,10 @@
 		1C58359F24EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
 		1C5835A024EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
 		1C5835A124EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
+		1C63BA55259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
+		1C63BA56259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
+		1C63BA57259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
+		1C63BA58259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
 		1C6E62982556BF48006087EF /* PromoAssetGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */; };
 		1C6EE75D258CA78900C645F0 /* shortcut-workshop.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C6EE761258CA78900C645F0 /* shortcut-workshop.json */; };
 		1C6EE75E258CA78900C645F0 /* shortcut-workshop.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C6EE761258CA78900C645F0 /* shortcut-workshop.json */; };
@@ -51,14 +55,6 @@
 		1CE03F5D257C8C9000F38061 /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 1CE03F5C257C8C9000F38061 /* Valet */; };
 		EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
-		EE000A8D24B41E1000979B1A /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
-		EE000A8E24B41E1000979B1A /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
-		EE000A8F24B41E1000979B1A /* route-recognizer.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8824B41E1000979B1A /* route-recognizer.js */; };
-		EE000A9024B41E1000979B1A /* route-recognizer.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8824B41E1000979B1A /* route-recognizer.js */; };
-		EE000A9124B41E1000979B1A /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8924B41E1000979B1A /* utils.js */; };
-		EE000A9224B41E1000979B1A /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8924B41E1000979B1A /* utils.js */; };
-		EE000A9324B41E1000979B1A /* psl.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8A24B41E1000979B1A /* psl.min.js */; };
-		EE000A9424B41E1000979B1A /* psl.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8A24B41E1000979B1A /* psl.min.js */; };
 		EE000A9624B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
 		EE000A9724B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
 		EE1ABF0F24E182E200996C06 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* WideButton.swift */; };
@@ -66,17 +62,8 @@
 		EE3EEAB624E152D20006ED53 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EEAB524E152D20006ED53 /* SettingsView.swift */; };
 		EE3EEAB724E152D20006ED53 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EEAB524E152D20006ED53 /* SettingsView.swift */; };
 		EE7CD90924DD541100FAA837 /* RSSBudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7CD90824DD541100FAA837 /* RSSBudTests.swift */; };
-		EE7CD91024DD547200FAA837 /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8924B41E1000979B1A /* utils.js */; };
-		EE7CD91124DD547200FAA837 /* psl.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8A24B41E1000979B1A /* psl.min.js */; };
 		EE7CD91224DD547200FAA837 /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
-		EE7CD91324DD547200FAA837 /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
 		EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
-		EE7CD91724DD6E6B00FAA837 /* url.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91624DD6E6B00FAA837 /* url.js */; };
-		EE7CD91824DD6E6B00FAA837 /* url.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91624DD6E6B00FAA837 /* url.js */; };
-		EE7CD91924DD6E6B00FAA837 /* url.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91624DD6E6B00FAA837 /* url.js */; };
-		EE7CD91B24DD6EEF00FAA837 /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
-		EE7CD91C24DD6EEF00FAA837 /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
-		EE7CD91D24DD6EEF00FAA837 /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
 		EE7CD91E24DD6FA000FAA837 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* Extensions.swift */; };
 		EEB7578524B2B6E700F26CF7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* App.swift */; };
 		EEB7578624B2B6E700F26CF7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* App.swift */; };
@@ -91,12 +78,8 @@
 		EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEC4A4FC24E3D032005041CA /* Media.xcassets */; };
 		EEC4A4FF24E3D032005041CA /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A4FE24E3D032005041CA /* ActionViewController.swift */; };
 		EEC4A50624E3D032005041CA /* Action Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EEC4A4FA24E3D032005041CA /* Action Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		EEC4A50B24E3E26D005041CA /* route-recognizer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8724B41E1000979B1A /* route-recognizer.min.js */; };
-		EEC4A50C24E3E26D005041CA /* psl.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8A24B41E1000979B1A /* psl.min.js */; };
-		EEC4A50E24E3E26D005041CA /* utils.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8924B41E1000979B1A /* utils.js */; };
 		EEC4A50F24E3E26D005041CA /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EEC4A51024E3E26D005041CA /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
-		EEC4A51224E3E26D005041CA /* url.min.js in Resources */ = {isa = PBXBuildFile; fileRef = EE7CD91A24DD6EEF00FAA837 /* url.min.js */; };
 		EEC4A51324E3E287005041CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577324B2B6E600F26CF7 /* ContentView.swift */; };
 		EEC4A51424E3E29A005041CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* Extensions.swift */; };
 		EEC4A51524E3E29D005041CA /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */; };
@@ -152,6 +135,7 @@
 		1C3221A125192F6A00CD9F56 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1C3221A725192F6E00CD9F56 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1C58359D24EA8D9100FB8523 /* Integration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integration.swift; sourceTree = "<group>"; };
+		1C63BA54259DE04F006D73AE /* radar.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = radar.min.js; sourceTree = "<group>"; };
 		1C6E62952556BF48006087EF /* PromoAssetGeneration.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PromoAssetGeneration.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoAssetGeneration.swift; sourceTree = "<group>"; };
 		1C6E62992556BF48006087EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -166,18 +150,12 @@
 		1CDB36C72544566D002E84D8 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1CE03F31257B7EC500F38061 /* RuleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleManager.swift; sourceTree = "<group>"; };
 		EE000A8624B41E1000979B1A /* radar-rules.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "radar-rules.js"; sourceTree = "<group>"; };
-		EE000A8724B41E1000979B1A /* route-recognizer.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "route-recognizer.min.js"; sourceTree = "<group>"; };
-		EE000A8824B41E1000979B1A /* route-recognizer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "route-recognizer.js"; sourceTree = "<group>"; };
-		EE000A8924B41E1000979B1A /* utils.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = utils.js; sourceTree = "<group>"; };
-		EE000A8A24B41E1000979B1A /* psl.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = psl.min.js; sourceTree = "<group>"; };
 		EE000A9524B41E9600979B1A /* Radar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radar.swift; sourceTree = "<group>"; };
 		EE1ABF0E24E182E200996C06 /* WideButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideButton.swift; sourceTree = "<group>"; };
 		EE3EEAB524E152D20006ED53 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSBudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE7CD90824DD541100FAA837 /* RSSBudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBudTests.swift; sourceTree = "<group>"; };
 		EE7CD90A24DD541100FAA837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE7CD91624DD6E6B00FAA837 /* url.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = url.js; sourceTree = "<group>"; };
-		EE7CD91A24DD6EEF00FAA837 /* url.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = url.min.js; sourceTree = "<group>"; };
 		EEB7577224B2B6E600F26CF7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EEB7577324B2B6E600F26CF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EEB7577424B2B6E700F26CF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -274,13 +252,8 @@
 		EE000A7624B41CAA00979B1A /* RSSHub Radar */ = {
 			isa = PBXGroup;
 			children = (
-				EE000A8A24B41E1000979B1A /* psl.min.js */,
 				EE000A8624B41E1000979B1A /* radar-rules.js */,
-				EE000A8824B41E1000979B1A /* route-recognizer.js */,
-				EE000A8724B41E1000979B1A /* route-recognizer.min.js */,
-				EE7CD91624DD6E6B00FAA837 /* url.js */,
-				EE7CD91A24DD6EEF00FAA837 /* url.min.js */,
-				EE000A8924B41E1000979B1A /* utils.js */,
+				1C63BA54259DE04F006D73AE /* radar.min.js */,
 				EE000A9524B41E9600979B1A /* Radar.swift */,
 			);
 			path = "RSSHub Radar";
@@ -566,12 +539,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE7CD91924DD6E6B00FAA837 /* url.js in Resources */,
-				EE7CD91324DD547200FAA837 /* route-recognizer.min.js in Resources */,
-				EE7CD91D24DD6EEF00FAA837 /* url.min.js in Resources */,
+				1C63BA57259DE04F006D73AE /* radar.min.js in Resources */,
 				EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */,
-				EE7CD91124DD547200FAA837 /* psl.min.js in Resources */,
-				EE7CD91024DD547200FAA837 /* utils.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,16 +548,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE000A9324B41E1000979B1A /* psl.min.js in Resources */,
-				EE000A9124B41E1000979B1A /* utils.js in Resources */,
-				EE7CD91B24DD6EEF00FAA837 /* url.min.js in Resources */,
+				1C63BA55259DE04F006D73AE /* radar.min.js in Resources */,
 				1C270114250B5BC300595BCE /* LaunchScreen.storyboard in Resources */,
-				EE000A8D24B41E1000979B1A /* route-recognizer.min.js in Resources */,
 				1C32219E25192F6A00CD9F56 /* Localizable.strings in Resources */,
 				1C6EE75D258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 				EEB7578924B2B6E700F26CF7 /* Assets.xcassets in Resources */,
-				EE000A8F24B41E1000979B1A /* route-recognizer.js in Resources */,
-				EE7CD91724DD6E6B00FAA837 /* url.js in Resources */,
 				EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -597,15 +561,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE000A9424B41E1000979B1A /* psl.min.js in Resources */,
-				EE000A9224B41E1000979B1A /* utils.js in Resources */,
-				EE7CD91C24DD6EEF00FAA837 /* url.min.js in Resources */,
-				EE000A8E24B41E1000979B1A /* route-recognizer.min.js in Resources */,
+				1C63BA56259DE04F006D73AE /* radar.min.js in Resources */,
 				1C6EE75E258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 				1C32219F25192F6A00CD9F56 /* Localizable.strings in Resources */,
 				EEB7578A24B2B6E700F26CF7 /* Assets.xcassets in Resources */,
-				EE000A9024B41E1000979B1A /* route-recognizer.js in Resources */,
-				EE7CD91824DD6E6B00FAA837 /* url.js in Resources */,
 				EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -615,14 +574,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEC4A50F24E3E26D005041CA /* radar-rules.js in Resources */,
-				EEC4A51224E3E26D005041CA /* url.min.js in Resources */,
-				EEC4A50B24E3E26D005041CA /* route-recognizer.min.js in Resources */,
 				1C3221A025192F6A00CD9F56 /* Localizable.strings in Resources */,
 				EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */,
-				EEC4A50C24E3E26D005041CA /* psl.min.js in Resources */,
 				1CDB36F0254AEA74002E84D8 /* Assets.xcassets in Resources */,
-				EEC4A50E24E3E26D005041CA /* utils.js in Resources */,
 				1C6EE75F258CA78900C645F0 /* shortcut-workshop.json in Resources */,
+				1C63BA58259DE04F006D73AE /* radar.min.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
