@@ -30,7 +30,7 @@ struct ContentView: View {
                             VStack(spacing: 30) {
                                 if let url = viewModel.originalURL?.url {
                                     LinkPresentation(previewURL: url)
-                                        .frame(height: 200)
+                                        .frame(minHeight: 100)
                                 }
                                 
                                 HStack(spacing: 20) {
