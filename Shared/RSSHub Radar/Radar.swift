@@ -57,7 +57,6 @@ extension RSSHub {
             _ = context.evaluateScript(localRules.content)
             
             // Polyfills
-//            context.setObject(context.globalObject, forKeyedSubscript: "global" as NSString)
             context.setObject(context.globalObject, forKeyedSubscript: "window" as NSString)
             
             _ = context.evaluateScript("""
@@ -68,9 +67,6 @@ extension RSSHub {
             
             // Load Radar
             _ = context.evaluateScript(fileNamed: "radar.min")
-            
-//            var { URL } = require('whatwg-url');
-//            var { JSDOM } = require('jsdom');
             
             _ = context.evaluateScript("""
                 const radar = require('radar');
