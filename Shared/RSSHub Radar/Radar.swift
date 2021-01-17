@@ -44,9 +44,13 @@ extension RSSHub {
         static let jsContext: JSContext = {
             let context = JSContext()!
             
-            context.exceptionHandler = { _, value in
-                guard let value = value else { return }
-                print(value)
+            context.exceptionHandler = { context, value in
+                guard let value = value,
+                      let stack = value.objectForKeyedSubscript("stack").toString(),
+                      let line = value.objectForKeyedSubscript("line").toString(),
+                      let column = value.objectForKeyedSubscript("column").toString()
+                else { assertionFailure("Can't get error info."); return }
+                print("Radar JSContext Error [\(line):\(column)]: \(value)\nTraceback:\n\(stack)")
             }
             
             // Load Dependencies
