@@ -49,7 +49,7 @@ struct ContentView: View {
                                             FeedView(feed: feed, contentViewModel: viewModel, openURL: openURL)
                                         }
                                     }
-                                } else {
+                                } else if !viewModel.isProcessing {
                                     NothingFoundView(url: viewModel.originalURL, openURL: openURL)
                                 }
                             }
@@ -168,32 +168,33 @@ extension ContentView {
                     self.isProcessing = true
                 }
                 
-                url.expanding()
-                    .prepend(url)
-                    .flatMap { url in
-                        RSSHub.Radar.detecting(url: url)
-                    }.first { feeds in !feeds.isEmpty }
-                    .replaceEmpty(with: [])
-                    .receive(on: DispatchQueue.main)
-                    .sink { [unowned self] completion in
-                        switch completion {
-                        case .finished:
-                            withAnimation {
-                                self.isProcessing = false
+                DispatchQueue.global(qos: .userInitiated).async {
+                    RSSHub.Radar.asyncExpandURLAndGetHTML(for: url)
+                        .prepend((url: url, html: ""))
+                        .flatMap { tuple in
+                            RSSHub.Radar.detecting(url: tuple.url, html: tuple.html ?? "")
+                        }.replaceEmpty(with: [])
+                        .receive(on: DispatchQueue.main)
+                        .sink { [unowned self] completion in
+                            switch completion {
+                            case .finished:
+                                withAnimation {
+                                    self.isProcessing = false
+                                }
+                            case .failure(let error):
+                                print(error)
+                                withAnimation {
+                                    self.isProcessing = false
+                                    self.detectedFeeds = nil
+                                    self.alert = Alert(title: Text("An Error Occurred"), message: Text(verbatim: error.localizedDescription))
+                                }
                             }
-                        case .failure(let error):
-                            print(error)
+                        } receiveValue: { [unowned self] feeds in
                             withAnimation {
-                                self.isProcessing = false
-                                self.detectedFeeds = nil
-                                self.alert = Alert(title: Text("An Error Occurred"), message: Text(verbatim: error.localizedDescription))
+                                self.detectedFeeds = feeds
                             }
-                        }
-                    } receiveValue: { [unowned self] feeds in
-                        withAnimation {
-                            self.detectedFeeds = feeds
-                        }
-                    }.store(in: &cancelBag)
+                        }.store(in: &self.cancelBag)
+                }
             }
         }
         

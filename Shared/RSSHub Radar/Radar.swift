@@ -90,40 +90,41 @@ extension RSSHub {
             return context
         }()
         
-        static func asyncGetHTML(for url: URLComponents) -> AnyPublisher<String, URLError> {
-            guard let url = url.url else { return Empty(completeImmediately: true).eraseToAnyPublisher() }
+        static func asyncExpandURLAndGetHTML(for urlComponents: URLComponents) -> AnyPublisher<(url: URLComponents, html: String?), Never> {
+            guard let url = urlComponents.url else { return Empty(completeImmediately: true).eraseToAnyPublisher() }
             var request = URLRequest(url: url)
             let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/605.1.12 (KHTML, like Gecko) Version/11.1 Safari/605.1.12"
             request.addValue(userAgent, forHTTPHeaderField: "User-Agent")
 
             return URLSession.shared.dataTaskPublisher(for: request)
                 .compactMap {
-                    String(data: $0.data, encoding: .utf8)
-                    ?? String(data: $0.data, encoding: .ascii)
-                }
+                    let url = $0.response.url?.components ?? urlComponents
+                    let html = String(data: $0.data, encoding: .utf8)
+                        ?? String(data: $0.data, encoding: .ascii)
+                    return (url: url, html: html)
+                }.replaceError(with: (url: urlComponents, html: nil))
                 .eraseToAnyPublisher()
         }
         
-        static func detecting(url: URLComponents) -> AnyPublisher<[DetectedFeed], Error> {
-            asyncGetHTML(for: url)
-                .prepend("")
-                .tryMap { html in
-                    guard let host = url.host else { throw DetectionError.hostNotFound(url: url) }
-                    print(html)
-                    
-                    RSSHub.Radar.jsContext.setObject(html, forKeyedSubscript: "html" as NSString)
-                    
-                    let jsonString = RSSHub.Radar.jsContext.evaluateScript("""
-                        JSON.stringify(radar.getPageRSSHub({
-                            url: "\(url.string ?? "")",
-                            html: html,
-                            rules: rules
-                        }));
-                        """
-                    )!.toString()!
-                    let data = jsonString.data(using: .utf8)!
-                    return try JSONDecoder().decode([RSSHub.Radar.DetectedFeed].self, from: data)
-                }.eraseToAnyPublisher()
+        static func detecting(url: URLComponents, html: String = "") -> AnyPublisher<[DetectedFeed], Error> {
+            Future { promise in
+                guard url.host != nil else { promise(.failure(DetectionError.hostNotFound(url: url))); return }
+                print(html)
+                
+                RSSHub.Radar.jsContext.setObject(html, forKeyedSubscript: "html" as NSString)
+                
+                let jsonString = RSSHub.Radar.jsContext.evaluateScript("""
+                    JSON.stringify(radar.getPageRSSHub({
+                        url: "\(url.string ?? "")",
+                        html: html,
+                        rules: rules
+                    }));
+                    """
+                )!.toString()!
+                let data = jsonString.data(using: .utf8)!
+                let result = Result { try JSONDecoder().decode([RSSHub.Radar.DetectedFeed].self, from: data) }
+                promise(result)
+            }.eraseToAnyPublisher()
         }
         
     }
