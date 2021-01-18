@@ -69,6 +69,7 @@ extension RSSHub {
             _ = context.evaluateScript(fileNamed: "radar.min")
             
             _ = context.evaluateScript("""
+                const { URL } = require('whatwg-url');
                 const radar = require('radar');
                 """)
             
