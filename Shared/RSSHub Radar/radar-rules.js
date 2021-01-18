@@ -42,6 +42,42 @@ var rules = ({
                 source: '/:uid',
                 target: '/bilibili/user/video/:uid',
             },
+            {
+                title: 'UP 主专栏',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/article/:uid',
+            },
+            {
+                title: 'UP 主默认收藏夹',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/fav/:uid',
+            },
+            {
+                title: 'UP 主投币视频',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/coin/:uid',
+            },
+            {
+                title: 'UP 主粉丝',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/followers/:uid',
+            },
+            {
+                title: 'UP 主关注用户',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/followings/:uid',
+            },
+            {
+                title: '用户追番列表',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/bangumi/:uid',
+            },
         ],
         manga: [
             {
@@ -169,7 +205,7 @@ var rules = ({
         ],
     },
     'youtube.com': {
-        _name: 'Youtube',
+        _name: 'YouTube',
         www: [
             {
                 title: '用户',
@@ -391,7 +427,7 @@ var rules = ({
     },
     'ximalaya.com': {
         _name: '喜马拉雅',
-        www: [
+        '.': [
             {
                 title: '专辑',
                 docs: 'https://docs.rsshub.app/multimedia.html#xi-ma-la-ya',
@@ -424,14 +460,44 @@ var rules = ({
             },
         ],
     },
-    'juejin.im': {
+    'juejin.cn': {
         _name: '掘金',
         '.': [
             {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/programming.html#jue-jin-biao-qian',
+                source: '/tag/:tag',
+                target: '/juejin/tag/:tag',
+            },
+            {
+                title: '小册',
+                docs: 'https://docs.rsshub.app/programming.html#jue-jin-xiao-ce',
+                source: '/books',
+                target: '/juejin/books',
+            },
+            {
+                title: '沸点',
+                docs: 'https://docs.rsshub.app/programming.html#jue-jin-fei-dian',
+                source: ['/pins/:type', '/pins/topic/:type'],
+                target: (params) => (params.type !== 'recommended' ? '/juejin/pins/:type' : '/juejin/pins'),
+            },
+            {
                 title: '专栏',
-                docs: 'https://docs.rsshub.app/programming.html#jue-jin',
-                source: '/user/:id/posts',
+                docs: 'https://docs.rsshub.app/programming.html#jue-jin-zhuan-lan',
+                source: ['/user/:id', '/user/:id/posts'],
                 target: '/juejin/posts/:id',
+            },
+            {
+                title: '收藏集',
+                docs: 'https://docs.rsshub.app/programming.html#jue-jin-shou-cang-ji',
+                source: ['/user/:id', '/user/:id/collections'],
+                target: '/juejin/collections/:id',
+            },
+            {
+                title: '单个收藏夹',
+                docs: 'https://docs.rsshub.app/programming.html#jue-jin-dan-ge-shou-cang-jia',
+                source: '/collection/:collectionId',
+                target: '/juejin/collection/:collectionId',
             },
         ],
     },
@@ -1829,6 +1895,12 @@ var rules = ({
                 source: '/mp/homepage',
                 target: (params, url) => `/wechat/mp/homepage/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('hid')}/${new URL(url).searchParams.get('cid') ? new URL(url).searchParams.get('cid') : ''}`,
             },
+            {
+                title: '微信公众号话题',
+                docs: 'https://docs.rsshub.app/new-media.html#wei-xin-gong-zhong-hao-wen-zhang-hua-ti-tag',
+                source: '/mp/appmsgalbum',
+                target: (params, url) => `/wechat/mp/msgalbum/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('album_id')}`,
+            },
         ],
         egame: [
             {
@@ -1959,6 +2031,82 @@ var rules = ({
                         ikey = document.querySelector('div.card > a').getAttribute('href').replace('/actress/', '');
                     }
                     return `/onejav/${itype}/${ikey}`;
+                },
+            },
+        ],
+    },
+    '141jav.com': {
+        _name: '141JAV BT',
+        '.': [
+            {
+                title: '今日种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#141jav',
+                source: '/',
+                target: (params, url, document) => {
+                    const today = document.querySelector('div.card.mb-1.card-overview').getAttribute('data-date').replace(/-/g, '');
+                    return `/141jav/day/${today}`;
+                },
+            },
+            {
+                title: '今日演员',
+                docs: 'https://docs.rsshub.app/multimedia.html#141jav',
+                source: '/',
+                target: (params, url, document) => {
+                    const star = document.querySelector('div.card-content > div > a').getAttribute('href');
+                    return `/141jav${star}`;
+                },
+            },
+            {
+                title: '页面种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#141jav',
+                source: ['/:type', '/:type/:key', '/:type/:key/:morekey'],
+                target: (params, url, document) => {
+                    const itype = params.morekey === undefined ? `${params.type}` : params.type === 'tag' ? 'tag' : 'day';
+                    let ikey = `${itype === 'day' ? params.type : ''}${params.key || ''}${itype === 'tag' && params.morekey !== undefined ? '%2F' : ''}${params.morekey || ''}`;
+                    if (ikey === '' && itype === 'tag') {
+                        ikey = document.querySelector('div.thumbnail.is-inline > a').getAttribute('href').replace('/tag/', '').replace('/', '%2F');
+                    } else if (ikey === '' && itype === 'actress') {
+                        ikey = document.querySelector('div.card > a').getAttribute('href').replace('/actress/', '');
+                    }
+                    return `/141jav/${itype}/${ikey}`;
+                },
+            },
+        ],
+    },
+    '141ppv.com': {
+        _name: '141ppv BT',
+        '.': [
+            {
+                title: '今日种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#141pvp',
+                source: '/',
+                target: (params, url, document) => {
+                    const today = document.querySelector('div.card.mb-1.card-overview').getAttribute('data-date').replace(/-/g, '');
+                    return `/141ppv/day/${today}`;
+                },
+            },
+            {
+                title: '今日演员',
+                docs: 'https://docs.rsshub.app/multimedia.html#141ppv',
+                source: '/',
+                target: (params, url, document) => {
+                    const star = document.querySelector('div.card-content > div > a').getAttribute('href');
+                    return `/141ppv${star}`;
+                },
+            },
+            {
+                title: '页面种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#141ppv',
+                source: ['/:type', '/:type/:key', '/:type/:key/:morekey'],
+                target: (params, url, document) => {
+                    const itype = params.morekey === undefined ? `${params.type}` : params.type === 'tag' ? 'tag' : 'day';
+                    let ikey = `${itype === 'day' ? params.type : ''}${params.key || ''}${itype === 'tag' && params.morekey !== undefined ? '%2F' : ''}${params.morekey || ''}`;
+                    if (ikey === '' && itype === 'tag') {
+                        ikey = document.querySelector('div.thumbnail.is-inline > a').getAttribute('href').replace('/tag/', '').replace('/', '%2F');
+                    } else if (ikey === '' && itype === 'actress') {
+                        ikey = document.querySelector('div.card > a').getAttribute('href').replace('/actress/', '');
+                    }
+                    return `/141ppv/${itype}/${ikey}`;
                 },
             },
         ],
@@ -2251,9 +2399,9 @@ var rules = ({
             },
         ],
     },
-    'manxiaosi.com': {
+    'jjmhw.cc': {
         _name: '漫小肆',
-        '.': [
+        www: [
             {
                 title: '漫画更新',
                 docs: 'https://docs.rsshub.app/anime.html#man-xiao-si',
@@ -2261,5 +2409,229 @@ var rules = ({
                 target: '/manxiaosi/book/:id',
             },
         ],
+    },
+    'wenxuecity.com': {
+        _name: '文学城',
+        blog: [
+            {
+                title: '博客',
+                docs: 'https://docs.rsshub.app/bbs.html#wen-xue-cheng-bo-ke',
+                source: '/myblog/:id',
+                target: '/wenxuecity/blog/:id',
+            },
+            {
+                title: '博客',
+                docs: 'https://docs.rsshub.app/bbs.html#wen-xue-cheng-bo-ke',
+                source: '/myoverview/:id',
+                target: '/wenxuecity/blog/:id',
+            },
+        ],
+        bbs: [
+            {
+                title: '最新主题',
+                docs: 'https://docs.rsshub.app/bbs.html#wen-xue-cheng-zui-xin-zhu-ti',
+                source: '/:cat',
+                target: '/wenxuecity/bbs/:cat',
+            },
+            {
+                title: '最新主题 - 精华区',
+                docs: 'https://docs.rsshub.app/bbs.html#wen-xue-cheng-zui-xin-zhu-ti',
+                source: '/:cat',
+                target: '/wenxuecity/bbs/:cat/1',
+            },
+            {
+                title: '最热主题',
+                docs: 'https://docs.rsshub.app/bbs.html#wen-xue-cheng-zui-re-zhu-ti',
+                source: '/?cid=*',
+                target: (params, url, document) => {
+                    const cid = document && new URL(document.location).searchParams.get('cid');
+                    return `/wenxuecity/hot/${cid}`;
+                },
+            },
+        ],
+    },
+    'buaq.net': {
+        _name: '不安全资讯',
+        '.': [
+            {
+                title: '不安全资讯',
+                docs: 'http://docs.rsshub.app/new-media.html#bu-an-quan',
+                source: '/',
+                target: '/buaq',
+            },
+        ],
+    },
+    'jian-ning.com': {
+        _name: '建宁闲谈',
+        '.': [
+            {
+                title: '文章',
+                docs: 'https://docs.rsshub.app/blog.html#jian-ning-xian-tan',
+                source: '/*',
+                target: '/blogs/jianning',
+            },
+        ],
+    },
+    'matataki.io': {
+        _name: 'matataki',
+        www: [
+            {
+                title: '最热作品',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: '/article/',
+                target: '/matataki/posts/hot',
+            },
+            {
+                title: '最新作品',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: '/article/latest',
+                target: '/matataki/posts/latest',
+            },
+            {
+                title: '作者创作',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: '/user/:uid',
+                target: (params) => `/matataki/users/${params.uid}/posts`,
+            },
+            {
+                title: 'Fan票关联作品',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: ['/token/:tokenId', '/token/:tokenId/circle'],
+                target: (params) => `/matataki/tokens/${params.tokenId}/posts`,
+            },
+            {
+                title: '标签关联作品',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: ['/tag/:tagId'],
+                target: (params, url) => {
+                    const tagName = new URL(url).searchParams.get('name');
+                    return `/matataki/tags/${params.tagId}/${tagName}/posts`;
+                },
+            },
+            {
+                title: '收藏夹',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: '/user/:uid/favlist/:fid',
+                target: (params) => `/matataki/users/${params.uid}/favorites/${params.fid}/posts`,
+            },
+        ],
+    },
+    'eventernote.com': {
+        _name: 'Eventernote',
+        www: [
+            {
+                title: '声优活动及演唱会',
+                docs: 'https://docs.rsshub.app/anime.html#eventernote',
+                source: '/actors/:name/:id/events',
+                target: '/eventernote/actors/:name/:id',
+            },
+        ],
+    },
+    'instagram.com': {
+        _name: 'Instagram',
+        www: [
+            {
+                title: '用户',
+                docs: 'https://docs.rsshub.app/social-media.html#instagram',
+                source: '/:id',
+                target: (params) => {
+                    if (params.id !== 'explore' && params.id !== 'developer') {
+                        return '/instagram/user/:id';
+                    }
+                },
+            },
+        ],
+    },
+    'huya.com': {
+        _name: '虎牙直播',
+        '.': [
+            {
+                title: '直播间开播',
+                docs: 'https://docs.rsshub.app/live.html#hu-ya-zhi-bo-zhi-bo-jian-kai-bo',
+                source: '/:id',
+                target: '/huya/live/:id',
+            },
+        ],
+    },
+    'craigslist.org': {
+        _name: 'Craigslist',
+        '.': [
+            {
+                title: '商品搜索列表',
+                docs: 'https://docs.rsshub.app/shopping.html#craigslist',
+            },
+        ],
+    },
+    'saraba1st.com': {
+        _name: 'Saraba1st',
+        bbs: [
+            {
+                title: '帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#saraba1st',
+                source: '/2b/:id',
+                target: (params) => {
+                    const id = params.id.includes('thread') ? params.id.split('-')[1] : '';
+                    return id ? `/saraba1st/thread/${id}` : '';
+                },
+            },
+        ],
+    },
+    'scboy.com': {
+        _name: 'scboy 论坛',
+        www: [
+            {
+                title: '帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#scboy',
+                source: '',
+                target: (params, url) => {
+                    const id = url.includes('thread') ? url.split('-')[1].split('.')[0] : '';
+                    return id ? `/scboy/thread/${id}` : '';
+                },
+            },
+        ],
+    },
+    'cqut.edu.cn': {
+        _name: '重庆理工大学',
+        tz: [
+            {
+                title: '通知',
+                docs: 'https://docs.rsshub.app/university.html#chong-qing-li-gong-da-xue',
+                source: '/*',
+            },
+        ],
+        lib: [
+            {
+                title: '图书馆通知',
+                docs: 'https://docs.rsshub.app/university.html#chong-qing-li-gong-da-xue',
+                source: '/*',
+            },
+        ],
+    },
+    'cqwu.net': {
+        _name: '重庆文理学院',
+        www: [
+            {
+                title: '通知',
+                docs: 'https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan',
+                source: '/:type',
+                target: (params) => {
+                    if (params.type === 'channel_7721.html')
+                    {
+                        return '/cqwu/news/notify';
+                    }
+                },
+            },
+            {
+                title: '学术活动',
+                docs: 'https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan',
+                source: '/:type',
+                target: (params) => {
+                    if (params.type === 'channel_7722.html')
+                    {
+                        return '/cqwu/news/academiceve';
+                    }
+                },
+            },
+        ]
     },
 });
