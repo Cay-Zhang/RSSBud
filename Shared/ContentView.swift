@@ -173,6 +173,8 @@ extension ContentView {
                         .prepend((url: url, html: ""))
                         .flatMap { tuple in
                             RSSHub.Radar.detecting(url: tuple.url, html: tuple.html ?? "")
+                        }.scan([]) {
+                            $0.count < $1.count ? $1 : $0
                         }.replaceEmpty(with: [])
                         .receive(on: DispatchQueue.main)
                         .sink { [unowned self] completion in
