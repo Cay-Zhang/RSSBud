@@ -106,7 +106,7 @@ extension RSSHub {
         static func detecting(url: URLComponents, html: String = "") -> AnyPublisher<[DetectedFeed], Error> {
             Future { promise in
                 guard url.host != nil else { promise(.failure(DetectionError.hostNotFound(url: url))); return }
-                print(html)
+                print("Radar Start Detecting: \(url)")
                 
                 RSSHub.Radar.jsContext.setObject(html, forKeyedSubscript: "html" as NSString)
                 
@@ -120,6 +120,7 @@ extension RSSHub {
                 )!.toString()!
                 let data = jsonString.data(using: .utf8)!
                 let result = Result { try JSONDecoder().decode([RSSHub.Radar.DetectedFeed].self, from: data) }
+                print("Radar Finish Detecting: \(result)")
                 promise(result)
             }.eraseToAnyPublisher()
         }
