@@ -96,7 +96,10 @@ var rules = ({
                 docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
                 source: ['/u/:id', '/:id'],
                 target: (params, url, document) => {
-                    const uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];
+                    let uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];
+                    if (!uid && !isNaN(params.id)) {
+                        uid = params.id;
+                    }
                     return uid ? `/weibo/user/${uid}` : '';
                 },
             },
@@ -117,6 +120,17 @@ var rules = ({
                 docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
                 source: '/top/summary',
                 target: '/weibo/search/hot',
+            },
+        ],
+    },
+    'weibo.cn': {
+        _name: '微博',
+        m: [
+            {
+                title: '博主',
+                docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
+                source: ['/u/:uid', '/profile/:uid'],
+                target: '/weibo/user/:uid',
             },
         ],
     },
@@ -249,6 +263,12 @@ var rules = ({
                 target: '/github/trending/:since',
             },
             {
+                title: 'Trending',
+                docs: 'https://docs.rsshub.app/programming.html#github',
+                source: '/topics',
+                target: '/github/topics/:name/:qs?',
+            },
+            {
                 title: '仓库 Issue',
                 docs: 'https://docs.rsshub.app/programming.html#github',
                 source: ['/:user/:repo/issues', '/:user/:repo/issues/:id', '/:user/:repo'],
@@ -322,9 +342,10 @@ var rules = ({
             {
                 title: '用户文章',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
-                source: '/people/:id/posts',
-                target: '/zhihu/people/posts/:id',
+                source: '/:usertype/:id/posts',
+                target: '/zhihu/posts/:usertype/:id',
             },
+
             {
                 title: '热榜',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
@@ -2158,6 +2179,12 @@ var rules = ({
                 source: '/news',
                 target: '/umass/amherst/ecenews',
             },
+            {
+                title: 'ECE Seminar',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/seminars',
+                target: '/umass/amherst/eceseminar',
+            },
         ],
         'www.cics': [
             {
@@ -2615,8 +2642,7 @@ var rules = ({
                 docs: 'https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan',
                 source: '/:type',
                 target: (params) => {
-                    if (params.type === 'channel_7721.html')
-                    {
+                    if (params.type === 'channel_7721.html') {
                         return '/cqwu/news/notify';
                     }
                 },
@@ -2626,12 +2652,11 @@ var rules = ({
                 docs: 'https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan',
                 source: '/:type',
                 target: (params) => {
-                    if (params.type === 'channel_7722.html')
-                    {
+                    if (params.type === 'channel_7722.html') {
                         return '/cqwu/news/academiceve';
                     }
                 },
             },
-        ]
+        ],
     },
 });
