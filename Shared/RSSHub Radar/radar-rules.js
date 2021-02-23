@@ -657,6 +657,12 @@ var rules = ({
                 source: '/topic/:id',
                 target: '/sspai/topic/:id',
             },
+            {
+                title: '标签订阅',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/tag/:keyword',
+                target: '/sspai/tag/:keyword',
+            },
         ],
         shortcuts: [
             {
@@ -703,6 +709,17 @@ var rules = ({
                 docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
                 source: '/p/:id',
                 target: '/tieba/post/lz/:id',
+            },
+            {
+                title: '用户帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: '/home/main',
+                target: (params, url) => {
+                    const uid = new URL(url).searchParams.get('un');
+                    if (uid) {
+                        return `/tieba/user/${uid}`;
+                    }
+                },
             },
         ],
     },
@@ -2740,7 +2757,12 @@ var rules = ({
                 title: '搜索',
                 docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
                 source: '/search/',
-                target: (params, url) => `/furaffinity/search/${new URL(url).searchParams.get('q')}`,
+                target: (params, url) => {
+                    const keyword = new URL(url).searchParams.get('q');
+                    if (keyword) {
+                        return `/furaffinity/search/${keyword}`;
+                    }
+                },
             },
             {
                 title: '用户主页简介',
@@ -2767,10 +2789,10 @@ var rules = ({
                 target: '/furaffinity/commissions/:username',
             },
             {
-                title: '用户的Shouts留言',
+                title: '用户的 Shouts 留言',
                 docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
                 source: '/user/:username/',
-                target: '/furaffinity/user/:username',
+                target: '/furaffinity/shouts/:username',
             },
             {
                 title: '用户的日记',
