@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/stleamist/BetterSafariView",
         "state": {
           "branch": null,
-          "revision": "a4a8590a24f088ddb077815f49b62c71342c5869",
-          "version": "2.2.2"
+          "revision": "561919b490eddf8f999b0f855cbf237001cbfccd",
+          "version": "2.3.1"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/Square/Valet",
         "state": {
           "branch": null,
-          "revision": "c9e7a1e5e0cb73f07cafb403c53c4922e22e5357",
-          "version": "4.1.1"
+          "revision": "2bf3329055f5d71d42a12801dd69d1d770fafa5e",
+          "version": "4.1.2"
         }
       }
     ]
