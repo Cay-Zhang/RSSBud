@@ -79,6 +79,7 @@ struct ContentView: View {
         .alert($viewModel.alert)
         .sheet(isPresented: $isSettingsViewPresented) {
             SettingsView()
+                .modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
         }
     }
     
