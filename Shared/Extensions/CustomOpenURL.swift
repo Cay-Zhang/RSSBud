@@ -21,7 +21,16 @@ struct CustomOpenURLAction {
     var openInSystem: (URL) -> Void = { _ in }
     
     func callAsFunction(_ url: URLComponents, mode: Mode) {
-        guard let url = url.url else { return }
+        guard let url = url.url else {
+            assertionFailure("URL conversion failed.")
+            return
+        }
+        
+        guard mode == .system || ["http", "https"].contains(url.scheme?.lowercased() ?? "") else {
+            assertionFailure("In app mode only supports http and https schemes.")
+            return
+        }
+        
         switch mode {
         case .inApp:
             openInApp(url)
@@ -31,7 +40,11 @@ struct CustomOpenURLAction {
     }
     
     func callAsFunction(_ url: URLComponents) {
-        callAsFunction(url, mode: defaultMode)
+        if ["http", "https"].contains(url.scheme?.lowercased() ?? "") {
+            callAsFunction(url, mode: defaultMode)
+        } else {
+            callAsFunction(url, mode: .system)
+        }
     }
     
 }

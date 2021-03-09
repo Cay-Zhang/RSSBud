@@ -10,7 +10,18 @@ import SwiftUI
 import Combine
 import MobileCoreServices
 
-class ActionViewController: UIHostingController<ContentView> {
+struct RootView: View {
+    var contentViewModel: ContentView.ViewModel
+    var openURLInSystem: (URL) -> Void = { _ in }
+    var done: () -> Void = { }
+    
+    var body: some View {
+        ContentView(done: done, viewModel: contentViewModel)
+            .modifier(CustomOpenURLModifier(openInSystem: openURLInSystem))
+    }
+}
+
+class ActionViewController: UIHostingController<RootView> {
     
     var contentViewModel = ContentView.ViewModel()
     var cancelBag = Set<AnyCancellable>()
@@ -19,12 +30,12 @@ class ActionViewController: UIHostingController<ContentView> {
         // temp workaround for list background
         UITableView.appearance().backgroundColor = UIColor.clear
         
-        let contentView = ContentView(viewModel: contentViewModel)
-        super.init(rootView: contentView)
-        rootView.openURL = { [weak self] url in
+        let view = RootView(contentViewModel: contentViewModel)
+        super.init(rootView: view)
+        self.rootView.openURLInSystem = { [weak self] url in
             self?.open(url: url)
         }
-        rootView.done = { [weak self] in
+        self.rootView.done = { [weak self] in
             self?.extensionContext?.completeRequest(returningItems: self?.extensionContext?.inputItems, completionHandler: nil)
         }
     }
@@ -70,11 +81,7 @@ class ActionViewController: UIHostingController<ContentView> {
             }.store(in: &self.cancelBag)
     }
     
-    func open(url urlComponents: URLComponents) {
-        guard let url = urlComponents.url else {
-            assertionFailure("URL conversion failed.")
-            return
-        }
+    func open(url: URL) {
         let selector = sel_registerName("openURL:")
         var responder = self as UIResponder?
         while let r = responder, !r.responds(to: selector) {

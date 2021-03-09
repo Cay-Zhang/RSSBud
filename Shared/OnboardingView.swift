@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     
-    var openURL: (URLComponents) -> Void = { _ in }
+    @Environment(\.customOpenURLAction) var openURL
     @State var currentPage: Page = .welcome
     
     @Namespace var namespace
@@ -17,23 +17,23 @@ struct OnboardingView: View {
     @ViewBuilder var currentPageView: some View {
         switch currentPage {
         case .welcome:
-            Welcome(currentPage: $currentPage, openURL: openURL)
+            Welcome(currentPage: $currentPage)
                 .transition(OnboardingView.transition)
                 .zIndex(1)
         case .discover:
-            Discover(currentPage: $currentPage, openURL: openURL)
+            Discover(currentPage: $currentPage)
                 .transition(OnboardingView.transition)
                 .zIndex(2)
         case .subscribe:
-            Subscribe(currentPage: $currentPage, openURL: openURL)
+            Subscribe(currentPage: $currentPage)
                 .transition(OnboardingView.transition)
                 .zIndex(3)
         case .rssHubInstance:
-            RSSHubInstance(currentPage: $currentPage, openURL: openURL)
+            RSSHubInstance(currentPage: $currentPage)
                 .transition(OnboardingView.transition)
                 .zIndex(4)
         case .support:
-            Support(currentPage: $currentPage, openURL: openURL)
+            Support(currentPage: $currentPage)
                 .transition(OnboardingView.transition)
                 .zIndex(5)
         }
@@ -74,7 +74,7 @@ extension OnboardingView {
     struct Welcome: View {
         
         @Binding var currentPage: Page
-        var openURL: (URLComponents) -> Void = { _ in }
+        @Environment(\.customOpenURLAction) var openURL
         
         @Environment(\.namespace) var namespace
         
@@ -113,7 +113,7 @@ extension OnboardingView {
     struct Discover: View {
         
         @Binding var currentPage: Page
-        var openURL: (URLComponents) -> Void = { _ in }
+        @Environment(\.customOpenURLAction) var openURL
         
         @Environment(\.namespace) var namespace
         
@@ -166,7 +166,7 @@ extension OnboardingView {
     struct Subscribe: View {
         
         @Binding var currentPage: Page
-        var openURL: (URLComponents) -> Void = { _ in }
+        @Environment(\.customOpenURLAction) var openURL
         
         @Environment(\.namespace) var namespace
         
@@ -215,7 +215,7 @@ extension OnboardingView {
         @State var isEnteringRSSHubBaseURL: Bool = false
         @State var isUseOfficialDemoButtonShown: Bool = false
         @Binding var currentPage: Page
-        var openURL: (URLComponents) -> Void = { _ in }
+        @Environment(\.customOpenURLAction) var openURL
         
         @Environment(\.namespace) var namespace
         var rssHubBaseURL = RSSHub.BaseURL()
@@ -290,7 +290,7 @@ extension OnboardingView {
     struct Support: View {
         
         @Binding var currentPage: Page
-        var openURL: (URLComponents) -> Void = { _ in }
+        @Environment(\.customOpenURLAction) var openURL
         
         @AppStorage("isOnboarding", store: RSSBud.userDefaults) var isOnboarding: Bool = true
         @Environment(\.namespace) var namespace

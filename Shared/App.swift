@@ -39,26 +39,22 @@ extension RSSBud {
         
         var body: some Scene {
             WindowGroup {
-                ContentView(
-                    openURL: { urlComponents in
-                        guard let url = urlComponents.url else {
-                            assertionFailure("URL conversion failed.")
-                            return
-                        }
-                        UIApplication.shared.open(url)
-                    }, viewModel: contentViewModel
-                ).onOpenURL { url in
-                    guard let url = url.components else { return }
-                    print("Open url: \(url)")
-                    if url.path.lowercased().starts(with: "/analyze") {
-                        if let urlToAnalyze = url.queryItems?["url"].flatMap(URLComponents.init(string:)) {
-                            withAnimation {
-                                xCallbackContext = url.queryItems.map(XCallbackContext.init) ?? nil
-                                contentViewModel.process(url: urlToAnalyze)
+                ContentView(viewModel: contentViewModel)
+                    .onOpenURL { url in
+                        guard let url = url.components else { return }
+                        print("Open url: \(url)")
+                        if url.path.lowercased().starts(with: "/analyze") {
+                            if let urlToAnalyze = url.queryItems?["url"].flatMap(URLComponents.init(string:)) {
+                                withAnimation {
+                                    xCallbackContext = url.queryItems.map(XCallbackContext.init) ?? nil
+                                    contentViewModel.process(url: urlToAnalyze)
+                                }
                             }
                         }
-                    }
-                }.environment(\.xCallbackContext, $xCallbackContext)
+                    }.environment(\.xCallbackContext, $xCallbackContext)
+                    .modifier(CustomOpenURLModifier { url in
+                        UIApplication.shared.open(url)
+                    })
             }
         }
     }

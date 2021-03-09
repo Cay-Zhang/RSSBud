@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    var openURL: (URLComponents) -> Void = { _ in }
+    @Environment(\.customOpenURLAction) var openURL
     var storedBaseURL = RSSHub.BaseURL()
     @State var baseURLString: String
     @State var isAlertPresented = false
@@ -18,14 +18,24 @@ struct SettingsView: View {
     @AppStorage("isOnboarding", store: RSSBud.userDefaults) var isOnboarding: Bool = true
     @Environment(\.presentationMode) var presentationMode
     var rssHubAccessControl = RSSHub.AccessControl()
+    @AppStorage("defaultOpenURLMode", store: RSSBud.userDefaults) var defaultOpenURLMode: CustomOpenURLAction.Mode = .inApp
+    
+    var _isOpenURLInAppPreferred: Binding<Bool> {
+        Binding<Bool>(
+            get: {
+                defaultOpenURLMode == .inApp
+            }, set: { newValue in
+                defaultOpenURLMode = newValue ? .inApp : .system
+            }
+        )
+    }
     
     var lastRemoteRulesFetchDate: Date? {
         get { _lastRemoteRulesFetchDate.map(Date.init(timeIntervalSinceReferenceDate:)) }
         set { _lastRemoteRulesFetchDate = newValue?.timeIntervalSinceReferenceDate }
     }
     
-    init(openURL: @escaping (URLComponents) -> Void = { _ in }) {
-        self.openURL = openURL
+    init() {
         self._baseURLString = State(wrappedValue: storedBaseURL.string)
     }
     
@@ -54,10 +64,12 @@ struct SettingsView: View {
                     
                     NavigationLink(
                         "Shortcut Workshop",
-                        destination: ShortcutWorkshopView(openURL: openURL)
+                        destination: ShortcutWorkshopView()
                     )
                     
                     Toggle("Access Control", isOn: rssHubAccessControl.$isAccessControlEnabled.animation(.default))
+                    
+                    Toggle("Open Webpages In App", isOn: _isOpenURLInAppPreferred.animation(.default))
                     
                     if rssHubAccessControl.isAccessControlEnabled {
                         HStack {
