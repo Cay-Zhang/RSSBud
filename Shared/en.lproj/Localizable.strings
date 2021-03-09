@@ -19,7 +19,8 @@
 "Done" = "Done";
 
 "Settings" = "Settings";
-"Settings Section General" = "General";
+"Settings Section RSSBud" = "RSSBud";
+"Settings Section RSSHub" = "RSSHub";
 "Settings Section About" = "About";
 "Updated %@ ago" = "Updated %@ ago";
 "Update Rules Now" = "Update Rules Now";
@@ -27,7 +28,7 @@
 "Rules" = "Rules";
 "Quick Subscriptions" = "Quick Subscriptions";
 "Access Control" = "Access Control";
-"Open Webpages In App" = "Open Webpages in App";
+"Prefer Opening URL In App" = "Prefer Opening Links in App";
 "Access Key" = "Access Key";
 "GitHub Repo Homepage" = "GitHub Repo Homepage";
 "Telegram Channel" = "Telegram Channel";

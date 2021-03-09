@@ -42,7 +42,22 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Settings Section General")) {
+                Section(header: Text("Settings Section RSSBud")) {
+                    NavigationLink(
+                        "Quick Subscriptions",
+                        destination: IntegrationSettingsView(backgroundColor: Color(UIColor.systemGroupedBackground))
+                            .navigationTitle("Quick Subscriptions")
+                    )
+                    
+                    NavigationLink(
+                        "Shortcut Workshop",
+                        destination: ShortcutWorkshopView()
+                    )
+                    
+                    Toggle("Prefer Opening URL In App", isOn: _isOpenURLInAppPreferred.animation(.default))
+                }
+                
+                Section(header: Text("Settings Section RSSHub")) {
                     HStack {
                         Text("RSSHub URL")
                         Spacer()
@@ -56,20 +71,7 @@ struct SettingsView: View {
                         .multilineTextAlignment(.trailing)
                     }
                     
-                    NavigationLink(
-                        "Quick Subscriptions",
-                        destination: IntegrationSettingsView(backgroundColor: Color(UIColor.systemGroupedBackground))
-                            .navigationTitle("Quick Subscriptions")
-                    )
-                    
-                    NavigationLink(
-                        "Shortcut Workshop",
-                        destination: ShortcutWorkshopView()
-                    )
-                    
                     Toggle("Access Control", isOn: rssHubAccessControl.$isAccessControlEnabled.animation(.default))
-                    
-                    Toggle("Open Webpages In App", isOn: _isOpenURLInAppPreferred.animation(.default))
                     
                     if rssHubAccessControl.isAccessControlEnabled {
                         HStack {
