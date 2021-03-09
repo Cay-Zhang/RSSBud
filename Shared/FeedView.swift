@@ -11,7 +11,7 @@ struct FeedView: View {
     
     var feed: RSSHub.Radar.DetectedFeed
     var contentViewModel: ContentView.ViewModel
-    var openURL: (URLComponents) -> Void = { _ in }
+    @Environment(\.customOpenURLAction) var openURL
     @Integration var integrations
     @RSSHub.BaseURL var baseURL
     var rssHubAccessControl = RSSHub.AccessControl()
@@ -44,7 +44,7 @@ struct FeedView: View {
                 URLQueryItem(name: "feed_title", value: feed.title),
                 URLQueryItem(name: "feed_url", value: rsshubURL().string)
             ])
-        url.map(openURL)
+        url.map(openURL.callAsFunction(_:))
         xCallbackContext.wrappedValue = nil
     }
     

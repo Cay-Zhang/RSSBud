@@ -33,6 +33,11 @@
 		1C8221A424EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
 		1C8221A524EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
 		1C8221A624EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
+		1C99BE3E259B26AA0073609C /* CustomOpenURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C99BE3D259B26AA0073609C /* CustomOpenURL.swift */; };
+		1C99BE3F259B26AA0073609C /* CustomOpenURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C99BE3D259B26AA0073609C /* CustomOpenURL.swift */; };
+		1C99BE40259B26AA0073609C /* CustomOpenURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C99BE3D259B26AA0073609C /* CustomOpenURL.swift */; };
+		1C99BE48259B35EC0073609C /* BetterSafariView in Frameworks */ = {isa = PBXBuildFile; productRef = 1C99BE47259B35EC0073609C /* BetterSafariView */; };
+		1C99BE4F259B35F30073609C /* BetterSafariView in Frameworks */ = {isa = PBXBuildFile; productRef = 1C99BE4E259B35F30073609C /* BetterSafariView */; };
 		1CA2078D24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */; };
 		1CA2078E24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */; };
 		1CA2078F24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */; };
@@ -144,6 +149,7 @@
 		1C6EE767258CA79400C645F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "zh-Hans"; path = "zh-Hans.lproj/shortcut-workshop.json"; sourceTree = "<group>"; };
 		1C6EE769258CA97300C645F0 /* ShortcutWorkshop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutWorkshop.swift; sourceTree = "<group>"; };
 		1C8221A324EAA73900E139F3 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		1C99BE3D259B26AA0073609C /* CustomOpenURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOpenURL.swift; sourceTree = "<group>"; };
 		1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryEditor.swift; sourceTree = "<group>"; };
 		1CA2079A24F3DEAC00C6EDD5 /* RSSHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSHub.swift; sourceTree = "<group>"; };
 		1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedTextField.swift; sourceTree = "<group>"; };
@@ -198,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CE03F56257C82E200F38061 /* Valet in Frameworks */,
+				1C99BE48259B35EC0073609C /* BetterSafariView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CE03F5D257C8C9000F38061 /* Valet in Frameworks */,
+				1C99BE4F259B35F30073609C /* BetterSafariView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +253,7 @@
 				EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */,
 				EE1ABF0E24E182E200996C06 /* WideButton.swift */,
 				1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */,
+				1C99BE3D259B26AA0073609C /* CustomOpenURL.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -429,6 +438,7 @@
 			name = iOS;
 			packageProductDependencies = (
 				1CE03F55257C82E200F38061 /* Valet */,
+				1C99BE47259B35EC0073609C /* BetterSafariView */,
 			);
 			productName = iOS;
 			productReference = EEB7577924B2B6E700F26CF7 /* RSSBud.app */;
@@ -468,6 +478,7 @@
 			name = "Action Extension";
 			packageProductDependencies = (
 				1CE03F5C257C8C9000F38061 /* Valet */,
+				1C99BE4E259B35F30073609C /* BetterSafariView */,
 			);
 			productName = "Action Extension";
 			productReference = EEC4A4FA24E3D032005041CA /* Action Extension.appex */;
@@ -513,6 +524,7 @@
 			mainGroup = EEB7576C24B2B6E600F26CF7;
 			packageReferences = (
 				1CE03F54257C82E200F38061 /* XCRemoteSwiftPackageReference "Valet" */,
+				1C99BE46259B35EC0073609C /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 			);
 			productRefGroup = EEB7577A24B2B6E700F26CF7 /* Products */;
 			projectDirPath = "";
@@ -614,6 +626,7 @@
 			files = (
 				1C8221A424EAA73900E139F3 /* FeedView.swift in Sources */,
 				1CA2078D24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */,
+				1C99BE3E259B26AA0073609C /* CustomOpenURL.swift in Sources */,
 				1C6EE76A258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */,
 				EEB7579424B2B7C600F26CF7 /* Extensions.swift in Sources */,
 				EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */,
@@ -638,6 +651,7 @@
 			files = (
 				1C8221A524EAA73900E139F3 /* FeedView.swift in Sources */,
 				1CA2078E24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */,
+				1C99BE3F259B26AA0073609C /* CustomOpenURL.swift in Sources */,
 				1C6EE76B258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */,
 				EEB7579524B2B7C600F26CF7 /* Extensions.swift in Sources */,
 				EEB7578824B2B6E700F26CF7 /* ContentView.swift in Sources */,
@@ -662,6 +676,7 @@
 			files = (
 				1C8221A624EAA73900E139F3 /* FeedView.swift in Sources */,
 				1CA2078F24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */,
+				1C99BE40259B26AA0073609C /* CustomOpenURL.swift in Sources */,
 				1C6EE76C258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */,
 				EEC4A51024E3E26D005041CA /* Radar.swift in Sources */,
 				EEC4A51424E3E29A005041CA /* Extensions.swift in Sources */,
@@ -1145,6 +1160,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1C99BE46259B35EC0073609C /* XCRemoteSwiftPackageReference "BetterSafariView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stleamist/BetterSafariView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.2;
+			};
+		};
 		1CE03F54257C82E200F38061 /* XCRemoteSwiftPackageReference "Valet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Square/Valet";
@@ -1156,6 +1179,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1C99BE47259B35EC0073609C /* BetterSafariView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C99BE46259B35EC0073609C /* XCRemoteSwiftPackageReference "BetterSafariView" */;
+			productName = BetterSafariView;
+		};
+		1C99BE4E259B35F30073609C /* BetterSafariView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C99BE46259B35EC0073609C /* XCRemoteSwiftPackageReference "BetterSafariView" */;
+			productName = BetterSafariView;
+		};
 		1CE03F55257C82E200F38061 /* Valet */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1CE03F54257C82E200F38061 /* XCRemoteSwiftPackageReference "Valet" */;

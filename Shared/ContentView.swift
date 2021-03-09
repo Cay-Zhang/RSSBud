@@ -10,7 +10,7 @@ import Combine
 
 struct ContentView: View {
     
-    var openURL: (URLComponents) -> Void = { _ in }
+    @Environment(\.customOpenURLAction) var openURL
     var done: (() -> Void)? = nil
     @ObservedObject var viewModel = ViewModel()
     @State var isSettingsViewPresented = false
@@ -24,7 +24,7 @@ struct ContentView: View {
                 ScrollView {
                     VStack(spacing: 30) {
                         if isOnboarding {
-                            OnboardingView(openURL: openURL)
+                            OnboardingView()
                         } else {
                             // Original URL
                             VStack(spacing: 30) {
@@ -46,11 +46,11 @@ struct ContentView: View {
                                 if !feeds.isEmpty {
                                     LazyVStack(spacing: 16) {
                                         ForEach(feeds, id: \.title) { feed in
-                                            FeedView(feed: feed, contentViewModel: viewModel, openURL: openURL)
+                                            FeedView(feed: feed, contentViewModel: viewModel)
                                         }
                                     }
                                 } else if !viewModel.isProcessing {
-                                    NothingFoundView(url: viewModel.originalURL, openURL: openURL)
+                                    NothingFoundView(url: viewModel.originalURL)
                                 }
                             }
                             
@@ -78,7 +78,8 @@ struct ContentView: View {
         .environmentObject(viewModel)
         .alert($viewModel.alert)
         .sheet(isPresented: $isSettingsViewPresented) {
-            SettingsView(openURL: openURL)
+            SettingsView()
+                .modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
         }
     }
     
@@ -206,7 +207,7 @@ extension ContentView {
 struct NothingFoundView: View {
     
     var url: URLComponents?
-    var openURL: (URLComponents) -> Void = { _ in }
+    @Environment(\.customOpenURLAction) var openURL
     
     @Environment(\.xCallbackContext) var xCallbackContext: Binding<XCallbackContext>
     
@@ -222,7 +223,7 @@ struct NothingFoundView: View {
         let url = xCallbackContext
             .wrappedValue
             .cancel
-        url.map(openURL)
+        url.map(openURL.callAsFunction(_:))
         xCallbackContext.wrappedValue = nil
     }
     

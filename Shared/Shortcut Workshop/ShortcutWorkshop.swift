@@ -69,7 +69,7 @@ extension ShortcutWorkshop {
 
 struct ShortcutWorkshopView: View {
     
-    var openURL: (URLComponents) -> Void = { _ in }
+    @Environment(\.customOpenURLAction) var openURL
     
     @StateObject var manager = ShortcutWorkshopManager()
     
