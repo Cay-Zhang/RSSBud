@@ -22,43 +22,28 @@ struct ContentView: View {
         HStack(spacing: 0) {
             NavigationView {
                 ScrollView {
-                    VStack(spacing: 30) {
+                    LazyVStack(spacing: 16) {
                         if isOnboarding {
                             OnboardingView()
                         } else {
-                            // Original URL
-                            VStack(spacing: 30) {
-                                if let url = viewModel.originalURL?.url {
-                                    LinkPresentation(previewURL: url)
-                                        .frame(minHeight: 100)
+                            if let url = viewModel.originalURL?.url {
+                                LinkPresentation(previewURL: url)
+                                    .frame(minHeight: 100)
+                            }
+                            
+                            HStack(spacing: 20) {
+                                if viewModel.isProcessing {
+                                    ProgressView()
                                 }
                                 
-                                HStack(spacing: 20) {
-                                    if viewModel.isProcessing {
-                                        ProgressView()
-                                    }
-                                    
-                                    WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: readFromClipboard)
-                                }
+                                WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: readFromClipboard)
                             }
                             
-                            if let feeds = viewModel.detectedFeeds {
-                                if !feeds.isEmpty {
-                                    LazyVStack(spacing: 16) {
-                                        ForEach(feeds, id: \.title) { feed in
-                                            FeedView(feed: feed, contentViewModel: viewModel)
-                                        }
-                                    }
-                                } else if !viewModel.isProcessing {
-                                    NothingFoundView(url: viewModel.originalURL)
-                                }
-                            }
+                            pageFeeds
                             
-                            if horizontalSizeClass != .regular {
-                                QueryEditor(queryItems: $viewModel.queryItems)
-                            }
+                            rsshubFeeds
                         }
-                    }.padding(20)
+                    }.padding(16)
                 }.navigationTitle("RSSBud")
                 .toolbar(content: toolbarContent)
             }
@@ -80,6 +65,39 @@ struct ContentView: View {
         .sheet(isPresented: $isSettingsViewPresented) {
             SettingsView()
                 .modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
+        }
+    }
+    
+    var pageFeeds: some View {
+        ExpandableSection(isExpanded: false) {
+            NothingFoundView(url: viewModel.originalURL)
+        } label: {
+            Text("Page Feeds")
+        }
+    }
+    
+    var rsshubFeeds: some View {
+        ExpandableSection(isExpanded: true) {
+            // Original URL
+            LazyVStack(spacing: 30) {
+                if let feeds = viewModel.detectedFeeds {
+                    if !feeds.isEmpty {
+                        LazyVStack(spacing: 16) {
+                            ForEach(feeds, id: \.title) { feed in
+                                FeedView(feed: feed, contentViewModel: viewModel)
+                            }
+                        }
+                    } else if !viewModel.isProcessing {
+                        NothingFoundView(url: viewModel.originalURL)
+                    }
+                }
+                
+                if horizontalSizeClass != .regular {
+                    QueryEditor(queryItems: $viewModel.queryItems)
+                }
+            }
+        } label: {
+            Text("RSSHub Feeds")
         }
     }
     
@@ -136,9 +154,14 @@ extension ContentView {
         @RSSHub.BaseURL var baseURL
         
         @Published var originalURL: URLComponents? = nil
+        @Published var isProcessing: Bool = false
+        
+//        @Published var isPageFeedSectionExpanded: Bool = false
+//
+//        @Published var isRSSHubFeedSectionExpanded: Bool = true
         @Published var detectedFeeds: [RSSHub.Radar.DetectedFeed]? = nil
         @Published var queryItems: [URLQueryItem] = []
-        @Published var isProcessing: Bool = false
+        
         @Published var alert: Alert? = nil
         
         var cancelBag = Set<AnyCancellable>()
