@@ -298,8 +298,8 @@ struct NothingFoundView: View {
 struct ContentView_Previews: PreviewProvider {
     
     static let viewModel = ContentView.ViewModel(detectedFeeds: [
-        RSSHub.Radar.DetectedFeed(title: "当前视频评论", path: "/bilibili/video/reply/BV15z411v7zt"),
-        RSSHub.Radar.DetectedFeed(title: "当前视频评论", path: "/bilibili/video/reply/BV15z411v7zt")
+        RSSHub.Radar.DetectedFeed(title: "UP 主动态", path: "/bilibili/user/dynamic/17404347"),
+        RSSHub.Radar.DetectedFeed(title: "UP 主投稿", path: "/bilibili/user/video/17404347")
     ])
     
     static var previews: some View {
