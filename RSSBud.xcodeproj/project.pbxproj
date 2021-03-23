@@ -19,6 +19,9 @@
 		1C58359F24EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
 		1C5835A024EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
 		1C5835A124EA8D9100FB8523 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58359D24EA8D9100FB8523 /* Integration.swift */; };
+		1C614E9A2605EEA800C634C1 /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C614E992605EEA800C634C1 /* ExpandableSection.swift */; };
+		1C614E9B2605EEA800C634C1 /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C614E992605EEA800C634C1 /* ExpandableSection.swift */; };
+		1C614E9C2605EEA800C634C1 /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C614E992605EEA800C634C1 /* ExpandableSection.swift */; };
 		1C63BA55259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
 		1C63BA56259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
 		1C63BA57259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
@@ -140,6 +143,7 @@
 		1C3221A125192F6A00CD9F56 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1C3221A725192F6E00CD9F56 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1C58359D24EA8D9100FB8523 /* Integration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integration.swift; sourceTree = "<group>"; };
+		1C614E992605EEA800C634C1 /* ExpandableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableSection.swift; sourceTree = "<group>"; };
 		1C63BA54259DE04F006D73AE /* radar.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = radar.min.js; sourceTree = "<group>"; };
 		1C6E62952556BF48006087EF /* PromoAssetGeneration.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PromoAssetGeneration.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoAssetGeneration.swift; sourceTree = "<group>"; };
@@ -254,6 +258,7 @@
 				EE1ABF0E24E182E200996C06 /* WideButton.swift */,
 				1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */,
 				1C99BE3D259B26AA0073609C /* CustomOpenURL.swift */,
+				1C614E992605EEA800C634C1 /* ExpandableSection.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -640,6 +645,7 @@
 				EE000A9624B41E9600979B1A /* Radar.swift in Sources */,
 				1CA2079B24F3DEAC00C6EDD5 /* RSSHub.swift in Sources */,
 				EE1ABF0F24E182E200996C06 /* WideButton.swift in Sources */,
+				1C614E9A2605EEA800C634C1 /* ExpandableSection.swift in Sources */,
 				1CDB36C82544566D002E84D8 /* OnboardingView.swift in Sources */,
 				1CE03F32257B7EC500F38061 /* RuleManager.swift in Sources */,
 			);
@@ -665,6 +671,7 @@
 				EE000A9724B41E9600979B1A /* Radar.swift in Sources */,
 				1CA2079C24F3DEAC00C6EDD5 /* RSSHub.swift in Sources */,
 				EE1ABF1024E182E200996C06 /* WideButton.swift in Sources */,
+				1C614E9B2605EEA800C634C1 /* ExpandableSection.swift in Sources */,
 				1CDB36C92544566D002E84D8 /* OnboardingView.swift in Sources */,
 				1CE03F33257B7EC500F38061 /* RuleManager.swift in Sources */,
 			);
@@ -690,6 +697,7 @@
 				EEC4A51524E3E29D005041CA /* LinkPresentation.swift in Sources */,
 				1CA2079E24F3DEAC00C6EDD5 /* RSSHub.swift in Sources */,
 				EEC4A51724E3E2A2005041CA /* WideButton.swift in Sources */,
+				1C614E9C2605EEA800C634C1 /* ExpandableSection.swift in Sources */,
 				1CDB36CA2544566D002E84D8 /* OnboardingView.swift in Sources */,
 				1CE03F35257B7EC500F38061 /* RuleManager.swift in Sources */,
 			);
