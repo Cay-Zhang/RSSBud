@@ -42,6 +42,10 @@ struct ContentView: View {
                             pageFeeds
                             
                             rsshubFeeds
+                            
+                            if horizontalSizeClass != .regular {
+                                rsshubParameters
+                            }
                         }
                     }.padding(16)
                 }.navigationTitle("RSSBud")
@@ -53,8 +57,8 @@ struct ContentView: View {
                 
                 NavigationView {
                     ScrollView {
-                        QueryEditor(queryItems: $viewModel.queryItems)
-                            .padding(20)
+                        rsshubParameters
+                            .padding(16)
                             .navigationTitle(Text("Parameters"))
                     }
                 }
@@ -91,13 +95,17 @@ struct ContentView: View {
                         NothingFoundView(url: viewModel.originalURL)
                     }
                 }
-                
-                if horizontalSizeClass != .regular {
-                    QueryEditor(queryItems: $viewModel.queryItems)
-                }
             }
         } label: {
             Text("RSSHub Feeds")
+        }
+    }
+    
+    var rsshubParameters: some View {
+        ExpandableSection(isExpanded: true) {
+            QueryEditor(queryItems: $viewModel.queryItems)
+        } label: {
+            Text("RSSHub Parameters")
         }
     }
     
