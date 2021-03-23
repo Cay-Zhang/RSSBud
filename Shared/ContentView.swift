@@ -304,7 +304,7 @@ struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            ContentView(viewModel: viewModel)
+            ContentView(viewModel: viewModel, isOnboarding: false)
             
             NothingFoundView(url: URLComponents(autoPercentEncoding: "https://www.baidu.com/s?word=你好")!)
                 .padding(.horizontal, 20)
