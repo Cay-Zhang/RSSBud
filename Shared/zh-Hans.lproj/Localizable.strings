@@ -7,12 +7,16 @@
 */
 
 "Read From Clipboard" = "从剪贴板读取";
+"Content Section RSS Feeds" = "RSS 源";
+"Content Section RSSHub Feeds" = "RSSHub 源";
+"Content Section RSSHub Parameters" = "RSSHub 参数";
 "Subscribe" = "订阅";
 "Copy" = "复制";
 "Continue" = "继续";
 "Continue in %@" = "跳转到 %@ 继续";
 "Parameters" = "参数";
-"Add Parameter" = "添加参数";
+"RSSHub Parameters Help" = "帮助";
+"RSSHub Parameters Add" = "添加";
 "Include..." = "仅保留...";
 "Exclude..." = "去掉...";
 "Delete" = "删除";

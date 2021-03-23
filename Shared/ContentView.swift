@@ -76,7 +76,7 @@ struct ContentView: View {
         ExpandableSection(isExpanded: false) {
             NothingFoundView(url: viewModel.originalURL)
         } label: {
-            Text("Page Feeds")
+            Text("Content Section RSS Feeds")
         }
     }
     
@@ -97,7 +97,7 @@ struct ContentView: View {
                 }
             }
         } label: {
-            Text("RSSHub Feeds")
+            Text("Content Section RSSHub Feeds")
         }
     }
     
@@ -105,7 +105,7 @@ struct ContentView: View {
         ExpandableSection(isExpanded: true) {
             QueryEditor(queryItems: $viewModel.queryItems)
         } label: {
-            Text("RSSHub Parameters")
+            Text("Content Section RSSHub Parameters")
         }
     }
     

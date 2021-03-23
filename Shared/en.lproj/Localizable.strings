@@ -7,12 +7,16 @@
 */
 
 "Read From Clipboard" = "Read from Clipboard";
+"Content Section RSS Feeds" = "RSS Feeds";
+"Content Section RSSHub Feeds" = "RSSHub Feeds";
+"Content Section RSSHub Parameters" = "RSSHub Parameters";
 "Subscribe" = "Subscribe";
 "Copy" = "Copy";
 "Continue" = "Continue";
 "Continue in %@" = "Continue in %@";
 "Parameters" = "Parameters";
-"Add Parameter" = "Add Parameter";
+"RSSHub Parameters Help" = "Help";
+"RSSHub Parameters Add" = "Add";
 "Include..." = "Include...";
 "Exclude..." = "Exclude...";
 "Delete" = "Delete";

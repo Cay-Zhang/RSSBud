@@ -16,7 +16,7 @@ struct QueryEditor: View {
     var body: some View {
         LazyVStack {
             HStack {
-                WideButton("About", systemImage: "info", backgroundColor: .secondarySystemBackground, withAnimation: .default) {
+                WideButton("RSSHub Parameters Help", systemImage: "text.book.closed.fill", backgroundColor: .secondarySystemBackground, withAnimation: .default) {
                     openURL(URLComponents(string: "https://docs.rsshub.app/parameter.html")!)
                 }
                 addParameterMenu
@@ -67,7 +67,7 @@ struct QueryEditor: View {
                 }.environment(\.isEnabled, !currentQueryItemNames.contains(name))
             }
         } label: {
-            Label("Add", systemImage: "plus")
+            Label("RSSHub Parameters Add", systemImage: "plus")
                 .padding(.horizontal)
                 .roundedRectangleBackground(color: .secondarySystemBackground)
         }
