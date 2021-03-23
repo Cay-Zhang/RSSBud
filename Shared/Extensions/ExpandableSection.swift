@@ -9,19 +9,19 @@ import SwiftUI
 
 struct ExpandableSection<Content: View, Label: View>: View {
     
-    init(isExpanded: Bool = true, @ViewBuilder content: () -> Content, @ViewBuilder label: () -> Label) {
+    init(isExpanded: Bool = true, @ViewBuilder content: @escaping () -> Content, @ViewBuilder label: () -> Label) {
         self._useBinding = false
         self._isExpandedState = State(wrappedValue: isExpanded)
         self._isExpandedBinding = .constant(true)
-        self.content = content()
+        self.content = content
         self.label = label()
     }
     
-    init(isExpanded: Binding<Bool>, @ViewBuilder content: () -> Content, @ViewBuilder label: () -> Label) {
+    init(isExpanded: Binding<Bool>, @ViewBuilder content: @escaping () -> Content, @ViewBuilder label: () -> Label) {
         self._useBinding = true
         self._isExpandedBinding = isExpanded
         self._isExpandedState = State(wrappedValue: true)
-        self.content = content()
+        self.content = content
         self.label = label()
     }
     
@@ -36,7 +36,7 @@ struct ExpandableSection<Content: View, Label: View>: View {
         }
     }
     
-    var content: Content
+    var content: () -> Content
     var label: Label
     
     @State var isExpandedState: Bool
@@ -76,7 +76,7 @@ struct ExpandableSection<Content: View, Label: View>: View {
             .zIndex(1)
             
             if isExpanded {
-                content
+                content()
                     .transition(contentTransition)
                     .zIndex(0)
             }
