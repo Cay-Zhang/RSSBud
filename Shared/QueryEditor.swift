@@ -11,37 +11,16 @@ struct QueryEditor: View {
     
     @Binding var queryItems: [URLQueryItem]
     
+    @Environment(\.customOpenURLAction) var openURL
+    
     var body: some View {
         LazyVStack {
-            Menu {
-                let currentQueryItemNames = queryItems.map(\.name)
-                
-                Menu {
-                    ForEach(QueryEditor.filterInQueryItemNames, id: \.self) { name in
-                        Button(action: addQueryItemAction(name: name)) {
-                            label(forQueryItemNamed: name)
-                        }.environment(\.isEnabled, !currentQueryItemNames.contains(name))
-                    }
-                } label: { Label("Include...", systemImage: "line.horizontal.3.decrease.circle.fill") }
-                
-                Menu {
-                    ForEach(QueryEditor.filterOutQueryItemNames, id: \.self) { name in
-                        Button(action: addQueryItemAction(name: name)) {
-                            label(forQueryItemNamed: name)
-                        }.environment(\.isEnabled, !currentQueryItemNames.contains(name))
-                    }
-                } label: { Label("Exclude...", systemImage: "line.horizontal.3.decrease.circle") }
-                
-                ForEach(QueryEditor.otherQueryItemNames, id: \.self) { name in
-                    Button(action: addQueryItemAction(name: name)) {
-                        label(forQueryItemNamed: name)
-                    }.environment(\.isEnabled, !currentQueryItemNames.contains(name))
+            HStack {
+                WideButton("About", systemImage: "info", backgroundColor: .secondarySystemBackground, withAnimation: .default) {
+                    openURL(URLComponents(string: "https://docs.rsshub.app/parameter.html")!)
                 }
-            } label: {
-                Label("Add Parameter", systemImage: "plus")
-                    .padding(.horizontal)
-                    .roundedRectangleBackground(color: .secondarySystemBackground)
-            }.frame(maxWidth: .infinity, alignment: .trailing)
+                addParameterMenu
+            }
             
             ForEach(queryItems, id: \.name) { item in
                 GroupBox(label:
@@ -59,6 +38,38 @@ struct QueryEditor: View {
                     }
                 }
             }
+        }
+    }
+    
+    var addParameterMenu: some View {
+        Menu {
+            let currentQueryItemNames = queryItems.map(\.name)
+            
+            Menu {
+                ForEach(QueryEditor.filterInQueryItemNames, id: \.self) { name in
+                    Button(action: addQueryItemAction(name: name)) {
+                        label(forQueryItemNamed: name)
+                    }.environment(\.isEnabled, !currentQueryItemNames.contains(name))
+                }
+            } label: { Label("Include...", systemImage: "line.horizontal.3.decrease.circle.fill") }
+            
+            Menu {
+                ForEach(QueryEditor.filterOutQueryItemNames, id: \.self) { name in
+                    Button(action: addQueryItemAction(name: name)) {
+                        label(forQueryItemNamed: name)
+                    }.environment(\.isEnabled, !currentQueryItemNames.contains(name))
+                }
+            } label: { Label("Exclude...", systemImage: "line.horizontal.3.decrease.circle") }
+            
+            ForEach(QueryEditor.otherQueryItemNames, id: \.self) { name in
+                Button(action: addQueryItemAction(name: name)) {
+                    label(forQueryItemNamed: name)
+                }.environment(\.isEnabled, !currentQueryItemNames.contains(name))
+            }
+        } label: {
+            Label("Add", systemImage: "plus")
+                .padding(.horizontal)
+                .roundedRectangleBackground(color: .secondarySystemBackground)
         }
     }
     
@@ -220,8 +231,11 @@ struct QueryEditor_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        ScrollView {
-            QueryEditor(queryItems: $queryItems)
+        NavigationView {
+            ScrollView {
+                QueryEditor(queryItems: $queryItems)
+                    .padding(.horizontal, 16)
+            }.navigationTitle("Query Editor")
         }
     }
 }
