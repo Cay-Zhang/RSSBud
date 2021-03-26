@@ -472,6 +472,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EEC4A50A24E3D032005041CA /* Build configuration list for PBXNativeTarget "Action Extension" */;
 			buildPhases = (
+				1CEB9FFC260E592A00694262 /* Build Core */,
 				EEC4A4F624E3D032005041CA /* Sources */,
 				EEC4A4F724E3D032005041CA /* Frameworks */,
 				EEC4A4F824E3D032005041CA /* Resources */,
@@ -600,6 +601,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1CEB9FFC260E592A00694262 /* Build Core */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Shared/Core/src/",
+				"$(SRCROOT)/Shared/Core/package.json",
+				"$(SRCROOT)/Shared/Core/package-lock.json",
+			);
+			name = "Build Core";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Shared/Core/core.min.js",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -e\n\ncd \"./Shared/Core/\"  \nif ! which npm > /dev/null; then\n  echo \"error: npm is missing\"\n  exit 1\nfi\n\nnpm install\nnpm run build\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1C6E62912556BF48006087EF /* Sources */ = {
