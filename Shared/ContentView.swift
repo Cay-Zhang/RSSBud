@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import LinkPresentation
 
 struct ContentView: View {
     
@@ -26,8 +27,8 @@ struct ContentView: View {
                         if isOnboarding {
                             OnboardingView()
                         } else {
-                            if let url = viewModel.originalURL?.url {
-                                LinkPresentation(previewURL: url)
+                            if let metadata = viewModel.linkPresentationMetadata {
+                                LinkPresentation(metadata: metadata)
                                     .frame(minHeight: 100)
                             }
                             
@@ -162,6 +163,7 @@ extension ContentView {
         @RSSHub.BaseURL var baseURL
         
         @Published var originalURL: URLComponents? = nil
+        @Published var linkPresentationMetadata: LPLinkMetadata? = nil
         @Published var isProcessing: Bool = false
         
 //        @Published var isPageFeedSectionExpanded: Bool = false
@@ -178,6 +180,35 @@ extension ContentView {
             self.originalURL = originalURL
             self.detectedFeeds = detectedFeeds
             self.queryItems = queryItems
+            
+            self.$originalURL
+                .map { $0?.url }
+                .removeDuplicates()
+                .map { (url: URL?) -> AnyPublisher<LPLinkMetadata?, Never> in
+                    if let url = url {
+                        let placeholderMetadata = LPLinkMetadata()
+                        placeholderMetadata.originalURL = url
+                        placeholderMetadata.url = url
+                        
+                        return Future<LPLinkMetadata?, Never> { promise in
+                            let provider = LPMetadataProvider()
+                            provider.startFetchingMetadata(for: url) { (result, error) in
+                                if let metadata = result {
+                                    promise(.success(metadata))
+                                } else if let _ = error {
+                                    promise(.success(placeholderMetadata))
+                                }
+                            }
+                        }.prepend(placeholderMetadata)
+                        .eraseToAnyPublisher()
+                    } else {
+                        return Just(nil).eraseToAnyPublisher()
+                    }
+                }.switchToLatest()
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] metadata in
+                    withAnimation { self?.linkPresentationMetadata = metadata }
+                }.store(in: &self.cancelBag)
             
             RSSHub.Radar.onFinishReloadingRules
                 .sink { [weak self] in
