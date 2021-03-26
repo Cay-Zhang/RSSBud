@@ -263,14 +263,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		EE000A7624B41CAA00979B1A /* RSSHub Radar */ = {
+		EE000A7624B41CAA00979B1A /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				EE000A8624B41E1000979B1A /* radar-rules.js */,
 				1C63BA54259DE04F006D73AE /* radar.min.js */,
 				EE000A9524B41E9600979B1A /* Radar.swift */,
 			);
-			path = "RSSHub Radar";
+			path = Core;
 			sourceTree = "<group>";
 		};
 		EE7CD90724DD541100FAA837 /* RSSBudTests */ = {
@@ -303,12 +303,12 @@
 		EEB7577124B2B6E600F26CF7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				EE000A7624B41CAA00979B1A /* Core */,
 				1C99BE2D259B25360073609C /* Extensions */,
 				1C6EE752258CA64300C645F0 /* Shortcut Workshop */,
 				EEC4A51A24E516D8005041CA /* RSSBud.swift */,
 				1CA2079A24F3DEAC00C6EDD5 /* RSSHub.swift */,
 				1CE03F31257B7EC500F38061 /* RuleManager.swift */,
-				EE000A7624B41CAA00979B1A /* RSSHub Radar */,
 				1C58359D24EA8D9100FB8523 /* Integration.swift */,
 				EEB7577224B2B6E600F26CF7 /* App.swift */,
 				EEB7577324B2B6E600F26CF7 /* ContentView.swift */,
