@@ -22,10 +22,6 @@
 		1C614E9A2605EEA800C634C1 /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C614E992605EEA800C634C1 /* ExpandableSection.swift */; };
 		1C614E9B2605EEA800C634C1 /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C614E992605EEA800C634C1 /* ExpandableSection.swift */; };
 		1C614E9C2605EEA800C634C1 /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C614E992605EEA800C634C1 /* ExpandableSection.swift */; };
-		1C63BA55259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
-		1C63BA56259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
-		1C63BA57259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
-		1C63BA58259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
 		1C6E62982556BF48006087EF /* PromoAssetGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */; };
 		1C6EE75D258CA78900C645F0 /* shortcut-workshop.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C6EE761258CA78900C645F0 /* shortcut-workshop.json */; };
 		1C6EE75E258CA78900C645F0 /* shortcut-workshop.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C6EE761258CA78900C645F0 /* shortcut-workshop.json */; };
@@ -61,6 +57,10 @@
 		1CE03F35257B7EC500F38061 /* RuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE03F31257B7EC500F38061 /* RuleManager.swift */; };
 		1CE03F56257C82E200F38061 /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 1CE03F55257C82E200F38061 /* Valet */; };
 		1CE03F5D257C8C9000F38061 /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 1CE03F5C257C8C9000F38061 /* Valet */; };
+		1CEB9FE4260E525600694262 /* core.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CEB9FE3260E525600694262 /* core.min.js */; };
+		1CEB9FE5260E525600694262 /* core.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CEB9FE3260E525600694262 /* core.min.js */; };
+		1CEB9FE6260E525600694262 /* core.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CEB9FE3260E525600694262 /* core.min.js */; };
+		1CEB9FE7260E525600694262 /* core.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CEB9FE3260E525600694262 /* core.min.js */; };
 		EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EE000A9624B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
@@ -144,7 +144,6 @@
 		1C3221A725192F6E00CD9F56 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1C58359D24EA8D9100FB8523 /* Integration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integration.swift; sourceTree = "<group>"; };
 		1C614E992605EEA800C634C1 /* ExpandableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableSection.swift; sourceTree = "<group>"; };
-		1C63BA54259DE04F006D73AE /* radar.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = radar.min.js; sourceTree = "<group>"; };
 		1C6E62952556BF48006087EF /* PromoAssetGeneration.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PromoAssetGeneration.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoAssetGeneration.swift; sourceTree = "<group>"; };
 		1C6E62992556BF48006087EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -159,6 +158,7 @@
 		1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedTextField.swift; sourceTree = "<group>"; };
 		1CDB36C72544566D002E84D8 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1CE03F31257B7EC500F38061 /* RuleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleManager.swift; sourceTree = "<group>"; };
+		1CEB9FE3260E525600694262 /* core.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = core.min.js; sourceTree = "<group>"; };
 		EE000A8624B41E1000979B1A /* radar-rules.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "radar-rules.js"; sourceTree = "<group>"; };
 		EE000A9524B41E9600979B1A /* Radar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radar.swift; sourceTree = "<group>"; };
 		EE1ABF0E24E182E200996C06 /* WideButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideButton.swift; sourceTree = "<group>"; };
@@ -267,8 +267,8 @@
 			isa = PBXGroup;
 			children = (
 				EE000A8624B41E1000979B1A /* radar-rules.js */,
-				1C63BA54259DE04F006D73AE /* radar.min.js */,
 				EE000A9524B41E9600979B1A /* Radar.swift */,
+				1CEB9FE3260E525600694262 /* core.min.js */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -556,8 +556,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C63BA57259DE04F006D73AE /* radar.min.js in Resources */,
 				EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */,
+				1CEB9FE6260E525600694262 /* core.min.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,12 +565,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C63BA55259DE04F006D73AE /* radar.min.js in Resources */,
 				1C270114250B5BC300595BCE /* LaunchScreen.storyboard in Resources */,
 				1C32219E25192F6A00CD9F56 /* Localizable.strings in Resources */,
 				1C6EE75D258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 				EEB7578924B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */,
+				1CEB9FE4260E525600694262 /* core.min.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,9 +578,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C63BA56259DE04F006D73AE /* radar.min.js in Resources */,
 				1C6EE75E258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 				1C32219F25192F6A00CD9F56 /* Localizable.strings in Resources */,
+				1CEB9FE5260E525600694262 /* core.min.js in Resources */,
 				EEB7578A24B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */,
 			);
@@ -595,7 +595,7 @@
 				EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */,
 				1CDB36F0254AEA74002E84D8 /* Assets.xcassets in Resources */,
 				1C6EE75F258CA78900C645F0 /* shortcut-workshop.json in Resources */,
-				1C63BA58259DE04F006D73AE /* radar.min.js in Resources */,
+				1CEB9FE7260E525600694262 /* core.min.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

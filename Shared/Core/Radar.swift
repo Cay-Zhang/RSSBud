@@ -66,11 +66,11 @@ extension RSSHub {
                 """)
             
             // Load Radar
-            _ = context.evaluateScript(fileNamed: "radar.min")
+            _ = context.evaluateScript(fileNamed: "core.min")
             
             _ = context.evaluateScript("""
                 const { URL } = require('whatwg-url');
-                const radar = require('radar');
+                const core = require('core');
                 """)
             
             // Reload Rules on Changes
@@ -111,7 +111,7 @@ extension RSSHub {
                 RSSHub.Radar.jsContext.setObject(html, forKeyedSubscript: "html" as NSString)
                 
                 let jsonString = RSSHub.Radar.jsContext.evaluateScript("""
-                    JSON.stringify(radar.getPageRSSHub({
+                    JSON.stringify(core.getPageRSSHub({
                         url: "\(url.string ?? "")",
                         html: html,
                         rules: rules
