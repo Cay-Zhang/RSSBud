@@ -2,12 +2,14 @@ var psl = require('psl');
 var RouteRecognizer = require('route-recognizer');
 var { URL } = require('whatwg-url');
 var { JSDOM } = require('jsdom');
+var { getPageRSS } = require('./page-rss.js');
 
 function ruleHandler(rule, params, url, html, success, fail) {
     const run = () => {
         let resultWithParams;
         if (typeof rule.target === 'function') {
-            const document = (new JSDOM(html)).window.document;
+            const document = (new JSDOM(html, { url })).window.document;
+            document.location.href = url;
             resultWithParams = rule.target(params, url, document);
         } else if (typeof rule.target === 'string') {
             resultWithParams = rule.target;
@@ -184,7 +186,23 @@ function getList(data) {
     return rules;
 }
 
+function analyze(url, html, rules) {
+    let rssFeeds = [];
+    let debugInfo = "";
+    if (html) {
+        const document = (new JSDOM(html, { url })).window.document;
+        debugInfo = document.location.href;
+        rssFeeds = getPageRSS(document);
+    }
+    const rsshubFeeds = getPageRSSHub({ url, html, rules });
+    return {
+        rssFeeds, rsshubFeeds, debugInfo
+    };
+}
+
 module.exports = {
+    getPageRSS,
     getPageRSSHub,
-    getWebsiteRSSHub
+    getWebsiteRSSHub,
+    analyze
 }
