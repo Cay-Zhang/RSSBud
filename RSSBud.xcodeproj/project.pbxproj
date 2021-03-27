@@ -623,7 +623,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -e\n\ncd \"./Shared/Core/\"  \nif ! which npm > /dev/null; then\n  echo \"error: npm is missing\"\n  exit 1\nfi\n\nnpm install\nnpm run build\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -e\n\ncd \"./Shared/Core/\"  \nif ! which npm > /dev/null; then\n  echo \"error: npm is missing\"\n  exit 1\nfi\n\nnpm run build-inc\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
