@@ -14,7 +14,7 @@ class RSSBudTests: XCTestCase {
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        let _ = RSSHub.Radar.jsContext
+        let _ = Core.jsContext
     }
 
     override func tearDownWithError() throws {
@@ -35,7 +35,7 @@ class RSSBudTests: XCTestCase {
     func _testAnalysis(_ name: String, url: URLComponents, rssFeedCount: Int? = nil, rsshubFeedCount: Int? = 1) {
         let expectation = self.expectation(description: "Detect RSS and RSSHub feeds from \(name).")
         
-        RSSHub.Radar.analyzing(contentsOf: url)
+        Core.analyzing(contentsOf: url)
             .last()
             .sink { completion in
                 if case let .failure(error) = completion {

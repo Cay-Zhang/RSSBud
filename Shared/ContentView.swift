@@ -219,7 +219,7 @@ extension ContentView {
                     withAnimation { self?.linkPresentationMetadata = metadata }
                 }.store(in: &self.cancelBag)
             
-            RSSHub.Radar.onFinishReloadingRules
+            Core.onFinishReloadingRules
                 .sink { [weak self] in
                     self?.originalURL.map { self?.process(url: $0) }
                 }.store(in: &cancelBag)
@@ -241,7 +241,7 @@ extension ContentView {
                 }
                 
                 DispatchQueue.global(qos: .userInitiated).async {
-                    RSSHub.Radar.analyzing(contentsOf: url)
+                    Core.analyzing(contentsOf: url)
                         .receive(on: DispatchQueue.main)
                         .sink { [unowned self] completion in
                             switch completion {
