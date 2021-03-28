@@ -2,9 +2,10 @@ name: iOS starter workflow
 
 on:
   push:
-    branches: [ main ]
+    branches: [ '**' ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,6 +15,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+          check-latest: true
+      - name: Build Core
+        run: |
+          cd ./Shared/Core/
+          npm ci
+          npm run build
+          cd -
       - name: Set Default Scheme
         run: |
           scheme_list=$(xcodebuild -list -json | tr -d "\n")
