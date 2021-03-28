@@ -75,7 +75,17 @@ struct ContentView: View {
     
     var pageFeeds: some View {
         ExpandableSection(isExpanded: false) {
-            NothingFoundView(url: viewModel.originalURL)
+            if let feeds = viewModel.rssFeeds {
+                if !feeds.isEmpty {
+                    LazyVStack(spacing: 16) {
+                        ForEach(feeds, id: \.title) { feed in
+                            RSSFeedView(feed: feed, contentViewModel: viewModel)
+                        }
+                    }
+                } else if !viewModel.isProcessing {
+                    NothingFoundView(url: viewModel.originalURL)
+                }
+            }
         } label: {
             Text("Content Section RSS Feeds")
         }
@@ -83,18 +93,15 @@ struct ContentView: View {
     
     var rsshubFeeds: some View {
         ExpandableSection(isExpanded: true) {
-            // Original URL
-            LazyVStack(spacing: 30) {
-                if let feeds = viewModel.detectedFeeds {
-                    if !feeds.isEmpty {
-                        LazyVStack(spacing: 16) {
-                            ForEach(feeds, id: \.title) { feed in
-                                FeedView(feed: feed, contentViewModel: viewModel)
-                            }
+            if let feeds = viewModel.rsshubFeeds {
+                if !feeds.isEmpty {
+                    LazyVStack(spacing: 16) {
+                        ForEach(feeds, id: \.title) { feed in
+                            RSSHubFeedView(feed: feed, contentViewModel: viewModel)
                         }
-                    } else if !viewModel.isProcessing {
-                        NothingFoundView(url: viewModel.originalURL)
                     }
+                } else if !viewModel.isProcessing {
+                    NothingFoundView(url: viewModel.originalURL)
                 }
             }
         } label: {
@@ -123,7 +130,7 @@ struct ContentView: View {
             #if DEBUG
             Menu {
                 Button("Analyze") {
-                    viewModel.process(url: URLComponents(string: "https://space.bilibili.com/17404347/")!)
+                    viewModel.process(url: URLComponents(string: "https://github.com/Cay-Zhang/RSSBud")!)
                 }
                 Button("Error") {
                     viewModel.process(url: URLComponents(string: "example.com")!)
@@ -169,16 +176,18 @@ extension ContentView {
 //        @Published var isPageFeedSectionExpanded: Bool = false
 //
 //        @Published var isRSSHubFeedSectionExpanded: Bool = true
-        @Published var detectedFeeds: [RSSHub.Radar.DetectedFeed]? = nil
+        @Published var rssFeeds: [RSSFeed]? = nil
+        @Published var rsshubFeeds: [RSSHubFeed]? = nil
         @Published var queryItems: [URLQueryItem] = []
         
         @Published var alert: Alert? = nil
         
         var cancelBag = Set<AnyCancellable>()
         
-        init(originalURL: URLComponents? = nil, detectedFeeds: [RSSHub.Radar.DetectedFeed]? = nil, queryItems: [URLQueryItem] = []) {
+        init(originalURL: URLComponents? = nil, rssFeeds: [RSSFeed]? = nil, rsshubFeeds: [RSSHubFeed]? = nil, queryItems: [URLQueryItem] = []) {
             self.originalURL = originalURL
-            self.detectedFeeds = detectedFeeds
+            self.rssFeeds = rssFeeds
+            self.rsshubFeeds = rsshubFeeds
             self.queryItems = queryItems
             
             self.$originalURL
@@ -222,7 +231,7 @@ extension ContentView {
                     URLQueryItem(name: item.name, value: item.value?.removingPercentEncoding)
                 }
                 withAnimation {
-                    detectedFeeds = [RSSHub.Radar.DetectedFeed(title: "Current URL", path: url.path)]
+                    rsshubFeeds = [RSSHubFeed(title: "Current URL", path: url.path)]
                     queryItems = items ?? []
                 }
             } else {
@@ -232,13 +241,7 @@ extension ContentView {
                 }
                 
                 DispatchQueue.global(qos: .userInitiated).async {
-                    RSSHub.Radar.asyncExpandURLAndGetHTML(for: url)
-                        .prepend((url: url, html: ""))
-                        .flatMap { tuple in
-                            RSSHub.Radar.detecting(url: tuple.url, html: tuple.html ?? "")
-                        }.scan([]) {
-                            $0.count < $1.count ? $1 : $0
-                        }.replaceEmpty(with: [])
+                    RSSHub.Radar.analyzing(contentsOf: url)
                         .receive(on: DispatchQueue.main)
                         .sink { [unowned self] completion in
                             switch completion {
@@ -250,13 +253,15 @@ extension ContentView {
                                 print(error)
                                 withAnimation {
                                     self.isProcessing = false
-                                    self.detectedFeeds = nil
+                                    self.rssFeeds = nil
+                                    self.rsshubFeeds = nil
                                     self.alert = Alert(title: Text("An Error Occurred"), message: Text(verbatim: error.localizedDescription))
                                 }
                             }
-                        } receiveValue: { [unowned self] feeds in
+                        } receiveValue: { [unowned self] result in
                             withAnimation {
-                                self.detectedFeeds = feeds
+                                self.rssFeeds = result.rssFeeds
+                                self.rsshubFeeds = result.rsshubFeeds
                             }
                         }.store(in: &self.cancelBag)
                 }
@@ -338,9 +343,9 @@ struct ContentView_Previews: PreviewProvider {
     
     static let viewModel = ContentView.ViewModel(
         originalURL: URLComponents(string: "https://space.bilibili.com/17404347"),
-        detectedFeeds: [
-            RSSHub.Radar.DetectedFeed(title: "UP 主动态", path: "/bilibili/user/dynamic/17404347"),
-            RSSHub.Radar.DetectedFeed(title: "UP 主投稿", path: "/bilibili/user/video/17404347")
+        rsshubFeeds: [
+            RSSHubFeed(title: "UP 主动态", path: "/bilibili/user/dynamic/17404347"),
+            RSSHubFeed(title: "UP 主投稿", path: "/bilibili/user/video/17404347")
         ]
     )
     

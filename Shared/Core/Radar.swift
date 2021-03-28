@@ -103,49 +103,68 @@ extension RSSHub {
                 .eraseToAnyPublisher()
         }
         
-        static func detecting(url: URLComponents, html: String = "") -> AnyPublisher<[DetectedFeed], Error> {
+        static func analyzing(url: URLComponents, html: String) -> AnyPublisher<AnalysisResult, Error> {
             Future { promise in
                 guard url.host != nil else { promise(.failure(DetectionError.hostNotFound(url: url))); return }
-                print("Radar Start Detecting: \(url)")
+                print("Core Start Analyzing: \(url)")
                 
                 RSSHub.Radar.jsContext.setObject(html, forKeyedSubscript: "html" as NSString)
                 
                 let jsonString = RSSHub.Radar.jsContext.evaluateScript("""
-                    JSON.stringify(core.getPageRSSHub({
-                        url: "\(url.string ?? "")",
-                        html: html,
-                        rules: rules
-                    }));
+                    JSON.stringify(core.analyze(
+                        "\(url.string ?? "")",
+                        html,
+                        rules
+                    ));
                     """
                 )!.toString()!
                 let data = jsonString.data(using: .utf8)!
-                let result = Result { try JSONDecoder().decode([RSSHub.Radar.DetectedFeed].self, from: data) }
-                print("Radar Finish Detecting: \(result)")
+                let result = Result { try JSONDecoder().decode(AnalysisResult.self, from: data) }
+                print("Core Finish Analyzing: \(result)")
                 promise(result)
             }.eraseToAnyPublisher()
+        }
+        
+        static func analyzing(contentsOf url: URLComponents) -> AnyPublisher<AnalysisResult, Error> {
+            RSSHub.Radar.asyncExpandURLAndGetHTML(for: url)
+                .prepend((url: url, html: ""))
+                .flatMap { tuple in
+                    RSSHub.Radar.analyzing(url: tuple.url, html: tuple.html ?? "")
+                }.scan(RSSHub.Radar.AnalysisResult()) {
+                    RSSHub.Radar.AnalysisResult.combine($0, $1)
+                }.replaceEmpty(with: RSSHub.Radar.AnalysisResult())
+                .eraseToAnyPublisher()
+        }
+        
+        struct AnalysisResult: Codable {
+            var rssFeeds: [RSSFeed] = []
+            var rsshubFeeds: [RSSHubFeed] = []
+            
+            static func combine(_ left: Self, _ right: Self) -> Self {
+                var result = left
+                if left.rssFeeds.count < right.rssFeeds.count {
+                    result.rssFeeds = right.rssFeeds
+                }
+                if left.rsshubFeeds.count < right.rsshubFeeds.count {
+                    result.rsshubFeeds = right.rsshubFeeds
+                }
+                return result
+            }
         }
         
     }
 }
 
-extension RSSHub.Radar {
-    struct DetectedFeed: Codable {
-        var title: String
-        var _url: String = ""
-        var path: String
-        var _isDocs: Bool?
-        
-        var isDocs: Bool {
-            _isDocs == .some(true)
-        }
-        
-        enum CodingKeys: String, CodingKey {
-            case title
-            case _url = "url"
-            case path
-            case _isDocs = "isDocs"
-        }
-    }
+struct RSSFeed: Codable {
+    @URLString var url: URLComponents
+    var title: String
+    @URLString var imageURL: URLComponents
+    var isCertain: Bool
+}
+
+struct RSSHubFeed: Codable {
+    var title: String
+    var path: String
 }
 
 extension RSSHub.Radar {

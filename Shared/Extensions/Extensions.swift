@@ -210,3 +210,23 @@ extension View {
         self.modifier(AnimatableFontModifier(size: size, weight: weight, design: design))
     }
 }
+
+@propertyWrapper
+struct URLString: Codable {
+    var string: String
+    var wrappedValue: URLComponents
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.string = try container.decode(String.self)
+        if let url = URLComponents(string: self.string) {
+            self.wrappedValue = url
+        } else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "shit")
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        try string.encode(to: encoder)
+    }
+}
