@@ -23,6 +23,7 @@
 订阅 [Telegram 频道](https://t.me/RSSBud) 以获取更新信息。
 
 ## 功能
+- [x] 检测网页中的 RSS 源
 - [x] 检测适用于网页 (或 App 内分享) 的 RSSHub 源 (几乎支持所有 RSSHub Radar 的规则)
 - [x] 移动端 URL 适配 (自动展开、常见移动子域名适配)
 - [x] 读取剪贴板 URL
