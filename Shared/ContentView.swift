@@ -44,6 +44,10 @@ struct ContentView: View {
                             
                             rsshubFeeds
                             
+                            if (viewModel.rssFeeds?.isEmpty ?? false) && (viewModel.rsshubFeeds?.isEmpty ?? false) && !viewModel.isProcessing {
+                                NothingFoundView(url: viewModel.originalURL)
+                            }
+                            
                             if horizontalSizeClass != .regular {
                                 rsshubParameters
                             }
@@ -73,47 +77,41 @@ struct ContentView: View {
         }
     }
     
-    var pageFeeds: some View {
-        ExpandableSection(isExpanded: false) {
-            if let feeds = viewModel.rssFeeds {
-                if !feeds.isEmpty {
-                    LazyVStack(spacing: 16) {
-                        ForEach(feeds, id: \.title) { feed in
-                            RSSFeedView(feed: feed, contentViewModel: viewModel)
-                        }
+    @ViewBuilder var pageFeeds: some View {
+        if let feeds = viewModel.rssFeeds, !feeds.isEmpty {
+            ExpandableSection(isExpanded: true) {
+                LazyVStack(spacing: 16) {
+                    ForEach(feeds, id: \.title) { feed in
+                        RSSFeedView(feed: feed, contentViewModel: viewModel)
                     }
-                } else if !viewModel.isProcessing {
-                    NothingFoundView(url: viewModel.originalURL)
                 }
+            } label: {
+                Text("Content Section RSS Feeds")
             }
-        } label: {
-            Text("Content Section RSS Feeds")
         }
     }
     
-    var rsshubFeeds: some View {
-        ExpandableSection(isExpanded: true) {
-            if let feeds = viewModel.rsshubFeeds {
-                if !feeds.isEmpty {
-                    LazyVStack(spacing: 16) {
-                        ForEach(feeds, id: \.title) { feed in
-                            RSSHubFeedView(feed: feed, contentViewModel: viewModel)
-                        }
+    @ViewBuilder var rsshubFeeds: some View {
+        if let feeds = viewModel.rsshubFeeds, !feeds.isEmpty {
+            ExpandableSection(isExpanded: true) {
+                LazyVStack(spacing: 16) {
+                    ForEach(feeds, id: \.title) { feed in
+                        RSSHubFeedView(feed: feed, contentViewModel: viewModel)
                     }
-                } else if !viewModel.isProcessing {
-                    NothingFoundView(url: viewModel.originalURL)
                 }
+            } label: {
+                Text("Content Section RSSHub Feeds")
             }
-        } label: {
-            Text("Content Section RSSHub Feeds")
         }
     }
     
-    var rsshubParameters: some View {
-        ExpandableSection(isExpanded: true) {
-            QueryEditor(queryItems: $viewModel.queryItems)
-        } label: {
-            Text("Content Section RSSHub Parameters")
+    @ViewBuilder var rsshubParameters: some View {
+        if let feeds = viewModel.rsshubFeeds, !feeds.isEmpty {
+            ExpandableSection(isExpanded: true) {
+                QueryEditor(queryItems: $viewModel.queryItems)
+            } label: {
+                Text("Content Section RSSHub Parameters")
+            }
         }
     }
     
