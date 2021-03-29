@@ -1,0 +1,20 @@
+{
+    "private": true,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "browserify -r whatwg-url -r ./src/core.js:core -o core.min.js",
+        "build-inc": "browserifyinc -r whatwg-url -r ./src/core.js:core -o core.min.js"
+    },
+    "keywords": [],
+    "author": "Cay Zhang",
+    "license": "MIT",
+    "devDependencies": {
+        "browserify": "^17.0.0",
+        "browserify-incremental": "^3.1.1"
+    },
+    "dependencies": {
+        "jsdom": "16.2.0",
+        "route-recognizer": "^0.3.4",
+        "whatwg-url": "8.0.0"
+    }
+}

@@ -70,9 +70,9 @@ extension RSSBud.App {
             
             let contentViewModel = ContentView.ViewModel(
                 originalURL: URLComponents(string: "https://space.bilibili.com/50333369/"),
-                detectedFeeds: [
-                    RSSHub.Radar.DetectedFeed(title: "当前 UP 主动态", path: "/bilibili/video/reply/test1"),
-                    RSSHub.Radar.DetectedFeed(title: "当前 UP 主投稿", path: "/bilibili/video/reply/test2")
+                rsshubFeeds: [
+                    RSSHubFeed(title: "当前 UP 主动态", path: "/bilibili/video/reply/test1"),
+                    RSSHubFeed(title: "当前 UP 主投稿", path: "/bilibili/video/reply/test2")
                 ], queryItems: [
                     URLQueryItem(name: "filter_title", value: "上海")
                 ]

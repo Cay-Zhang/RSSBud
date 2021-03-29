@@ -22,10 +22,6 @@
 		1C614E9A2605EEA800C634C1 /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C614E992605EEA800C634C1 /* ExpandableSection.swift */; };
 		1C614E9B2605EEA800C634C1 /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C614E992605EEA800C634C1 /* ExpandableSection.swift */; };
 		1C614E9C2605EEA800C634C1 /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C614E992605EEA800C634C1 /* ExpandableSection.swift */; };
-		1C63BA55259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
-		1C63BA56259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
-		1C63BA57259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
-		1C63BA58259DE04F006D73AE /* radar.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1C63BA54259DE04F006D73AE /* radar.min.js */; };
 		1C6E62982556BF48006087EF /* PromoAssetGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */; };
 		1C6EE75D258CA78900C645F0 /* shortcut-workshop.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C6EE761258CA78900C645F0 /* shortcut-workshop.json */; };
 		1C6EE75E258CA78900C645F0 /* shortcut-workshop.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C6EE761258CA78900C645F0 /* shortcut-workshop.json */; };
@@ -61,16 +57,20 @@
 		1CE03F35257B7EC500F38061 /* RuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE03F31257B7EC500F38061 /* RuleManager.swift */; };
 		1CE03F56257C82E200F38061 /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 1CE03F55257C82E200F38061 /* Valet */; };
 		1CE03F5D257C8C9000F38061 /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 1CE03F5C257C8C9000F38061 /* Valet */; };
+		1CEB9FE4260E525600694262 /* core.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CEB9FE3260E525600694262 /* core.min.js */; };
+		1CEB9FE5260E525600694262 /* core.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CEB9FE3260E525600694262 /* core.min.js */; };
+		1CEB9FE6260E525600694262 /* core.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CEB9FE3260E525600694262 /* core.min.js */; };
+		1CEB9FE7260E525600694262 /* core.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CEB9FE3260E525600694262 /* core.min.js */; };
 		EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
-		EE000A9624B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
-		EE000A9724B41E9600979B1A /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
+		EE000A9624B41E9600979B1A /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Core.swift */; };
+		EE000A9724B41E9600979B1A /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Core.swift */; };
 		EE1ABF0F24E182E200996C06 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* WideButton.swift */; };
 		EE1ABF1024E182E200996C06 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* WideButton.swift */; };
 		EE3EEAB624E152D20006ED53 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EEAB524E152D20006ED53 /* SettingsView.swift */; };
 		EE3EEAB724E152D20006ED53 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EEAB524E152D20006ED53 /* SettingsView.swift */; };
 		EE7CD90924DD541100FAA837 /* RSSBudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7CD90824DD541100FAA837 /* RSSBudTests.swift */; };
-		EE7CD91224DD547200FAA837 /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
+		EE7CD91224DD547200FAA837 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Core.swift */; };
 		EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EE7CD91E24DD6FA000FAA837 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* Extensions.swift */; };
 		EEB7578524B2B6E700F26CF7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577224B2B6E600F26CF7 /* App.swift */; };
@@ -87,7 +87,7 @@
 		EEC4A4FF24E3D032005041CA /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A4FE24E3D032005041CA /* ActionViewController.swift */; };
 		EEC4A50624E3D032005041CA /* Action Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EEC4A4FA24E3D032005041CA /* Action Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EEC4A50F24E3E26D005041CA /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
-		EEC4A51024E3E26D005041CA /* Radar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Radar.swift */; };
+		EEC4A51024E3E26D005041CA /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Core.swift */; };
 		EEC4A51324E3E287005041CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7577324B2B6E600F26CF7 /* ContentView.swift */; };
 		EEC4A51424E3E29A005041CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* Extensions.swift */; };
 		EEC4A51524E3E29D005041CA /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */; };
@@ -144,7 +144,6 @@
 		1C3221A725192F6E00CD9F56 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1C58359D24EA8D9100FB8523 /* Integration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integration.swift; sourceTree = "<group>"; };
 		1C614E992605EEA800C634C1 /* ExpandableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableSection.swift; sourceTree = "<group>"; };
-		1C63BA54259DE04F006D73AE /* radar.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = radar.min.js; sourceTree = "<group>"; };
 		1C6E62952556BF48006087EF /* PromoAssetGeneration.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PromoAssetGeneration.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C6E62972556BF48006087EF /* PromoAssetGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoAssetGeneration.swift; sourceTree = "<group>"; };
 		1C6E62992556BF48006087EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -159,8 +158,9 @@
 		1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedTextField.swift; sourceTree = "<group>"; };
 		1CDB36C72544566D002E84D8 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1CE03F31257B7EC500F38061 /* RuleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleManager.swift; sourceTree = "<group>"; };
+		1CEB9FE3260E525600694262 /* core.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = core.min.js; sourceTree = "<group>"; };
 		EE000A8624B41E1000979B1A /* radar-rules.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "radar-rules.js"; sourceTree = "<group>"; };
-		EE000A9524B41E9600979B1A /* Radar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radar.swift; sourceTree = "<group>"; };
+		EE000A9524B41E9600979B1A /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		EE1ABF0E24E182E200996C06 /* WideButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideButton.swift; sourceTree = "<group>"; };
 		EE3EEAB524E152D20006ED53 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSBudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -263,14 +263,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		EE000A7624B41CAA00979B1A /* RSSHub Radar */ = {
+		EE000A7624B41CAA00979B1A /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				EE000A8624B41E1000979B1A /* radar-rules.js */,
-				1C63BA54259DE04F006D73AE /* radar.min.js */,
-				EE000A9524B41E9600979B1A /* Radar.swift */,
+				EE000A9524B41E9600979B1A /* Core.swift */,
+				1CEB9FE3260E525600694262 /* core.min.js */,
 			);
-			path = "RSSHub Radar";
+			path = Core;
 			sourceTree = "<group>";
 		};
 		EE7CD90724DD541100FAA837 /* RSSBudTests */ = {
@@ -303,12 +303,12 @@
 		EEB7577124B2B6E600F26CF7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				EE000A7624B41CAA00979B1A /* Core */,
 				1C99BE2D259B25360073609C /* Extensions */,
 				1C6EE752258CA64300C645F0 /* Shortcut Workshop */,
 				EEC4A51A24E516D8005041CA /* RSSBud.swift */,
 				1CA2079A24F3DEAC00C6EDD5 /* RSSHub.swift */,
 				1CE03F31257B7EC500F38061 /* RuleManager.swift */,
-				EE000A7624B41CAA00979B1A /* RSSHub Radar */,
 				1C58359D24EA8D9100FB8523 /* Integration.swift */,
 				EEB7577224B2B6E600F26CF7 /* App.swift */,
 				EEB7577324B2B6E600F26CF7 /* ContentView.swift */,
@@ -472,6 +472,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EEC4A50A24E3D032005041CA /* Build configuration list for PBXNativeTarget "Action Extension" */;
 			buildPhases = (
+				1CEB9FFC260E592A00694262 /* Build Core */,
 				EEC4A4F624E3D032005041CA /* Sources */,
 				EEC4A4F724E3D032005041CA /* Frameworks */,
 				EEC4A4F824E3D032005041CA /* Resources */,
@@ -556,8 +557,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C63BA57259DE04F006D73AE /* radar.min.js in Resources */,
 				EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */,
+				1CEB9FE6260E525600694262 /* core.min.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,12 +566,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C63BA55259DE04F006D73AE /* radar.min.js in Resources */,
 				1C270114250B5BC300595BCE /* LaunchScreen.storyboard in Resources */,
 				1C32219E25192F6A00CD9F56 /* Localizable.strings in Resources */,
 				1C6EE75D258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 				EEB7578924B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */,
+				1CEB9FE4260E525600694262 /* core.min.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,9 +579,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C63BA56259DE04F006D73AE /* radar.min.js in Resources */,
 				1C6EE75E258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 				1C32219F25192F6A00CD9F56 /* Localizable.strings in Resources */,
+				1CEB9FE5260E525600694262 /* core.min.js in Resources */,
 				EEB7578A24B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */,
 			);
@@ -595,11 +596,36 @@
 				EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */,
 				1CDB36F0254AEA74002E84D8 /* Assets.xcassets in Resources */,
 				1C6EE75F258CA78900C645F0 /* shortcut-workshop.json in Resources */,
-				1C63BA58259DE04F006D73AE /* radar.min.js in Resources */,
+				1CEB9FE7260E525600694262 /* core.min.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1CEB9FFC260E592A00694262 /* Build Core */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Shared/Core/src/",
+				"$(SRCROOT)/Shared/Core/package.json",
+				"$(SRCROOT)/Shared/Core/package-lock.json",
+			);
+			name = "Build Core";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Shared/Core/core.min.js",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -e\n\ncd \"./Shared/Core/\"  \nif ! which npm > /dev/null; then\n  echo \"error: npm is missing\"\n  exit 1\nfi\n\nnpm run build-inc\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1C6E62912556BF48006087EF /* Sources */ = {
@@ -617,7 +643,7 @@
 				EE7CD91E24DD6FA000FAA837 /* Extensions.swift in Sources */,
 				1C5835A024EA8D9100FB8523 /* Integration.swift in Sources */,
 				1C2A9AE7257714D4008FD5F7 /* PersistentFile.swift in Sources */,
-				EE7CD91224DD547200FAA837 /* Radar.swift in Sources */,
+				EE7CD91224DD547200FAA837 /* Core.swift in Sources */,
 				EEC4A51D24E516D8005041CA /* RSSBud.swift in Sources */,
 				1CA2079D24F3DEAC00C6EDD5 /* RSSHub.swift in Sources */,
 				EE7CD90924DD541100FAA837 /* RSSBudTests.swift in Sources */,
@@ -642,7 +668,7 @@
 				1CA854CD25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */,
 				EEB7579924B3084A00F26CF7 /* LinkPresentation.swift in Sources */,
 				1C2A9AE5257714D4008FD5F7 /* PersistentFile.swift in Sources */,
-				EE000A9624B41E9600979B1A /* Radar.swift in Sources */,
+				EE000A9624B41E9600979B1A /* Core.swift in Sources */,
 				1CA2079B24F3DEAC00C6EDD5 /* RSSHub.swift in Sources */,
 				EE1ABF0F24E182E200996C06 /* WideButton.swift in Sources */,
 				1C614E9A2605EEA800C634C1 /* ExpandableSection.swift in Sources */,
@@ -668,7 +694,7 @@
 				1CA854CE25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */,
 				EEB7579A24B3084A00F26CF7 /* LinkPresentation.swift in Sources */,
 				1C2A9AE6257714D4008FD5F7 /* PersistentFile.swift in Sources */,
-				EE000A9724B41E9600979B1A /* Radar.swift in Sources */,
+				EE000A9724B41E9600979B1A /* Core.swift in Sources */,
 				1CA2079C24F3DEAC00C6EDD5 /* RSSHub.swift in Sources */,
 				EE1ABF1024E182E200996C06 /* WideButton.swift in Sources */,
 				1C614E9B2605EEA800C634C1 /* ExpandableSection.swift in Sources */,
@@ -685,7 +711,7 @@
 				1CA2078F24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */,
 				1C99BE40259B26AA0073609C /* CustomOpenURL.swift in Sources */,
 				1C6EE76C258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */,
-				EEC4A51024E3E26D005041CA /* Radar.swift in Sources */,
+				EEC4A51024E3E26D005041CA /* Core.swift in Sources */,
 				EEC4A51424E3E29A005041CA /* Extensions.swift in Sources */,
 				1C5835A124EA8D9100FB8523 /* Integration.swift in Sources */,
 				EEC4A51E24E516D8005041CA /* RSSBud.swift in Sources */,

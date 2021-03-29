@@ -22,7 +22,7 @@ class RuleManager: ObservableObject {
     var cancelBag = Set<AnyCancellable>()
     
     init() {
-        RSSHub.Radar.localRules.contentPublisher
+        Core.localRules.contentPublisher
             .dropFirst()
             .map { _ in Date() }
             .assign(to: \.lastRemoteRulesFetchDate, on: self)
@@ -38,7 +38,7 @@ class RuleManager: ObservableObject {
                     print(error)
                 }
             } receiveValue: { [weak self] string in
-                RSSHub.Radar.localRules.content = string
+                Core.localRules.content = string
                 DispatchQueue.main.async {
                     withAnimation {
                         self?.isFetchingRemoteRules = false
@@ -68,7 +68,7 @@ class RuleManager: ObservableObject {
                     task.setTaskCompleted(success: false)
                 }
             } receiveValue: { [weak self] string in
-                RSSHub.Radar.localRules.content = string
+                Core.localRules.content = string
                 DispatchQueue.main.async {
                     withAnimation {
                         self?.isFetchingRemoteRules = false

@@ -84,7 +84,7 @@ struct SettingsView: View {
                         }
                     }
                     
-                    NavigationLink(destination: RSSHub.Radar.RulesEditor()) {
+                    NavigationLink(destination: Core.RulesEditor()) {
                         HStack {
                             Text("Rules")
                             Spacer()
@@ -202,9 +202,9 @@ struct IntegrationSettingsView: View {
     }
 }
 
-extension RSSHub.Radar {
+extension Core {
     struct RulesEditor: View {
-        @State var rules: String = RSSHub.Radar.localRules.content
+        @State var rules: String = Core.localRules.content
         
         var body: some View {
             TextEditor(text: $rules)
@@ -225,7 +225,7 @@ struct SettingsView_Previews: PreviewProvider {
             }
             
             NavigationView {
-                RSSHub.Radar.RulesEditor()
+                Core.RulesEditor()
             }
         }
     }
