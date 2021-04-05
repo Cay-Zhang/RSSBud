@@ -1920,7 +1920,7 @@ var rules = ({
                 title: '用户作品',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: ['/u/:id'],
-                target: `/zcoo/user/:id`,
+                target: `/zcool/user/:id`,
             },
         ],
     },
