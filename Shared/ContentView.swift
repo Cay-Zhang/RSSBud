@@ -58,7 +58,7 @@ struct ContentView: View {
             }
             
             if horizontalSizeClass == .regular {
-                Divider()
+                Divider().ignoresSafeArea(.keyboard, edges: .vertical)
                 
                 NavigationView {
                     ScrollView {
