@@ -68,6 +68,15 @@ rssbud://x-callback-url/analyze?url[&x-callback-parameters...]
 - **feed_url** 用户选择的 RSS 源的 URL
 
 ## 自行编译须知
+RSSBud 的核心功能来自 [RSSBud Core](https://github.com/Cay-Zhang/RSSBud/tree/main/Shared/Core)，一个用 JavaScript 编写的子项目。代码主要参考 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar)。
+
+在使用 Xcode 进行编译前，你需要先在工程文件夹下执行以下命令来编译 RSSBud Core (需要 [Node.js](https://nodejs.org/zh-cn/))：
+```sh
+cd Shared/Core/
+npm install
+npm run build
+```
+
 若要使用分享菜单插件 (Action Extension)，请在 iOS 和 Action Extension 这两个 Target 中设置你自己的 App Group 并修改 `RSSBud.appGroupIdentifier`。
 
 ## 规则
