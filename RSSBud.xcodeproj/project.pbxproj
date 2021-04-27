@@ -175,7 +175,6 @@
 		EEB7578324B2B6E700F26CF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEB7578424B2B6E700F26CF7 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		EEB7579324B2B7C600F26CF7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		EEB7579724B2EA9100F26CF7 /* JS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = JS.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		EEB7579824B3084A00F26CF7 /* LinkPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPresentation.swift; sourceTree = "<group>"; };
 		EEC4A4F024E2B8C4005041CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		EEC4A4F224E2B9A8005041CA /* RSSBud.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RSSBud.jpg; sourceTree = "<group>"; };
@@ -356,7 +355,6 @@
 		EEB7579624B2EA6D00F26CF7 /* Playgrounds */ = {
 			isa = PBXGroup;
 			children = (
-				EEB7579724B2EA9100F26CF7 /* JS.playground */,
 			);
 			path = Playgrounds;
 			sourceTree = "<group>";
