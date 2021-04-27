@@ -25,6 +25,7 @@ class RuleManager: ObservableObject {
         Core.localRules.contentPublisher
             .dropFirst()
             .map { _ in Date() }
+            .receive(on: DispatchQueue.main)
             .assign(to: \.lastRemoteRulesFetchDate, on: self)
             .store(in: &cancelBag)
     }
