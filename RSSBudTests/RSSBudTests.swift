@@ -50,7 +50,7 @@ class RSSBudTests: XCTestCase {
                 }
             }.store(in: &self.cancelBag)
         
-        wait(for: [expectation], timeout: 5)
+        wait(for: [expectation], timeout: 10)
     }
     
     func _testAnalysis(_ name: String? = nil, urlString: String, rssFeedCount: Int? = nil, rsshubFeedCount: Int? = 1) {
