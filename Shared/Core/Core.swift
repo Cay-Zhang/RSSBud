@@ -86,24 +86,6 @@ enum Core {
         return context
     }()
     
-    static func isRSSFeed(contentsOf url: URLComponents) -> AnyPublisher<Bool, Never> {
-        guard let _url = url.url else {
-            assertionFailure()
-            return Just(false).eraseToAnyPublisher()
-        }
-        var req = URLRequest(url: _url)
-        req.httpMethod = "HEAD"
-        
-        return URLSession.shared.dataTaskPublisher(for: req)
-            .compactMap { $0.response as? HTTPURLResponse }
-            .map { response in
-                print("content type: \(response.value(forHTTPHeaderField: "Content-Type"))")
-                print("mime type: \(response.mimeType)")
-                return response.mimeType.map(rssContentTypes.contains) ?? false
-            }.replaceError(with: false)
-            .eraseToAnyPublisher()
-    }
-    
     static func asyncExpandURLAndGetHTML(for urlComponents: URLComponents) -> AnyPublisher<(url: URLComponents, html: String?), Never> {
         guard let url = urlComponents.url else { return Empty(completeImmediately: true).eraseToAnyPublisher() }
         var request = URLRequest(url: url)
@@ -154,18 +136,12 @@ enum Core {
                 } else {
                     let certainRSSFeeds = result.rssFeeds.filter { $0.isCertain }
                     return uncertainRSSFeeds.publisher
-                        .flatMap { uncertainFeed in
-                            Core.isRSSFeed(contentsOf: uncertainFeed.url)
-                                .compactMap { $0 ? uncertainFeed : nil }
-                                .map { feed in
-                                    var certainFeed = feed
-                                    certainFeed.isCertain = true
-                                    return certainFeed
-                                }
-                        }.collect()
+                        .flatMap { $0.validated() }
+                        .collect()
                         .map { verifiedFeeds in
                             AnalysisResult(rssFeeds: certainRSSFeeds + verifiedFeeds, rsshubFeeds: result.rsshubFeeds)
-                        }.eraseToAnyPublisher()
+                        }.prepend(AnalysisResult(rssFeeds: certainRSSFeeds, rsshubFeeds: result.rsshubFeeds))
+                        .eraseToAnyPublisher()
                 }
             }
             .scan(Core.AnalysisResult()) {
@@ -190,7 +166,44 @@ enum Core {
         }
     }
     
-    static let rssContentTypes: [String] = [
+}
+
+
+struct RSSFeed: Codable {
+    @URLString var url: URLComponents
+    var title: String
+    @URLString var imageURL: URLComponents
+    var isCertain: Bool
+    
+    func validated() -> AnyPublisher<Self, Never> {
+        RSSFeed.isValid(url: self.url)
+            .filter { $0 }
+            .map { _ in
+                var copy = self
+                copy.isCertain = true
+                return copy
+            }.eraseToAnyPublisher()
+    }
+    
+    static func isValid(url: URLComponents) -> AnyPublisher<Bool, Never> {
+        guard let _url = url.url else {
+            assertionFailure()
+            return Just(false).eraseToAnyPublisher()
+        }
+        
+        var request = URLRequest(url: _url)
+        request.httpMethod = "HEAD"
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .map {
+                let isValid = $0.response.mimeType.map(mimeTypes.contains) ?? false
+                print("RSSFeed Validity of \(url): \(isValid) (MIME Type: \($0.response.mimeType ?? "N/A"))")
+                return isValid
+            }.replaceError(with: false)
+            .eraseToAnyPublisher()
+    }
+    
+    static let mimeTypes: [String] = [
         "application/rss+xml",
         "application/atom+xml",
         "application/rdf+xml",
@@ -204,15 +217,6 @@ enum Core {
         "text/atom",
         "text/rdf"
     ]
-    
-}
-
-
-struct RSSFeed: Codable {
-    @URLString var url: URLComponents
-    var title: String
-    @URLString var imageURL: URLComponents
-    var isCertain: Bool
 }
 
 struct RSSHubFeed: Codable {
