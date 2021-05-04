@@ -90,6 +90,9 @@ class RSSBudTests: XCTestCase {
     
     func testRSSFeedDetections() {
         _testAnalysis("少数派", urlString: "https://sspai.com/", rssFeedCount: 1, rsshubFeedCount: nil)
+        _testAnalysis("Moon FM News", urlString: "https://news.moon.fm/", rssFeedCount: 1, rsshubFeedCount: nil)
+        _testAnalysis("Leetao's Blog", urlString: "https://www.leetao94.cn/", rssFeedCount: 1, rsshubFeedCount: nil)
+        _testAnalysis("RSSBud GitHub Repo", urlString: "https://github.com/Cay-Zhang/RSSBud", rssFeedCount: 0, rsshubFeedCount: nil)
     }
     
 }
