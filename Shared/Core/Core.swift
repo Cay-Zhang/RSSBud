@@ -129,7 +129,22 @@ enum Core {
             .prepend((url: url, html: ""))
             .flatMap { tuple in
                 Core.analyzing(url: tuple.url, html: tuple.html ?? "")
-            }.scan(Core.AnalysisResult()) {
+            }.flatMap { (result: AnalysisResult) -> AnyPublisher<AnalysisResult, Never> in
+                let uncertainRSSFeeds = result.rssFeeds.filter { !$0.isCertain }
+                if uncertainRSSFeeds.isEmpty {
+                    return Just(result).eraseToAnyPublisher()
+                } else {
+                    let certainRSSFeeds = result.rssFeeds.filter { $0.isCertain }
+                    return uncertainRSSFeeds.publisher
+                        .flatMap { $0.validated() }
+                        .collect()
+                        .map { verifiedFeeds in
+                            AnalysisResult(rssFeeds: certainRSSFeeds + verifiedFeeds, rsshubFeeds: result.rsshubFeeds)
+                        }.prepend(AnalysisResult(rssFeeds: certainRSSFeeds, rsshubFeeds: result.rsshubFeeds))
+                        .eraseToAnyPublisher()
+                }
+            }
+            .scan(Core.AnalysisResult()) {
                 Core.AnalysisResult.combine($0, $1)
             }.replaceEmpty(with: Core.AnalysisResult())
             .eraseToAnyPublisher()
@@ -159,6 +174,49 @@ struct RSSFeed: Codable {
     var title: String
     @URLString var imageURL: URLComponents
     var isCertain: Bool
+    
+    func validated() -> AnyPublisher<Self, Never> {
+        RSSFeed.isValid(url: self.url)
+            .filter { $0 }
+            .map { _ in
+                var copy = self
+                copy.isCertain = true
+                return copy
+            }.eraseToAnyPublisher()
+    }
+    
+    static func isValid(url: URLComponents) -> AnyPublisher<Bool, Never> {
+        guard let _url = url.url else {
+            assertionFailure()
+            return Just(false).eraseToAnyPublisher()
+        }
+        
+        var request = URLRequest(url: _url)
+        request.httpMethod = "HEAD"
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .map {
+                let isValid = $0.response.mimeType.map(mimeTypes.contains) ?? false
+                print("RSSFeed Validity of \(url): \(isValid) (MIME Type: \($0.response.mimeType ?? "N/A"))")
+                return isValid
+            }.replaceError(with: false)
+            .eraseToAnyPublisher()
+    }
+    
+    static let mimeTypes: [String] = [
+        "application/rss+xml",
+        "application/atom+xml",
+        "application/rdf+xml",
+        "application/rss",
+        "application/atom",
+        "application/rdf",
+        "text/rss+xml",
+        "text/atom+xml",
+        "text/rdf+xml",
+        "text/rss",
+        "text/atom",
+        "text/rdf"
+    ]
 }
 
 struct RSSHubFeed: Codable {
