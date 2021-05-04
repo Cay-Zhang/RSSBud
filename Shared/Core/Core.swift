@@ -86,6 +86,24 @@ enum Core {
         return context
     }()
     
+    static func isRSSFeed(contentsOf url: URLComponents) -> AnyPublisher<Bool, Never> {
+        guard let _url = url.url else {
+            assertionFailure()
+            return Just(false).eraseToAnyPublisher()
+        }
+        var req = URLRequest(url: _url)
+        req.httpMethod = "HEAD"
+        
+        return URLSession.shared.dataTaskPublisher(for: req)
+            .compactMap { $0.response as? HTTPURLResponse }
+            .map { response in
+                print("content type: \(response.value(forHTTPHeaderField: "Content-Type"))")
+                print("mime type: \(response.mimeType)")
+                return response.mimeType.map(rssContentTypes.contains) ?? false
+            }.replaceError(with: false)
+            .eraseToAnyPublisher()
+    }
+    
     static func asyncExpandURLAndGetHTML(for urlComponents: URLComponents) -> AnyPublisher<(url: URLComponents, html: String?), Never> {
         guard let url = urlComponents.url else { return Empty(completeImmediately: true).eraseToAnyPublisher() }
         var request = URLRequest(url: url)
@@ -129,7 +147,28 @@ enum Core {
             .prepend((url: url, html: ""))
             .flatMap { tuple in
                 Core.analyzing(url: tuple.url, html: tuple.html ?? "")
-            }.scan(Core.AnalysisResult()) {
+            }.flatMap { (result: AnalysisResult) -> AnyPublisher<AnalysisResult, Never> in
+                let uncertainRSSFeeds = result.rssFeeds.filter { !$0.isCertain }
+                if uncertainRSSFeeds.isEmpty {
+                    return Just(result).eraseToAnyPublisher()
+                } else {
+                    let certainRSSFeeds = result.rssFeeds.filter { $0.isCertain }
+                    return uncertainRSSFeeds.publisher
+                        .flatMap { uncertainFeed in
+                            Core.isRSSFeed(contentsOf: uncertainFeed.url)
+                                .compactMap { $0 ? uncertainFeed : nil }
+                                .map { feed in
+                                    var certainFeed = feed
+                                    certainFeed.isCertain = true
+                                    return certainFeed
+                                }
+                        }.collect()
+                        .map { verifiedFeeds in
+                            AnalysisResult(rssFeeds: certainRSSFeeds + verifiedFeeds, rsshubFeeds: result.rsshubFeeds)
+                        }.eraseToAnyPublisher()
+                }
+            }
+            .scan(Core.AnalysisResult()) {
                 Core.AnalysisResult.combine($0, $1)
             }.replaceEmpty(with: Core.AnalysisResult())
             .eraseToAnyPublisher()
@@ -150,6 +189,21 @@ enum Core {
             return result
         }
     }
+    
+    static let rssContentTypes: [String] = [
+        "application/rss+xml",
+        "application/atom+xml",
+        "application/rdf+xml",
+        "application/rss",
+        "application/atom",
+        "application/rdf",
+        "text/rss+xml",
+        "text/atom+xml",
+        "text/rdf+xml",
+        "text/rss",
+        "text/atom",
+        "text/rdf"
+    ]
     
 }
 
