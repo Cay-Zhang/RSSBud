@@ -982,7 +982,7 @@
 				DEVELOPMENT_TEAM = 459NR5CZG8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1008,7 +1008,7 @@
 				DEVELOPMENT_TEAM = 459NR5CZG8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1087,7 +1087,7 @@
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 459NR5CZG8;
 				INFOPLIST_FILE = "Action Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1114,7 +1114,7 @@
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 459NR5CZG8;
 				INFOPLIST_FILE = "Action Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
