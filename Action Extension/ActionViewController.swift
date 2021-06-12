@@ -21,27 +21,37 @@ struct RootView: View {
     }
 }
 
-class ActionViewController: UIHostingController<RootView> {
+class ActionViewController: UIViewController {
     
     var contentViewModel = ContentView.ViewModel()
     var cancelBag = Set<AnyCancellable>()
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         // temp workaround for list background
         UITableView.appearance().backgroundColor = UIColor.clear
         
-        let view = RootView(contentViewModel: contentViewModel)
-        super.init(rootView: view)
-        self.rootView.openURLInSystem = { [weak self] url in
+        var view = RootView(contentViewModel: contentViewModel)
+        view.openURLInSystem = { [weak self] url in
             self?.open(url: url)
         }
-        self.rootView.done = { [weak self] in
+        view.done = { [weak self] in
             self?.extensionContext?.completeRequest(returningItems: self?.extensionContext?.inputItems, completionHandler: nil)
         }
-    }
-    
-    @objc required dynamic init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        
+        let hostingController = UIHostingController(rootView: view)
+        self.addChild(hostingController)
+        self.view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: self)
+        
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            hostingController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
