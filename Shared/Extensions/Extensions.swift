@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import CryptoKit
+import LinkPresentation
 
 extension URLComponents {
     func expanding() -> Publishers.ReplaceError<Publishers.Map<URLSession.DataTaskPublisher, URLComponents>> {
@@ -228,5 +229,53 @@ struct URLString: Codable {
     
     func encode(to encoder: Encoder) throws {
         try string.encode(to: encoder)
+    }
+}
+
+extension NSItemProvider {
+    func loadObject<T: NSItemProviderReading>(ofClass aClass: T.Type) async throws -> T {
+        return try await withCheckedThrowingContinuation { continuation in
+            _ = self.loadObject(ofClass: T.self) { (object: NSItemProviderReading?, error: Error?) in
+                if let object = object as? T {
+                    continuation.resume(returning: object)
+                } else if let error = error {
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+    func loadObject<T: _ObjectiveCBridgeable>(ofClass: T.Type) async throws -> T where T._ObjectiveCType: NSItemProviderReading {
+        return try await withCheckedThrowingContinuation { continuation in
+            _ = self.loadObject(ofClass: T.self) { (object: T?, error: Error?) in
+                if let object = object {
+                    continuation.resume(returning: object)
+                } else if let error = error {
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+}
+
+extension LPLinkMetadata {
+    var image: Image? {
+        get async {
+            if let provider = self.imageProvider {
+                return try? await Image(uiImage: provider.loadObject(ofClass: UIImage.self))
+            } else {
+                return nil
+            }
+        }
+    }
+    
+    var icon: Image? {
+        get async {
+            if let provider = self.iconProvider {
+                return try? await Image(uiImage: provider.loadObject(ofClass: UIImage.self))
+            } else {
+                return nil
+            }
+        }
     }
 }
