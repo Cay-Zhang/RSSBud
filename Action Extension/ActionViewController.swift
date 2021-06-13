@@ -9,6 +9,7 @@ import UIKit
 import SwiftUI
 import Combine
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 struct RootView: View {
     var contentViewModel: ContentView.ViewModel
@@ -21,6 +22,7 @@ struct RootView: View {
     }
 }
 
+@MainActor
 class ActionViewController: UIViewController {
     
     var contentViewModel = ContentView.ViewModel()
@@ -63,26 +65,17 @@ class ActionViewController: UIViewController {
             .flatMap { item in
                 item.attachments!.publisher
             }.print()
-            .flatMap { (provider: NSItemProvider) -> Future<URLComponents?, Never> in
-                
+            .flatMap { (provider: NSItemProvider) -> AsyncFuture<URLComponents?> in
                 if provider.canLoadObject(ofClass: URL.self) {
-                    
-                    return Future { promise in
-                        _ = provider.loadObject(ofClass: URL.self) { url, error in
-                            promise(.success(url?.components))
-                        }
+                    return AsyncFuture {
+                        return try? await provider.loadObject(ofClass: URL.self).components
                     }
-                    
                 } else {
-                    
-                    return Future { promise in
-                        provider.loadItem(forTypeIdentifier: kUTTypePlainText as String, options: nil) { string, error in
-                            promise(.success((string as? String).flatMap(URLComponents.init(autoPercentEncoding:))))
-                        }
+                    return AsyncFuture {
+                        let result = try? await provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil)
+                        return (result as? String).flatMap(URLComponents.init(autoPercentEncoding:))
                     }
-                    
                 }
-                
             }.compactMap { $0 }
             .first()
             .receive(on: DispatchQueue.main)
