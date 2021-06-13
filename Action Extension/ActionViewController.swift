@@ -31,6 +31,11 @@ class ActionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // if host view cannot fit the preferred content size,
+        // a sheet will be used instead of a popover
+        // size class is not assigned properly
+        preferredContentSize = CGSize(width: 450, height: 900)
+        
         // temp workaround for list background
         UITableView.appearance().backgroundColor = UIColor.clear
         
