@@ -37,28 +37,65 @@ extension Publisher {
 
 final class AsyncFuture<Output>: Publisher {
     
-    typealias Failure = Error
+    typealias Failure = Never
     
     let priority: Task.Priority?
-    let task: @Sendable () async throws -> Output
+    let operation: @Sendable () async -> Output
     
-    init(priority: Task.Priority? = nil, task: @escaping @Sendable () async throws -> Output) {
+    init(priority: Task.Priority? = nil, operation: @escaping @Sendable () async -> Output) {
         self.priority = priority
-        self.task = task
+        self.operation = operation
     }
     
     func receive<S>(subscriber: S) where S: Subscriber, Failure == S.Failure, Output == S.Input {
-        subscriber.receive(subscription: Subscription(subscriber: subscriber, priority: priority, task: task))
+        subscriber.receive(subscription: Subscription(subscriber: subscriber, priority: priority, operation: operation))
+    }
+    
+    private class Subscription<Subscriber: Combine.Subscriber>: Combine.Subscription where Subscriber.Input == Output, Subscriber.Failure == Never {
+        var taskHandle: Task.Handle<Void, Never>?
+        
+        init(subscriber: Subscriber, priority: Task.Priority? = nil, operation: @escaping @Sendable () async -> Output) {
+            self.taskHandle = async(priority: priority) {
+                if Task.isCancelled { return }
+                let result = await operation()
+                _ = subscriber.receive(result)
+                subscriber.receive(completion: .finished)
+            }
+        }
+        
+        func request(_ demand: Subscribers.Demand) { }
+        
+        func cancel() {
+            taskHandle?.cancel()
+            taskHandle = nil
+        }
+    }
+}
+
+final class AsyncThrowingFuture<Output>: Publisher {
+    
+    typealias Failure = Error
+    
+    let priority: Task.Priority?
+    let operation: @Sendable () async throws -> Output
+    
+    init(priority: Task.Priority? = nil, operation: @escaping @Sendable () async throws -> Output) {
+        self.priority = priority
+        self.operation = operation
+    }
+    
+    func receive<S>(subscriber: S) where S: Subscriber, Failure == S.Failure, Output == S.Input {
+        subscriber.receive(subscription: Subscription(subscriber: subscriber, priority: priority, operation: operation))
     }
     
     private class Subscription<Subscriber: Combine.Subscriber>: Combine.Subscription where Subscriber.Input == Output, Subscriber.Failure == Error {
         var taskHandle: Task.Handle<Void, Never>?
         
-        init(subscriber: Subscriber, priority: Task.Priority? = nil, task: @escaping @Sendable () async throws -> Output) {
+        init(subscriber: Subscriber, priority: Task.Priority? = nil, operation: @escaping @Sendable () async throws -> Output) {
             self.taskHandle = async(priority: priority) {
                 do {
                     if Task.isCancelled { return }
-                    let result = try await task()
+                    let result = try await operation()
                     _ = subscriber.receive(result)
                     subscriber.receive(completion: .finished)
                 } catch {
