@@ -66,15 +66,18 @@ extension RSSBud.App {
     mutating func prepareForPromoAssetGeneration(pageIndex: Int) {
         if pageIndex == 1 {
             AppStorage<Bool?>("isOnboarding", store: RSSBud.userDefaults).wrappedValue = false
-            Integration().wrappedValue = [.reeder]
+            Integration().wrappedValue = [.reeder, .inoreader]
             
             let contentViewModel = ContentView.ViewModel(
-                originalURL: URLComponents(string: "https://space.bilibili.com/50333369/"),
+                originalURL: "https://github.com/Cay-Zhang/RSSBud",
+                rssFeeds: [
+                    RSSFeed(url: "https://github.com/Cay-Zhang/RSSBud/commits/main.atom", title: "Recent Commits to RSSBud:main", imageURL: "", isCertain: true)
+                ],
                 rsshubFeeds: [
-                    RSSHubFeed(title: "当前 UP 主动态", path: "/bilibili/video/reply/test1"),
-                    RSSHubFeed(title: "当前 UP 主投稿", path: "/bilibili/video/reply/test2")
+                    RSSHubFeed(title: "仓库 Issues", path: "/github/issue/Cay-Zhang/RSSBud"),
+                    RSSHubFeed(title: "仓库 Pull Requests", path: "/github/pull/Cay-Zhang/RSSBud")
                 ], queryItems: [
-                    URLQueryItem(name: "filter_title", value: "上海")
+                    URLQueryItem(name: "filter_title", value: "")
                 ]
             )
             
@@ -82,8 +85,10 @@ extension RSSBud.App {
         } else if pageIndex == 2 {
             AppStorage<Bool?>("isOnboarding", store: RSSBud.userDefaults).wrappedValue = false
             RSSHub.BaseURL().string = RSSHub.officialDemoBaseURLString
+            @AppStorage<CustomOpenURLAction.Mode>("defaultOpenURLMode", store: RSSBud.userDefaults) var defaultMode = .inApp
+            defaultMode = .inApp
             let _lastRemoteRulesFetchDate = AppStorage<Double?>("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults)
-            _lastRemoteRulesFetchDate.wrappedValue = Date(timeIntervalSinceNow: -60 * 5 + 3).timeIntervalSinceReferenceDate
+            _lastRemoteRulesFetchDate.wrappedValue = Date(timeIntervalSinceNow: -60 * 5 + 6.5).timeIntervalSinceReferenceDate
         }
     }
 }
