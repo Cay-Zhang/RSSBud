@@ -214,13 +214,16 @@ extension View {
 
 @propertyWrapper
 struct URLString: Codable {
-    var string: String
     var wrappedValue: URLComponents
+    
+    init(wrappedValue: URLComponents) {
+        self.wrappedValue = wrappedValue
+    }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.string = try container.decode(String.self)
-        if let url = URLComponents(string: self.string) {
+        let string = try container.decode(String.self)
+        if let url = URLComponents(string: string) {
             self.wrappedValue = url
         } else {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "shit")
@@ -228,7 +231,7 @@ struct URLString: Codable {
     }
     
     func encode(to encoder: Encoder) throws {
-        try string.encode(to: encoder)
+        try wrappedValue.string.encode(to: encoder)
     }
 }
 
