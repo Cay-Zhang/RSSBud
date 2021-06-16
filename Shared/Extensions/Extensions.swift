@@ -73,6 +73,12 @@ extension URLComponents {
     }
 }
 
+extension URLComponents: ExpressibleByStringLiteral {
+    public init(stringLiteral value: StaticString) {
+        self.init(autoPercentEncoding: "\(value)")!
+    }
+}
+
 extension Array where Element == URLQueryItem {
     subscript(name: String) -> String? {
         get {
