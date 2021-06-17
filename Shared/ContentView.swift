@@ -43,7 +43,7 @@ struct ContentView: View {
                 }.navigationTitle("RSSBud")
                 .toolbar(content: toolbarContent)
                 .safeAreaInset(edge: .bottom) {
-                    BottomBar(parentViewModel: viewModel)
+                    BottomBar(parentViewModel: viewModel, viewModel: viewModel.bottomBarViewModel)
                 }
             }
             
@@ -158,7 +158,6 @@ extension ContentView {
         @RSSHub.BaseURL var baseURL
         
         @Published var originalURL: URLComponents? = nil
-        @Published var linkPresentationMetadata: LPLinkMetadata? = nil
         @Published var isProcessing: Bool = false
         
 //        @Published var isPageFeedSectionExpanded: Bool = false
@@ -169,6 +168,8 @@ extension ContentView {
         @Published var queryItems: [URLQueryItem] = []
         
         @Published var alert: Alert? = nil
+        
+        let bottomBarViewModel = BottomBar.ViewModel()
         
         var cancelBag = Set<AnyCancellable>()
         
@@ -181,30 +182,37 @@ extension ContentView {
             self.$originalURL
                 .map { $0?.url }
                 .removeDuplicates()
-                .map { (url: URL?) -> AnyPublisher<LPLinkMetadata?, Never> in
+                .map { (url: URL?) -> AnyPublisher<(metadata: LPLinkMetadata, icon: Image?, image: Image?)?, Never> in
                     if let url = url {
                         let placeholderMetadata = LPLinkMetadata()
                         placeholderMetadata.originalURL = url
                         placeholderMetadata.url = url
                         
-                        return Future<LPLinkMetadata?, Never> { promise in
+                        return AsyncFuture<(metadata: LPLinkMetadata, icon: Image?, image: Image?)?> { @MainActor in
                             let provider = LPMetadataProvider()
-                            provider.startFetchingMetadata(for: url) { (result, error) in
-                                if let metadata = result {
-                                    promise(.success(metadata))
-                                } else if let _ = error {
-                                    promise(.success(placeholderMetadata))
-                                }
+                            if let metadata = try? await provider.startFetchingMetadata(for: url) {
+                                async let icon = metadata.icon
+                                async let image = metadata.image
+                                return await (metadata, icon, image)
+                            } else {
+                                return nil
                             }
-                        }.prepend(placeholderMetadata)
+                        }.prepend((placeholderMetadata, nil, nil))
                         .eraseToAnyPublisher()
                     } else {
                         return Just(nil).eraseToAnyPublisher()
                     }
                 }.switchToLatest()
+                .compactMap { $0 }
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] metadata in
-                    withAnimation { self?.linkPresentationMetadata = metadata }
+                .sink { [bottomBarViewModel] tuple in
+                    let (metadata, icon, image) = tuple
+                    withAnimation(BottomBar.transitionAnimation) {
+                        bottomBarViewModel.linkURL = metadata.url?.components
+                        bottomBarViewModel.linkTitle = metadata.title
+                        bottomBarViewModel.linkIcon = icon
+                        bottomBarViewModel.linkImage = image
+                    }
                 }.store(in: &self.cancelBag)
             
             Core.onFinishReloadingRules
@@ -226,6 +234,7 @@ extension ContentView {
                 withAnimation {
                     self.originalURL = url
                     self.isProcessing = true
+                    self.bottomBarViewModel.state = .focusedOnLink
                 }
                 
                 DispatchQueue.global(qos: .userInitiated).async {

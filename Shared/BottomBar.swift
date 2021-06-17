@@ -12,9 +12,7 @@ import LinkPresentation
 struct BottomBar: View {
     
     let parentViewModel: ContentView.ViewModel
-    @State var state: ViewState = .focusedOnControls
-    @State var image: Image?
-    @State var signal = true
+    @ObservedObject var viewModel: Self.ViewModel
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -52,7 +50,7 @@ struct BottomBar: View {
                 Text(detailedRepresentation(of: url))
             }
                 .background(
-                    image?
+                    viewModel.linkImage?
                         .resizable()
                         .aspectRatio(1, contentMode: .fill)
                         .opacity(isExpanded ? 0 : 1)
@@ -84,16 +82,27 @@ struct BottomBar: View {
 }
 
 extension BottomBar {
+    class ViewModel: ObservableObject {
+        @Published var state: ViewState = .focusedOnControls
+        @Published var linkURL: URLComponents?
+        @Published var linkTitle: String?
+        @Published var linkIcon: Image?
+        @Published var linkImage: Image?
+    }
+}
+
+extension BottomBar {
     enum ViewState {
         case expanded, focusedOnControls, focusedOnLink
     }
     
-    var isExpanded: Bool {
-        state == .expanded
+    var state: ViewState {
+        get { viewModel.state }
+        nonmutating set { viewModel.state = newValue }
     }
     
-    var metadata: LPLinkMetadata? {
-        parentViewModel.linkPresentationMetadata
+    var isExpanded: Bool {
+        state == .expanded
     }
     
     func detailedRepresentation(of url: URLComponents) -> AttributedString {
