@@ -223,7 +223,7 @@ extension ContentView {
                 }.store(in: &cancelBag)
         }
         
-        func process(url: URLComponents) {
+        func process(url: URLComponents, html: String? = nil) {
             if baseURL.host == url.host {
                 let items = url.queryItems?.map { item in
                     URLQueryItem(name: item.name, value: item.value?.removingPercentEncoding)
@@ -239,7 +239,14 @@ extension ContentView {
                 }
                 
                 DispatchQueue.global(qos: .userInitiated).async {
-                    Core.analyzing(contentsOf: url)
+                    let analysisPipeline: AnyPublisher<Core.AnalysisResult, Error>
+                    if let html = html {
+                        analysisPipeline = Core.analyzing(url: url, html: html)
+                    } else {
+                        analysisPipeline = Core.analyzing(contentsOf: url)
+                    }
+                    
+                    analysisPipeline
                         .receive(on: DispatchQueue.main)
                         .sink { [unowned self] completion in
                             switch completion {
