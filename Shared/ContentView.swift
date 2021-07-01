@@ -27,19 +27,6 @@ struct ContentView: View {
                         if isOnboarding {
                             OnboardingView()
                         } else {
-                            if let metadata = viewModel.linkPresentationMetadata {
-                                LinkPresentation(metadata: metadata)
-                                    .frame(minHeight: 100)
-                            }
-                            
-                            HStack(spacing: 20) {
-                                if viewModel.isProcessing {
-                                    ProgressView()
-                                }
-                                
-                                WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: readFromClipboard)
-                            }
-                            
                             pageFeeds
                             
                             rsshubFeeds
@@ -55,6 +42,9 @@ struct ContentView: View {
                     }.padding(16)
                 }.navigationTitle("RSSBud")
                 .toolbar(content: toolbarContent)
+                .safeAreaInset(edge: .bottom) {
+                    BottomBar(parentViewModel: viewModel)
+                }
             }
             
             if horizontalSizeClass == .regular {
