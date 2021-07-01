@@ -38,6 +38,8 @@
 				<key>NSExtensionActivationSupportsImageWithMaxCount</key>
 				<integer>1</integer>
 			</dict>
+			<key>NSExtensionJavaScriptPreprocessingFile</key>
+			<string>JavaScriptPreprocessingFile</string>
 			<key>NSExtensionServiceAllowsFinderPreviewItem</key>
 			<true/>
 			<key>NSExtensionServiceAllowsTouchBarItem</key>
