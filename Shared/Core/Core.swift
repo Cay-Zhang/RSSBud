@@ -121,6 +121,20 @@ enum Core {
             let result = Result { try JSONDecoder().decode(AnalysisResult.self, from: data) }
             print("Core Finish Analyzing: \(result)")
             promise(result)
+        }.flatMap { (result: AnalysisResult) -> AnyPublisher<AnalysisResult, Never> in
+            let uncertainRSSFeeds = result.rssFeeds.filter { !$0.isCertain }
+            if uncertainRSSFeeds.isEmpty {
+                return Just(result).eraseToAnyPublisher()
+            } else {
+                let certainRSSFeeds = result.rssFeeds.filter { $0.isCertain }
+                return uncertainRSSFeeds.publisher
+                    .flatMap { $0.validated() }
+                    .collect()
+                    .map { verifiedFeeds in
+                        AnalysisResult(rssFeeds: certainRSSFeeds + verifiedFeeds, rsshubFeeds: result.rsshubFeeds)
+                    }.prepend(AnalysisResult(rssFeeds: certainRSSFeeds, rsshubFeeds: result.rsshubFeeds))
+                    .eraseToAnyPublisher()
+            }
         }.eraseToAnyPublisher()
     }
     
@@ -129,22 +143,7 @@ enum Core {
             .prepend((url: url, html: ""))
             .flatMap { tuple in
                 Core.analyzing(url: tuple.url, html: tuple.html ?? "")
-            }.flatMap { (result: AnalysisResult) -> AnyPublisher<AnalysisResult, Never> in
-                let uncertainRSSFeeds = result.rssFeeds.filter { !$0.isCertain }
-                if uncertainRSSFeeds.isEmpty {
-                    return Just(result).eraseToAnyPublisher()
-                } else {
-                    let certainRSSFeeds = result.rssFeeds.filter { $0.isCertain }
-                    return uncertainRSSFeeds.publisher
-                        .flatMap { $0.validated() }
-                        .collect()
-                        .map { verifiedFeeds in
-                            AnalysisResult(rssFeeds: certainRSSFeeds + verifiedFeeds, rsshubFeeds: result.rsshubFeeds)
-                        }.prepend(AnalysisResult(rssFeeds: certainRSSFeeds, rsshubFeeds: result.rsshubFeeds))
-                        .eraseToAnyPublisher()
-                }
-            }
-            .scan(Core.AnalysisResult()) {
+            }.scan(Core.AnalysisResult()) {
                 Core.AnalysisResult.combine($0, $1)
             }.replaceEmpty(with: Core.AnalysisResult())
             .eraseToAnyPublisher()
