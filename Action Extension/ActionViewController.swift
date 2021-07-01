@@ -70,22 +70,29 @@ class ActionViewController: UIViewController {
             .flatMap { item in
                 item.attachments!.publisher
             }.print()
-            .flatMap { (provider: NSItemProvider) -> AsyncFuture<URLComponents?> in
-                if provider.canLoadObject(ofClass: URL.self) {
-                    return AsyncFuture {
-                        return try? await provider.loadObject(ofClass: URL.self).components
-                    }
-                } else {
-                    return AsyncFuture {
-                        let result = try? await provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil)
-                        return (result as? String).flatMap(URLComponents.init(autoPercentEncoding:))
+            .flatMap { (provider: NSItemProvider) -> AsyncFuture<(url: URLComponents, html: String?)?> in
+                AsyncFuture {
+                    if let item = try? await provider.loadItem(forTypeIdentifier: UTType.propertyList.identifier, options: nil) as? Dictionary<String, Dictionary<String, String>>,
+                       let results = item[NSExtensionJavaScriptPreprocessingResultsKey],
+                       let urlString = results["url"],
+                       let url = URLComponents(string: urlString),
+                       let html = results["html"] {
+                        // from safari webpage
+                        return (url, html)
+                    } else if let url = try? await provider.loadObject(ofClass: URL.self).components {
+                        return (url, nil)
+                    } else if let text = try? await provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) as? String,
+                              let url = URLComponents(autoPercentEncoding: text) {
+                        return (url, nil)
+                    } else {
+                        return nil
                     }
                 }
             }.compactMap { $0 }
             .first()
             .receive(on: DispatchQueue.main)
-            .sink { [weak viewModel = contentViewModel] url in
-                viewModel?.process(url: url)
+            .sink { [weak viewModel = contentViewModel] tuple in
+                viewModel?.process(url: tuple.url, html: tuple.html)
             }.store(in: &self.cancelBag)
     }
     
