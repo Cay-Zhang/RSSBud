@@ -17,14 +17,6 @@ struct BottomBar: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack(spacing: 8) {
-                if isExpanded {
-                    Cell { Text("Test") }.transition(Self.contentTransition)
-                    Cell { Text("Test") }.transition(Self.contentTransition)
-                    Cell { Text("Test") }.transition(Self.contentTransition)
-                    Cell { Text("Test") }.transition(Self.contentTransition)
-                    Cell { Text("Test") }.transition(Self.contentTransition)
-                }
-                
                 if state != .focusedOnControls { mainCell }
                 if state != .focusedOnLink {
                     HStack(spacing: 20) {
@@ -172,7 +164,7 @@ extension BottomBar {
 extension BottomBar {
     static var transitionAnimation: Animation { Animation.interpolatingSpring(mass: 3, stiffness: 1000, damping: 500, initialVelocity: 0) }
     static var contentTransition: AnyTransition {
-        AnyTransition.offset(y: 25).combined(with: AnyTransition.opacity).animation(BottomBar.transitionAnimation.speed(1.5))
+        AnyTransition.offset(y: 25).combined(with: AnyTransition.opacity)
     }
 }
 
