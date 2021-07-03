@@ -169,7 +169,17 @@ extension BottomBar {
 }
 
 struct BottomBar_Previews: PreviewProvider {
+    static func bottomBar(for url: URLComponents) -> BottomBar {
+        let model = ContentView.ViewModel()
+        model.originalURL = url
+        model.bottomBarViewModel.state = .focusedOnLink
+        return BottomBar(parentViewModel: model, viewModel: model.bottomBarViewModel)
+    }
+    
     static var previews: some View {
-        ContentView_Previews.previews
+        Group {
+            bottomBar(for: "https://space.bilibili.com/17404347")
+            bottomBar(for: "https://www.youtube.com/watch?v=7A5-eRfDQ0M")
+        }
     }
 }
