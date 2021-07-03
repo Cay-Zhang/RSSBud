@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 import CryptoKit
 import LinkPresentation
+import UniformTypeIdentifiers
 
 extension URLComponents {
     func expanding() -> Publishers.ReplaceError<Publishers.Map<URLSession.DataTaskPublisher, URLComponents>> {
@@ -265,23 +266,39 @@ extension NSItemProvider {
             }
         }
     }
+    
+    func loadDataRepresentation(forTypeIdentifier typeIdentifier: String) async throws -> Data {
+        return try await withCheckedThrowingContinuation { continuation in
+            _ = self.loadDataRepresentation(forTypeIdentifier: typeIdentifier) { data, error in
+                if let data = data {
+                    continuation.resume(returning: data)
+                } else if let error = error {
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
 }
 
 extension LPLinkMetadata {
-    var image: Image? {
+    var image: UIImage? {
         get async {
             if let provider = self.imageProvider {
-                return try? await Image(uiImage: provider.loadObject(ofClass: UIImage.self))
+                return try? await provider.loadObject(ofClass: UIImage.self)
             } else {
                 return nil
             }
         }
     }
     
-    var icon: Image? {
+    var icon: UIImage? {
         get async {
             if let provider = self.iconProvider {
-                return try? await Image(uiImage: provider.loadObject(ofClass: UIImage.self))
+                var data = try? await provider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier)
+                if data == nil { data = try? await provider.loadDataRepresentation(forTypeIdentifier: "dyn.agq80w5pbq7ww88brrfv085u") }
+                let scale = await UIScreen.main.scale
+                return data
+                    .flatMap { UIImage(data: $0, scale: scale) }
             } else {
                 return nil
             }
