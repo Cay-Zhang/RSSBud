@@ -280,6 +280,25 @@ extension NSItemProvider {
     }
 }
 
+extension UIImage {
+    func scaled(by ratio: CGFloat) -> UIImage {
+        let newSize = CGSize(width: self.size.width * ratio, height: self.size.height * ratio)
+        let renderFormat = UIGraphicsImageRendererFormat.default()
+        renderFormat.opaque = false
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: newSize.width, height: newSize.height), format: renderFormat)
+        return renderer.image { context in
+            self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        }
+    }
+    
+    func scaledDownIfNeeded(toFit size: CGSize) -> UIImage {
+        let horizontalRatio = min(size.width / self.size.width, 1.0)
+        let verticalRatio = min(size.height / self.size.height, 1.0)
+        let ratio = min(horizontalRatio, verticalRatio)
+        return self.scaled(by: ratio)
+    }
+}
+
 extension LPLinkMetadata {
     var image: UIImage? {
         get async {

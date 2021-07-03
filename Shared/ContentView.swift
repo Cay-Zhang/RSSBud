@@ -182,16 +182,16 @@ extension ContentView {
             self.$originalURL
                 .map { $0?.url }
                 .removeDuplicates()
-                .map { (url: URL?) -> AnyPublisher<(metadata: LPLinkMetadata, icon: Image?, image: Image?)?, Never> in
+                .map { (url: URL?) -> AnyPublisher<(metadata: LPLinkMetadata, icon: UIImage?, image: UIImage?)?, Never> in
                     if let url = url {
                         let placeholderMetadata = LPLinkMetadata()
                         placeholderMetadata.originalURL = url
                         placeholderMetadata.url = url
                         
-                        return AsyncFuture<(metadata: LPLinkMetadata, icon: Image?, image: Image?)?> { @MainActor in
+                        return AsyncFuture<(metadata: LPLinkMetadata, icon: UIImage?, image: UIImage?)?> {
                             let provider = LPMetadataProvider()
-                            if let metadata = try? await provider.startFetchingMetadata(for: url) {
-                                async let icon = metadata.icon
+                            if let metadata = await { @MainActor in try? await provider.startFetchingMetadata(for: url) }() {
+                                async let icon = metadata.icon?.scaledDownIfNeeded(toFit: CGSize(width: 36, height: 36))
                                 async let image = metadata.image
                                 return await (metadata, icon, image)
                             } else {
@@ -210,8 +210,11 @@ extension ContentView {
                     withAnimation(BottomBar.transitionAnimation) {
                         bottomBarViewModel.linkURL = metadata.url?.components
                         bottomBarViewModel.linkTitle = metadata.title
-                        bottomBarViewModel.linkIcon = icon
-                        bottomBarViewModel.linkImage = image
+                        bottomBarViewModel.linkIcon = icon.map(Image.init(uiImage:))
+                        bottomBarViewModel.linkImage = image.map(Image.init(uiImage:))
+                        if let icon = icon {
+                            bottomBarViewModel.linkIconSize = (icon.size.width < 20) && (icon.size.height < 20) ? .small : .large
+                        }
                     }
                 }.store(in: &self.cancelBag)
             

@@ -88,12 +88,17 @@ extension BottomBar {
         @Published var linkTitle: String?
         @Published var linkIcon: Image?
         @Published var linkImage: Image?
+        @Published var linkIconSize: LinkIconSize = .large
     }
 }
 
 extension BottomBar {
     enum ViewState {
         case expanded, focusedOnControls, focusedOnLink
+    }
+    
+    enum LinkIconSize {
+        case small, large
     }
     
     var state: ViewState {
