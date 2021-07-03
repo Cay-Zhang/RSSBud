@@ -30,7 +30,6 @@ struct BottomBar: View {
             }
             .padding(isExpanded ? 8 : 0)
             .frame(maxWidth: .infinity)
-            .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .padding(.bottom, isExpanded ? 0 : 8)
         }.padding(.horizontal, 16)
