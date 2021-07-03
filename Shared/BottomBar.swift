@@ -47,12 +47,29 @@ struct BottomBar: View {
     @ViewBuilder var mainCell: some View {
         if let url = parentViewModel.originalURL {
             Cell(cornerRadius: isExpanded ? 8 : 16) {
-                Text(detailedRepresentation(of: url))
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        linkTitleView
+                            .font(.system(size: 15, weight: .semibold, design: .default))
+                            .transition(.offset(y: -25).combined(with: .opacity))
+                        
+                        Text((viewModel.linkTitle != nil) ? conciseRepresentation(of: url) : detailedRepresentation(of: url))
+                            .animatableFont(size: (viewModel.linkTitle != nil) ? 13 : 15, weight: (viewModel.linkTitle != nil) ? .regular : .semibold)
+                            .foregroundColor((viewModel.linkTitle != nil) ? .secondary : .primary)
+                    }
+                    Spacer()
+                    if viewModel.linkIconSize == .large {
+                        viewModel.linkIcon?
+                            .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
+                            .transition(.offset(x: 25).combined(with: .opacity))
+                    }
+                }.padding(.horizontal, 16)
             }
                 .background(
                     viewModel.linkImage?
                         .resizable()
                         .aspectRatio(1, contentMode: .fill)
+                        .opacity(0.5)
                         .opacity(isExpanded ? 0 : 1)
                 )
                 .clipShape(RoundedRectangle(cornerRadius: isExpanded ? 8 : 16, style: .continuous))
@@ -61,6 +78,16 @@ struct BottomBar: View {
                         state = (state == .expanded) ? .focusedOnLink : .expanded
                     }
                 }
+        }
+    }
+    
+    @ViewBuilder var linkTitleView: some View {
+        if let title = viewModel.linkTitle {
+            if let icon = viewModel.linkIcon, viewModel.linkIconSize == .small {
+                Label { Text(title).lineLimit(1) } icon: { icon }
+            } else {
+                Text(title)
+            }
         }
     }
     
@@ -110,13 +137,22 @@ extension BottomBar {
         state == .expanded
     }
     
+    func conciseRepresentation(of url: URLComponents) -> AttributedString {
+        AttributedString(url.host ?? "")
+    }
+    
     func detailedRepresentation(of url: URLComponents) -> AttributedString {
-        let text = (url.host ?? "Untitled") + (isExpanded ? "" : url.path)
-        var attributed = AttributedString(text)
-        if let range = attributed.range(of: url.path) {
-            attributed[range].foregroundColor = Color.secondary
+        guard let rangeOfHost = url.rangeOfHost,
+              let startingIndexOfPath = url.rangeOfPath?.lowerBound,
+              let hostString = url.string?[rangeOfHost],
+              let afterHostString = url.string?[startingIndexOfPath...]
+        else {
+            return AttributedString("")
         }
-        return attributed
+        let host = AttributedString(hostString)
+        var afterHost = AttributedString(afterHostString)
+        afterHost.foregroundColor = Color.secondary
+        return host + afterHost
     }
 }
 
