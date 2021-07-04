@@ -42,6 +42,8 @@ struct ContentView: View {
                     }.padding(16)
                 }.navigationTitle("RSSBud")
                 .toolbar(content: toolbarContent)
+                .environment(\.isEnabled, !viewModel.isFocusedOnBottomBar)
+                .overlay(Color.black.opacity(viewModel.isFocusedOnBottomBar ? 0.5: 0.0))
                 .safeAreaInset(edge: .bottom) {
                     BottomBar(parentViewModel: viewModel, viewModel: viewModel.bottomBarViewModel)
                 }
@@ -168,6 +170,8 @@ extension ContentView {
         @Published var queryItems: [URLQueryItem] = []
         
         @Published var alert: Alert? = nil
+        
+        @Published var isFocusedOnBottomBar: Bool = false
         
         let bottomBarViewModel = BottomBar.ViewModel()
         
