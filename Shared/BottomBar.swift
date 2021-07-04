@@ -62,6 +62,7 @@ struct BottomBar: View {
                         .aspectRatio(1, contentMode: .fill)
                         .opacity(0.5)
                         .opacity(isExpanded ? 0 : 1)
+                        .allowsHitTesting(false)
                 )
                 .clipShape(RoundedRectangle(cornerRadius: isExpanded ? 8 : 16, style: .continuous))
                 .onTapGesture {
