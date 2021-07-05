@@ -17,7 +17,6 @@ struct BottomBar: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack(spacing: 8) {
-                if state != .focusedOnControls { mainCell }
                 if state != .focusedOnLink {
                     HStack(spacing: 20) {
                         if parentViewModel.isProcessing {
@@ -25,19 +24,21 @@ struct BottomBar: View {
                         }
                         
                         WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: readFromClipboard)
-                    }
+                    }.transition(.offset(y: -50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
+                }
+                if state != .focusedOnControls {
+                    mainCell
+                        .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
                 }
             }
-            .padding(isExpanded ? 8 : 0)
             .frame(maxWidth: .infinity)
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .padding(.bottom, isExpanded ? 0 : 8)
+            .padding(.bottom, 8)
         }.padding(.horizontal, 16)
     }
     
     @ViewBuilder var mainCell: some View {
         if let url = parentViewModel.originalURL {
-            Cell(cornerRadius: isExpanded ? 8 : 16) {
+            Cell(cornerRadius: 16) {
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
                         linkTitleView
@@ -61,10 +62,9 @@ struct BottomBar: View {
                         .resizable()
                         .aspectRatio(1, contentMode: .fill)
                         .opacity(0.5)
-                        .opacity(isExpanded ? 0 : 1)
                         .allowsHitTesting(false)
                 )
-                .clipShape(RoundedRectangle(cornerRadius: isExpanded ? 8 : 16, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                 .onTapGesture {
                     withAnimation(BottomBar.transitionAnimation) {
                         state = (state == .expanded) ? .focusedOnLink : .expanded
@@ -93,7 +93,7 @@ struct BottomBar: View {
                 .font(Font.body.weight(.semibold))
                 .padding(.vertical, 16)
                 .frame(maxWidth: .infinity)
-                .background(.thinMaterial)
+                .background(Rectangle().fill(.thinMaterial).transition(.identity))
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         }
         
