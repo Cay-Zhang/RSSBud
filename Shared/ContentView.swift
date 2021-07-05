@@ -66,7 +66,7 @@ struct ContentView: View {
         .sheet(isPresented: $isSettingsViewPresented) {
             SettingsView()
                 .modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
-        }
+        }.symbolRenderingMode(.hierarchical)
     }
     
     @ViewBuilder var pageFeeds: some View {
