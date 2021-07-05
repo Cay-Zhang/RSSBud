@@ -27,19 +27,6 @@ struct ContentView: View {
                         if isOnboarding {
                             OnboardingView()
                         } else {
-                            if let metadata = viewModel.linkPresentationMetadata {
-                                LinkPresentation(metadata: metadata)
-                                    .frame(minHeight: 100)
-                            }
-                            
-                            HStack(spacing: 20) {
-                                if viewModel.isProcessing {
-                                    ProgressView()
-                                }
-                                
-                                WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: readFromClipboard)
-                            }
-                            
                             pageFeeds
                             
                             rsshubFeeds
@@ -55,6 +42,11 @@ struct ContentView: View {
                     }.padding(16)
                 }.navigationTitle("RSSBud")
                 .toolbar(content: toolbarContent)
+                .environment(\.isEnabled, !viewModel.isFocusedOnBottomBar)
+                .overlay(Color.black.opacity(viewModel.isFocusedOnBottomBar ? 0.5: 0.0))
+                .safeAreaInset(edge: .bottom) {
+                    BottomBar(parentViewModel: viewModel, viewModel: viewModel.bottomBarViewModel)
+                }
             }
             
             if horizontalSizeClass == .regular {
@@ -168,7 +160,6 @@ extension ContentView {
         @RSSHub.BaseURL var baseURL
         
         @Published var originalURL: URLComponents? = nil
-        @Published var linkPresentationMetadata: LPLinkMetadata? = nil
         @Published var isProcessing: Bool = false
         
 //        @Published var isPageFeedSectionExpanded: Bool = false
@@ -179,6 +170,10 @@ extension ContentView {
         @Published var queryItems: [URLQueryItem] = []
         
         @Published var alert: Alert? = nil
+        
+        @Published var isFocusedOnBottomBar: Bool = false
+        
+        let bottomBarViewModel = BottomBar.ViewModel()
         
         var cancelBag = Set<AnyCancellable>()
         
@@ -191,30 +186,40 @@ extension ContentView {
             self.$originalURL
                 .map { $0?.url }
                 .removeDuplicates()
-                .map { (url: URL?) -> AnyPublisher<LPLinkMetadata?, Never> in
+                .map { (url: URL?) -> AnyPublisher<(metadata: LPLinkMetadata, icon: UIImage?, image: UIImage?)?, Never> in
                     if let url = url {
                         let placeholderMetadata = LPLinkMetadata()
                         placeholderMetadata.originalURL = url
                         placeholderMetadata.url = url
                         
-                        return Future<LPLinkMetadata?, Never> { promise in
+                        return AsyncFuture<(metadata: LPLinkMetadata, icon: UIImage?, image: UIImage?)?> {
                             let provider = LPMetadataProvider()
-                            provider.startFetchingMetadata(for: url) { (result, error) in
-                                if let metadata = result {
-                                    promise(.success(metadata))
-                                } else if let _ = error {
-                                    promise(.success(placeholderMetadata))
-                                }
+                            if let metadata = await { @MainActor in try? await provider.startFetchingMetadata(for: url) }() {
+                                async let icon = metadata.icon?.scaledDownIfNeeded(toFit: CGSize(width: 36, height: 36))
+                                async let image = metadata.image
+                                return await (metadata, icon, image)
+                            } else {
+                                return nil
                             }
-                        }.prepend(placeholderMetadata)
+                        }.prepend((placeholderMetadata, nil, nil))
                         .eraseToAnyPublisher()
                     } else {
                         return Just(nil).eraseToAnyPublisher()
                     }
                 }.switchToLatest()
+                .compactMap { $0 }
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] metadata in
-                    withAnimation { self?.linkPresentationMetadata = metadata }
+                .sink { [bottomBarViewModel] tuple in
+                    let (metadata, icon, image) = tuple
+                    withAnimation(BottomBar.transitionAnimation) {
+                        bottomBarViewModel.linkURL = metadata.url?.components
+                        bottomBarViewModel.linkTitle = metadata.title
+                        bottomBarViewModel.linkIcon = icon.map(Image.init(uiImage:))
+                        bottomBarViewModel.linkImage = image.map(Image.init(uiImage:))
+                        if let icon = icon {
+                            bottomBarViewModel.linkIconSize = (icon.size.width < 20) && (icon.size.height < 20) ? .small : .large
+                        }
+                    }
                 }.store(in: &self.cancelBag)
             
             Core.onFinishReloadingRules
@@ -233,9 +238,10 @@ extension ContentView {
                     queryItems = items ?? []
                 }
             } else {
-                withAnimation {
+                withAnimation(BottomBar.transitionAnimation) {
                     self.originalURL = url
                     self.isProcessing = true
+                    self.bottomBarViewModel.state = .focusedOnLink
                 }
                 
                 DispatchQueue.global(qos: .userInitiated).async {

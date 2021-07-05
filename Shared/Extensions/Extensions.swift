@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 import CryptoKit
 import LinkPresentation
+import UniformTypeIdentifiers
 
 extension URLComponents {
     func expanding() -> Publishers.ReplaceError<Publishers.Map<URLSession.DataTaskPublisher, URLComponents>> {
@@ -265,23 +266,58 @@ extension NSItemProvider {
             }
         }
     }
+    
+    func loadDataRepresentation(forTypeIdentifier typeIdentifier: String) async throws -> Data {
+        return try await withCheckedThrowingContinuation { continuation in
+            _ = self.loadDataRepresentation(forTypeIdentifier: typeIdentifier) { data, error in
+                if let data = data {
+                    continuation.resume(returning: data)
+                } else if let error = error {
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+}
+
+extension UIImage {
+    func scaled(by ratio: CGFloat) -> UIImage {
+        let newSize = CGSize(width: self.size.width * ratio, height: self.size.height * ratio)
+        let renderFormat = UIGraphicsImageRendererFormat.default()
+        renderFormat.opaque = false
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: newSize.width, height: newSize.height), format: renderFormat)
+        return renderer.image { context in
+            self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        }
+    }
+    
+    func scaledDownIfNeeded(toFit size: CGSize) -> UIImage {
+        let horizontalRatio = min(size.width / self.size.width, 1.0)
+        let verticalRatio = min(size.height / self.size.height, 1.0)
+        let ratio = min(horizontalRatio, verticalRatio)
+        return self.scaled(by: ratio)
+    }
 }
 
 extension LPLinkMetadata {
-    var image: Image? {
+    var image: UIImage? {
         get async {
             if let provider = self.imageProvider {
-                return try? await Image(uiImage: provider.loadObject(ofClass: UIImage.self))
+                return try? await provider.loadObject(ofClass: UIImage.self)
             } else {
                 return nil
             }
         }
     }
     
-    var icon: Image? {
+    var icon: UIImage? {
         get async {
             if let provider = self.iconProvider {
-                return try? await Image(uiImage: provider.loadObject(ofClass: UIImage.self))
+                var data = try? await provider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier)
+                if data == nil { data = try? await provider.loadDataRepresentation(forTypeIdentifier: "dyn.agq80w5pbq7ww88brrfv085u") }
+                let scale = await UIScreen.main.scale
+                return data
+                    .flatMap { UIImage(data: $0, scale: scale) }
             } else {
                 return nil
             }

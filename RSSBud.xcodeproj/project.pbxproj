@@ -52,6 +52,9 @@
 		1CA854CE25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */; };
 		1CA854CF25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */; };
 		1CCFA7AD268DE6730011190F /* JavaScriptPreprocessingFile.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CCFA7AC268DE6730011190F /* JavaScriptPreprocessingFile.js */; };
+		1CCCCC08267B90520077E6EC /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCCC07267B90520077E6EC /* BottomBar.swift */; };
+		1CCCCC09267B90520077E6EC /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCCC07267B90520077E6EC /* BottomBar.swift */; };
+		1CCCCC0A267B90520077E6EC /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCCC07267B90520077E6EC /* BottomBar.swift */; };
 		1CDB36C82544566D002E84D8 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB36C72544566D002E84D8 /* OnboardingView.swift */; };
 		1CDB36C92544566D002E84D8 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB36C72544566D002E84D8 /* OnboardingView.swift */; };
 		1CDB36CA2544566D002E84D8 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB36C72544566D002E84D8 /* OnboardingView.swift */; };
@@ -163,6 +166,7 @@
 		1CA2079A24F3DEAC00C6EDD5 /* RSSHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSHub.swift; sourceTree = "<group>"; };
 		1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedTextField.swift; sourceTree = "<group>"; };
 		1CCFA7AC268DE6730011190F /* JavaScriptPreprocessingFile.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = JavaScriptPreprocessingFile.js; sourceTree = "<group>"; };
+		1CCCCC07267B90520077E6EC /* BottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
 		1CDB36C72544566D002E84D8 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1CE03F31257B7EC500F38061 /* RuleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleManager.swift; sourceTree = "<group>"; };
 		1CEB9FE3260E525600694262 /* core.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = core.min.js; sourceTree = "<group>"; };
@@ -325,6 +329,7 @@
 				EEB7577424B2B6E700F26CF7 /* Assets.xcassets */,
 				EE3EEAB524E152D20006ED53 /* SettingsView.swift */,
 				1C3221A225192F6A00CD9F56 /* Localizable.strings */,
+				1CCCCC07267B90520077E6EC /* BottomBar.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -672,6 +677,7 @@
 				EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */,
 				1C58359E24EA8D9100FB8523 /* Integration.swift in Sources */,
 				EEC4A51B24E516D8005041CA /* RSSBud.swift in Sources */,
+				1CCCCC08267B90520077E6EC /* BottomBar.swift in Sources */,
 				EEB7578524B2B6E700F26CF7 /* App.swift in Sources */,
 				EE3EEAB624E152D20006ED53 /* SettingsView.swift in Sources */,
 				1CA854CD25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */,
@@ -699,6 +705,7 @@
 				EEB7578824B2B6E700F26CF7 /* ContentView.swift in Sources */,
 				1C58359F24EA8D9100FB8523 /* Integration.swift in Sources */,
 				EEC4A51C24E516D8005041CA /* RSSBud.swift in Sources */,
+				1CCCCC09267B90520077E6EC /* BottomBar.swift in Sources */,
 				EEB7578624B2B6E700F26CF7 /* App.swift in Sources */,
 				EE3EEAB724E152D20006ED53 /* SettingsView.swift in Sources */,
 				1CA854CE25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */,
@@ -726,6 +733,7 @@
 				EEC4A51424E3E29A005041CA /* Extensions.swift in Sources */,
 				1C5835A124EA8D9100FB8523 /* Integration.swift in Sources */,
 				EEC4A51E24E516D8005041CA /* RSSBud.swift in Sources */,
+				1CCCCC0A267B90520077E6EC /* BottomBar.swift in Sources */,
 				EEC4A4FF24E3D032005041CA /* ActionViewController.swift in Sources */,
 				EEC4A51624E3E29F005041CA /* SettingsView.swift in Sources */,
 				1CA854CF25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */,
