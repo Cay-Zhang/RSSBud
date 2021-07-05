@@ -238,7 +238,7 @@ extension ContentView {
                     queryItems = items ?? []
                 }
             } else {
-                withAnimation {
+                withAnimation(BottomBar.transitionAnimation) {
                     self.originalURL = url
                     self.isProcessing = true
                     self.bottomBarViewModel.state = .focusedOnLink
