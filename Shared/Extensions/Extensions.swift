@@ -324,3 +324,11 @@ extension LPLinkMetadata {
         }
     }
 }
+
+struct BarProgressViewStyle: ProgressViewStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        let progress = configuration.fractionCompleted ?? 0.5
+        return Color.accentColor
+            .scaleEffect(x: progress, y: 1, anchor: .leading)
+    }
+}
