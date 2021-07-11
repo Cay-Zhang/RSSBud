@@ -38,7 +38,15 @@ struct BottomBar: View {
     
     @ViewBuilder var mainCell: some View {
         if let url = parentViewModel.originalURL {
-            Cell(cornerRadius: 16) {
+            ZStack {
+                viewModel.linkImage?
+                    .resizable()
+                    .aspectRatio(1, contentMode: .fill)
+                    .opacity((viewModel.progress == 1.0) ? 0.5 : 0.0)
+                    .allowsHitTesting(false)
+                
+                Rectangle().fill(.thinMaterial).transition(.identity)
+                
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
                         linkTitleView
@@ -55,21 +63,15 @@ struct BottomBar: View {
                             .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
                             .transition(.offset(x: 25).combined(with: .opacity))
                     }
-                }.padding(.horizontal, 16)
-            }
-                .background(
-                    viewModel.linkImage?
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fill)
-                        .opacity(0.5)
-                        .allowsHitTesting(false)
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .onTapGesture {
-                    withAnimation(BottomBar.transitionAnimation) {
-                        state = (state == .expanded) ? .focusedOnLink : .expanded
-                    }
+                }.padding(16)
+                .font(Font.body.weight(.semibold))
+                .layoutPriority(1)
+            }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .onTapGesture {
+                withAnimation(BottomBar.transitionAnimation) {
+                    state = (state == .expanded) ? .focusedOnLink : .expanded
                 }
+            }
         }
     }
     
