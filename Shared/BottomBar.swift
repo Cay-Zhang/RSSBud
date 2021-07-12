@@ -34,6 +34,7 @@ struct BottomBar: View {
             .frame(maxWidth: .infinity)
             .padding(.bottom, 8)
         }.padding(.horizontal, 16)
+        .animation(Self.transitionAnimation, value: state)
     }
     
     @ViewBuilder var mainCell: some View {
@@ -46,6 +47,10 @@ struct BottomBar: View {
                     .allowsHitTesting(false)
                 
                 Rectangle().fill(.thinMaterial).transition(.identity)
+                
+                AutoAdvancingProgressView(viewModel: viewModel.progressViewModel)
+                    .progressViewStyle(BarProgressViewStyle())
+                    .opacity((viewModel.progress != 1.0) ? 0.1 : 0.0)
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
@@ -110,6 +115,17 @@ extension BottomBar {
         @Published var linkIcon: Image?
         @Published var linkImage: Image?
         @Published var linkIconSize: LinkIconSize = .large
+        
+        @Published var progress: Double = 1.0
+        let progressViewModel = AutoAdvancingProgressView.ViewModel()
+        
+        var cancelBag = Set<AnyCancellable>()
+        
+        init() {
+            $progress
+                .assign(to: \.progress, on: progressViewModel)
+                .store(in: &cancelBag)
+        }
     }
 }
 
