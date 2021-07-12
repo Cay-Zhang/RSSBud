@@ -238,10 +238,11 @@ extension ContentView {
                     queryItems = items ?? []
                 }
             } else {
-                withAnimation(BottomBar.transitionAnimation) {
+                withAnimation {
                     self.originalURL = url
                     self.isProcessing = true
                     self.bottomBarViewModel.state = .focusedOnLink
+                    self.bottomBarViewModel.progress = 0.0
                 }
                 
                 DispatchQueue.global(qos: .userInitiated).async {
@@ -259,11 +260,13 @@ extension ContentView {
                             case .finished:
                                 withAnimation {
                                     self.isProcessing = false
+                                    self.bottomBarViewModel.progress = 1.0
                                 }
                             case .failure(let error):
                                 print(error)
                                 withAnimation {
                                     self.isProcessing = false
+                                    self.bottomBarViewModel.progress = 0.0
                                     self.rssFeeds = nil
                                     self.rsshubFeeds = nil
                                     self.alert = Alert(title: Text("An Error Occurred"), message: Text(verbatim: error.localizedDescription))
@@ -271,6 +274,7 @@ extension ContentView {
                             }
                         } receiveValue: { [unowned self] result in
                             withAnimation {
+                                self.bottomBarViewModel.progress += 0.3
                                 self.rssFeeds = result.rssFeeds
                                 self.rsshubFeeds = result.rsshubFeeds
                             }

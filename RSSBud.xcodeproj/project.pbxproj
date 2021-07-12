@@ -55,6 +55,9 @@
 		1CCCCC08267B90520077E6EC /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCCC07267B90520077E6EC /* BottomBar.swift */; };
 		1CCCCC09267B90520077E6EC /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCCC07267B90520077E6EC /* BottomBar.swift */; };
 		1CCCCC0A267B90520077E6EC /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCCC07267B90520077E6EC /* BottomBar.swift */; };
+		1CDA93FE269B0A3D001A4F4C /* AutoAdvancingProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDA93FD269B0A3D001A4F4C /* AutoAdvancingProgressView.swift */; };
+		1CDA93FF269B0A3D001A4F4C /* AutoAdvancingProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDA93FD269B0A3D001A4F4C /* AutoAdvancingProgressView.swift */; };
+		1CDA9400269B0A3D001A4F4C /* AutoAdvancingProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDA93FD269B0A3D001A4F4C /* AutoAdvancingProgressView.swift */; };
 		1CDB36C82544566D002E84D8 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB36C72544566D002E84D8 /* OnboardingView.swift */; };
 		1CDB36C92544566D002E84D8 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB36C72544566D002E84D8 /* OnboardingView.swift */; };
 		1CDB36CA2544566D002E84D8 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB36C72544566D002E84D8 /* OnboardingView.swift */; };
@@ -167,6 +170,7 @@
 		1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedTextField.swift; sourceTree = "<group>"; };
 		1CCFA7AC268DE6730011190F /* JavaScriptPreprocessingFile.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = JavaScriptPreprocessingFile.js; sourceTree = "<group>"; };
 		1CCCCC07267B90520077E6EC /* BottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
+		1CDA93FD269B0A3D001A4F4C /* AutoAdvancingProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoAdvancingProgressView.swift; sourceTree = "<group>"; };
 		1CDB36C72544566D002E84D8 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1CE03F31257B7EC500F38061 /* RuleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleManager.swift; sourceTree = "<group>"; };
 		1CEB9FE3260E525600694262 /* core.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = core.min.js; sourceTree = "<group>"; };
@@ -270,6 +274,7 @@
 				1C99BE3D259B26AA0073609C /* CustomOpenURL.swift */,
 				1C614E992605EEA800C634C1 /* ExpandableSection.swift */,
 				1C007AFA2675DC3B008B7B4C /* Combine+Async.swift */,
+				1CDA93FD269B0A3D001A4F4C /* AutoAdvancingProgressView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -681,6 +686,7 @@
 				EEB7578524B2B6E700F26CF7 /* App.swift in Sources */,
 				EE3EEAB624E152D20006ED53 /* SettingsView.swift in Sources */,
 				1CA854CD25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */,
+				1CDA93FE269B0A3D001A4F4C /* AutoAdvancingProgressView.swift in Sources */,
 				1C007AFB2675DC3B008B7B4C /* Combine+Async.swift in Sources */,
 				EEB7579924B3084A00F26CF7 /* LinkPresentation.swift in Sources */,
 				1C2A9AE5257714D4008FD5F7 /* PersistentFile.swift in Sources */,
@@ -709,6 +715,7 @@
 				EEB7578624B2B6E700F26CF7 /* App.swift in Sources */,
 				EE3EEAB724E152D20006ED53 /* SettingsView.swift in Sources */,
 				1CA854CE25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */,
+				1CDA93FF269B0A3D001A4F4C /* AutoAdvancingProgressView.swift in Sources */,
 				1C007AFC2675DC3B008B7B4C /* Combine+Async.swift in Sources */,
 				EEB7579A24B3084A00F26CF7 /* LinkPresentation.swift in Sources */,
 				1C2A9AE6257714D4008FD5F7 /* PersistentFile.swift in Sources */,
@@ -737,6 +744,7 @@
 				EEC4A4FF24E3D032005041CA /* ActionViewController.swift in Sources */,
 				EEC4A51624E3E29F005041CA /* SettingsView.swift in Sources */,
 				1CA854CF25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */,
+				1CDA9400269B0A3D001A4F4C /* AutoAdvancingProgressView.swift in Sources */,
 				1C007AFD2675DC3B008B7B4C /* Combine+Async.swift in Sources */,
 				EEC4A51324E3E287005041CA /* ContentView.swift in Sources */,
 				1C2A9AE8257714D4008FD5F7 /* PersistentFile.swift in Sources */,
