@@ -159,6 +159,11 @@ extension String {
         let digest = Insecure.MD5.hash(data: self.data(using: .utf8) ?? Data())
         return digest.lazy.map { String(format: "%02hhx", $0) }.joined()
     }
+    
+    public func detect(types: NSTextCheckingResult.CheckingType) -> [NSTextCheckingResult] {
+        let detector = try! NSDataDetector(types: types.rawValue)
+        return detector.matches(in: self, range: NSRange(self.startIndex..., in: self))
+    }
 }
 
 struct XCallbackContext: Equatable, ExpressibleByNilLiteral {
