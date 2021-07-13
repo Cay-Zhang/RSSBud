@@ -144,17 +144,6 @@ struct ContentView: View {
     }
 }
 
-// MARK: - Methods
-extension ContentView {
-    func readFromClipboard() {
-        if let url = UIPasteboard.general.url?.components {
-            viewModel.process(url: url)
-        } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
-            viewModel.process(url: url)
-        }
-    }
-}
-
 extension ContentView {
     class ViewModel: ObservableObject {
         @RSSHub.BaseURL var baseURL
@@ -221,6 +210,14 @@ extension ContentView {
                         }
                     }
                 }.store(in: &self.cancelBag)
+            
+            bottomBarViewModel.analyzeClipboardContent = { [unowned self] in
+                if let url = UIPasteboard.general.url?.components {
+                    process(url: url)
+                } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
+                    process(url: url)
+                }
+            }
             
             Core.onFinishReloadingRules
                 .sink { [weak self] in

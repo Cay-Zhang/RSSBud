@@ -23,7 +23,7 @@ struct BottomBar: View {
                             ProgressView()
                         }
                         
-                        WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: readFromClipboard)
+                        WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: viewModel.analyzeClipboardContent)
                     }.transition(.offset(y: -50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
                 }
                 if state != .focusedOnControls {
@@ -119,6 +119,8 @@ extension BottomBar {
         @Published var progress: Double = 1.0
         let progressViewModel = AutoAdvancingProgressView.ViewModel()
         
+        var analyzeClipboardContent: () -> Void = { }
+        
         var cancelBag = Set<AnyCancellable>()
         
         init() {
@@ -163,19 +165,6 @@ extension BottomBar {
         var afterHost = AttributedString(afterHostString)
         afterHost.foregroundColor = Color.secondary
         return host + afterHost
-    }
-}
-
-extension BottomBar {
-    func readFromClipboard() {
-        if let url = UIPasteboard.general.url?.components {
-            parentViewModel.process(url: url)
-        } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
-            parentViewModel.process(url: url)
-        }
-        withAnimation(BottomBar.transitionAnimation) {
-            state = .focusedOnLink
-        }
     }
 }
 
