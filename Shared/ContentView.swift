@@ -45,7 +45,7 @@ struct ContentView: View {
                 .environment(\.isEnabled, !viewModel.isFocusedOnBottomBar)
                 .overlay(Color.black.opacity(viewModel.isFocusedOnBottomBar ? 0.5: 0.0))
                 .safeAreaInset(edge: .bottom) {
-                    BottomBar(parentViewModel: viewModel, viewModel: viewModel.bottomBarViewModel)
+                    BottomBar(viewModel: viewModel.bottomBarViewModel)
                 }
             }
             

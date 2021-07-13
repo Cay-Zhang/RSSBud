@@ -10,8 +10,6 @@ import Combine
 import LinkPresentation
 
 struct BottomBar: View {
-    
-    let parentViewModel: ContentView.ViewModel
     @ObservedObject var viewModel: Self.ViewModel
     
     var body: some View {
@@ -19,10 +17,6 @@ struct BottomBar: View {
             VStack(spacing: 8) {
                 if state != .focusedOnLink {
                     HStack(spacing: 20) {
-                        if parentViewModel.isProcessing {
-                            ProgressView()
-                        }
-                        
                         WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: viewModel.analyzeClipboardContent)
                     }.transition(.offset(y: -50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
                 }
@@ -38,7 +32,7 @@ struct BottomBar: View {
     }
     
     @ViewBuilder var mainCell: some View {
-        if let url = parentViewModel.originalURL {
+        if let url = viewModel.linkURL {
             ZStack {
                 viewModel.linkImage?
                     .resizable()
@@ -180,7 +174,7 @@ struct BottomBar_Previews: PreviewProvider {
         let model = ContentView.ViewModel()
         model.originalURL = url
         model.bottomBarViewModel.state = .focusedOnLink
-        return BottomBar(parentViewModel: model, viewModel: model.bottomBarViewModel)
+        return BottomBar(viewModel: model.bottomBarViewModel)
     }
     
     static var previews: some View {
