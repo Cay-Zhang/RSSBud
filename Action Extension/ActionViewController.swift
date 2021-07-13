@@ -82,7 +82,7 @@ class ActionViewController: UIViewController {
                     } else if let url = try? await provider.loadObject(ofClass: URL.self).components {
                         return (url, nil)
                     } else if let text = try? await provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) as? String,
-                              let url = URLComponents(autoPercentEncoding: text) {
+                              let url = text.detect(types: .link).compactMap(\.url?.components).first {
                         return (url, nil)
                     } else {
                         return nil

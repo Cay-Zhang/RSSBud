@@ -214,7 +214,7 @@ extension ContentView {
             bottomBarViewModel.analyzeClipboardContent = { [unowned self] in
                 if let url = UIPasteboard.general.url?.components {
                     process(url: url)
-                } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
+                } else if let url = UIPasteboard.general.string?.detect(types: .link).compactMap(\.url?.components).first {
                     process(url: url)
                 }
             }
