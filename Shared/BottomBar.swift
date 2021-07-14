@@ -170,8 +170,11 @@ extension BottomBar {
 }
 
 struct BottomBar_Previews: PreviewProvider {
+    static var contentViewModels = [ContentView.ViewModel]()
+    
     static func bottomBar(for url: URLComponents) -> BottomBar {
         let model = ContentView.ViewModel()
+        contentViewModels.append(model)
         model.originalURL = url
         model.bottomBarViewModel.state = .focusedOnLink
         return BottomBar(viewModel: model.bottomBarViewModel)
