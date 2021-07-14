@@ -7,6 +7,9 @@
 */
 
 "Read From Clipboard" = "Read from Clipboard";
+"Copy Link" = "Copy Link";
+"Dismiss Current Analysis" = "Dismiss";
+
 "Content Section RSS Feeds" = "RSS Feeds";
 "Content Section RSSHub Feeds" = "RSSHub Feeds";
 "Content Section RSSHub Parameters" = "RSSHub Parameters";

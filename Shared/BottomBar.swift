@@ -65,12 +65,26 @@ struct BottomBar: View {
                 }.padding(16)
                 .font(Font.body.weight(.semibold))
                 .layoutPriority(1)
+                .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .contextMenu(menuItems: linkViewContextMenuItems)
             }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .onTapGesture {
                 withAnimation(BottomBar.transitionAnimation) {
                     state = (state == .expanded) ? .focusedOnLink : .expanded
                 }
             }
+        }
+    }
+    
+    @ViewBuilder func linkViewContextMenuItems() -> some View {
+        Button {
+            viewModel.linkURL?.url.map { UIPasteboard.general.url = $0 }
+        } label: {
+            Label("Copy Link", systemImage: "doc.on.doc.fill")
+        }
+        
+        Button(action: viewModel.dismiss) {
+            Label("Dismiss Current Analysis", systemImage: "clear.fill")
         }
     }
     
@@ -114,6 +128,7 @@ extension BottomBar {
         let progressViewModel = AutoAdvancingProgressView.ViewModel()
         
         var analyzeClipboardContent: () -> Void = { }
+        var dismiss: () -> Void = { }
         
         var cancelBag = Set<AnyCancellable>()
         

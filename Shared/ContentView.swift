@@ -219,6 +219,8 @@ extension ContentView {
                 }
             }
             
+            bottomBarViewModel.dismiss = { [unowned self] in dismiss() }
+            
             Core.onFinishReloadingRules
                 .sink { [weak self] in
                     self?.originalURL.map { self?.process(url: $0) }
@@ -277,6 +279,19 @@ extension ContentView {
                             }
                         }.store(in: &self.cancelBag)
                 }
+            }
+        }
+        
+        func dismiss() {
+            withAnimation {
+                originalURL = nil
+                rssFeeds = nil
+                rsshubFeeds = nil
+                bottomBarViewModel.state = .focusedOnControls
+                bottomBarViewModel.linkURL = nil
+                bottomBarViewModel.linkIcon = nil
+                bottomBarViewModel.linkImage = nil
+                bottomBarViewModel.linkTitle = nil
             }
         }
         

@@ -7,6 +7,9 @@
 */
 
 "Read From Clipboard" = "从剪贴板读取";
+"Copy Link" = "复制链接";
+"Dismiss Current Analysis" = "取消本次分析";
+
 "Content Section RSS Feeds" = "RSS 源";
 "Content Section RSSHub Feeds" = "RSSHub 源";
 "Content Section RSSHub Parameters" = "RSSHub 参数";
