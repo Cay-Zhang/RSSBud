@@ -64,6 +64,7 @@ struct RSSFeedView: View {
         }.padding(.top, 15)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
+        .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .tertiarySystemBackground)))
         .background(Color(UIColor.secondarySystemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
@@ -157,6 +158,7 @@ struct RSSHubFeedView: View {
         }.padding(.top, 15)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
+        .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .tertiarySystemBackground)))
         .background(Color(UIColor.secondarySystemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }

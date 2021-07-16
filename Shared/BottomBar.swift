@@ -19,6 +19,7 @@ struct BottomBar: View {
                     HStack(spacing: 20) {
                         Button("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", action: viewModel.analyzeClipboardContent)
                     }.transition(.offset(y: -50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
+                    .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .secondarySystemBackground)))
                 }
                 if state != .focusedOnControls {
                     mainCell

@@ -50,6 +50,7 @@ struct OnboardingView: View {
         }.clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         .environment(\.namespace, namespace)
         .transition(OnboardingView.transition)
+        .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .tertiarySystemBackground)))
     }
 }
 
