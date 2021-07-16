@@ -132,9 +132,31 @@ extension EnvironmentValues {
     }
 }
 
-extension Button {
-    init(_ titleKey: LocalizedStringKey, systemImage iconName: String, action: @escaping () -> Void) where Label == SwiftUI.Label<Text, Image> {
-        self.init(action: action, label: { Label(titleKey, systemImage: iconName) })
+extension Button where Label == SwiftUI.Label<Text, Image> {
+    init(_ titleKey: LocalizedStringKey, systemImage iconName: String, action: @escaping () -> Void) {
+        self.init(action: action) { Label(titleKey, systemImage: iconName) }
+    }
+    
+    @_disfavoredOverload
+    init<S>(_ title: S, systemImage iconName: String, action: @escaping () -> Void) where S : StringProtocol {
+        self.init(action: action) { Label(title, systemImage: iconName) }
+    }
+    
+    init(_ titleKey: LocalizedStringKey, systemImage iconName: String, withAnimation animation: Animation?, action: @escaping () -> Void) {
+        self.init {
+            withAnimation(animation, action)
+        } label: {
+            Label(titleKey, systemImage: iconName)
+        }
+    }
+    
+    @_disfavoredOverload
+    init<S>(_ title: S, systemImage iconName: String, withAnimation animation: Animation?, action: @escaping () -> Void) where S : StringProtocol {
+        self.init {
+            withAnimation(animation, action)
+        } label: {
+            Label(title, systemImage: iconName)
+        }
     }
 }
 

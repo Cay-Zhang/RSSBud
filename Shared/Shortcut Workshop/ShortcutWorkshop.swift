@@ -84,9 +84,9 @@ struct ShortcutWorkshopView: View {
                             openURL(shortcut.url)
                         } label: {
                             ShortcutView(shortcut: shortcut)
-                        }.buttonStyle(SquashableButtonStyle())
+                        }
                     }
-                }
+                }.buttonStyle(CayButtonStyle(containerModifier: EmptyModifier()).labelOpacityWhenPressed(0.75))
             }.padding(.horizontal, 16)
         }.navigationTitle("Shortcut Workshop")
         .background(

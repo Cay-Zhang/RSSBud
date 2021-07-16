@@ -16,11 +16,11 @@ struct QueryEditor: View {
     var body: some View {
         LazyVStack(spacing: 16) {
             HStack(spacing: 16) {
-                WideButton("RSSHub Parameters Help", systemImage: "text.book.closed.fill", backgroundColor: .secondarySystemBackground, withAnimation: .default) {
+                Button("RSSHub Parameters Help", systemImage: "text.book.closed.fill", withAnimation: .default) {
                     openURL(URLComponents(string: "https://docs.rsshub.app/parameter.html")!)
                 }
                 addParameterMenu
-            }
+            }.buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .secondarySystemBackground)))
             
             ForEach(queryItems, id: \.name) { item in
                 GroupBox(label:
@@ -68,8 +68,7 @@ struct QueryEditor: View {
             }
         } label: {
             Label("RSSHub Parameters Add", systemImage: "plus")
-                .padding(.horizontal)
-                .roundedRectangleBackground(color: .secondarySystemBackground)
+                .modifier(WideButtonContainerModifier(backgroundColor: Color(uiColor: .secondarySystemBackground)))
         }
     }
     
