@@ -1,5 +1,5 @@
 //
-//  WideButton.swift
+//  ButtonStyling.swift
 //  RSSBud
 //
 //  Created by Cay Zhang on 2020/8/10.
