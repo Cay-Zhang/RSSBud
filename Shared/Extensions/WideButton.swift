@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-struct SquashableButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .opacity(configuration.isPressed ? 0.75 : 1)
-            .scaleEffect(configuration.isPressed ? 0.97 : 1)
-    }
-}
-
 struct CayButtonStyle<ContainerModifier: ViewModifier>: PrimitiveButtonStyle {
     var containerModifier: ContainerModifier
     var labelOpacityWhenPressed: Double = 0.5

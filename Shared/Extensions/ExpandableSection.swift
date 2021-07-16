@@ -67,7 +67,7 @@ struct ExpandableSection<Content: View, Label: View>: View {
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 .contentShape(Rectangle())
-            }.buttonStyle(SquashableButtonStyle())
+            }.buttonStyle(CayButtonStyle(containerModifier: EmptyModifier()).labelOpacityWhenPressed(0.75))
             .animatableFont(
                 size: isExpanded ? 24 : 18,
                 weight: .semibold,
