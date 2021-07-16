@@ -64,17 +64,6 @@ struct WideButtonContainerModifier: ViewModifier {
     }
 }
 
-extension View {
-    func roundedRectangleBackground(color uiColor: UIColor = .tertiarySystemBackground) -> some View {
-        self.font(Font.body.weight(.semibold))
-            .foregroundColor(.accentColor)
-            .padding(.vertical, 10)
-            .frame(maxWidth: .infinity)
-            .background(Color(uiColor))
-            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-    }
-}
-
 struct ButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
         EmptyView()

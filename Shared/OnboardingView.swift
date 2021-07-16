@@ -248,10 +248,13 @@ extension OnboardingView {
                             text: rssHubBaseURL.$string,
                             validation: rssHubBaseURL.validate(string:)
                         ).foregroundColor(.primary)
+                        .font(Font.body.weight(.semibold))
                         .keyboardType(.URL)
                         .disableAutocorrection(true)
-                        .padding(.horizontal, 10)
-                        .roundedRectangleBackground()
+                        .padding(10)
+                        .frame(maxWidth: .infinity)
+                        .background(Color(uiColor: .tertiarySystemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                         
                         Button("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                             currentPage = .support
