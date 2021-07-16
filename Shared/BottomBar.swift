@@ -17,7 +17,7 @@ struct BottomBar: View {
             VStack(spacing: 8) {
                 if state != .focusedOnLink {
                     HStack(spacing: 20) {
-                        WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: viewModel.analyzeClipboardContent)
+                        Button("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", action: viewModel.analyzeClipboardContent)
                     }.transition(.offset(y: -50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
                 }
                 if state != .focusedOnControls {

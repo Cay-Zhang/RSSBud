@@ -49,11 +49,11 @@ struct RSSFeedView: View {
 //                .padding(.horizontal, 15)
             
             if xCallbackContext.wrappedValue.success != nil {
-                WideButton(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
+                Button(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
                     .padding(.horizontal, 8)
             } else {
                 HStack(spacing: 8) {
-                    WideButton("Copy", systemImage: "doc.on.doc.fill") {
+                    Button("Copy", systemImage: "doc.on.doc.fill") {
                         feed.url.url.map { UIPasteboard.general.url = $0 }
                     }
                     
@@ -70,7 +70,7 @@ struct RSSFeedView: View {
     
     @ViewBuilder var integrationButton: some View {
         if integrations.count == 1, let url = integrationURL(for: integrations[0]) {
-            WideButton(Label(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill")) {
+            Button(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill") {
                 openURL(url)
             }
         } else {
@@ -142,11 +142,11 @@ struct RSSHubFeedView: View {
 //                .padding(.horizontal, 15)
             
             if xCallbackContext.wrappedValue.success != nil {
-                WideButton(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
+                Button(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
                     .padding(.horizontal, 8)
             } else {
                 HStack(spacing: 8) {
-                    WideButton("Copy", systemImage: "doc.on.doc.fill") {
+                    Button("Copy", systemImage: "doc.on.doc.fill") {
                         rsshubURL().url.map { UIPasteboard.general.url = $0 }
                     }
                     
@@ -163,7 +163,7 @@ struct RSSHubFeedView: View {
     
     @ViewBuilder var integrationButton: some View {
         if integrations.count == 1, let url = integrationURL(for: integrations[0]) {
-            WideButton(Label(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill")) {
+            Button(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill") {
                 openURL(url)
             }
         } else {
