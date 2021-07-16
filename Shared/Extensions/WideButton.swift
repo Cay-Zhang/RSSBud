@@ -56,7 +56,7 @@ struct WideButtonContainerModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.body.weight(.semibold))
-            .foregroundStyle(.tint)
+            .foregroundColor(.accentColor)
             .padding(.vertical, 10)
             .frame(maxWidth: .infinity)
             .background(backgroundColor)
