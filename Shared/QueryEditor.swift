@@ -68,8 +68,7 @@ struct QueryEditor: View {
             }
         } label: {
             Label("RSSHub Parameters Add", systemImage: "plus")
-                .padding(.horizontal)
-                .roundedRectangleBackground(color: .secondarySystemBackground)
+                .modifier(WideButtonContainerModifier(backgroundColor: Color(uiColor: .secondarySystemBackground)))
         }
     }
     

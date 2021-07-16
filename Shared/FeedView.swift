@@ -85,7 +85,7 @@ struct RSSFeedView: View {
                 }
             } label: {
                 Label("Subscribe", systemImage: "arrowshape.turn.up.right.fill")
-                    .roundedRectangleBackground()
+                    .modifier(WideButtonContainerModifier(backgroundColor: Color(uiColor: .tertiarySystemBackground)))
             }
         }
     }
@@ -179,7 +179,7 @@ struct RSSHubFeedView: View {
                 }
             } label: {
                 Label("Subscribe", systemImage: "arrowshape.turn.up.right.fill")
-                    .roundedRectangleBackground()
+                    .modifier(WideButtonContainerModifier(backgroundColor: Color(uiColor: .tertiarySystemBackground)))
             }
         }
     }
