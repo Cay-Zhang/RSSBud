@@ -65,6 +65,8 @@ struct WideButtonContainerModifier: ViewModifier {
 
 struct ButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
-        EmptyView()
+        Button("Test") { }
+            .padding(20)
+            .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .secondarySystemBackground)))
     }
 }
