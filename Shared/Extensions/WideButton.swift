@@ -17,6 +17,7 @@ struct SquashableButtonStyle: ButtonStyle {
 
 struct CayButtonStyle<ContainerModifier: ViewModifier>: PrimitiveButtonStyle {
     var containerModifier: ContainerModifier
+    var labelOpacityWhenPressed: Double = 0.5
     
     @State private var isPressed: Bool = false
     
@@ -31,7 +32,7 @@ struct CayButtonStyle<ContainerModifier: ViewModifier>: PrimitiveButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .compositingGroup()
-            .opacity(isPressed ? 0.5 : 1)
+            .opacity(isPressed ? labelOpacityWhenPressed : 1)
             .modifier(containerModifier)
             ._onButtonGesture { newValue in
                 withAnimation(.easeOut(duration: newValue ? 0.1 : 0.4)) {
@@ -43,6 +44,12 @@ struct CayButtonStyle<ContainerModifier: ViewModifier>: PrimitiveButtonStyle {
             } perform: {
                 configuration.trigger()
             }.scaleEffect(isPressed ? 0.97 : 1)
+    }
+    
+    func labelOpacityWhenPressed(_ newValue: Double) -> Self {
+        var copy = self
+        copy.labelOpacityWhenPressed = newValue
+        return copy
     }
 }
 
