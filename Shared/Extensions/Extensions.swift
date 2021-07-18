@@ -26,8 +26,14 @@ extension URLComponents {
 extension URLComponents {
     
     init?(autoPercentEncoding string: String) {
-        guard let encodedString = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed.union([" "])) else { return nil }
-        self.init(string: encodedString)
+        if let url = URLComponents(string: string) {
+            self = url
+        } else if let encodedString = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed.union([" "])),
+                  let url = URLComponents(string: encodedString) {
+            self = url
+        } else {
+            return nil
+        }
     }
     
     func replacing(path: String) -> URLComponents {
