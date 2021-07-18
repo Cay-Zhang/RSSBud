@@ -257,10 +257,10 @@ struct URLString: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
-        if let url = URLComponents(string: string) {
+        if let url = URLComponents(autoPercentEncoding: string) {
             self.wrappedValue = url
         } else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "shit")
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "\"\(string)\" is not a valid URL.")
         }
     }
     
