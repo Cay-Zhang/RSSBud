@@ -84,6 +84,7 @@ class RSSBudTests: XCTestCase {
         try await _testAnalysis("Moon FM News", urlString: "https://news.moon.fm/", rssFeedCount: 1, rsshubFeedCount: nil)
         try await _testAnalysis("Leetao's Blog", urlString: "https://www.leetao94.cn/", rssFeedCount: 1, rsshubFeedCount: nil)
         try await _testAnalysis("RSSBud GitHub Repo", urlString: "https://github.com/Cay-Zhang/RSSBud", rssFeedCount: 0, rsshubFeedCount: nil)
+        try await _testAnalysis("说做", urlString: "https://bearchao.com/", rssFeedCount: 2, rsshubFeedCount: nil)
     }
     
 }

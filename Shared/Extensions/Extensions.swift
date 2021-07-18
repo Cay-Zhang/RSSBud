@@ -26,8 +26,14 @@ extension URLComponents {
 extension URLComponents {
     
     init?(autoPercentEncoding string: String) {
-        guard let encodedString = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed.union([" "])) else { return nil }
-        self.init(string: encodedString)
+        if let url = URLComponents(string: string) {
+            self = url
+        } else if let encodedString = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed.union([" "])),
+                  let url = URLComponents(string: encodedString) {
+            self = url
+        } else {
+            return nil
+        }
     }
     
     func replacing(path: String) -> URLComponents {
@@ -257,10 +263,10 @@ struct URLString: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
-        if let url = URLComponents(string: string) {
+        if let url = URLComponents(autoPercentEncoding: string) {
             self.wrappedValue = url
         } else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "shit")
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "\"\(string)\" is not a valid URL.")
         }
     }
     
