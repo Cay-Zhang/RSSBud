@@ -51,10 +51,10 @@
 		1CA854CD25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */; };
 		1CA854CE25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */; };
 		1CA854CF25138A1B00EB28F4 /* ValidatedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */; };
-		1CCFA7AD268DE6730011190F /* JavaScriptPreprocessingFile.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CCFA7AC268DE6730011190F /* JavaScriptPreprocessingFile.js */; };
 		1CCCCC08267B90520077E6EC /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCCC07267B90520077E6EC /* BottomBar.swift */; };
 		1CCCCC09267B90520077E6EC /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCCC07267B90520077E6EC /* BottomBar.swift */; };
 		1CCCCC0A267B90520077E6EC /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCCC07267B90520077E6EC /* BottomBar.swift */; };
+		1CCFA7AD268DE6730011190F /* JavaScriptPreprocessingFile.js in Resources */ = {isa = PBXBuildFile; fileRef = 1CCFA7AC268DE6730011190F /* JavaScriptPreprocessingFile.js */; };
 		1CDA93FE269B0A3D001A4F4C /* AutoAdvancingProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDA93FD269B0A3D001A4F4C /* AutoAdvancingProgressView.swift */; };
 		1CDA93FF269B0A3D001A4F4C /* AutoAdvancingProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDA93FD269B0A3D001A4F4C /* AutoAdvancingProgressView.swift */; };
 		1CDA9400269B0A3D001A4F4C /* AutoAdvancingProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDA93FD269B0A3D001A4F4C /* AutoAdvancingProgressView.swift */; };
@@ -168,8 +168,8 @@
 		1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryEditor.swift; sourceTree = "<group>"; };
 		1CA2079A24F3DEAC00C6EDD5 /* RSSHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSHub.swift; sourceTree = "<group>"; };
 		1CA854CC25138A1B00EB28F4 /* ValidatedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedTextField.swift; sourceTree = "<group>"; };
-		1CCFA7AC268DE6730011190F /* JavaScriptPreprocessingFile.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = JavaScriptPreprocessingFile.js; sourceTree = "<group>"; };
 		1CCCCC07267B90520077E6EC /* BottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
+		1CCFA7AC268DE6730011190F /* JavaScriptPreprocessingFile.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = JavaScriptPreprocessingFile.js; sourceTree = "<group>"; };
 		1CDA93FD269B0A3D001A4F4C /* AutoAdvancingProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoAdvancingProgressView.swift; sourceTree = "<group>"; };
 		1CDB36C72544566D002E84D8 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1CE03F31257B7EC500F38061 /* RuleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleManager.swift; sourceTree = "<group>"; };
