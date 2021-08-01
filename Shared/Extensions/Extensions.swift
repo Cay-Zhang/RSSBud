@@ -409,3 +409,23 @@ extension Version: Codable {
     }
 }
 
+@propertyWrapper
+public struct CodableAdaptor<Value: Codable>: RawRepresentable {
+    public var wrappedValue: Value
+    
+    public init(wrappedValue: Value) {
+        self.wrappedValue = wrappedValue
+    }
+    
+    public init?(rawValue: String) {
+        if let value = rawValue.data(using: .utf8).flatMap({ try? JSONDecoder().decode(Value.self, from: $0) }) {
+            wrappedValue = value
+        } else {
+            return nil
+        }
+    }
+    
+    public var rawValue: String {
+        (try? JSONEncoder().encode(wrappedValue)).flatMap { String(data: $0, encoding: .utf8) } ?? ""
+    }
+}
