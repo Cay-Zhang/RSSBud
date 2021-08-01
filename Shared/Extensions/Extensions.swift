@@ -365,3 +365,47 @@ struct BarProgressViewStyle: ProgressViewStyle {
             .scaleEffect(x: progress, y: 1, anchor: .leading)
     }
 }
+
+public struct Version: Comparable, CustomStringConvertible {
+    public var major: Int
+    public var minor: Int
+    public var patch: Int
+    
+    public init(major: Int, minor: Int, patch: Int) {
+        precondition(major >= 0 && minor >= 0 && patch >= 0)
+        self.major = major
+        self.minor = minor
+        self.patch = patch
+    }
+    
+    public init<S: StringProtocol>(string: S) {
+        var numbers = string.split(separator: ".").prefix(3).compactMap { Int($0) }
+        if numbers.count < 3 { numbers += [Int](repeating: 0, count: 3 - numbers.count) }
+        self.init(major: numbers[0], minor: numbers[1], patch: numbers[2])
+    }
+    
+    public var tuple: (Int, Int, Int) { (major, minor, patch) }
+    
+    public static func < (lhs: Version, rhs: Version) -> Bool {
+        lhs.tuple < rhs.tuple
+    }
+    
+    public var description: String {
+        "\(major).\(minor)" + (patch != 0 ? ".\(patch)" : "")
+    }
+    
+    static let marketing: Version = Version(string: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
+    
+    static let build: Version = Version(string: Bundle.main.infoDictionary!["CFBundleVersion"] as! String)
+}
+
+extension Version: Codable {
+    public init(from decoder: Decoder) throws {
+        self.init(string: try decoder.singleValueContainer().decode(String.self))
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        try description.encode(to: encoder)
+    }
+}
+
