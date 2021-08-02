@@ -350,7 +350,7 @@ struct NothingFoundView: View {
                 }
                 
                 Button("Submit New Rules", systemImage: "link.badge.plus") {
-                    openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
+                    openURL(URLComponents(string: "https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
                 }
                 
                 if xCallbackContext.wrappedValue.cancel != nil {
