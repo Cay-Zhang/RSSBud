@@ -55,7 +55,8 @@ struct BottomBar: View {
                         
                         Text((viewModel.linkTitle != nil) ? conciseRepresentation(of: url) : detailedRepresentation(of: url))
                             .animatableFont(size: (viewModel.linkTitle != nil) ? 13 : 15, weight: (viewModel.linkTitle != nil) ? .regular : .semibold)
-                            .foregroundColor((viewModel.linkTitle != nil) ? .secondary : .primary)
+                            .foregroundStyle(.secondary)
+                            .environment(\.backgroundMaterial, .thin)
                     }
                     Spacer()
                     if viewModel.linkIconSize == .large {
@@ -171,9 +172,9 @@ extension BottomBar {
         else {
             return AttributedString("")
         }
-        let host = AttributedString(hostString)
-        var afterHost = AttributedString(afterHostString)
-        afterHost.foregroundColor = Color.secondary
+        var host = AttributedString(hostString)
+        host.foregroundColor = Color.primary
+        let afterHost = AttributedString(afterHostString)
         return host + afterHost
     }
 }
