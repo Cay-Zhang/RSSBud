@@ -71,7 +71,7 @@ struct ContentView: View {
     
     @ViewBuilder var pageFeeds: some View {
         if let feeds = viewModel.rssFeeds, !feeds.isEmpty {
-            ExpandableSection(isExpanded: true) {
+            ExpandableSection(viewModel: viewModel.pageFeedSectionViewModel) {
                 LazyVStack(spacing: 16) {
                     ForEach(feeds, id: \.title) { feed in
                         RSSFeedView(feed: feed, contentViewModel: viewModel)
@@ -85,7 +85,7 @@ struct ContentView: View {
     
     @ViewBuilder var rsshubFeeds: some View {
         if let feeds = viewModel.rsshubFeeds, !feeds.isEmpty {
-            ExpandableSection(isExpanded: true) {
+            ExpandableSection(viewModel: viewModel.rsshubFeedSectionViewModel) {
                 LazyVStack(spacing: 16) {
                     ForEach(feeds, id: \.title) { feed in
                         RSSHubFeedView(feed: feed, contentViewModel: viewModel)
@@ -99,7 +99,7 @@ struct ContentView: View {
     
     @ViewBuilder var rsshubParameters: some View {
         if let feeds = viewModel.rsshubFeeds, !feeds.isEmpty {
-            ExpandableSection(isExpanded: true) {
+            ExpandableSection(viewModel: viewModel.rsshubParameterSectionViewModel) {
                 QueryEditor(queryItems: $viewModel.queryItems)
             } label: {
                 Text("Content Section RSSHub Parameters")
@@ -151,9 +151,6 @@ extension ContentView {
         @Published var originalURL: URLComponents? = nil
         @Published var isProcessing: Bool = false
         
-//        @Published var isPageFeedSectionExpanded: Bool = false
-//
-//        @Published var isRSSHubFeedSectionExpanded: Bool = true
         @Published var rssFeeds: [RSSFeed]? = nil
         @Published var rsshubFeeds: [RSSHubFeed]? = nil
         @Published var queryItems: [URLQueryItem] = []
@@ -161,6 +158,10 @@ extension ContentView {
         @Published var alert: Alert? = nil
         
         @Published var isFocusedOnBottomBar: Bool = false
+        
+        let pageFeedSectionViewModel = ExpandableSection.ViewModel()
+        let rsshubFeedSectionViewModel = ExpandableSection.ViewModel()
+        let rsshubParameterSectionViewModel = ExpandableSection.ViewModel()
         
         let bottomBarViewModel = BottomBar.ViewModel()
         
