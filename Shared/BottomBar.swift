@@ -13,23 +13,11 @@ struct BottomBar: View {
     @ObservedObject var viewModel: Self.ViewModel
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack(spacing: 8) {
-                if state != .focusedOnLink {
-                    HStack(spacing: 20) {
-                        Button("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", action: viewModel.analyzeClipboardContent)
-                    }.transition(.offset(y: -50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
-                    .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .secondarySystemBackground)))
-                }
-                if state != .focusedOnControls {
-                    mainCell
-                        .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
-                }
-            }
+        mainCell
             .frame(maxWidth: .infinity)
             .padding(.bottom, 8)
-        }.padding(.horizontal, 16)
-        .animation(Self.transitionAnimation, value: state)
+            .padding(.horizontal, 16)
+            .animation(Self.transitionAnimation, value: viewModel.linkTitle)
     }
     
     @ViewBuilder var mainCell: some View {
@@ -70,11 +58,7 @@ struct BottomBar: View {
                 .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                 .contextMenu(menuItems: linkViewContextMenuItems)
             }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .onTapGesture {
-                withAnimation(BottomBar.transitionAnimation) {
-                    state = (state == .expanded) ? .focusedOnLink : .expanded
-                }
-            }
+            .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
         }
     }
     
@@ -99,27 +83,10 @@ struct BottomBar: View {
             }
         }
     }
-    
-    struct Cell<Label: View>: View {
-        
-        var cornerRadius: CGFloat = 8
-        @ViewBuilder var label: Label
-       
-        var body: some View {
-            HStack { label }
-                .font(Font.body.weight(.semibold))
-                .padding(.vertical, 16)
-                .frame(maxWidth: .infinity)
-                .background(Rectangle().fill(.thinMaterial).transition(.identity))
-                .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-        }
-        
-    }
 }
 
 extension BottomBar {
     class ViewModel: ObservableObject {
-        @Published var state: ViewState = .focusedOnControls
         @Published var linkURL: URLComponents?
         @Published var linkTitle: String?
         @Published var linkIcon: Image?
@@ -129,7 +96,6 @@ extension BottomBar {
         @Published var progress: Double = 1.0
         let progressViewModel = AutoAdvancingProgressView.ViewModel()
         
-        var analyzeClipboardContent: () -> Void = { }
         var dismiss: () -> Void = { }
         
         var cancelBag = Set<AnyCancellable>()
@@ -143,21 +109,8 @@ extension BottomBar {
 }
 
 extension BottomBar {
-    enum ViewState {
-        case expanded, focusedOnControls, focusedOnLink
-    }
-    
     enum LinkIconSize {
         case small, large
-    }
-    
-    var state: ViewState {
-        get { viewModel.state }
-        nonmutating set { viewModel.state = newValue }
-    }
-    
-    var isExpanded: Bool {
-        state == .expanded
     }
     
     func conciseRepresentation(of url: URLComponents) -> AttributedString {
@@ -193,7 +146,6 @@ struct BottomBar_Previews: PreviewProvider {
         let model = ContentView.ViewModel()
         contentViewModels.append(model)
         model.originalURL = url
-        model.bottomBarViewModel.state = .focusedOnLink
         return BottomBar(viewModel: model.bottomBarViewModel)
     }
     

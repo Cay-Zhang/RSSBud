@@ -219,14 +219,6 @@ extension ContentView {
                     }
                 }.store(in: &self.cancelBag)
             
-            bottomBarViewModel.analyzeClipboardContent = { [unowned self] in
-                if let url = UIPasteboard.general.url?.components {
-                    process(url: url)
-                } else if let url = UIPasteboard.general.string?.detect(types: .link).compactMap(\.url?.components).first {
-                    process(url: url)
-                }
-            }
-            
             bottomBarViewModel.dismiss = { [unowned self] in dismiss() }
             
             Core.onFinishReloadingRules
@@ -248,7 +240,6 @@ extension ContentView {
                 withAnimation {
                     self.originalURL = url
                     self.isProcessing = true
-                    self.bottomBarViewModel.state = .focusedOnLink
                     self.bottomBarViewModel.progress = 0.0
                 }
                 
@@ -295,7 +286,6 @@ extension ContentView {
                 originalURL = nil
                 rssFeeds = nil
                 rsshubFeeds = nil
-                bottomBarViewModel.state = .focusedOnControls
                 bottomBarViewModel.linkURL = nil
                 bottomBarViewModel.linkIcon = nil
                 bottomBarViewModel.linkImage = nil
