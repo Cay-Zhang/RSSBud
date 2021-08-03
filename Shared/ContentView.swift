@@ -26,6 +26,10 @@ struct ContentView: View {
                     LazyVStack(spacing: 16) {
                         if isOnboarding {
                             OnboardingView()
+                        } else if viewModel.originalURL == nil {
+                            #if !ACTION_EXTENSION
+                            StartView()
+                            #endif
                         } else {
                             pageFeeds
                             
@@ -163,6 +167,9 @@ extension ContentView {
         let rsshubFeedSectionViewModel = ExpandableSection.ViewModel()
         let rsshubParameterSectionViewModel = ExpandableSection.ViewModel()
         
+        let startViewStartSection = ExpandableSection.ViewModel()
+        let startViewResourceSection = ExpandableSection.ViewModel()
+        
         let bottomBarViewModel = BottomBar.ViewModel()
         
         var cancelBag = Set<AnyCancellable>()
@@ -296,6 +303,13 @@ extension ContentView {
             }
         }
         
+        func analyzeClipboardContent() {
+            if let url = UIPasteboard.general.url?.components {
+                process(url: url)
+            } else if let url = UIPasteboard.general.string?.detect(types: .link).compactMap(\.url?.components).first {
+                process(url: url)
+            }
+        }
     }
 }
 

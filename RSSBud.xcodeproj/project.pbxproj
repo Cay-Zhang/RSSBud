@@ -33,6 +33,8 @@
 		1C6EE76A258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EE769258CA97300C645F0 /* ShortcutWorkshop.swift */; };
 		1C6EE76B258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EE769258CA97300C645F0 /* ShortcutWorkshop.swift */; };
 		1C6EE76C258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EE769258CA97300C645F0 /* ShortcutWorkshop.swift */; };
+		1C7D8DAE26B96509000EE4E4 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D8DAD26B96508000EE4E4 /* StartView.swift */; };
+		1C7D8DAF26B96509000EE4E4 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D8DAD26B96508000EE4E4 /* StartView.swift */; };
 		1C8221A424EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
 		1C8221A524EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
 		1C8221A624EAA73900E139F3 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8221A324EAA73900E139F3 /* FeedView.swift */; };
@@ -163,6 +165,7 @@
 		1C6EE760258CA78900C645F0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = "en.lproj/shortcut-workshop.json"; sourceTree = "<group>"; };
 		1C6EE767258CA79400C645F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "zh-Hans"; path = "zh-Hans.lproj/shortcut-workshop.json"; sourceTree = "<group>"; };
 		1C6EE769258CA97300C645F0 /* ShortcutWorkshop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutWorkshop.swift; sourceTree = "<group>"; };
+		1C7D8DAD26B96508000EE4E4 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		1C8221A324EAA73900E139F3 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		1C99BE3D259B26AA0073609C /* CustomOpenURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOpenURL.swift; sourceTree = "<group>"; };
 		1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryEditor.swift; sourceTree = "<group>"; };
@@ -328,6 +331,7 @@
 				1C58359D24EA8D9100FB8523 /* Integration.swift */,
 				EEB7577224B2B6E600F26CF7 /* App.swift */,
 				EEB7577324B2B6E600F26CF7 /* ContentView.swift */,
+				1C7D8DAD26B96508000EE4E4 /* StartView.swift */,
 				1CDB36C72544566D002E84D8 /* OnboardingView.swift */,
 				1C8221A324EAA73900E139F3 /* FeedView.swift */,
 				1CA2078C24EFCD7600C6EDD5 /* QueryEditor.swift */,
@@ -682,6 +686,7 @@
 				EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */,
 				1C58359E24EA8D9100FB8523 /* Integration.swift in Sources */,
 				EEC4A51B24E516D8005041CA /* RSSBud.swift in Sources */,
+				1C7D8DAE26B96509000EE4E4 /* StartView.swift in Sources */,
 				1CCCCC08267B90520077E6EC /* BottomBar.swift in Sources */,
 				EEB7578524B2B6E700F26CF7 /* App.swift in Sources */,
 				EE3EEAB624E152D20006ED53 /* SettingsView.swift in Sources */,
@@ -711,6 +716,7 @@
 				EEB7578824B2B6E700F26CF7 /* ContentView.swift in Sources */,
 				1C58359F24EA8D9100FB8523 /* Integration.swift in Sources */,
 				EEC4A51C24E516D8005041CA /* RSSBud.swift in Sources */,
+				1C7D8DAF26B96509000EE4E4 /* StartView.swift in Sources */,
 				1CCCCC09267B90520077E6EC /* BottomBar.swift in Sources */,
 				EEB7578624B2B6E700F26CF7 /* App.swift in Sources */,
 				EE3EEAB724E152D20006ED53 /* SettingsView.swift in Sources */,
