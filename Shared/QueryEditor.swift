@@ -21,6 +21,7 @@ struct QueryEditor: View {
                 }
                 addParameterMenu
             }.buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .secondarySystemBackground)))
+            .menuStyle(CayMenuStyle())
             
             ForEach(queryItems, id: \.name) { item in
                 GroupBox(label:

@@ -45,6 +45,35 @@ struct CayButtonStyle<ContainerModifier: ViewModifier>: PrimitiveButtonStyle {
     }
 }
 
+struct CayMenuStyle: MenuStyle {
+    var labelOpacityWhenPressed: Double = 0.5
+    
+    @State private var isPressed: Bool = false
+    
+    var buttonGesture: some Gesture {
+        _ButtonGesture { } pressing: { newValue in
+            withAnimation(.easeOut(duration: newValue ? 0.1 : 0.4)) {
+                isPressed = newValue
+            }
+            if newValue {
+                UIImpactFeedbackGenerator.light.impactOccurred(intensity: 0.5)
+            }
+        }
+    }
+    
+    func makeBody(configuration: Configuration) -> some View {
+        Menu(configuration)
+            .simultaneousGesture(buttonGesture)
+            .scaleEffect(isPressed ? 0.97 : 1)
+    }
+    
+    func labelOpacityWhenPressed(_ newValue: Double) -> Self {
+        var copy = self
+        copy.labelOpacityWhenPressed = newValue
+        return copy
+    }
+}
+
 extension UIImpactFeedbackGenerator {
     static let light: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
 }

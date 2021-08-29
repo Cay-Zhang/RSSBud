@@ -44,6 +44,7 @@ extension FeedView {
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
         .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .tertiarySystemBackground)))
+        .menuStyle(CayMenuStyle())
         .background {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .fill(Color(uiColor: .secondarySystemBackground))
