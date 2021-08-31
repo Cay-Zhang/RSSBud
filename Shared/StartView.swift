@@ -21,15 +21,28 @@ struct StartView: View {
             }
             
             ExpandableSection(viewModel: viewModel.startViewResourceSection) {
-                VStack(spacing: 16) {
-                    Color.clear.frame(height: 100)
-                        .overlay { Text("Todo") }
-                }.padding(.horizontal, 8)
-                .padding(.top, 20)
-                .padding(.bottom, 8)
-                .frame(maxWidth: .infinity)
-                .background(Color(uiColor: .secondarySystemBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: .infinity), spacing: 10)], spacing: 10) {
+                    Button("GitHub Repo Homepage", systemImage: "house.fill") {
+                        openURL("https://github.com/Cay-Zhang/RSSBud")
+                    }
+                    
+                    Button("Telegram Group", systemImage: "paperplane.fill") {
+                        openURL("https://t.me/RSSBud_Discussion")
+                    }
+                    
+                    Button("Submit New Rules", systemImage: "chevron.left.forwardslash.chevron.right") {
+                        openURL("https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze")
+                    }
+                    
+                    
+                    Button("All About RSS", systemImage: "list.star") {
+                        openURL("https://github.com/AboutRSS/ALL-about-RSS")
+                    }
+                    
+                    Button("RSSHub Documentation", systemImage: "text.book.closed.fill") {
+                        openURL("https://docs.rsshub.app/")
+                    }
+                }.buttonStyle(CayButtonStyle(blockContainerWithBackgroundColor: Color(uiColor: .secondarySystemBackground)))
             } label: {
                 Text("Resources")
             }
