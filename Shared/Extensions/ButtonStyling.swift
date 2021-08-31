@@ -21,6 +21,10 @@ struct CayButtonStyle<ContainerModifier: ViewModifier>: PrimitiveButtonStyle {
         self.init(containerModifier: WideButtonContainerModifier(backgroundColor: backgroundColor))
     }
     
+    init(blockContainerWithBackgroundColor backgroundColor: Color) where ContainerModifier == BlockButtonContainerModifier {
+        self.init(containerModifier: BlockButtonContainerModifier(backgroundColor: backgroundColor))
+    }
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .compositingGroup()
@@ -87,6 +91,38 @@ struct WideButtonContainerModifier: ViewModifier {
             .foregroundColor(.accentColor)
             .padding(.vertical, 10)
             .frame(maxWidth: .infinity)
+            .background(backgroundColor)
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+    }
+}
+
+struct BlockLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            configuration.icon
+                .font(Font.system(size: 24.0, weight: .medium, design: .default))
+            
+            Spacer()
+            
+            configuration.title
+                .font(Font.system(size: 17.0, weight: .medium, design: .default))
+                .minimumScaleFactor(0.7)
+        }
+    }
+}
+
+struct BlockButtonContainerModifier: ViewModifier {
+    var backgroundColor: Color
+    @ScaledMetric(relativeTo: Font.TextStyle.body) var height: CGFloat = 120
+    
+    func body(content: Content) -> some View {
+        content
+            .labelStyle(BlockLabelStyle())
+            .foregroundColor(.accentColor)
+            .padding(.leading, 12)
+            .padding(.trailing, 16)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, idealHeight: height, alignment: .leading)
             .background(backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
