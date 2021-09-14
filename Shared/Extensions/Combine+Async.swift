@@ -39,10 +39,10 @@ final class AsyncFuture<Output>: Publisher {
     
     typealias Failure = Never
     
-    let priority: Task.Priority?
+    let priority: TaskPriority?
     let operation: @Sendable () async -> Output
     
-    init(priority: Task.Priority? = nil, operation: @escaping @Sendable () async -> Output) {
+    init(priority: TaskPriority? = nil, operation: @escaping @Sendable () async -> Output) {
         self.priority = priority
         self.operation = operation
     }
@@ -52,10 +52,10 @@ final class AsyncFuture<Output>: Publisher {
     }
     
     private class Subscription<Subscriber: Combine.Subscriber>: Combine.Subscription where Subscriber.Input == Output, Subscriber.Failure == Never {
-        var taskHandle: Task.Handle<Void, Never>?
+        var taskHandle: Task<Void, Never>?
         
-        init(subscriber: Subscriber, priority: Task.Priority? = nil, operation: @escaping @Sendable () async -> Output) {
-            self.taskHandle = async(priority: priority) {
+        init(subscriber: Subscriber, priority: TaskPriority? = nil, operation: @escaping @Sendable () async -> Output) {
+            self.taskHandle = Task(priority: priority) {
                 if Task.isCancelled { return }
                 let result = await operation()
                 _ = subscriber.receive(result)
@@ -76,10 +76,10 @@ final class AsyncThrowingFuture<Output>: Publisher {
     
     typealias Failure = Error
     
-    let priority: Task.Priority?
+    let priority: TaskPriority?
     let operation: @Sendable () async throws -> Output
     
-    init(priority: Task.Priority? = nil, operation: @escaping @Sendable () async throws -> Output) {
+    init(priority: TaskPriority? = nil, operation: @escaping @Sendable () async throws -> Output) {
         self.priority = priority
         self.operation = operation
     }
@@ -89,10 +89,10 @@ final class AsyncThrowingFuture<Output>: Publisher {
     }
     
     private class Subscription<Subscriber: Combine.Subscriber>: Combine.Subscription where Subscriber.Input == Output, Subscriber.Failure == Error {
-        var taskHandle: Task.Handle<Void, Never>?
+        var taskHandle: Task<Void, Never>?
         
-        init(subscriber: Subscriber, priority: Task.Priority? = nil, operation: @escaping @Sendable () async throws -> Output) {
-            self.taskHandle = async(priority: priority) {
+        init(subscriber: Subscriber, priority: TaskPriority? = nil, operation: @escaping @Sendable () async throws -> Output) {
+            self.taskHandle = Task(priority: priority) {
                 do {
                     if Task.isCancelled { return }
                     let result = try await operation()
