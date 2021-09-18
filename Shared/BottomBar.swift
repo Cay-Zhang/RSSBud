@@ -79,7 +79,7 @@ struct BottomBar: View {
             if let icon = viewModel.linkIcon, viewModel.linkIconSize == .small {
                 Label { Text(title).lineLimit(1) } icon: { icon }
             } else {
-                Text(title)
+                Text(title).lineLimit(2)
             }
         }
     }
