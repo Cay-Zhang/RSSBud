@@ -224,16 +224,16 @@ struct RSSHubFeed: Codable {
 }
 
 extension Core {
-    enum DetectionError: Error {
+    enum DetectionError: LocalizedError {
         case hostNotFound(url: URLComponents)
         case decodingFailure(error: DecodingError)
         
-        var localizedDescription: String {
+        var errorDescription: String? {
             switch self {
             case .hostNotFound(let url):
-                return "Host not found in URL \"\(url)\"."
+                return String(localized: "Host not found in URL \(url.string ?? "").")
             case .decodingFailure(let error):
-                return error.localizedDescription
+                return error.errorDescription
             }
         }
     }

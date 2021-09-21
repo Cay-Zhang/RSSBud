@@ -51,6 +51,8 @@
 "Can be detected by RSSHub Radar?" = "Can be detected by RSSHub Radar?";
 "Contact Developer" = "Contact Developer";
 
+"Host not found in URL %@." = "Host not found in URL %@.";
+
 "filter" = "Include Titles and Descriptions";
 "filter_title" = "Include Titles";
 "filter_description" = "Include Descriptions";

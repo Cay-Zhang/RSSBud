@@ -51,6 +51,8 @@
 "Can be detected by RSSHub Radar?" = "与 RSSHub Radar 的结果不一致？";
 "Contact Developer" = "联系开发者";
 
+"Host not found in URL %@." = "网址 %@ 缺少域名。";
+
 "filter" = "仅保留匹配的标题或描述";
 "filter_title" = "仅保留匹配的标题";
 "filter_description" = "仅保留匹配的描述";
