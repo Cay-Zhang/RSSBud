@@ -26,6 +26,8 @@ struct ContentView: View {
                     LazyVStack(spacing: 16) {
                         if isOnboarding {
                             OnboardingView()
+                        } else if let error = viewModel.error {
+                            ErrorView(error: error, editOriginalURL: { /* TODO */ })
                         } else if viewModel.originalURL == nil {
                             #if !ACTION_EXTENSION
                             StartView()
@@ -66,7 +68,6 @@ struct ContentView: View {
             }
         }.navigationViewStyle(StackNavigationViewStyle())
         .environmentObject(viewModel)
-        .alert($viewModel.alert)
         .sheet(isPresented: $isSettingsViewPresented) {
             SettingsView()
                 .modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
@@ -159,7 +160,7 @@ extension ContentView {
         @Published var rsshubFeeds: [RSSHubFeed]? = nil
         @Published var queryItems: [URLQueryItem] = []
         
-        @Published var alert: Alert? = nil
+        @Published var error: Error? = nil
         
         @Published var isFocusedOnBottomBar: Bool = false
         
@@ -221,6 +222,12 @@ extension ContentView {
             
             bottomBarViewModel.dismiss = { [unowned self] in dismiss() }
             
+            self.$error
+                .map { $0 != nil }
+                .sink { [bottomBarViewModel] isFailed in
+                    bottomBarViewModel.isFailed = isFailed
+                }.store(in: &self.cancelBag)
+            
             Core.onFinishReloadingRules
                 .sink { [weak self] in
                     self?.originalURL.map { self?.process(url: $0) }
@@ -233,11 +240,13 @@ extension ContentView {
                     URLQueryItem(name: item.name, value: item.value?.removingPercentEncoding)
                 }
                 withAnimation {
+                    error = nil
                     rsshubFeeds = [RSSHubFeed(title: "Current URL", path: url.path)]
                     queryItems = items ?? []
                 }
             } else {
                 withAnimation {
+                    self.error = nil
                     self.originalURL = url
                     self.isProcessing = true
                     self.bottomBarViewModel.progress = 0.0
@@ -264,10 +273,10 @@ extension ContentView {
                                 print(error)
                                 withAnimation {
                                     self.isProcessing = false
-                                    self.bottomBarViewModel.progress = 0.0
+                                    self.bottomBarViewModel.progress = 1.0
                                     self.rssFeeds = nil
                                     self.rsshubFeeds = nil
-                                    self.alert = Alert(title: Text("An Error Occurred"), message: Text(verbatim: error.localizedDescription))
+                                    self.error = error
                                 }
                             }
                         } receiveValue: { [unowned self] result in
@@ -286,6 +295,7 @@ extension ContentView {
                 originalURL = nil
                 rssFeeds = nil
                 rsshubFeeds = nil
+                error = nil
                 bottomBarViewModel.linkURL = nil
                 bottomBarViewModel.linkIcon = nil
                 bottomBarViewModel.linkImage = nil
