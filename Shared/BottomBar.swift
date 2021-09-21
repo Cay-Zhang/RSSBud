@@ -33,6 +33,7 @@ struct BottomBar: View {
                 
                 AutoAdvancingProgressView(viewModel: viewModel.progressViewModel)
                     .progressViewStyle(BarProgressViewStyle())
+                    .tint(!viewModel.isFailed ? nil : .red)
                     .opacity((viewModel.progress != 1.0) ? 0.1 : 0.0)
                 
                 HStack {
@@ -92,6 +93,8 @@ extension BottomBar {
         @Published var linkIcon: Image?
         @Published var linkImage: Image?
         @Published var linkIconSize: LinkIconSize = .large
+        
+        @Published var isFailed: Bool = false
         
         @Published var progress: Double = 1.0
         let progressViewModel = AutoAdvancingProgressView.ViewModel()
