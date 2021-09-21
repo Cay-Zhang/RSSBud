@@ -114,7 +114,7 @@ extension BottomBar {
     }
     
     func conciseRepresentation(of url: URLComponents) -> AttributedString {
-        AttributedString(url.host ?? "")
+        AttributedString(url.host ?? url.string ?? "")
     }
     
     func detailedRepresentation(of url: URLComponents) -> AttributedString {
@@ -123,7 +123,7 @@ extension BottomBar {
               let hostString = url.string?[rangeOfHost],
               let afterHostString = url.string?[startingIndexOfPath...]
         else {
-            return AttributedString("")
+            return AttributedString(url.string ?? "")
         }
         var host = AttributedString(hostString)
         host.foregroundColor = Color.primary
