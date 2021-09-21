@@ -1,8 +1,8 @@
 <h1 align=center>RSSBud</h1>
 
 <p align=center>
-<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/swift-5.3-fe562e?style=flat-square"></a>
-<a href="https://developer.apple.com/ios"><img src="https://img.shields.io/badge/iOS-14%2B-blue?style=flat-square"></a>
+<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/swift-5.5-fe562e?style=flat-square"></a>
+<a href="https://developer.apple.com/ios"><img src="https://img.shields.io/badge/iOS-15%2B-blue?style=flat-square"></a>
 <a href="https://github.com/Cay-Zhang/SwiftSpeech/blob/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square"></a>
 </p>
 
