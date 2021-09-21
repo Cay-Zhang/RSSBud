@@ -26,20 +26,13 @@ struct ContentView: View {
                     LazyVStack(spacing: 16) {
                         if isOnboarding {
                             OnboardingView()
+                        } else if let error = viewModel.error {
+                            ErrorView(error: error, editOriginalURL: { /* TODO */ })
+                        } else if viewModel.originalURL == nil {
+                            #if !ACTION_EXTENSION
+                            StartView()
+                            #endif
                         } else {
-                            if let metadata = viewModel.linkPresentationMetadata {
-                                LinkPresentation(metadata: metadata)
-                                    .frame(minHeight: 100)
-                            }
-                            
-                            HStack(spacing: 20) {
-                                if viewModel.isProcessing {
-                                    ProgressView()
-                                }
-                                
-                                WideButton("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", backgroundColor: UIColor.secondarySystemBackground, action: readFromClipboard)
-                            }
-                            
                             pageFeeds
                             
                             rsshubFeeds
@@ -55,6 +48,11 @@ struct ContentView: View {
                     }.padding(16)
                 }.navigationTitle("RSSBud")
                 .toolbar(content: toolbarContent)
+                .environment(\.isEnabled, !viewModel.isFocusedOnBottomBar)
+                .overlay(Color.black.opacity(viewModel.isFocusedOnBottomBar ? 0.5: 0.0))
+                .safeAreaInset(edge: .bottom) {
+                    BottomBar(viewModel: viewModel.bottomBarViewModel)
+                }
             }
             
             if horizontalSizeClass == .regular {
@@ -70,16 +68,15 @@ struct ContentView: View {
             }
         }.navigationViewStyle(StackNavigationViewStyle())
         .environmentObject(viewModel)
-        .alert($viewModel.alert)
         .sheet(isPresented: $isSettingsViewPresented) {
             SettingsView()
                 .modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
-        }
+        }.symbolRenderingMode(.hierarchical)
     }
     
     @ViewBuilder var pageFeeds: some View {
         if let feeds = viewModel.rssFeeds, !feeds.isEmpty {
-            ExpandableSection(isExpanded: true) {
+            ExpandableSection(viewModel: viewModel.pageFeedSectionViewModel) {
                 LazyVStack(spacing: 16) {
                     ForEach(feeds, id: \.title) { feed in
                         RSSFeedView(feed: feed, contentViewModel: viewModel)
@@ -93,7 +90,7 @@ struct ContentView: View {
     
     @ViewBuilder var rsshubFeeds: some View {
         if let feeds = viewModel.rsshubFeeds, !feeds.isEmpty {
-            ExpandableSection(isExpanded: true) {
+            ExpandableSection(viewModel: viewModel.rsshubFeedSectionViewModel) {
                 LazyVStack(spacing: 16) {
                     ForEach(feeds, id: \.title) { feed in
                         RSSHubFeedView(feed: feed, contentViewModel: viewModel)
@@ -107,7 +104,7 @@ struct ContentView: View {
     
     @ViewBuilder var rsshubParameters: some View {
         if let feeds = viewModel.rsshubFeeds, !feeds.isEmpty {
-            ExpandableSection(isExpanded: true) {
+            ExpandableSection(viewModel: viewModel.rsshubParameterSectionViewModel) {
                 QueryEditor(queryItems: $viewModel.queryItems)
             } label: {
                 Text("Content Section RSSHub Parameters")
@@ -152,33 +149,29 @@ struct ContentView: View {
     }
 }
 
-// MARK: - Methods
-extension ContentView {
-    func readFromClipboard() {
-        if let url = UIPasteboard.general.url?.components {
-            viewModel.process(url: url)
-        } else if let url = UIPasteboard.general.string.flatMap(URLComponents.init(autoPercentEncoding:)) {
-            viewModel.process(url: url)
-        }
-    }
-}
-
 extension ContentView {
     class ViewModel: ObservableObject {
         @RSSHub.BaseURL var baseURL
         
         @Published var originalURL: URLComponents? = nil
-        @Published var linkPresentationMetadata: LPLinkMetadata? = nil
         @Published var isProcessing: Bool = false
         
-//        @Published var isPageFeedSectionExpanded: Bool = false
-//
-//        @Published var isRSSHubFeedSectionExpanded: Bool = true
         @Published var rssFeeds: [RSSFeed]? = nil
         @Published var rsshubFeeds: [RSSHubFeed]? = nil
         @Published var queryItems: [URLQueryItem] = []
         
-        @Published var alert: Alert? = nil
+        @Published var error: Error? = nil
+        
+        @Published var isFocusedOnBottomBar: Bool = false
+        
+        let pageFeedSectionViewModel = ExpandableSection.ViewModel()
+        let rsshubFeedSectionViewModel = ExpandableSection.ViewModel()
+        let rsshubParameterSectionViewModel = ExpandableSection.ViewModel()
+        
+        let startViewStartSection = ExpandableSection.ViewModel()
+        let startViewResourceSection = ExpandableSection.ViewModel()
+        
+        let bottomBarViewModel = BottomBar.ViewModel()
         
         var cancelBag = Set<AnyCancellable>()
         
@@ -191,30 +184,48 @@ extension ContentView {
             self.$originalURL
                 .map { $0?.url }
                 .removeDuplicates()
-                .map { (url: URL?) -> AnyPublisher<LPLinkMetadata?, Never> in
+                .map { (url: URL?) -> AnyPublisher<(metadata: LPLinkMetadata, icon: UIImage?, image: UIImage?)?, Never> in
                     if let url = url {
                         let placeholderMetadata = LPLinkMetadata()
                         placeholderMetadata.originalURL = url
                         placeholderMetadata.url = url
                         
-                        return Future<LPLinkMetadata?, Never> { promise in
+                        return AsyncFuture<(metadata: LPLinkMetadata, icon: UIImage?, image: UIImage?)?> {
                             let provider = LPMetadataProvider()
-                            provider.startFetchingMetadata(for: url) { (result, error) in
-                                if let metadata = result {
-                                    promise(.success(metadata))
-                                } else if let _ = error {
-                                    promise(.success(placeholderMetadata))
-                                }
+                            if let metadata = await { @MainActor in try? await provider.startFetchingMetadata(for: url) }() {
+                                async let icon = metadata.icon?.scaledDownIfNeeded(toFit: CGSize(width: 36, height: 36))
+                                async let image = metadata.image
+                                return await (metadata, icon, image)
+                            } else {
+                                return nil
                             }
-                        }.prepend(placeholderMetadata)
+                        }.prepend((placeholderMetadata, nil, nil))
                         .eraseToAnyPublisher()
                     } else {
                         return Just(nil).eraseToAnyPublisher()
                     }
                 }.switchToLatest()
+                .compactMap { $0 }
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] metadata in
-                    withAnimation { self?.linkPresentationMetadata = metadata }
+                .sink { [bottomBarViewModel] tuple in
+                    let (metadata, icon, image) = tuple
+                    withAnimation(BottomBar.transitionAnimation) {
+                        bottomBarViewModel.linkURL = metadata.url?.components
+                        bottomBarViewModel.linkTitle = metadata.title
+                        bottomBarViewModel.linkIcon = icon.map(Image.init(uiImage:))
+                        bottomBarViewModel.linkImage = image.map(Image.init(uiImage:))
+                        if let icon = icon {
+                            bottomBarViewModel.linkIconSize = (icon.size.width < 20) && (icon.size.height < 20) ? .small : .large
+                        }
+                    }
+                }.store(in: &self.cancelBag)
+            
+            bottomBarViewModel.dismiss = { [unowned self] in dismiss() }
+            
+            self.$error
+                .map { $0 != nil }
+                .sink { [bottomBarViewModel] isFailed in
+                    bottomBarViewModel.isFailed = isFailed
                 }.store(in: &self.cancelBag)
             
             Core.onFinishReloadingRules
@@ -223,41 +234,54 @@ extension ContentView {
                 }.store(in: &cancelBag)
         }
         
-        func process(url: URLComponents) {
+        func process(url: URLComponents, html: String? = nil) {
             if baseURL.host == url.host {
                 let items = url.queryItems?.map { item in
                     URLQueryItem(name: item.name, value: item.value?.removingPercentEncoding)
                 }
                 withAnimation {
+                    error = nil
                     rsshubFeeds = [RSSHubFeed(title: "Current URL", path: url.path)]
                     queryItems = items ?? []
                 }
             } else {
                 withAnimation {
+                    self.error = nil
                     self.originalURL = url
                     self.isProcessing = true
+                    self.bottomBarViewModel.progress = 0.0
                 }
                 
                 DispatchQueue.global(qos: .userInitiated).async {
-                    Core.analyzing(contentsOf: url)
+                    let analysisPipeline: AnyPublisher<Core.AnalysisResult, Error>
+                    if let html = html {
+                        analysisPipeline = Core.analyzing(url: url, html: html)
+                    } else {
+                        analysisPipeline = Core.analyzing(contentsOf: url)
+                    }
+                    
+                    analysisPipeline
                         .receive(on: DispatchQueue.main)
                         .sink { [unowned self] completion in
                             switch completion {
                             case .finished:
                                 withAnimation {
                                     self.isProcessing = false
+                                    self.bottomBarViewModel.progress = 1.0
                                 }
                             case .failure(let error):
                                 print(error)
                                 withAnimation {
                                     self.isProcessing = false
+                                    self.bottomBarViewModel.progress = 1.0
                                     self.rssFeeds = nil
                                     self.rsshubFeeds = nil
-                                    self.alert = Alert(title: Text("An Error Occurred"), message: Text(verbatim: error.localizedDescription))
+                                    self.error = error
                                 }
                             }
                         } receiveValue: { [unowned self] result in
                             withAnimation {
+                                self.bottomBarViewModel.progress += 0.3
                                 self.rssFeeds = result.rssFeeds
                                 self.rsshubFeeds = result.rsshubFeeds
                             }
@@ -266,6 +290,26 @@ extension ContentView {
             }
         }
         
+        func dismiss() {
+            withAnimation {
+                originalURL = nil
+                rssFeeds = nil
+                rsshubFeeds = nil
+                error = nil
+                bottomBarViewModel.linkURL = nil
+                bottomBarViewModel.linkIcon = nil
+                bottomBarViewModel.linkImage = nil
+                bottomBarViewModel.linkTitle = nil
+            }
+        }
+        
+        func analyzeClipboardContent() {
+            if let url = UIPasteboard.general.url?.components {
+                process(url: url)
+            } else if let url = UIPasteboard.general.string?.detect(types: .link).compactMap(\.url?.components).first {
+                process(url: url)
+            }
+        }
     }
 }
 
@@ -316,18 +360,18 @@ struct NothingFoundView: View {
             }
             
             VStack(spacing: 8) {
-                WideButton("See What's Supported", systemImage: "text.book.closed.fill") {
+                Button("See What's Supported", systemImage: "text.book.closed.fill") {
                     openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
                 }
                 
-                WideButton("Submit New Rules", systemImage: "link.badge.plus") {
-                    openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
+                Button("Submit New Rules", systemImage: "link.badge.plus") {
+                    openURL(URLComponents(string: "https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
                 }
                 
                 if xCallbackContext.wrappedValue.cancel != nil {
-                    WideButton(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
+                    Button(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
                 }
-            }
+            }.buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .tertiarySystemBackground)))
         }.padding(.horizontal, 8)
         .padding(.top, 20)
         .padding(.bottom, 8)

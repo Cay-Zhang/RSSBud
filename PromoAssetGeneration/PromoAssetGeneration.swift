@@ -26,7 +26,7 @@ class PromoAssetGeneration: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-promo-asset-generation", "1"]
         app.launch()
-        _ = app.wait(for: .unknown, timeout: 2)
+        _ = app.wait(for: .unknown, timeout: 7)
         takeScreenshot(name: "Page 1")
     }
     

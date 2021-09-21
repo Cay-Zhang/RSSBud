@@ -50,6 +50,7 @@ struct OnboardingView: View {
         }.clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         .environment(\.namespace, namespace)
         .transition(OnboardingView.transition)
+        .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .tertiarySystemBackground)))
     }
 }
 
@@ -93,15 +94,15 @@ extension OnboardingView {
                     .padding(.horizontal, 8)
                 
                 VStack(spacing: 8) {
-                    WideButton("Learn More About RSSHub", systemImage: "info.circle.fill") {
+                    Button("Learn More About RSSHub", systemImage: "info.circle.fill") {
                         openURL(URLComponents(string: "https://docs.rsshub.app/en/")!)
                     }
                     
-                    WideButton("All About RSS", systemImage: "list.star") {
+                    Button("All About RSS", systemImage: "list.star") {
                         openURL(URLComponents(string: "https://github.com/AboutRSS/ALL-about-RSS")!)
                     }
                     
-                    WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                    Button("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .discover
                     }
                 }
@@ -150,11 +151,11 @@ extension OnboardingView {
                     .padding(.horizontal, 8)
                 
                 VStack(spacing: 8) {
-                    WideButton("See What's Supported", systemImage: "text.book.closed.fill") {
+                    Button("See What's Supported", systemImage: "text.book.closed.fill") {
                         openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
                     }
                     
-                    WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                    Button("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .subscribe
                     }
                 }
@@ -202,7 +203,7 @@ extension OnboardingView {
                 ).padding(.horizontal, 1.5)
                 
                 VStack(spacing: 8) {
-                    WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                    Button("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                         currentPage = .rssHubInstance
                     }
                 }
@@ -247,27 +248,30 @@ extension OnboardingView {
                             text: rssHubBaseURL.$string,
                             validation: rssHubBaseURL.validate(string:)
                         ).foregroundColor(.primary)
+                        .font(Font.body.weight(.semibold))
                         .keyboardType(.URL)
                         .disableAutocorrection(true)
-                        .padding(.horizontal, 10)
-                        .roundedRectangleBackground()
+                        .padding(10)
+                        .frame(maxWidth: .infinity)
+                        .background(Color(uiColor: .tertiarySystemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                         
-                        WideButton("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
+                        Button("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
                             currentPage = .support
                         }
                     }.transition(OnboardingView.transition)
                 } else {
                     VStack(spacing: 8) {
-                        WideButton("Learn More About Deployment", systemImage: "info.circle.fill") {
+                        Button("Learn More About Deployment", systemImage: "info.circle.fill") {
                             openURL(URLComponents(string: "https://docs.rsshub.app/en/")!)
                         }
                         
-                        WideButton("Use My Own Instance", systemImage: "lock.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
+                        Button("Use My Own Instance", systemImage: "lock.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
                             isEnteringRSSHubBaseURL = true
                         }
                         
                         if isUseOfficialDemoButtonShown {
-                            WideButton("Use Official Demo", systemImage: "exclamationmark.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
+                            Button("Use Official Demo", systemImage: "exclamationmark.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
                                 rssHubBaseURL.string = RSSHub.officialDemoBaseURLString
                                 currentPage = .support
                             }.accentColor(.red)
@@ -310,28 +314,28 @@ extension OnboardingView {
                     .padding(.horizontal, 8)
                 
                 VStack(spacing: 8) {
-                    WideButton("Star on GitHub", systemImage: "star.fill") {
+                    Button("Star on GitHub", systemImage: "star.fill") {
                         openURL(URLComponents(string: "https://github.com/Cay-Zhang/RSSBud")!)
                     }.accentColor(.yellow)
                     
-                    WideButton("Join Telegram Discussion", systemImage: "paperplane.fill") {
+                    Button("Join Telegram Discussion", systemImage: "paperplane.fill") {
                         openURL(URLComponents(string: "https://t.me/RSSBud_Discussion")!)
                     }
                     
-                    WideButton("Submit New Rules", systemImage: "link.badge.plus") {
-                        openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
+                    Button("Submit New Rules", systemImage: "link.badge.plus") {
+                        openURL(URLComponents(string: "https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
                     }
                     
-                    WideButton("Donate to RSSBud", systemImage: "yensign.circle.fill") {
+                    Button("Donate to RSSBud", systemImage: "yensign.circle.fill") {
                         openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
                     }.environment(\.isEnabled, false)
                     
                     HStack(spacing: 8) {
-                        WideButton("Onboarding Start Over", systemImage: "arrow.left", withAnimation: OnboardingView.transitionAnimation) {
+                        Button("Onboarding Start Over", systemImage: "arrow.left", withAnimation: OnboardingView.transitionAnimation) {
                             currentPage = .welcome
                         }
                         
-                        WideButton("Done", systemImage: "checkmark", withAnimation: OnboardingView.transitionAnimation) {
+                        Button("Done", systemImage: "checkmark", withAnimation: OnboardingView.transitionAnimation) {
                             isOnboarding = false
                         }
                     }
