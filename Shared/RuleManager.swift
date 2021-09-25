@@ -99,7 +99,7 @@ class RuleManager: ObservableObject {
     }
     
     func remoteRules() -> AnyPublisher<String, URLError> {
-        let urls = ["https://raw.githubusercontent.com/DIYgod/RSSHub/master/assets/radar-rules.js", "https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@master/assets/radar-rules.js"]
+        let urls = ["https://rsshub.js.org/build/radar-rules.js", "https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@gh-pages/build/radar-rules.js"]
             .compactMap(URL.init(string:))
         
         return urls

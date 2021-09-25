@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
       - name: Update rules
         run: |
-          rules="$(curl 'https://raw.githubusercontent.com/DIYgod/RSSHub/master/assets/radar-rules.js' 2>/dev/null)"
+          rules="$(curl 'https://rsshub.js.org/build/radar-rules.js' 2>/dev/null)"
           echo "var rules = $rules" > "./Shared/Core/radar-rules.js"
       - name: Commit files
         run: |
