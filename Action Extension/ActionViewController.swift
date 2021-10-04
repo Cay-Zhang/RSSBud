@@ -9,6 +9,7 @@ import UIKit
 import SwiftUI
 import Combine
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 struct RootView: View {
     var contentViewModel: ContentView.ViewModel
@@ -21,6 +22,7 @@ struct RootView: View {
     }
 }
 
+@MainActor
 class ActionViewController: UIViewController {
     
     var contentViewModel = ContentView.ViewModel()
@@ -28,6 +30,11 @@ class ActionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // if host view cannot fit the preferred content size,
+        // a sheet will be used instead of a popover
+        // size class is not assigned properly
+        preferredContentSize = CGSize(width: 450, height: 900)
         
         // temp workaround for list background
         UITableView.appearance().backgroundColor = UIColor.clear
@@ -63,31 +70,29 @@ class ActionViewController: UIViewController {
             .flatMap { item in
                 item.attachments!.publisher
             }.print()
-            .flatMap { (provider: NSItemProvider) -> Future<URLComponents?, Never> in
-                
-                if provider.canLoadObject(ofClass: URL.self) {
-                    
-                    return Future { promise in
-                        _ = provider.loadObject(ofClass: URL.self) { url, error in
-                            promise(.success(url?.components))
-                        }
+            .flatMap { (provider: NSItemProvider) -> AsyncFuture<(url: URLComponents, html: String?)?> in
+                AsyncFuture {
+                    if let item = try? await provider.loadItem(forTypeIdentifier: UTType.propertyList.identifier, options: nil) as? Dictionary<String, Dictionary<String, String>>,
+                       let results = item[NSExtensionJavaScriptPreprocessingResultsKey],
+                       let urlString = results["url"],
+                       let url = URLComponents(string: urlString),
+                       let html = results["html"] {
+                        // from safari webpage
+                        return (url, html)
+                    } else if let url = try? await provider.loadObject(ofClass: URL.self).components {
+                        return (url, nil)
+                    } else if let text = try? await provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) as? String,
+                              let url = text.detect(types: .link).compactMap(\.url?.components).first {
+                        return (url, nil)
+                    } else {
+                        return nil
                     }
-                    
-                } else {
-                    
-                    return Future { promise in
-                        provider.loadItem(forTypeIdentifier: kUTTypePlainText as String, options: nil) { string, error in
-                            promise(.success((string as? String).flatMap(URLComponents.init(autoPercentEncoding:))))
-                        }
-                    }
-                    
                 }
-                
             }.compactMap { $0 }
             .first()
             .receive(on: DispatchQueue.main)
-            .sink { [weak viewModel = contentViewModel] url in
-                viewModel?.process(url: url)
+            .sink { [weak viewModel = contentViewModel] tuple in
+                viewModel?.process(url: tuple.url, html: tuple.html)
             }.store(in: &self.cancelBag)
     }
     

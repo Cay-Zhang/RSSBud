@@ -7,54 +7,33 @@
 
 import SwiftUI
 
-struct RSSFeedView: View {
+protocol FeedView: View {
+    var feedTitle: String { get }
+    var feedURL: URLComponents { get }
     
-    var feed: RSSFeed
-    var contentViewModel: ContentView.ViewModel
-    @Environment(\.customOpenURLAction) var openURL
-    @Integration var integrations
-    @Environment(\.xCallbackContext) var xCallbackContext: Binding<XCallbackContext>
+    var openURL: CustomOpenURLAction { get }
+    var xCallbackContext: XCallbackContext { get nonmutating set }
     
-    func integrationURL(for integrationKey: Integration.Key) -> URLComponents? {
-        _integrations.url(forAdding: feed.url, to: integrationKey)
-    }
-    
-    func continueXCallbackText() -> LocalizedStringKey {
-        if let source = xCallbackContext.wrappedValue.source {
-            return LocalizedStringKey("Continue in \(source)")
-        } else {
-            return LocalizedStringKey("Continue")
-        }
-    }
-    
-    func continueXCallback() {
-        let url = xCallbackContext
-            .wrappedValue
-            .success?
-            .appending(queryItems: [
-                URLQueryItem(name: "feed_title", value: feed.title),
-                URLQueryItem(name: "feed_url", value: feed.url.string)
-            ])
-        url.map(openURL.callAsFunction(_:))
-        xCallbackContext.wrappedValue = nil
-    }
-    
+    var _integrations: Integration { get }
+}
+
+extension FeedView {
     var body: some View {
         VStack(spacing: 10.0) {
-            Text(feed.title)
+            Text(feedTitle)
                 .fontWeight(.semibold)
                 .padding(.horizontal, 15)
             
 //            Text(rsshubURL().string ?? "URL Conversion Failed")
 //                .padding(.horizontal, 15)
             
-            if xCallbackContext.wrappedValue.success != nil {
-                WideButton(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
+            if xCallbackContext.success != nil {
+                Button(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
                     .padding(.horizontal, 8)
             } else {
                 HStack(spacing: 8) {
-                    WideButton("Copy", systemImage: "doc.on.doc.fill") {
-                        feed.url.url.map { UIPasteboard.general.url = $0 }
+                    Button("Copy", systemImage: "doc.on.doc.fill") {
+                        feedURL.url.map { UIPasteboard.general.url = $0 }
                     }
                     
                     integrationButton
@@ -64,13 +43,42 @@ struct RSSFeedView: View {
         }.padding(.top, 15)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
-        .background(Color(UIColor.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .tertiarySystemBackground)))
+        .menuStyle(CayMenuStyle())
+        .background {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color(uiColor: .secondarySystemBackground))
+        }
+    }
+    
+    var integrations: [Integration.Key] { _integrations.wrappedValue }
+    
+    func continueXCallbackText() -> LocalizedStringKey {
+        if let source = xCallbackContext.source {
+            return LocalizedStringKey("Continue in \(source)")
+        } else {
+            return LocalizedStringKey("Continue")
+        }
+    }
+    
+    func continueXCallback() {
+        let url = xCallbackContext
+            .success?
+            .appending(queryItems: [
+                URLQueryItem(name: "feed_title", value: feedTitle),
+                URLQueryItem(name: "feed_url", value: feedURL.string)
+            ])
+        url.map(openURL.callAsFunction(_:))
+        xCallbackContext = nil
+    }
+    
+    func integrationURL(for integrationKey: Integration.Key) -> URLComponents? {
+        _integrations.url(forAdding: feedURL, to: integrationKey)
     }
     
     @ViewBuilder var integrationButton: some View {
         if integrations.count == 1, let url = integrationURL(for: integrations[0]) {
-            WideButton(Label(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill")) {
+            Button(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill") {
                 openURL(url)
             }
         } else {
@@ -84,104 +92,42 @@ struct RSSFeedView: View {
                 }
             } label: {
                 Label("Subscribe", systemImage: "arrowshape.turn.up.right.fill")
-                    .roundedRectangleBackground()
+                    .modifier(WideButtonContainerModifier(backgroundColor: Color(uiColor: .tertiarySystemBackground)))
             }
         }
     }
-    
 }
 
-struct RSSHubFeedView: View {
+struct RSSFeedView: FeedView {
+    var feed: RSSFeed
+    var contentViewModel: ContentView.ViewModel
     
+    @Environment(\.customOpenURLAction) var openURL
+    @Environment(\.xCallbackContext) @Binding var xCallbackContext: XCallbackContext
+    var _integrations = Integration()
+    
+    var feedTitle: String { feed.title }
+    var feedURL: URLComponents { feed.url }
+}
+
+struct RSSHubFeedView: FeedView {
     var feed: RSSHubFeed
     var contentViewModel: ContentView.ViewModel
+    
     @Environment(\.customOpenURLAction) var openURL
-    @Integration var integrations
+    @Environment(\.xCallbackContext) @Binding var xCallbackContext: XCallbackContext
     @RSSHub.BaseURL var baseURL
     var rssHubAccessControl = RSSHub.AccessControl()
-    @Environment(\.xCallbackContext) var xCallbackContext: Binding<XCallbackContext>
+    var _integrations = Integration()
     
-    func rsshubURL() -> URLComponents {
+    var feedTitle: String { feed.title }
+    
+    var feedURL: URLComponents {
         baseURL
             .appending(path: feed.path)
             .appending(queryItems: contentViewModel.queryItems + rssHubAccessControl.accessCodeQueryItem(for: feed.path))
             .omittingEmptyQueryItems()
     }
-    
-    func integrationURL(for integrationKey: Integration.Key) -> URLComponents? {
-        _integrations.url(forAdding: rsshubURL(), to: integrationKey)
-    }
-    
-    func continueXCallbackText() -> LocalizedStringKey {
-        if let source = xCallbackContext.wrappedValue.source {
-            return LocalizedStringKey("Continue in \(source)")
-        } else {
-            return LocalizedStringKey("Continue")
-        }
-    }
-    
-    func continueXCallback() {
-        let url = xCallbackContext
-            .wrappedValue
-            .success?
-            .appending(queryItems: [
-                URLQueryItem(name: "feed_title", value: feed.title),
-                URLQueryItem(name: "feed_url", value: rsshubURL().string)
-            ])
-        url.map(openURL.callAsFunction(_:))
-        xCallbackContext.wrappedValue = nil
-    }
-    
-    var body: some View {
-        VStack(spacing: 10.0) {
-            Text(feed.title)
-                .fontWeight(.semibold)
-                .padding(.horizontal, 15)
-            
-//            Text(rsshubURL().string ?? "URL Conversion Failed")
-//                .padding(.horizontal, 15)
-            
-            if xCallbackContext.wrappedValue.success != nil {
-                WideButton(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
-                    .padding(.horizontal, 8)
-            } else {
-                HStack(spacing: 8) {
-                    WideButton("Copy", systemImage: "doc.on.doc.fill") {
-                        rsshubURL().url.map { UIPasteboard.general.url = $0 }
-                    }
-                    
-                    integrationButton
-                }.padding(.horizontal, 8)
-            }
-            
-        }.padding(.top, 15)
-        .padding(.bottom, 8)
-        .frame(maxWidth: .infinity)
-        .background(Color(UIColor.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-    }
-    
-    @ViewBuilder var integrationButton: some View {
-        if integrations.count == 1, let url = integrationURL(for: integrations[0]) {
-            WideButton(Label(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill")) {
-                openURL(url)
-            }
-        } else {
-            Menu {
-                ForEach(integrations) { key in
-                    if let url = integrationURL(for: key) {
-                        Button(key.rawValue) {
-                            openURL(url)
-                        }
-                    }
-                }
-            } label: {
-                Label("Subscribe", systemImage: "arrowshape.turn.up.right.fill")
-                    .roundedRectangleBackground()
-            }
-        }
-    }
-    
 }
 
 struct FeedView_Previews: PreviewProvider {

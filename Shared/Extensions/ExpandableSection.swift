@@ -6,48 +6,18 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ExpandableSection<Content: View, Label: View>: View {
-    
-    init(isExpanded: Bool = true, @ViewBuilder content: @escaping () -> Content, @ViewBuilder label: () -> Label) {
-        self._useBinding = false
-        self._isExpandedState = State(wrappedValue: isExpanded)
-        self._isExpandedBinding = .constant(true)
-        self.content = content
-        self.label = label()
-    }
-    
-    init(isExpanded: Binding<Bool>, @ViewBuilder content: @escaping () -> Content, @ViewBuilder label: () -> Label) {
-        self._useBinding = true
-        self._isExpandedBinding = isExpanded
-        self._isExpandedState = State(wrappedValue: true)
-        self.content = content
-        self.label = label()
-    }
-    
-    var isExpanded: Bool {
-        get { _useBinding ? isExpandedBinding : isExpandedState }
-        nonmutating set {
-            if _useBinding {
-                isExpandedBinding = newValue
-            } else {
-                isExpandedState = newValue
-            }
-        }
-    }
-    
-    var content: () -> Content
-    var label: Label
-    
-    @State var isExpandedState: Bool
-    @Binding var isExpandedBinding: Bool
-    let _useBinding: Bool
+    @ObservedObject var viewModel: ExpandableSection<Never, Never>.ViewModel
+    @ViewBuilder var content: () -> Content
+    @ViewBuilder var label: Label
 
     var body: some View {
         LazyVStack {
             Button(action: toggleExpanded) {
                 HStack {
-                    if !isExpanded {
+                    if !viewModel.isExpanded {
                         Image(systemName: "plus")
                             .imageScale(.small)
                             .transition(AnyTransition.offset(x: -50))
@@ -56,26 +26,26 @@ struct ExpandableSection<Content: View, Label: View>: View {
                     Spacer()
                     Image(systemName: "chevron.down")
                         .imageScale(.small)
-                        .rotationEffect(isExpanded ? .degrees(0) : .degrees(-90))
-                }.padding(.horizontal, isExpanded ? 0 : 10)
+                        .rotationEffect(viewModel.isExpanded ? .degrees(0) : .degrees(-90))
+                }.padding(.horizontal, viewModel.isExpanded ? 0 : 10)
                 .padding(.top, 10)
-                .padding(.bottom, isExpanded ? 0 : 10)
+                .padding(.bottom, viewModel.isExpanded ? 0 : 10)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     Color(UIColor.secondarySystemBackground)
-                        .opacity(isExpanded ? 0.0 : 1.0)
+                        .opacity(viewModel.isExpanded ? 0.0 : 1.0)
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 .contentShape(Rectangle())
-            }.buttonStyle(SquashableButtonStyle())
+            }.buttonStyle(CayButtonStyle(containerModifier: EmptyModifier()).labelOpacityWhenPressed(0.75))
             .animatableFont(
-                size: isExpanded ? 24 : 18,
+                size: viewModel.isExpanded ? 24 : 18,
                 weight: .semibold,
                 design: .default
             ).foregroundColor(.accentColor)
             .zIndex(1)
             
-            if isExpanded {
+            if viewModel.isExpanded {
                 content()
                     .transition(contentTransition)
                     .zIndex(0)
@@ -85,7 +55,7 @@ struct ExpandableSection<Content: View, Label: View>: View {
     
     func toggleExpanded() {
         withAnimation(transitionAnimation) {
-            isExpanded.toggle()
+            viewModel.isExpanded.toggle()
         }
     }
 }
@@ -97,11 +67,23 @@ extension ExpandableSection {
     }
 }
 
+extension ExpandableSection {
+    class ViewModel: ObservableObject {
+        @Published var isExpanded: Bool
+        
+        init(isExpanded: Bool = true) where Content == Never, Label == Never {
+            self.isExpanded = isExpanded
+        }
+    }
+}
+
 struct DisclosureList_Previews: PreviewProvider {
+    static let viewModel = ExpandableSection.ViewModel()
+    
     static var previews: some View {
         NavigationView {
             ScrollView {
-                ExpandableSection {
+                ExpandableSection(viewModel: viewModel) {
                     ForEach(1..<21) { i in
                         Text("Text \(i)")
                             .font(.system(size: 27, weight: Font.Weight.semibold, design: Font.Design.default))

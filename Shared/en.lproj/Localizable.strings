@@ -6,7 +6,14 @@
   
 */
 
+"Start" = "Start";
+"Resources" = "Resources";
 "Read From Clipboard" = "Read from Clipboard";
+"RSSHub Documentation" = "RSSHub Documentation";
+
+"Copy Link" = "Copy Link";
+"Dismiss Current Analysis" = "Dismiss";
+
 "Content Section RSS Feeds" = "RSS Feeds";
 "Content Section RSSHub Feeds" = "RSSHub Feeds";
 "Content Section RSSHub Parameters" = "RSSHub Parameters";
@@ -39,10 +46,14 @@
 "Telegram Group" = "Telegram Group";
 
 "Nothing Found" = "Nothing Found";
+"Error Occurred" = "Oops...";
+"Edit Original URL" = "Edit Original URL";
 "See What's Supported" = "See What's Supported";
 "Submit New Rules" = "Submit New Rules";
 "Can be detected by RSSHub Radar?" = "Can be detected by RSSHub Radar?";
 "Contact Developer" = "Contact Developer";
+
+"Host not found in URL %@." = "Host not found in URL %@.";
 
 "filter" = "Include Titles and Descriptions";
 "filter_title" = "Include Titles";
