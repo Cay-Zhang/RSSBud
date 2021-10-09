@@ -59,6 +59,7 @@ struct BottomBar: View {
                 .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                 .contextMenu(menuItems: linkViewContextMenuItems)
             }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.15), radius: 12, y: 3)
             .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
         }
     }
