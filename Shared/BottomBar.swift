@@ -18,6 +18,7 @@ struct BottomBar: View {
             .padding(.bottom, 8)
             .padding(.horizontal, 16)
             .animation(Self.transitionAnimation, value: viewModel.linkTitle)
+            .animation(Self.transitionAnimation, value: viewModel.isEditing)
     }
     
     @ViewBuilder var mainCell: some View {
@@ -26,7 +27,7 @@ struct BottomBar: View {
                 viewModel.linkImage?
                     .resizable()
                     .aspectRatio(1, contentMode: .fill)
-                    .opacity((viewModel.progress == 1.0) ? 0.5 : 0.0)
+                    .opacity((!viewModel.isEditing && viewModel.progress == 1.0) ? 0.5 : 0.0)
                     .allowsHitTesting(false)
                 
                 Rectangle().fill(.thinMaterial).transition(.identity)
@@ -42,13 +43,11 @@ struct BottomBar: View {
                             .font(.system(size: 15, weight: .semibold, design: .default))
                             .transition(.offset(y: -25).combined(with: .opacity))
                         
-                        Text((viewModel.linkTitle != nil) ? conciseRepresentation(of: url) : detailedRepresentation(of: url))
-                            .animatableFont(size: (viewModel.linkTitle != nil) ? 13 : 15, weight: (viewModel.linkTitle != nil) ? .regular : .semibold)
-                            .foregroundStyle(.secondary)
+                        linkURLView(url: url)
                             .environment(\.backgroundMaterial, .thin)
                     }
                     Spacer()
-                    if viewModel.linkIconSize == .large {
+                    if !viewModel.isEditing && viewModel.linkIconSize == .large {
                         viewModel.linkIcon?
                             .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
                             .transition(.offset(x: 25).combined(with: .opacity))
@@ -61,6 +60,20 @@ struct BottomBar: View {
             }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.15), radius: 12, y: 3)
             .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
+            .gesture(
+                DragGesture(minimumDistance: 5)
+                    .onChanged { value in
+                        if value.predictedEndTranslation.height < -20 && !viewModel.isEditing {
+                            withAnimation {
+                                viewModel.isEditing = true
+                            }
+                        } else if value.predictedEndTranslation.height > 20 && viewModel.isEditing {
+                            withAnimation {
+                                viewModel.isEditing = false
+                            }
+                        }
+                    }
+            )
         }
     }
     
@@ -77,12 +90,30 @@ struct BottomBar: View {
     }
     
     @ViewBuilder var linkTitleView: some View {
-        if let title = viewModel.linkTitle {
+        if !viewModel.isEditing, let title = viewModel.linkTitle {
             if let icon = viewModel.linkIcon, viewModel.linkIconSize == .small {
                 Label { Text(title).lineLimit(1) } icon: { icon }
             } else {
                 Text(title).lineLimit(2)
             }
+        }
+    }
+    
+    @ViewBuilder func linkURLView(url: URLComponents) -> some View {
+        ZStack(alignment: .leading) {
+            TextField("", text: $viewModel.editingText, prompt: Text("URL"))
+                .animatableFont(size: (viewModel.linkTitle != nil && !viewModel.isEditing) ? 13 : 15, weight: .semibold)
+                .opacity(viewModel.isEditing ? 1 : 0)
+                .offset(x: viewModel.isEditing ? 0 : -30)
+                .onSubmit {
+                    URLComponents(autoPercentEncoding: viewModel.editingText)
+                        .map(viewModel.onSubmit)
+                }
+            Text((viewModel.linkTitle != nil) ? conciseRepresentation(of: url) : detailedRepresentation(of: url))
+                .foregroundStyle(.secondary)
+                .animatableFont(size: (viewModel.linkTitle != nil && !viewModel.isEditing) ? 13 : 15, weight: (viewModel.linkTitle != nil && !viewModel.isEditing) ? .regular : .semibold)
+                .opacity(!viewModel.isEditing ? 1 : 0)
+                .offset(x: viewModel.isEditing ? 30 : 0)
         }
     }
 }
@@ -96,11 +127,14 @@ extension BottomBar {
         @Published var linkIconSize: LinkIconSize = .large
         
         @Published var isFailed: Bool = false
+        @Published var _isEditing: Bool = false
+        @Published var editingText: String = ""
         
         @Published var progress: Double = 1.0
         let progressViewModel = AutoAdvancingProgressView.ViewModel()
         
         var dismiss: () -> Void = { }
+        var onSubmit: (URLComponents) -> Void = { _ in }
         
         var cancelBag = Set<AnyCancellable>()
         
@@ -108,6 +142,16 @@ extension BottomBar {
             $progress
                 .assign(to: \.progress, on: progressViewModel)
                 .store(in: &cancelBag)
+        }
+        
+        var isEditing: Bool {
+            get { _isEditing }
+            set {
+                _isEditing = newValue
+                if newValue {
+                    editingText = linkURL?.string ?? ""
+                }
+            }
         }
     }
 }
