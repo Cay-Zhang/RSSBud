@@ -82,7 +82,7 @@ import SwiftUI
         case .tinyTinyRSS:
             return ttrssBaseURL?
                 .appending(path: "/public.php")
-                .appending(queryItems: [URLQueryItem(name: "op", value: "subscribe"), URLQueryItem(name: "feed_url", value: feedURL.string)])
+                .appending(queryItems: [URLQueryItem(name: "op", value: "bookmarklets--subscribe"), URLQueryItem(name: "feed_url", value: feedURL.string)])
         case .miniflux:
             return minifluxBaseURL?
                 .appending(path: "/bookmarklet")
