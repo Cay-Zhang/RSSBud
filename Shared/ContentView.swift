@@ -27,7 +27,7 @@ struct ContentView: View {
                         if isOnboarding {
                             OnboardingView()
                         } else if let error = viewModel.error {
-                            ErrorView(error: error, editOriginalURL: { /* TODO */ })
+                            ErrorView(error: error, editOriginalURL: { withAnimation { viewModel.bottomBarViewModel.isEditing = true } })
                         } else if viewModel.originalURL == nil {
                             #if !ACTION_EXTENSION
                             StartView()
@@ -221,6 +221,9 @@ extension ContentView {
                 }.store(in: &self.cancelBag)
             
             bottomBarViewModel.dismiss = { [unowned self] in dismiss() }
+            bottomBarViewModel.onSubmit = { [unowned self] url in
+                process(url: url)
+            }
             
             self.$error
                 .map { $0 != nil }
@@ -241,6 +244,7 @@ extension ContentView {
                 }
                 withAnimation {
                     error = nil
+                    bottomBarViewModel.isEditing = false
                     rsshubFeeds = [RSSHubFeed(title: "Current URL", path: url.path)]
                     queryItems = items ?? []
                 }
@@ -249,6 +253,7 @@ extension ContentView {
                     self.error = nil
                     self.originalURL = url
                     self.isProcessing = true
+                    self.bottomBarViewModel.isEditing = false
                     self.bottomBarViewModel.progress = 0.0
                 }
                 
