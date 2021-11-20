@@ -50,9 +50,12 @@ struct ValidatedTextField: View {
             
             if !validate(isEditing ? transientText : text) {
                 Image(systemName: "exclamationmark.circle.fill")
-                    .imageScale(.large)
-                    .foregroundColor(.red)
-                    .transition(
+                    .opacity(0)
+                    .overlay {
+                        Image(systemName: "exclamationmark.circle.fill")
+                            .imageScale(.large)
+                            .foregroundColor(.red)
+                    }.transition(
                         AnyTransition.scale(scale: 0.7)
                             .combined(with: AnyTransition.opacity)
                             .animation(.spring())
