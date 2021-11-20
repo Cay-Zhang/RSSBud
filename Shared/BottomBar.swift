@@ -93,7 +93,10 @@ struct BottomBar: View {
     
     @ViewBuilder func linkURLView(url: URLComponents) -> some View {
         ZStack(alignment: .leading) {
-            TextField("", text: $viewModel.editingText, prompt: Text("URL"))
+            ValidatedTextField("Bottom Bar Start Prompt", text: $viewModel.editingText) { $0.isEmpty || URLComponents(string: $0)?.host != nil }
+                .keyboardType(.URL)
+                .textInputAutocapitalization(.never)
+                .disableAutocorrection(true)
                 .animatableFont(size: (viewModel.linkTitle != nil && !viewModel.isEditing) ? 13 : 15, weight: .semibold)
                 .opacity(viewModel.isEditing ? 1 : 0)
                 .offset(x: viewModel.isEditing ? 0 : -30)
