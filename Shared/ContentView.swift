@@ -52,6 +52,8 @@ struct ContentView: View {
                 .overlay(Color.black.opacity(viewModel.isFocusedOnBottomBar ? 0.5: 0.0))
                 .safeAreaInset(edge: .bottom) {
                     BottomBar(viewModel: viewModel.bottomBarViewModel)
+                        .padding(.bottom, 8)
+                        .padding(.horizontal, 8)
                 }
             }
             

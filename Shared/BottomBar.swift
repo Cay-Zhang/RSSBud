@@ -13,68 +13,60 @@ struct BottomBar: View {
     @ObservedObject var viewModel: Self.ViewModel
     
     var body: some View {
-        mainCell
-            .frame(maxWidth: .infinity)
-            .padding(.bottom, 8)
-            .padding(.horizontal, 16)
-            .animation(Self.transitionAnimation, value: viewModel.linkTitle)
-            .animation(Self.transitionAnimation, value: viewModel.isEditing)
-    }
-    
-    @ViewBuilder var mainCell: some View {
-        if let url = viewModel.linkURL {
-            ZStack {
-                viewModel.linkImage?
-                    .resizable()
-                    .aspectRatio(1, contentMode: .fill)
-                    .opacity((!viewModel.isEditing && viewModel.progress == 1.0) ? 0.5 : 0.0)
-                    .allowsHitTesting(false)
-                
-                Rectangle().fill(.thinMaterial).transition(.identity)
-                
-                AutoAdvancingProgressView(viewModel: viewModel.progressViewModel)
-                    .progressViewStyle(BarProgressViewStyle())
-                    .tint(!viewModel.isFailed ? nil : .red)
-                    .opacity((viewModel.progress != 1.0) ? 0.1 : 0.0)
-                
-                HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        linkTitleView
-                            .font(.system(size: 15, weight: .semibold, design: .default))
-                            .transition(.offset(y: -25).combined(with: .opacity))
-                        
-                        linkURLView(url: url)
-                            .environment(\.backgroundMaterial, .thin)
-                    }
-                    Spacer()
-                    if !viewModel.isEditing && viewModel.linkIconSize == .large {
-                        viewModel.linkIcon?
-                            .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
-                            .transition(.offset(x: 25).combined(with: .opacity))
-                    }
-                }.padding(16)
-                .font(Font.body.weight(.semibold))
-                .layoutPriority(1)
-                .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .contextMenu(menuItems: linkViewContextMenuItems)
-            }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.15), radius: 12, y: 3)
-            .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
-            .gesture(
-                DragGesture(minimumDistance: 5)
-                    .onChanged { value in
-                        if value.predictedEndTranslation.height < -20 && !viewModel.isEditing {
-                            withAnimation {
-                                viewModel.isEditing = true
-                            }
-                        } else if value.predictedEndTranslation.height > 20 && viewModel.isEditing {
-                            withAnimation {
-                                viewModel.isEditing = false
-                            }
+        let url = viewModel.linkURL ?? URLComponents()
+        ZStack {
+            viewModel.linkImage?
+                .resizable()
+                .aspectRatio(1, contentMode: .fill)
+                .opacity((!viewModel.isEditing && viewModel.progress == 1.0) ? 0.5 : 0.0)
+                .allowsHitTesting(false)
+            
+            Rectangle().fill(.thinMaterial).transition(.identity)
+            
+            AutoAdvancingProgressView(viewModel: viewModel.progressViewModel)
+                .progressViewStyle(BarProgressViewStyle())
+                .tint(!viewModel.isFailed ? nil : .red)
+                .opacity((viewModel.progress != 1.0) ? 0.1 : 0.0)
+            
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    linkTitleView
+                        .font(.system(size: 15, weight: .semibold, design: .default))
+                        .transition(.offset(y: -25).combined(with: .opacity))
+                    
+                    linkURLView(url: url)
+                        .environment(\.backgroundMaterial, .thin)
+                }
+                Spacer()
+                if !viewModel.isEditing && viewModel.linkIconSize == .large {
+                    viewModel.linkIcon?
+                        .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
+                        .transition(.offset(x: 25).combined(with: .opacity))
+                }
+            }.padding(16)
+            .font(Font.body.weight(.semibold))
+            .layoutPriority(1)
+            .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .contextMenu(menuItems: linkViewContextMenuItems)
+        }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.15), radius: 12, y: 3)
+        .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
+        .gesture(
+            DragGesture(minimumDistance: 5)
+                .onChanged { value in
+                    if value.predictedEndTranslation.height < -20 && !viewModel.isEditing {
+                        withAnimation {
+                            viewModel.isEditing = true
+                        }
+                    } else if value.predictedEndTranslation.height > 20 && viewModel.isEditing {
+                        withAnimation {
+                            viewModel.isEditing = false
                         }
                     }
-            )
-        }
+                }
+        )
+        .animation(Self.transitionAnimation, value: viewModel.linkTitle)
+        .animation(Self.transitionAnimation, value: viewModel.isEditing)
     }
     
     @ViewBuilder func linkViewContextMenuItems() -> some View {
@@ -127,7 +119,7 @@ extension BottomBar {
         @Published var linkIconSize: LinkIconSize = .large
         
         @Published var isFailed: Bool = false
-        @Published var _isEditing: Bool = false
+        @Published var _isEditing: Bool = true
         @Published var editingText: String = ""
         
         @Published var progress: Double = 1.0
