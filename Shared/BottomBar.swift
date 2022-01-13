@@ -42,7 +42,7 @@ struct BottomBar: View {
                 if !viewModel.isEditing && viewModel.linkIconSize == .large {
                     viewModel.linkIcon?
                         .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
-                        .transition(.offset(x: 25).combined(with: .opacity))
+                        .transition(.offset(x: 60).combined(with: .opacity))
                 }
             }.padding(16)
             .font(Font.body.weight(.semibold))
