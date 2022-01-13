@@ -298,16 +298,14 @@ extension ContentView {
         }
         
         func dismiss() {
-            withAnimation {
-                originalURL = nil
-                rssFeeds = nil
-                rsshubFeeds = nil
-                error = nil
-                bottomBarViewModel.linkURL = nil
-                bottomBarViewModel.linkIcon = nil
-                bottomBarViewModel.linkImage = nil
-                bottomBarViewModel.linkTitle = nil
-            }
+            originalURL = nil
+            rssFeeds = nil
+            rsshubFeeds = nil
+            error = nil
+            bottomBarViewModel.linkURL = nil
+            bottomBarViewModel.linkIcon = nil
+            bottomBarViewModel.linkImage = nil
+            bottomBarViewModel.linkTitle = nil
         }
         
         func analyzeClipboardContent() {

@@ -11,6 +11,7 @@ import LinkPresentation
 
 struct BottomBar: View {
     @ObservedObject var viewModel: Self.ViewModel
+    @FocusState var isTextFieldFocused: Bool
     
     var body: some View {
         let url = viewModel.linkURL ?? URLComponents()
@@ -52,19 +53,38 @@ struct BottomBar: View {
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.15), radius: 12, y: 3)
         .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
         .gesture(
-            DragGesture(minimumDistance: 5)
+            DragGesture(minimumDistance: 5, coordinateSpace: .global)
                 .onChanged { value in
-                    if value.predictedEndTranslation.height < -20 && !viewModel.isEditing {
-                        withAnimation {
-                            viewModel.isEditing = true
-                        }
-                    } else if value.predictedEndTranslation.height > 20 && viewModel.isEditing {
-                        withAnimation {
+                    let offsetHeight = decay(value.translation.height, positiveThreshold: 0, negativeThreshold: 0)
+                    withAnimation(Self.transitionAnimation) {
+                        viewModel.offset.height = offsetHeight
+                        if value.translation.height < -50 {
+                            if !viewModel.isEditing {
+                                viewModel.isEditing = true
+                                Self.feedbackGenerator.selectionChanged()
+                            }
+                        } else if value.translation.height > 15 {
+                            if !viewModel.isEditing {
+                                viewModel._isEditing = true
+                                viewModel.editingText = ""
+                                Self.feedbackGenerator.selectionChanged()
+                            }
+                        } else if viewModel.isEditing && viewModel.linkURL != nil {
                             viewModel.isEditing = false
+                            Self.feedbackGenerator.selectionChanged()
                         }
                     }
+                }.onEnded { value in
+                    withAnimation(.spring()) {
+                        if value.translation.height < -50 {
+                            isTextFieldFocused = true
+                        } else if value.translation.height > 15 {
+                            viewModel.dismiss()
+                        }
+                        viewModel.offset.height = 0
+                    }
                 }
-        )
+        ).offset(viewModel.offset)
         .animation(Self.transitionAnimation, value: viewModel.linkTitle)
         .animation(Self.transitionAnimation, value: viewModel.isEditing)
     }
@@ -100,9 +120,11 @@ struct BottomBar: View {
                 .animatableFont(size: (viewModel.linkTitle != nil && !viewModel.isEditing) ? 13 : 15, weight: .semibold)
                 .opacity(viewModel.isEditing ? 1 : 0)
                 .offset(x: viewModel.isEditing ? 0 : -30)
+                .focused($isTextFieldFocused)
                 .onSubmit {
-                    URLComponents(autoPercentEncoding: viewModel.editingText)
-                        .map(viewModel.onSubmit)
+                    if !viewModel.editingText.isEmpty, let url = URLComponents(autoPercentEncoding: viewModel.editingText) {
+                        viewModel.onSubmit(url)
+                    }
                 }
             Text((viewModel.linkTitle != nil) ? conciseRepresentation(of: url) : detailedRepresentation(of: url))
                 .foregroundStyle(.secondary)
@@ -127,6 +149,8 @@ extension BottomBar {
         
         @Published var progress: Double = 1.0
         let progressViewModel = AutoAdvancingProgressView.ViewModel()
+        
+        @Published var offset: CGSize = .zero
         
         var dismiss: () -> Void = { }
         var onSubmit: (URLComponents) -> Void = { _ in }
@@ -173,9 +197,24 @@ extension BottomBar {
         let afterHost = AttributedString(afterHostString)
         return host + afterHost
     }
+    
+    func decay(_ value: CGFloat, positiveThreshold: CGFloat, negativeThreshold: CGFloat, k: CGFloat = 20) -> CGFloat {
+        return (value >= 0) ? _decay(value, threshold: positiveThreshold, k: k) : -_decay(-value, threshold: -negativeThreshold, k: k)
+    }
+    
+    private func _decay(_ value: CGFloat, threshold: CGFloat, k: CGFloat) -> CGFloat {
+        assert(value >= 0 && threshold >= 0)
+        if value > threshold {
+            let x = value - threshold
+            return threshold + sqrt(k * (x + 0.25 * k)) - 0.5 * k
+        } else {
+            return value
+        }
+    }
 }
 
 extension BottomBar {
+    static let feedbackGenerator: UISelectionFeedbackGenerator = UISelectionFeedbackGenerator()
     static var transitionAnimation: Animation { Animation.interpolatingSpring(mass: 3, stiffness: 1000, damping: 500, initialVelocity: 0) }
     static var contentTransition: AnyTransition {
         AnyTransition.offset(y: 25).combined(with: AnyTransition.opacity)
