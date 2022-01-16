@@ -83,14 +83,14 @@ extension UIImpactFeedbackGenerator {
 }
 
 struct WideButtonContainerModifier: ViewModifier {
+    @ScaledMetric var height: CGFloat = 42
     var backgroundColor: Color
     
     func body(content: Content) -> some View {
         content
             .font(Font.body.weight(.semibold))
             .foregroundColor(.accentColor)
-            .padding(.vertical, 10)
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, minHeight: height, idealHeight: height, maxHeight: height)
             .background(backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
