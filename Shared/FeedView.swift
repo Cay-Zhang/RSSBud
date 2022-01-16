@@ -10,6 +10,8 @@ import SwiftUI
 protocol FeedView: View {
     var feedTitle: String { get }
     var feedURL: URLComponents { get }
+    var pathComponents: [Substring] { get }
+    var docsURL: URLComponents? { get }
     
     var openURL: CustomOpenURLAction { get }
     var xCallbackContext: XCallbackContext { get nonmutating set }
@@ -108,6 +110,10 @@ struct RSSFeedView: FeedView {
     
     var feedTitle: String { feed.title }
     var feedURL: URLComponents { feed.url }
+    var pathComponents: [Substring] {
+        feed.url.path.split(separator: "/", omittingEmptySubsequences: true)
+    }
+    var docsURL: URLComponents? { nil }
 }
 
 struct RSSHubFeedView: FeedView {
@@ -128,6 +134,12 @@ struct RSSHubFeedView: FeedView {
             .appending(queryItems: contentViewModel.queryItems + rssHubAccessControl.accessCodeQueryItem(for: feed.path))
             .omittingEmptyQueryItems()
     }
+    
+    var pathComponents: [Substring] {
+        return feed.path.split(separator: "/", omittingEmptySubsequences: true)
+    }
+    
+    var docsURL: URLComponents? { feed.docsURL }
 }
 
 struct FeedView_Previews: PreviewProvider {
