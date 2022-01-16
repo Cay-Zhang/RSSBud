@@ -111,6 +111,7 @@ function getPageRSSHub(data) {
                                             title: rulesForSubdomain[recog.handler].title,
                                             url: '{rsshubDomain}' + path,
                                             path: path,
+                                            docsURL: rulesForSubdomain[recog.handler].docs,
                                         });
                                     } else {
                                         // this will never be run

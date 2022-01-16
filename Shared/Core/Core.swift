@@ -221,6 +221,7 @@ struct RSSFeed: Codable {
 struct RSSHubFeed: Codable {
     var title: String
     var path: String
+    @URLString var docsURL: URLComponents
 }
 
 extension Core {

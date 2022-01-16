@@ -247,7 +247,7 @@ extension ContentView {
                 withAnimation {
                     error = nil
                     bottomBarViewModel.isEditing = false
-                    rsshubFeeds = [RSSHubFeed(title: "Current URL", path: url.path)]
+                    rsshubFeeds = [RSSHubFeed(title: "Current URL", path: url.path, docsURL: "")]
                     queryItems = items ?? []
                 }
             } else {
@@ -391,8 +391,16 @@ struct ContentView_Previews: PreviewProvider {
     static let viewModel = ContentView.ViewModel(
         originalURL: URLComponents(string: "https://space.bilibili.com/17404347"),
         rsshubFeeds: [
-            RSSHubFeed(title: "UP 主动态", path: "/bilibili/user/dynamic/17404347"),
-            RSSHubFeed(title: "UP 主投稿", path: "/bilibili/user/video/17404347")
+            RSSHubFeed(
+                title: "UP 主动态",
+                path: "/bilibili/user/dynamic/17404347",
+                docsURL: "https://docs.rsshub.app/social-media.html#bilibili"
+            ),
+            RSSHubFeed(
+                title: "UP 主投稿",
+                path: "/bilibili/user/video/17404347",
+                docsURL: "https://docs.rsshub.app/social-media.html#bilibili"
+            )
         ]
     )
     

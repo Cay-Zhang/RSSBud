@@ -74,8 +74,8 @@ extension RSSBud.App {
                     RSSFeed(url: "https://github.com/Cay-Zhang/RSSBud/commits/main.atom", title: "Recent Commits to RSSBud:main", imageURL: "", isCertain: true)
                 ],
                 rsshubFeeds: [
-                    RSSHubFeed(title: "仓库 Issues", path: "/github/issue/Cay-Zhang/RSSBud"),
-                    RSSHubFeed(title: "仓库 Pull Requests", path: "/github/pull/Cay-Zhang/RSSBud")
+                    RSSHubFeed(title: "仓库 Issues", path: "/github/issue/Cay-Zhang/RSSBud", docsURL: ""),
+                    RSSHubFeed(title: "仓库 Pull Requests", path: "/github/pull/Cay-Zhang/RSSBud", docsURL: "")
                 ], queryItems: [
                     URLQueryItem(name: "filter_title", value: "")
                 ]
