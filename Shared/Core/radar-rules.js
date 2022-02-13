@@ -2323,6 +2323,31 @@ var rules = ({ "2047.name":{ _name:"2047",
         source:[ "/category/:category",
           "/" ],
         target:"/startuplatte/:category?" } ] },
+  "stcn.com":{ _name:"证券时报网",
+    ".":[ { title:"要闻",
+        docs:"https://docs.rsshub.app/finance.html#zheng-quan-shi-bao-wang-yao-wen",
+        source:[ "/xw/:id",
+          "/gd",
+          "/" ],
+        target:(params, url) => `/stcn${new URL(url).pathname}` },
+      { title:"快讯",
+        docs:"https://docs.rsshub.app/finance.html#zheng-quan-shi-bao-wang-kuai-xun",
+        source:[ "/kuaixun/:id",
+          "/kuaixun",
+          "/" ],
+        target:(params, url) => `/stcn${new URL(url).pathname}` },
+      { title:"股市",
+        docs:"https://docs.rsshub.app/finance.html#zheng-quan-shi-bao-wang-gu-shi",
+        source:[ "/stock/:id",
+          "/stock",
+          "/" ],
+        target:(params, url) => `/stcn${new URL(url).pathname}` },
+      { title:"数据",
+        docs:"https://docs.rsshub.app/finance.html#zheng-quan-shi-bao-wang-shu-ju",
+        source:[ "/data/:id",
+          "/data",
+          "/" ],
+        target:(params, url) => `/stcn${new URL(url).pathname}` } ] },
   "storm.mg":{ _name:"風傳媒",
     ".":[ { title:"分类",
         docs:"https://docs.rsshub.app/new-media.html#feng-chuan-mei",
@@ -2749,6 +2774,59 @@ var rules = ({ "2047.name":{ _name:"2047",
         docs:"https://docs.rsshub.app/multimedia.html#you-ku",
         source:[ "/i/:id" ],
         target:"/youku/channel/:id" } ] },
+  "youzhiyouxing.cn":{ _name:"有知有行",
+    ".":[ { title:"有知 - 全部",
+        docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
+        source:[ "/materials" ],
+        target:"/youzhiyouxing/materials" },
+      { title:"有知 - 知行小酒馆",
+        docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
+        source:[ "/materials" ],
+        target:(_params, url) => {
+                    if (new URL(url).searchParams.get('column') === '4') {
+                        return '/youzhiyouxing/materials/4';
+                    }
+                } },
+      { title:"有知 - 知行黑板报",
+        docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
+        source:[ "/materials" ],
+        target:(_params, url) => {
+                    if (new URL(url).searchParams.get('column') === '2') {
+                        return '/youzhiyouxing/materials/2';
+                    }
+                } },
+      { title:"有知 - 无人知晓",
+        docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
+        source:[ "/materials" ],
+        target:(_params, url) => {
+                    if (new URL(url).searchParams.get('column') === '10') {
+                        return '/youzhiyouxing/materials/10';
+                    }
+                } },
+      { title:"有知 - 孟岩专栏",
+        docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
+        source:[ "/materials" ],
+        target:(_params, url) => {
+                    if (new URL(url).searchParams.get('column') === '1') {
+                        return '/youzhiyouxing/materials/1';
+                    }
+                } },
+      { title:"有知 - 知行读书会",
+        docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
+        source:[ "/materials" ],
+        target:(_params, url) => {
+                    if (new URL(url).searchParams.get('column') === '3') {
+                        return '/youzhiyouxing/materials/3';
+                    }
+                } },
+      { title:"有知 - 你好，同路人",
+        docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
+        source:[ "/materials" ],
+        target:(_params, url) => {
+                    if (new URL(url).searchParams.get('column') === '11') {
+                        return '/youzhiyouxing/materials/11';
+                    }
+                } } ] },
   "yxdzqb.com":{ _name:"游戏打折情报",
     ".":[ { title:"游戏折扣",
         docs:"https://docs.rsshub.app/game.html#you-xi-da-zhe-qing-bao-you-xi-zhe-kou",
