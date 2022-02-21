@@ -21,17 +21,31 @@ protocol FeedView: View {
 
 extension FeedView {
     var body: some View {
-        VStack(spacing: 10.0) {
-            Text(feedTitle)
-                .fontWeight(.semibold)
-                .padding(.horizontal, 15)
-            
-//            Text(rsshubURL().string ?? "URL Conversion Failed")
-//                .padding(.horizontal, 15)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(feedTitle)
+                        .font(Font.system(size: 20.0, weight: .semibold, design: .default))
+                        .minimumScaleFactor(0.7)
+                    
+                    pathComponentsView
+                }
+               
+                Spacer()
+                
+                if let docsURL = docsURL {
+                    Button {
+                        openURL(docsURL)
+                    } label: {
+                        Image(systemName: "text.book.closed.fill")
+                            .font(Font.system(size: 20.0, weight: .semibold, design: .default))
+                            .foregroundStyle(.tint)
+                    }.buttonStyle(CayButtonStyle(containerModifier: EmptyModifier()))
+                }
+            }
             
             if xCallbackContext.success != nil {
                 Button(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
-                    .padding(.horizontal, 8)
             } else {
                 HStack(spacing: 8) {
                     Button("Copy", systemImage: "doc.on.doc.fill") {
@@ -39,17 +53,29 @@ extension FeedView {
                     }
                     
                     integrationButton
-                }.padding(.horizontal, 8)
+                }
             }
-            
-        }.padding(.top, 15)
-        .padding(.bottom, 8)
+        }.padding(.top, 12)
+        .padding(.bottom, 9)
+        .padding(.horizontal, 9)
         .frame(maxWidth: .infinity)
         .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .tertiarySystemBackground)))
         .menuStyle(CayMenuStyle())
         .background {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .fill(Color(uiColor: .secondarySystemBackground))
+        }
+    }
+    
+    var pathComponentsView: some View {
+        HStack(spacing: 4) {
+            ForEach(pathComponents, id: \.self) { component in
+                Text(component)
+                    .foregroundStyle(.secondary)
+                    .font(Font.system(size: 13.0, weight: .regular, design: .rounded))
+                    .padding(4)
+                    .background(Color(uiColor: UIColor.tertiarySystemBackground), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+            }
         }
     }
     
