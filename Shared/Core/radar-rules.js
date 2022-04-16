@@ -805,7 +805,15 @@ var rules = ({ "2047.name":{ _name:"2047",
     ".":[ { title:"最新文章列表",
         docs:"https://docs.rsshub.app/finance.html#shou-xi-jing-ji-xue-jia-lun-tan",
         source:[ "/" ],
-        target:"/chinacef" } ] },
+        target:"/chinacef" },
+      { title:"专家文章",
+        docs:"https://docs.rsshub.app/finance.html#shou-xi-jing-ji-xue-jia-lun-tan-zhuan-jia",
+        source:[ "/index.php/experts/zjmain/experts_id/:experts_id" ],
+        target:"/chinacef/:experts_id" },
+      { title:"金融热点",
+        docs:"https://docs.rsshub.app/finance.html#shou-xi-jing-ji-xue-jia-lun-tan-jin-rong-re-dian",
+        source:[ "/index.php/index/index" ],
+        target:"/chinacef/portal/hot" } ] },
   "ciidbnu.org":{ _name:"中国收入分配研究院",
     ".":[ { title:"分类",
         docs:"https://docs.rsshub.app/new-media.html#",
@@ -3887,6 +3895,176 @@ var rules = ({ "2047.name":{ _name:"2047",
         source:[ "/u/:id",
           "/" ],
         target:"/sciencenet/user/:id" } ] },
+  "sdu.edu.cn":{ _name:"山东大学",
+    "xinwen.wh":[ { title:"(威海)新闻网|校园要闻",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/xyyw" },
+      { title:"(威海)新闻网|学生动态",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/xsdt" },
+      { title:"(威海)新闻网|综合新闻",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/zhxw" },
+      { title:"(威海)新闻网|山大视点",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/sdsd" },
+      { title:"(威海)新闻网|菁菁校园",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/jjxy" },
+      { title:"(威海)新闻网|校园简讯",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/xyjx" },
+      { title:"(威海)新闻网|玛珈之窗",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/mjzc" },
+      { title:"(威海)新闻网|热点专题",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/rdzt" },
+      { title:"(威海)新闻网|媒体视角",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/mtsj" },
+      { title:"(威海)新闻网|高教视野",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/gjsy" },
+      { title:"(威海)新闻网|理论学习",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue-wei-hai",
+        source:[ "/" ],
+        target:"/sdu/wh/news/llxx" } ],
+    "www.cmse":[ { title:"材料科学与工程学院通知",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue",
+        source:[ "/*path",
+          "/" ],
+        target:(params) => {
+                    let type;
+                    switch (params.path) {
+                        case 'zxzx/tzgg.htm':
+                            type = '0';
+                            break;
+                        case 'zxzx/xyxw.htm':
+                            type = '1';
+                            break;
+                        case 'zxzx/bksjy.htm':
+                            type = '2';
+                            break;
+                        case 'zxzx/yjsjy.htm':
+                            type = '3';
+                            break;
+                        case 'zxzx/xsdt.htm':
+                            type = '4';
+                            break;
+                        default:
+                            type = '0';
+                            break;
+                    }
+                    return `/sdu/cmse/${type}`;
+                } } ],
+    "www.cs":[ { title:"计算机科学与技术学院通知",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue",
+        source:[ "/*path",
+          "/" ],
+        target:(params) => {
+                    let type;
+                    switch (params.path) {
+                        case 'xygg.htm':
+                            type = '0';
+                            break;
+                        case 'xsbg.htm':
+                            type = '1';
+                            break;
+                        case 'kjjx.htm':
+                            type = '2';
+                            break;
+                        default:
+                            type = '0';
+                            break;
+                    }
+                    return `/sdu/cs/${type}`;
+                } } ],
+    "www.epe":[ { title:"能源与动力工程学院通知",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue",
+        source:[ "/*path",
+          "/" ],
+        target:(params) => {
+                    let type;
+                    switch (params.path) {
+                        case 'zxzx/xydt.htm':
+                            type = '0';
+                            break;
+                        case 'zxzx/tzgg.htm':
+                            type = '1';
+                            break;
+                        case 'zxzx/xslt.htm':
+                            type = '2';
+                            break;
+                        default:
+                            type = '0';
+                            break;
+                    }
+                    return `/sdu/epe/${type}`;
+                } } ],
+    "www.mech":[ { title:"机械工程学院通知",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue",
+        source:[ "/*path",
+          "/" ],
+        target:(params) => {
+                    let type;
+                    switch (params.path) {
+                        case 'xwdt/tzgg.htm':
+                            type = '0';
+                            break;
+                        case 'xwdt/ysxw.htm':
+                            type = '1';
+                            break;
+                        case 'xwdt/jxxx.htm':
+                            type = '2';
+                            break;
+                        case 'xwdt/xsdt.htm':
+                            type = '3';
+                            break;
+                        case 'xwdt/xyjb.htm':
+                            type = '4';
+                            break;
+                        default:
+                            type = '0';
+                            break;
+                    }
+                    return `/sdu/mech/${type}`;
+                } } ],
+    "www.sc":[ { title:"软件学院通知",
+        docs:"https://docs.rsshub.app/university.html#shan-dong-da-xue",
+        source:[ "/*path",
+          "/" ],
+        target:(params) => {
+                    let type;
+                    switch (params.path) {
+                        case 'tzgg.htm':
+                            type = '0';
+                            break;
+                        case 'kxyj/xsyg.htm':
+                            type = '1';
+                            break;
+                        case 'rcpy/bkjy.htm':
+                            type = '2';
+                            break;
+                        case 'rcpy/yjsjy.htm':
+                            type = '3';
+                            break;
+                        default:
+                            type = '0';
+                            break;
+                    }
+                    return `/sdu/sc/${type}`;
+                } } ] },
   "segmentfault.com":{ _name:"SegmentFault",
     ".":[ { title:"频道",
         docs:"https://docs.rsshub.app/programming.html#segmentfault",
