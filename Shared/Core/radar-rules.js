@@ -4165,6 +4165,12 @@ var rules = ({ "2047.name":{ _name:"2047",
         source:[ "/Help/Versions",
           "/" ],
         target:"/quicker/versions" } ] },
+  "radio.cn":{ _name:"云听",
+    ".":[ { title:"电台节目",
+        docs:"https://docs.rsshub.app/multimedia.html#yun-ting-dian-tai-jie-mu",
+        source:[ "/pc-portal/sanji/detail.html",
+          "/" ],
+        target:(params, url) => `/radio/${new URL(url).searchParams.get('columnId')}` } ] },
   "ici.radio-canada.ca":{ _name:"Radio Canada",
     ".":[ { title:"Latest News",
         docs:"https://docs.rsshub.app/new-media.html#jia-na-da-guo-ji-guang-bo-dian-tai-zui-xin-xiao-xi",
@@ -5356,7 +5362,7 @@ var rules = ({ "2047.name":{ _name:"2047",
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '4') {
+                    if (new URL(url).searchParams.get('column_id') === '4') {
                         return '/youzhiyouxing/materials/4';
                     }
                 } },
@@ -5364,7 +5370,7 @@ var rules = ({ "2047.name":{ _name:"2047",
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '2') {
+                    if (new URL(url).searchParams.get('column_id') === '2') {
                         return '/youzhiyouxing/materials/2';
                     }
                 } },
@@ -5372,7 +5378,7 @@ var rules = ({ "2047.name":{ _name:"2047",
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '10') {
+                    if (new URL(url).searchParams.get('column_id') === '10') {
                         return '/youzhiyouxing/materials/10';
                     }
                 } },
@@ -5380,7 +5386,7 @@ var rules = ({ "2047.name":{ _name:"2047",
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '1') {
+                    if (new URL(url).searchParams.get('column_id') === '1') {
                         return '/youzhiyouxing/materials/1';
                     }
                 } },
@@ -5388,7 +5394,7 @@ var rules = ({ "2047.name":{ _name:"2047",
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '3') {
+                    if (new URL(url).searchParams.get('column_id') === '3') {
                         return '/youzhiyouxing/materials/3';
                     }
                 } },
@@ -5396,7 +5402,7 @@ var rules = ({ "2047.name":{ _name:"2047",
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '11') {
+                    if (new URL(url).searchParams.get('column_id') === '11') {
                         return '/youzhiyouxing/materials/11';
                     }
                 } } ] },
