@@ -6,19 +6,25 @@ var { getPageRSS } = require('./page-rss.js');
 
 function ruleHandler(rule, params, url, html, success, fail) {
     const run = () => {
-        let resultWithParams;
+        let resultWithParams = null;
         if (typeof rule.target === 'function') {
             const document = (new JSDOM(html, { url })).window.document;
             document.location.href = url;
-            resultWithParams = rule.target(params, url, document);
+            resultWithParams = rule.target(params, url, document).toString();
         } else if (typeof rule.target === 'string') {
             resultWithParams = rule.target;
         }
 
         if (resultWithParams) {
-            for (const param in params) {
-                resultWithParams = resultWithParams.replace(`/:${param}`, `/${params[param]}`);
-            }
+            const optionalParamRegex = /\/:([^\?\/]+)\?/g;
+            resultWithParams = resultWithParams.replaceAll(optionalParamRegex, (match, param) => params[param] ? `/${params[param]}` : ``);
+            const requiredParamRegex = /\/:([^\/]+)/g;
+            let failedToReplace = false;
+            resultWithParams = resultWithParams.replaceAll(requiredParamRegex, (match, param) => {
+                if (!params[param]) failedToReplace = true;
+                return `/${params[param]}`;
+            });
+            if (failedToReplace) return null;
         }
 
         return resultWithParams;
@@ -62,35 +68,27 @@ function getPageRSSHub(data) {
             }
             if (rulesForSubdomain) {
                 const recognized = [];
+                
                 rulesForSubdomain.forEach((rule, index) => {
-                    if (rule.source !== undefined) {
-                        if (Object.prototype.toString.call(rule.source) === '[object Array]') {
-                            rule.source.forEach((source) => {
-                                const router = new RouteRecognizer();
-                                router.add([{
-                                    path: source,
-                                    handler: index,
-                                }, ]);
-                                const result = router.recognize(new URL(url).pathname.replace(/\/$/, ''));
-                                if (result && result[0]) {
-                                    recognized.push(result[0]);
-                                }
-                            });
-                        } else if (typeof rule.source === 'string') {
-                            const router = new RouteRecognizer();
-                            router.add([{
-                                path: rule.source,
-                                handler: index,
-                            }, ]);
-                            const result = router.recognize(new URL(url).pathname.replace(/\/$/, ''));
-                            if (result && result[0]) {
-                                recognized.push(result[0]);
-                            }
-                        }
+                    let sources;
+                    if (Object.prototype.toString.call(rule.source) === '[object Array]') {
+                        sources = rule.source;
+                    } else if (typeof(rule.source) === 'string') {
+                        sources = [rule.source];
                     } else {
-                        // source is undefined
-                        // add website feed
+                        sources = ["/", "/*"];
                     }
+                    sources.forEach((source) => {
+                        const router = new RouteRecognizer();
+                        router.add([{
+                            path: source,
+                            handler: index,
+                        }, ]);
+                        const result = router.recognize(new URL(url).pathname.replace(/\/$/, ''));
+                        if (result && result[0]) {
+                            recognized.push(result[0]);
+                        }
+                    });
                 });
                 
                 const pageFeeds = [];
