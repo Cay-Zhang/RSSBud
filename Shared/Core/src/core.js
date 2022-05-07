@@ -5,33 +5,76 @@ var { JSDOM } = require('jsdom');
 var { getPageRSS } = require('./page-rss.js');
 
 function ruleHandler(rule, params, url, html, success, fail) {
-    const run = () => {
-        let resultWithParams = null;
+    function resolveTarget() {
+        let target = null;
         if (typeof rule.target === 'function') {
             const document = (new JSDOM(html, { url })).window.document;
             document.location.href = url;
-            resultWithParams = rule.target(params, url, document).toString();
+            target = rule.target(params, url, document).toString();
         } else if (typeof rule.target === 'string') {
-            resultWithParams = rule.target;
+            target = rule.target;
         }
 
-        if (resultWithParams) {
+        if (target) {
             const optionalParamRegex = /\/:([^\?\/]+)\?/g;
-            resultWithParams = resultWithParams.replaceAll(optionalParamRegex, (match, param) => params[param] ? `/${params[param]}` : ``);
+            target = target.replaceAll(optionalParamRegex, (match, param) => params[param] ? `/${params[param]}` : ``);
             const requiredParamRegex = /\/:([^\/]+)/g;
             let failedToReplace = false;
-            resultWithParams = resultWithParams.replaceAll(requiredParamRegex, (match, param) => {
+            target = target.replaceAll(requiredParamRegex, (match, param) => {
                 if (!params[param]) failedToReplace = true;
                 return `/${params[param]}`;
             });
             if (failedToReplace) return null;
         }
 
-        return resultWithParams;
-    };
-    const path = run();
-    if (path && (!rule.verification || rule.verification(params))) {
-        success(path);
+        return target;
+    }
+
+    function buildResult(resolvedTarget) {
+        targetType = (typeof rule.targetType !== 'undefined') ? rule.targetType : undefined;
+        if (!resolvedTarget) {
+            // TODO: return doc only feed
+            return null;
+        }
+        switch (targetType) {
+            case "url":
+                return {
+                    isRSSFeed: true,
+                    feed: {
+                        url: resolvedTarget,
+                        title: rule.title,
+                        imageURL: "",
+                        isCertain: true,
+                    }
+                };
+                break;
+            case "pathForOriginal":
+                return {
+                    isRSSFeed: true,
+                    feed: {
+                        url: new URL(resolvedTarget, (new URL(url)).origin).toString(),
+                        title: rule.title,
+                        imageURL: "",
+                        isCertain: true,
+                    }
+                };
+                break;
+            default:
+                return {
+                    isRSSFeed: false,
+                    feed: {
+                        title: rule.title,
+                        path: resolvedTarget,
+                        docsURL: rule.docs,
+                    }
+                };
+                break;
+        }
+    }
+
+    const result = buildResult(resolveTarget());
+    if (result && (!rule.verification || rule.verification(params))) {
+        success(result);
     } else {
         fail();
     }
@@ -91,54 +134,43 @@ function getPageRSSHub(data) {
                     });
                 });
                 
-                const pageFeeds = [];
+                const rssFeeds = [];
+                const rssHubFeeds = [];
                 Promise.all(
                     recognized.map(
                         (recog) =>
-                        new Promise((resolve) => {
-                            ruleHandler(
-                                rulesForSubdomain[recog.handler],
-                                recog.params,
-                                url,
-                                html,
-                                (path) => {
-                                    // path resolved
-                                    // add page feed
-                                    if (path) {
-                                        pageFeeds.push({
-                                            title: rulesForSubdomain[recog.handler].title,
-                                            url: '{rsshubDomain}' + path,
-                                            path: path,
-                                            docsURL: rulesForSubdomain[recog.handler].docs,
-                                        });
-                                    } else {
-                                        // this will never be run
-                                        pageFeeds.push({
-                                            title: rulesForSubdomain[recog.handler].title,
-                                            url: rulesForSubdomain[recog.handler].docs,
-                                            isDocs: true,
-                                        });
+                            new Promise((resolve) => {
+                                ruleHandler(
+                                    rulesForSubdomain[recog.handler],
+                                    recog.params,
+                                    url,
+                                    html,
+                                    ({ isRSSFeed, feed }) => {
+                                        if (isRSSFeed) {
+                                            rssFeeds.push(feed);
+                                        } else {
+                                            rssHubFeeds.push(feed);
+                                        }
+                                        resolve();
+                                    },
+                                    () => {
+                                        // path not resolved
+                                        // add website feed
+                                        resolve();
                                     }
-                                    resolve();
-                                },
-                                () => {
-                                    // path not resolved
-                                    // add website feed
-                                    resolve();
-                                }
-                            );
-                        })
+                                );
+                            })
                     )
                 );
-                return pageFeeds;
+                return { rssFeeds, rssHubFeeds };
             } else {
-                return [];
+                return { rssFeeds: [], rssHubFeeds: [] };
             }
         } else {
-            return [];
+            return { rssFeeds: [], rssHubFeeds: [] };
         }
     } else {
-        return [];
+        return { rssFeeds: [], rssHubFeeds: [] };
     }
 }
 
@@ -186,16 +218,16 @@ function getList(data) {
 }
 
 function analyze(url, html, rules) {
-    let rssFeeds = [];
+    let rssFeedsFromHTML = [];
     let debugInfo = "";
     if (html) {
         const document = (new JSDOM(html, { url })).window.document;
         debugInfo = document.location.href;
-        rssFeeds = getPageRSS(document);
+        rssFeedsFromHTML = getPageRSS(document);
     }
-    const rsshubFeeds = getPageRSSHub({ url, html, rules });
+    const { rssFeeds: rssFeedsFromRules, rssHubFeeds } = getPageRSSHub({ url, html, rules });
     return {
-        rssFeeds, rsshubFeeds, debugInfo
+        rssFeeds: rssFeedsFromRules.concat(rssFeedsFromHTML), rssHubFeeds, debugInfo
     };
 }
 

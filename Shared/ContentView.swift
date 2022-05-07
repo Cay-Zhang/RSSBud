@@ -290,7 +290,7 @@ extension ContentView {
                             withAnimation {
                                 self.bottomBarViewModel.progress += 0.3
                                 self.rssFeeds = result.rssFeeds
-                                self.rsshubFeeds = result.rsshubFeeds
+                                self.rsshubFeeds = result.rssHubFeeds
                             }
                         }.store(in: &self.cancelBag)
                 }

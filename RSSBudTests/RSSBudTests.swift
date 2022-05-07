@@ -40,7 +40,7 @@ class RSSBudTests: XCTestCase {
         if let rssFeedCount = rssFeedCount {
             XCTAssertEqual(result.rssFeeds.count, rssFeedCount, "Unexpected RSS feed count.")
         } else if let rsshubFeedCount = rsshubFeedCount {
-            XCTAssertEqual(result.rsshubFeeds.count, rsshubFeedCount, "Unexpected RSSHub feed count.")
+            XCTAssertEqual(result.rssHubFeeds.count, rsshubFeedCount, "Unexpected RSSHub feed count.")
         }
     }
     

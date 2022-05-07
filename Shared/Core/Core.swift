@@ -131,8 +131,8 @@ enum Core {
                     .flatMap { $0.validated() }
                     .collect()
                     .map { verifiedFeeds in
-                        AnalysisResult(rssFeeds: certainRSSFeeds + verifiedFeeds, rsshubFeeds: result.rsshubFeeds)
-                    }.prepend(AnalysisResult(rssFeeds: certainRSSFeeds, rsshubFeeds: result.rsshubFeeds))
+                        AnalysisResult(rssFeeds: certainRSSFeeds + verifiedFeeds, rssHubFeeds: result.rssHubFeeds)
+                    }.prepend(AnalysisResult(rssFeeds: certainRSSFeeds, rssHubFeeds: result.rssHubFeeds))
                     .eraseToAnyPublisher()
             }
         }.eraseToAnyPublisher()
@@ -151,15 +151,15 @@ enum Core {
     
     struct AnalysisResult: Codable {
         var rssFeeds: [RSSFeed] = []
-        var rsshubFeeds: [RSSHubFeed] = []
+        var rssHubFeeds: [RSSHubFeed] = []
         
         static func combine(_ left: Self, _ right: Self) -> Self {
             var result = left
             if left.rssFeeds.count < right.rssFeeds.count {
                 result.rssFeeds = right.rssFeeds
             }
-            if left.rsshubFeeds.count < right.rsshubFeeds.count {
-                result.rsshubFeeds = right.rsshubFeeds
+            if left.rssHubFeeds.count < right.rssHubFeeds.count {
+                result.rssHubFeeds = right.rssHubFeeds
             }
             return result
         }
