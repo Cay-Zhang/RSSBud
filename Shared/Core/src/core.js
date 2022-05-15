@@ -94,29 +94,29 @@ function parseRules(rules) {
 
 function getPageRSSHub(data) {
     const { url, html } = data;
-    const rules = parseRules(data.rules);
+    const ruleFile = parseRules(data.ruleFile);
 
     const parsedDomain = psl.parse(new URL(url).hostname);
     if (parsedDomain && parsedDomain.domain) {
         const subdomain = parsedDomain.subdomain;
         const domain = parsedDomain.domain;
-        if (rules[domain]) {
-            let rulesForSubdomain = rules[domain][subdomain || '.'];
+        if (ruleFile[domain]) {
+            let rulesForSubdomain = ruleFile[domain][subdomain || '.'];
             if (!rulesForSubdomain) {
                 if (subdomain === 'www' || subdomain === 'mobile' || subdomain === 'm') {
-                    rulesForSubdomain = rules[domain]['.'];
+                    rulesForSubdomain = ruleFile[domain]['.'];
                 } else if (!subdomain) {
-                    rulesForSubdomain = rules[domain].www;
+                    rulesForSubdomain = ruleFile[domain].www;
                 }
             }
             if (rulesForSubdomain) {
                 const recognized = [];
-                
+
                 rulesForSubdomain.forEach((rule, index) => {
                     let sources;
                     if (Object.prototype.toString.call(rule.source) === '[object Array]') {
                         sources = rule.source;
-                    } else if (typeof(rule.source) === 'string') {
+                    } else if (typeof (rule.source) === 'string') {
                         sources = [rule.source];
                     } else {
                         sources = ["/", "/*"];
@@ -126,14 +126,14 @@ function getPageRSSHub(data) {
                         router.add([{
                             path: source,
                             handler: index,
-                        }, ]);
+                        },]);
                         const result = router.recognize(new URL(url).pathname.replace(/\/$/, ''));
                         if (result && result[0]) {
                             recognized.push(result[0]);
                         }
                     });
                 });
-                
+
                 const rssFeeds = [];
                 const rssHubFeeds = [];
                 Promise.all(
@@ -217,7 +217,7 @@ function getList(data) {
     return rules;
 }
 
-function analyze(url, html, rules) {
+function analyze(url, html, ruleFile) {
     let rssFeedsFromHTML = [];
     let debugInfo = "";
     if (html) {
@@ -225,7 +225,7 @@ function analyze(url, html, rules) {
         debugInfo = document.location.href;
         rssFeedsFromHTML = getPageRSS(document);
     }
-    const { rssFeeds: rssFeedsFromRules, rssHubFeeds } = getPageRSSHub({ url, html, rules });
+    const { rssFeeds: rssFeedsFromRules, rssHubFeeds } = getPageRSSHub({ url, html, ruleFile });
     return {
         rssFeeds: rssFeedsFromRules.concat(rssFeedsFromHTML), rssHubFeeds, debugInfo
     };
