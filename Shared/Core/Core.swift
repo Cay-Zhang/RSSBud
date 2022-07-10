@@ -33,9 +33,14 @@ enum Core {
         return url
     }()
     
-    static let localRules = try! PersistentFile(
+    static let localRadarRuleFile = try! PersistentFile(
         url: Core.directoryURL.appendingPathComponent("radar-rules.js", isDirectory: false),
         defaultContentURL: Bundle.main.url(forResource: "radar-rules", withExtension: "js")!
+    )
+    
+    static let localRSSBudRuleFile = try! PersistentFile(
+        url: Core.directoryURL.appendingPathComponent("rssbud-rules.js", isDirectory: false),
+        defaultContentURL: Bundle.main.url(forResource: "rssbud-rules", withExtension: "js")!
     )
     
     static let onFinishReloadingRules = ObservableObjectPublisher()
@@ -53,7 +58,18 @@ enum Core {
         }
         
         // Load Rules
-        _ = context.evaluateScript(localRules.content)
+        _ = context.evaluateScript(localRadarRuleFile.content)
+        
+        _ = context.evaluateScript("""
+            const ruleFiles = new Map();
+            ruleFiles.set("radar-rules", rules);
+            """)
+        
+        context.setObject(context.evaluateScript(localRSSBudRuleFile.content), forKeyedSubscript: "rules" as NSString)
+        
+        _ = context.evaluateScript("""
+            ruleFiles.set("rssbud-rules", rules);
+            """)
         
         // Polyfills
         context.setObject(context.globalObject, forKeyedSubscript: "window" as NSString)
@@ -73,7 +89,7 @@ enum Core {
             """)
         
         // Reload Rules on Changes
-        localRules.contentPublisher
+        localRadarRuleFile.contentPublisher
             .dropFirst()
             .debounce(for: 0.5, scheduler: DispatchQueue.main)
             .removeDuplicates()
@@ -113,7 +129,7 @@ enum Core {
                 JSON.stringify(core.analyze(
                     "\(url.string ?? "")",
                     html,
-                    rules
+                    ruleFiles
                 ));
                 """
             )!.toString()!

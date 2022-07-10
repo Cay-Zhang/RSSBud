@@ -86,6 +86,10 @@
 		EE7CD91224DD547200FAA837 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Core.swift */; };
 		EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
 		EE7CD91E24DD6FA000FAA837 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7579324B2B7C600F26CF7 /* Extensions.swift */; };
+		EEA11F152844906C003F839B /* rssbud-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EEA11F142844906C003F839B /* rssbud-rules.js */; };
+		EEA11F162844906C003F839B /* rssbud-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EEA11F142844906C003F839B /* rssbud-rules.js */; };
+		EEA11F172844906C003F839B /* rssbud-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EEA11F142844906C003F839B /* rssbud-rules.js */; };
+		EEA11F182844906C003F839B /* rssbud-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EEA11F142844906C003F839B /* rssbud-rules.js */; };
 		EEA6AF8926FAA4720044166E /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA6AF8826FAA4720044166E /* ErrorView.swift */; };
 		EEA6AF8A26FAA4720044166E /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA6AF8826FAA4720044166E /* ErrorView.swift */; };
 		EEA6AF8B26FAA4720044166E /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA6AF8826FAA4720044166E /* ErrorView.swift */; };
@@ -187,6 +191,7 @@
 		EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSBudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE7CD90824DD541100FAA837 /* RSSBudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBudTests.swift; sourceTree = "<group>"; };
 		EE7CD90A24DD541100FAA837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEA11F142844906C003F839B /* rssbud-rules.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "rssbud-rules.js"; sourceTree = "<group>"; };
 		EEA6AF8826FAA4720044166E /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		EEB7577224B2B6E600F26CF7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EEB7577324B2B6E600F26CF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -290,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				EE000A8624B41E1000979B1A /* radar-rules.js */,
+				EEA11F142844906C003F839B /* rssbud-rules.js */,
 				EE000A9524B41E9600979B1A /* Core.swift */,
 				1CEB9FE3260E525600694262 /* core.min.js */,
 			);
@@ -585,6 +591,7 @@
 			files = (
 				EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */,
 				1CEB9FE6260E525600694262 /* core.min.js in Resources */,
+				EEA11F172844906C003F839B /* rssbud-rules.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,6 +602,7 @@
 				1C270114250B5BC300595BCE /* LaunchScreen.storyboard in Resources */,
 				1C32219E25192F6A00CD9F56 /* Localizable.strings in Resources */,
 				1C6EE75D258CA78900C645F0 /* shortcut-workshop.json in Resources */,
+				EEA11F152844906C003F839B /* rssbud-rules.js in Resources */,
 				EEB7578924B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A8B24B41E1000979B1A /* radar-rules.js in Resources */,
 				1CEB9FE4260E525600694262 /* core.min.js in Resources */,
@@ -610,6 +618,7 @@
 				1CEB9FE5260E525600694262 /* core.min.js in Resources */,
 				EEB7578A24B2B6E700F26CF7 /* Assets.xcassets in Resources */,
 				EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */,
+				EEA11F162844906C003F839B /* rssbud-rules.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,6 +631,7 @@
 				1CCFA7AD268DE6730011190F /* JavaScriptPreprocessingFile.js in Resources */,
 				EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */,
 				1CDB36F0254AEA74002E84D8 /* Assets.xcassets in Resources */,
+				EEA11F182844906C003F839B /* rssbud-rules.js in Resources */,
 				1C6EE75F258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 				1CEB9FE7260E525600694262 /* core.min.js in Resources */,
 			);

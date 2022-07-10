@@ -217,7 +217,7 @@ function getList(data) {
     return rules;
 }
 
-function analyze(url, html, ruleFile) {
+function analyze(url, html, ruleFiles) {
     let rssFeedsFromHTML = [];
     let debugInfo = "";
     if (html) {
@@ -225,9 +225,15 @@ function analyze(url, html, ruleFile) {
         debugInfo = document.location.href;
         rssFeedsFromHTML = getPageRSS(document);
     }
-    const { rssFeeds: rssFeedsFromRules, rssHubFeeds } = getPageRSSHub({ url, html, ruleFile });
+    const rssFeedsFromRuleFiles = [];
+    const rssHubFeeds = [];
+    for (const [ruleFileName, ruleFile] of ruleFiles) {
+        const { rssFeeds: rssFeedsFromRuleFile, rssHubFeeds: rssHubFeedsFromRuleFile } = getPageRSSHub({ url, html, ruleFile });
+        rssFeedsFromRuleFiles.push(...rssFeedsFromRuleFile);
+        rssHubFeeds.push(...rssHubFeedsFromRuleFile);
+    }
     return {
-        rssFeeds: rssFeedsFromRules.concat(rssFeedsFromHTML), rssHubFeeds, debugInfo
+        rssFeeds: rssFeedsFromRuleFiles.concat(rssFeedsFromHTML), rssHubFeeds, debugInfo
     };
 }
 

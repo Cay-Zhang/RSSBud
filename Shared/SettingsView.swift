@@ -204,7 +204,7 @@ struct IntegrationSettingsView: View {
 
 extension Core {
     struct RulesEditor: View {
-        @State var rules: String = Core.localRules.content
+        @State var rules: String = Core.localRadarRuleFile.content
         
         var body: some View {
             TextEditor(text: $rules)
