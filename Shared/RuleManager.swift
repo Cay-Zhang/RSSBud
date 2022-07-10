@@ -110,8 +110,7 @@ class RuleManager: ObservableObject {
                 return URLSession.shared.dataTaskPublisher(for: url)
                     .compactMap { output in
                         String(data: output.data, encoding: .utf8)
-                    }.map { "var rules = " + $0 }
-                    .catch { (error: URLError) -> AnyPublisher<String, URLError> in
+                    }.catch { (error: URLError) -> AnyPublisher<String, URLError> in
                         if index == urls.count - 1 {
                             return Fail(outputType: String.self, failure: error).eraseToAnyPublisher()
                         } else {

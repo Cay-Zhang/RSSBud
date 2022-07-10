@@ -21,12 +21,12 @@ enum Core {
     
     static var cancelBag = Set<AnyCancellable>()
     
-    static let directoryURL: URL = {
+    static let ruleDirectoryURL: URL = {
         let url = FileManager
             .default
             .containerURL(forSecurityApplicationGroupIdentifier: RSSBud.appGroupIdentifier)!
-            .appendingPathComponent("RSSHub", isDirectory: true)
-            .appendingPathComponent("Radar", isDirectory: true)
+            .appendingPathComponent("Core", isDirectory: true)
+            .appendingPathComponent("Rules", isDirectory: true)
         
         try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
         
@@ -34,12 +34,12 @@ enum Core {
     }()
     
     static let localRadarRuleFile = try! PersistentFile(
-        url: Core.directoryURL.appendingPathComponent("radar-rules.js", isDirectory: false),
+        url: Core.ruleDirectoryURL.appendingPathComponent("radar-rules.js", isDirectory: false),
         defaultContentURL: Bundle.main.url(forResource: "radar-rules", withExtension: "js")!
     )
     
     static let localRSSBudRuleFile = try! PersistentFile(
-        url: Core.directoryURL.appendingPathComponent("rssbud-rules.js", isDirectory: false),
+        url: Core.ruleDirectoryURL.appendingPathComponent("rssbud-rules.js", isDirectory: false),
         defaultContentURL: Bundle.main.url(forResource: "rssbud-rules", withExtension: "js")!
     )
     
@@ -58,7 +58,7 @@ enum Core {
         }
         
         // Load Rules
-        _ = context.evaluateScript(localRadarRuleFile.content)
+        context.setObject(context.evaluateScript(localRadarRuleFile.content), forKeyedSubscript: "rules" as NSString)
         
         _ = context.evaluateScript("""
             const ruleFiles = new Map();
