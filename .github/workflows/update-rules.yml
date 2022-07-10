@@ -19,7 +19,7 @@ jobs:
       - name: Update rules
         run: |
           rules="$(curl 'https://rsshub.js.org/build/radar-rules.js' 2>/dev/null)"
-          echo $rules > "./Shared/Core/radar-rules.js"
+          echo "$rules" > "./Shared/Core/radar-rules.js"
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
