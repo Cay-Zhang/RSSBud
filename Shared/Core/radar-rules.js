@@ -386,6 +386,12 @@
         docs:"https://docs.rsshub.app/programming.html#ACM-ECNU",
         source:[ "/contest/" ],
         target:"/acm-ecnu/contest/public" } ] },
+  "acs.org":{ _name:"American Chemistry Society",
+    pubs:[ { title:"Journal",
+        docs:"https://docs.rsshub.app/journal.html#american-chemistry-society",
+        source:[ "/journal/:id",
+          "/" ],
+        target:"/acs/journal/:id" } ] },
   "aotter.net":{ _name:"電獺少女",
     agirls:[ { title:"分類",
         docs:"https://docs.rsshub.app/new-media.html##dian-ta-shao-nu",
@@ -4880,27 +4886,37 @@
         target:"/newsmarket/:category?" } ] },
   "nga.cn":{ _name:"NGA",
     bbs:[ { title:"分区帖子",
-        docs:"https://docs.rsshub.app/bbs.html#nga",
+        docs:"https://docs.rsshub.app/bbs.html#nga-fen-qu-tie-zi",
         source:"/thread.php",
         target:(params, url) => new URL(url).searchParams.get('fid') && `/nga/forum/${new URL(url).searchParams.get('fid')}` },
       { title:"帖子",
-        docs:"https://docs.rsshub.app/bbs.html#nga",
+        docs:"https://docs.rsshub.app/bbs.html#nga-tie-zi",
         source:"/read.php",
-        target:(params, url) => new URL(url).searchParams.get('tid') && `/nga/post/${new URL(url).searchParams.get('tid')}` } ] },
+        target:(params, url) => new URL(url).searchParams.get('tid') && `/nga/post/${new URL(url).searchParams.get('tid')}` },
+      { title:"帖子 - 只看作者",
+        docs:"https://docs.rsshub.app/bbs.html#nga-tie-zi",
+        source:"/read.php",
+        target:(params, url, document) => {
+                    const tid = new URL(url).searchParams.get('tid');
+                    const authorId = document.documentElement.innerHTML.match(/commonui\.userInfo\.setAll\(\s{3}{"(\d+)"/)[1];
+                    return `/nga/post/${tid}/${authorId}`;
+                } } ] },
   "178.com":{ _name:"NGA",
     nga:[ { title:"分区帖子",
         docs:"https://docs.rsshub.app/bbs.html#nga-fen-qu-tie-zi",
-        source:[ "/thread.php" ],
-        target:(params, url) => {
-                    const fid = new URL(url).searchParams.get('fid');
-                    return `/nga/forum/${fid}`;
-                } },
+        source:"/thread.php",
+        target:(params, url) => new URL(url).searchParams.get('fid') && `/nga/forum/${new URL(url).searchParams.get('fid')}` },
       { title:"帖子",
         docs:"https://docs.rsshub.app/bbs.html#nga-tie-zi",
-        source:[ "/read.php" ],
-        target:(params, url) => {
+        source:"/read.php",
+        target:(params, url) => new URL(url).searchParams.get('tid') && `/nga/post/${new URL(url).searchParams.get('tid')}` },
+      { title:"帖子 - 只看作者",
+        docs:"https://docs.rsshub.app/bbs.html#nga-tie-zi",
+        source:"/read.php",
+        target:(params, url, document) => {
                     const tid = new URL(url).searchParams.get('tid');
-                    return `/nga/post/${tid}`;
+                    const authorId = document.documentElement.innerHTML.match(/commonui\.userInfo\.setAll\(\s{3}{"(\d+)"/)[1];
+                    return `/nga/post/${tid}/${authorId}`;
                 } } ] },
   "ngocn2.org":{ _name:"NGOCN",
     ".":[ { title:"分类",
@@ -5344,6 +5360,11 @@
         source:[ "/hk/finance/index.html",
           "/hk/finance/index_cn.html" ],
         target:"/oncc/zh-hans/finance" } ] },
+  "oo-software.com":{ _name:"O&O Software",
+    ".":[ { title:"Changelog",
+        docs:"https://docs.rsshub.app/program-update.html#oo-software-changelog",
+        source:[ "/en/changelog" ],
+        target:(params, url) => `/oo-software/changelog/${new URL(url).match(/\/en\/(.*?)\/changelog/)[1]}` } ] },
   "openwrt.org":{ _name:"Openwrt",
     ".":[ { title:"Model Releases",
         docs:"https://docs.rsshub.app/program-update.html#openwrt",
