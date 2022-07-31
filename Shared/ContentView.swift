@@ -233,7 +233,7 @@ extension ContentView {
                     bottomBarViewModel.isFailed = isFailed
                 }.store(in: &self.cancelBag)
             
-            Core.onFinishReloadingRules
+            Core.onFinishReloadingChangedRules
                 .sink { [weak self] in
                     self?.originalURL.map { self?.process(url: $0) }
                 }.store(in: &cancelBag)

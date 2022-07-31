@@ -9,43 +9,49 @@ import SwiftUI
 import Combine
 import BackgroundTasks
 
+struct RuleFileInfo: Hashable, Codable {
+    var filename: String
+    var remoteURL: URLComponents
+    
+    var isValid: Bool {
+        filename.isValidFilename
+    }
+}
+
+extension Sequence where Element == RuleFileInfo {
+    var isValid: Bool {
+        map(\.filename).isUnique() && map(\.remoteURL).isUnique() && allSatisfy(\.isValid)
+    }
+}
+
 class RuleManager: ObservableObject {
     
     static let shared: RuleManager = RuleManager()
+    
+    static var defaultRuleFilesInfo: [RuleFileInfo] = [
+        RuleFileInfo(filename: "radar-rules.js", remoteURL: "https://rsshub.js.org/build/radar-rules.js"),
+        RuleFileInfo(filename: "rssbud-rules.js", remoteURL: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rssbud-rules.js"),
+    ]
     
     let remoteRulesFetchTaskIdentifier = "me.CayZhang.RSSBud.fetchRemoteRSSHubRadarRules"
     
     @Published var isFetchingRemoteRules: Bool = false
     
     @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) var _lastRemoteRulesFetchDate: Double?
+    @AppStorage("rules", store: RSSBud.userDefaults) @CodableAdaptor private(set) var ruleFilesInfo: [RuleFileInfo] = RuleManager.defaultRuleFilesInfo
+   
+    private(set) lazy var ruleFiles: [PersistentFile] = RuleManager.ruleFiles(from: ruleFilesInfo)
     
+    let onRuleFilesChange = ObservableObjectPublisher()
+    
+    private var ruleFilesMonitoringCancellable: AnyCancellable! = nil  // Never read
     var cancelBag = Set<AnyCancellable>()
     
     init() {
-        Core.localRadarRuleFile.contentPublisher
-            .dropFirst()
-            .map { _ in Date() }
+        ruleFilesMonitoringCancellable = Publishers.MergeMany(ruleFiles.map { $0.contentPublisher.dropFirst() })
+            .map { _ in () }
             .receive(on: DispatchQueue.main)
-            .assign(to: \.lastRemoteRulesFetchDate, on: self)
-            .store(in: &cancelBag)
-    }
-    
-    func fetchRemoteRules() {
-        withAnimation { isFetchingRemoteRules = true }
-        
-        remoteRules()
-            .sink { completion in
-                if case let .failure(error) = completion {
-                    print(error)
-                }
-            } receiveValue: { [weak self] string in
-                Core.localRadarRuleFile.content = string
-                DispatchQueue.main.async {
-                    withAnimation {
-                        self?.isFetchingRemoteRules = false
-                    }
-                }
-            }.store(in: &self.cancelBag)
+            .sink { [onRuleFilesChange] in onRuleFilesChange.send() }
     }
     
     var lastRemoteRulesFetchDate: Date? {
@@ -53,31 +59,62 @@ class RuleManager: ObservableObject {
         set { _lastRemoteRulesFetchDate = newValue?.timeIntervalSinceReferenceDate }
     }
     
-    func fetchRemoteRules(withAppRefreshTask task: BGAppRefreshTask) {
-        task.expirationHandler = {
-            task.setTaskCompleted(success: false)
-            self.cancelBag = []
+    func updateRuleFilesInfo(_ newValue: [RuleFileInfo]) -> Bool {
+        guard newValue.isValid else { return false }
+        ruleFilesInfo = newValue
+        ruleFiles = RuleManager.ruleFiles(from: newValue)
+        ruleFilesMonitoringCancellable = Publishers.MergeMany(ruleFiles.map { $0.contentPublisher.dropFirst() })
+            .map { _ in () }
+            .prepend(())
+            .sink { [onRuleFilesChange] in onRuleFilesChange.send() }
+        return true
+    }
+    
+    func fetchRemoteRules(withAppRefreshTask task: BGAppRefreshTask? = nil) {
+        if let task {
+            task.expirationHandler = {
+                task.setTaskCompleted(success: false)
+                self.cancelBag = []
+            }
         }
         
-        DispatchQueue.main.sync {
+        DispatchQueue.main.async {
             withAnimation { self.isFetchingRemoteRules = true }
         }
         
-        remoteRules()
-            .sink { completion in
+        remoteRuleFiles()
+            .sink { [weak self] completion in
                 if case .failure(_) = completion {
-                    task.setTaskCompleted(success: false)
+                    task?.setTaskCompleted(success: false)
+                } else {
+                    DispatchQueue.main.async {
+                        self?.lastRemoteRulesFetchDate = Date()
+                    }
                 }
-            } receiveValue: { [weak self] string in
-                Core.localRadarRuleFile.content = string
+            } receiveValue: { [weak self] ruleContents in
+                for (filename, content) in ruleContents {
+                    guard let index = self?.ruleFilesInfo.firstIndex(where: { $0.filename == filename }) else {
+                        continue
+                    }
+                    self?.ruleFiles[index].content = content
+                }
                 DispatchQueue.main.async {
                     withAnimation {
                         self?.isFetchingRemoteRules = false
                     }
                     print("Task completed.")
-                    task.setTaskCompleted(success: true)
+                    task?.setTaskCompleted(success: true)
                 }
             }.store(in: &self.cancelBag)
+    }
+    
+    private static func ruleFiles(from ruleFilesInfo: [RuleFileInfo]) -> [PersistentFile] {
+        ruleFilesInfo.map { info in
+            try! PersistentFile(
+                url: Core.ruleDirectoryURL.appendingPathComponent("\(info.filename)", isDirectory: false),
+                defaultContentURL: Bundle.main.url(forResource: "radar-rules", withExtension: "js")!
+            )
+        }
     }
     
     func scheduleRemoteRulesFetchTask() {
@@ -98,26 +135,18 @@ class RuleManager: ObservableObject {
         }
     }
     
-    func remoteRules() -> AnyPublisher<String, URLError> {
-        let urls = ["https://rsshub.js.org/build/radar-rules.js", "https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@gh-pages/build/radar-rules.js"]
-            .compactMap(URL.init(string:))
-        
-        return urls
-            .enumerated()
+    func remoteRuleFiles() -> AnyPublisher<[String: String], URLError> {
+        ruleFilesInfo
             .publisher
-            .flatMap(maxPublishers: .max(1)) { tuple -> AnyPublisher<String, URLError> in
-                let (index, url) = tuple
-                return URLSession.shared.dataTaskPublisher(for: url)
+            .flatMap { info -> AnyPublisher<(String, String), URLError> in
+                return URLSession.shared.dataTaskPublisher(for: info.remoteURL.url!)
                     .compactMap { output in
                         String(data: output.data, encoding: .utf8)
-                    }.catch { (error: URLError) -> AnyPublisher<String, URLError> in
-                        if index == urls.count - 1 {
-                            return Fail(outputType: String.self, failure: error).eraseToAnyPublisher()
-                        } else {
-                            return Empty(completeImmediately: true).eraseToAnyPublisher()
-                        }
+                    }.map { (content: String) -> (filename: String, content: String) in
+                        (info.filename,  content)
                     }.eraseToAnyPublisher()
-            }.first()
+            }.collect()
+            .map(Dictionary.init(uniqueKeysWithValues:))
             .eraseToAnyPublisher()
     }
 }

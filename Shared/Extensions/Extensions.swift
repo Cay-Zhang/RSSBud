@@ -192,6 +192,15 @@ extension String {
         let detector = try! NSDataDetector(types: types.rawValue)
         return detector.matches(in: self, range: NSRange(self.startIndex..., in: self))
     }
+    
+    public var isValidFilename: Bool {
+        let invalidCharacters = CharacterSet(charactersIn: ":/")
+            .union(.newlines)
+            .union(.illegalCharacters)
+            .union(.controlCharacters)
+
+        return rangeOfCharacter(from: invalidCharacters) == nil
+    }
 }
 
 struct XCallbackContext: Equatable, ExpressibleByNilLiteral {
@@ -428,5 +437,18 @@ public struct CodableAdaptor<Value: Codable>: RawRepresentable {
     
     public var rawValue: String {
         (try? JSONEncoder().encode(wrappedValue)).flatMap { String(data: $0, encoding: .utf8) } ?? ""
+    }
+}
+
+extension Sequence where Element: Hashable {
+    public func isUnique() -> Bool {
+        var set = Set<Element>()
+        for element in self {
+            let (inserted, _) = set.insert(element)
+            if !inserted {
+                return false
+            }
+        }
+        return true
     }
 }

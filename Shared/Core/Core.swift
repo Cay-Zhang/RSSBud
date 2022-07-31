@@ -33,17 +33,20 @@ enum Core {
         return url
     }()
     
-    static let localRadarRuleFile = try! PersistentFile(
-        url: Core.ruleDirectoryURL.appendingPathComponent("radar-rules.js", isDirectory: false),
-        defaultContentURL: Bundle.main.url(forResource: "radar-rules", withExtension: "js")!
-    )
+    static let onFinishReloadingChangedRules = ObservableObjectPublisher()
     
-    static let localRSSBudRuleFile = try! PersistentFile(
-        url: Core.ruleDirectoryURL.appendingPathComponent("rssbud-rules.js", isDirectory: false),
-        defaultContentURL: Bundle.main.url(forResource: "rssbud-rules", withExtension: "js")!
-    )
-    
-    static let onFinishReloadingRules = ObservableObjectPublisher()
+    private static func loadRules(for context: JSContext) {
+        _ = context.evaluateScript("""
+            var ruleFiles = new Map();
+            """)
+        for (info, file) in zip(RuleManager.shared.ruleFilesInfo, RuleManager.shared.ruleFiles) {
+            context.setObject(info.filename, forKeyedSubscript: "filename" as NSString)
+            context.setObject(context.evaluateScript(file.content), forKeyedSubscript: "content" as NSString)
+            _ = context.evaluateScript("""
+                ruleFiles.set(filename, content);
+                """)
+        }
+    }
     
     static let jsContext: JSContext = {
         let context = JSContext()!
@@ -58,18 +61,7 @@ enum Core {
         }
         
         // Load Rules
-        context.setObject(context.evaluateScript(localRadarRuleFile.content), forKeyedSubscript: "rules" as NSString)
-        
-        _ = context.evaluateScript("""
-            const ruleFiles = new Map();
-            ruleFiles.set("radar-rules", rules);
-            """)
-        
-        context.setObject(context.evaluateScript(localRSSBudRuleFile.content), forKeyedSubscript: "rules" as NSString)
-        
-        _ = context.evaluateScript("""
-            ruleFiles.set("rssbud-rules", rules);
-            """)
+        loadRules(for: context)
         
         // Polyfills
         context.setObject(context.globalObject, forKeyedSubscript: "window" as NSString)
@@ -89,14 +81,12 @@ enum Core {
             """)
         
         // Reload Rules on Changes
-        localRadarRuleFile.contentPublisher
-            .dropFirst()
+        RuleManager.shared.onRuleFilesChange
             .debounce(for: 0.5, scheduler: DispatchQueue.main)
-            .removeDuplicates()
             .sink { rules in
                 print("Reloading rules...")
-                _ = context.evaluateScript(rules)
-                onFinishReloadingRules.send()
+                loadRules(for: context)
+                onFinishReloadingChangedRules.send()
             }.store(in: &cancelBag)
         
         return context

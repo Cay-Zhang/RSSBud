@@ -20,7 +20,7 @@ extension RSSBud {
         init() {
             BGTaskScheduler.shared.register(forTaskWithIdentifier: RuleManager.shared.remoteRulesFetchTaskIdentifier, using: nil) { task in
                 print("Running task...")
-                RuleManager.shared.fetchRemoteRules(withAppRefreshTask: task as! BGAppRefreshTask)
+                RuleManager.shared.fetchRemoteRules(withAppRefreshTask: task as? BGAppRefreshTask)
                 RuleManager.shared.scheduleRemoteRulesFetchTask()
             }
             RuleManager.shared.scheduleRemoteRulesFetchTask()
