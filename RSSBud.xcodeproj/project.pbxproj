@@ -117,6 +117,10 @@
 		EEC4A51C24E516D8005041CA /* RSSBud.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A51A24E516D8005041CA /* RSSBud.swift */; };
 		EEC4A51D24E516D8005041CA /* RSSBud.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A51A24E516D8005041CA /* RSSBud.swift */; };
 		EEC4A51E24E516D8005041CA /* RSSBud.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4A51A24E516D8005041CA /* RSSBud.swift */; };
+		EEC83FF32897526200F14B63 /* empty-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EEC83FF22897526200F14B63 /* empty-rules.js */; };
+		EEC83FF42897526200F14B63 /* empty-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EEC83FF22897526200F14B63 /* empty-rules.js */; };
+		EEC83FF52897526200F14B63 /* empty-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EEC83FF22897526200F14B63 /* empty-rules.js */; };
+		EEC83FF62897526200F14B63 /* empty-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EEC83FF22897526200F14B63 /* empty-rules.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -212,6 +216,7 @@
 		EEC4A51824E42D61005041CA /* RSSBud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RSSBud.entitlements; sourceTree = "<group>"; };
 		EEC4A51924E5122F005041CA /* Action Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Action Extension.entitlements"; sourceTree = "<group>"; };
 		EEC4A51A24E516D8005041CA /* RSSBud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBud.swift; sourceTree = "<group>"; };
+		EEC83FF22897526200F14B63 /* empty-rules.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "empty-rules.js"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +303,7 @@
 				EEA11F142844906C003F839B /* rssbud-rules.js */,
 				EE000A9524B41E9600979B1A /* Core.swift */,
 				1CEB9FE3260E525600694262 /* core.min.js */,
+				EEC83FF22897526200F14B63 /* empty-rules.js */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -589,6 +595,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEC83FF52897526200F14B63 /* empty-rules.js in Resources */,
 				EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */,
 				1CEB9FE6260E525600694262 /* core.min.js in Resources */,
 				EEA11F172844906C003F839B /* rssbud-rules.js in Resources */,
@@ -599,6 +606,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEC83FF32897526200F14B63 /* empty-rules.js in Resources */,
 				1C270114250B5BC300595BCE /* LaunchScreen.storyboard in Resources */,
 				1C32219E25192F6A00CD9F56 /* Localizable.strings in Resources */,
 				1C6EE75D258CA78900C645F0 /* shortcut-workshop.json in Resources */,
@@ -617,6 +625,7 @@
 				1C32219F25192F6A00CD9F56 /* Localizable.strings in Resources */,
 				1CEB9FE5260E525600694262 /* core.min.js in Resources */,
 				EEB7578A24B2B6E700F26CF7 /* Assets.xcassets in Resources */,
+				EEC83FF42897526200F14B63 /* empty-rules.js in Resources */,
 				EE000A8C24B41E1000979B1A /* radar-rules.js in Resources */,
 				EEA11F162844906C003F839B /* rssbud-rules.js in Resources */,
 			);
@@ -631,6 +640,7 @@
 				1CCFA7AD268DE6730011190F /* JavaScriptPreprocessingFile.js in Resources */,
 				EEC4A4FD24E3D032005041CA /* Media.xcassets in Resources */,
 				1CDB36F0254AEA74002E84D8 /* Assets.xcassets in Resources */,
+				EEC83FF62897526200F14B63 /* empty-rules.js in Resources */,
 				EEA11F182844906C003F839B /* rssbud-rules.js in Resources */,
 				1C6EE75F258CA78900C645F0 /* shortcut-workshop.json in Resources */,
 				1CEB9FE7260E525600694262 /* core.min.js in Resources */,

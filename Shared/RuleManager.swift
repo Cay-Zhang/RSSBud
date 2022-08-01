@@ -28,7 +28,7 @@ class RuleManager: ObservableObject {
     
     static let shared: RuleManager = RuleManager()
     
-    static var defaultRuleFilesInfo: [RuleFileInfo] = [
+    static let bundledRuleFilesInfo: [RuleFileInfo] = [
         RuleFileInfo(filename: "radar-rules.js", remoteURL: "https://rsshub.js.org/build/radar-rules.js"),
         RuleFileInfo(filename: "rssbud-rules.js", remoteURL: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rssbud-rules.js"),
     ]
@@ -38,7 +38,7 @@ class RuleManager: ObservableObject {
     @Published var isFetchingRemoteRules: Bool = false
     
     @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) var _lastRemoteRulesFetchDate: Double?
-    @AppStorage("rules", store: RSSBud.userDefaults) @CodableAdaptor private(set) var ruleFilesInfo: [RuleFileInfo] = RuleManager.defaultRuleFilesInfo
+    @AppStorage("rules", store: RSSBud.userDefaults) @CodableAdaptor private(set) var ruleFilesInfo: [RuleFileInfo] = RuleManager.bundledRuleFilesInfo
    
     private(set) lazy var ruleFiles: [PersistentFile] = RuleManager.ruleFiles(from: ruleFilesInfo)
     
@@ -108,11 +108,19 @@ class RuleManager: ObservableObject {
             }.store(in: &self.cancelBag)
     }
     
+    private static func defaultRuleFileContentURL(for remoteURL: URLComponents) -> URL {
+        if let info = bundledRuleFilesInfo.first(where: { $0.remoteURL == remoteURL }), let bundledRuleFileURL = Bundle.main.url(forResource: info.filename, withExtension: nil) {
+            return bundledRuleFileURL
+        } else {
+            return Bundle.main.url(forResource: "empty-rules", withExtension: "js")!
+        }
+    }
+    
     private static func ruleFiles(from ruleFilesInfo: [RuleFileInfo]) -> [PersistentFile] {
         ruleFilesInfo.map { info in
             try! PersistentFile(
                 url: Core.ruleDirectoryURL.appendingPathComponent("\(info.filename)", isDirectory: false),
-                defaultContentURL: Bundle.main.url(forResource: "radar-rules", withExtension: "js")!
+                defaultContentURL: defaultRuleFileContentURL(for: info.remoteURL)
             )
         }
     }
