@@ -46,6 +46,11 @@
 "Telegram Channel" = "Telegram 更新频道";
 "Telegram Group" = "Telegram 群组";
 
+"Save and update" = "保存并更新";
+"Filename" = "文件名";
+"Remote URL" = "远程 URL";
+"Add new rule file" = "添加规则文件";
+
 "Nothing Found" = "真的一滴也没有了 (/TДT)/";
 "Error Occurred" = "出错了...";
 "Edit Original URL" = "编辑分析网址";

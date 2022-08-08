@@ -9,7 +9,8 @@ import SwiftUI
 import Combine
 import BackgroundTasks
 
-struct RuleFileInfo: Hashable, Codable {
+struct RuleFileInfo: Hashable, Codable, Identifiable {
+    var id = UUID()
     var filename: String
     var remoteURL: URLComponents
     

@@ -84,7 +84,7 @@ struct SettingsView: View {
                         }
                     }
                     
-                    NavigationLink(destination: Core.RulesEditor()) {
+                    NavigationLink(destination: Core.RuleManagerView()) {
                         HStack {
                             Text("Rules")
                             Spacer()
@@ -203,14 +203,64 @@ struct IntegrationSettingsView: View {
 }
 
 extension Core {
-    struct RulesEditor: View {
-        @State var rules: String = ""
+    struct RuleManagerView: View {
+        @State var ruleFilesInfo: [RuleFileInfo] = RuleManager.shared.ruleFilesInfo
         
         var body: some View {
-            TextEditor(text: $rules)
-                .font(.system(size: 12, weight: .light, design: .monospaced))
-                .disableAutocorrection(true)
-                .navigationTitle("Rules")
+            Form {
+                Section {
+                    Button("Save and update", systemImage: "arrow.clockwise", withAnimation: .default) {
+                        RuleManager.shared.updateRuleFilesInfo(ruleFilesInfo)
+                        RuleManager.shared.fetchRemoteRules()
+                    }.environment(\.isEnabled, ruleFilesInfo != RuleManager.shared.ruleFilesInfo && ruleFilesInfo.isValid)
+                }
+                
+                ForEach($ruleFilesInfo) { $info in
+                    Section {
+                        HStack {
+                            Text("Filename")
+                            Spacer()
+                            ValidatedTextField(
+                                "Filename",
+                                text: $info.filename,
+                                validation: \.isValidFilename
+                            ).foregroundColor(.secondary)
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
+                            .multilineTextAlignment(.trailing)
+                        }
+                        
+                        HStack {
+                            Text("Remote URL")
+                            Spacer()
+                            ValidatedTextField(
+                                "Remote URL",
+                                text: $info.remoteURL.validatedString,
+                                validation: { URLComponents(autoPercentEncoding: $0) != nil }
+                            ).foregroundColor(.secondary)
+                            .keyboardType(.URL)
+                            .disableAutocorrection(true)
+                            .multilineTextAlignment(.trailing)
+                        }
+                        
+                        Button("Delete", role: .destructive) {
+                            withAnimation {
+                                _ = ruleFilesInfo.firstIndex {
+                                    $0.id == info.id
+                                }.map {
+                                    ruleFilesInfo.remove(at: $0)
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                Section {
+                    Button("Add new rule file", systemImage: "plus", withAnimation: .default) {
+                        ruleFilesInfo.append(.init(filename: "", remoteURL: ""))
+                    }
+                }
+            }.navigationTitle("Rules")
         }
     }
 }
@@ -225,7 +275,7 @@ struct SettingsView_Previews: PreviewProvider {
             }
             
             NavigationView {
-                Core.RulesEditor()
+                Core.RuleManagerView()
             }
         }
     }

@@ -46,6 +46,11 @@
 "Telegram Channel" = "Telegram Channel";
 "Telegram Group" = "Telegram Group";
 
+"Save and update" = "Save and update";
+"Filename" = "Filename";
+"Remote URL" = "Remote URL";
+"Add new rule file" = "Add new rule file";
+
 "Nothing Found" = "Nothing Found";
 "Error Occurred" = "Oops...";
 "Edit Original URL" = "Edit Original URL";

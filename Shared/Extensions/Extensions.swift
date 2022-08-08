@@ -78,6 +78,23 @@ extension URLComponents {
         copy.omitEmptyQueryItems()
         return copy
     }
+    
+    var validatedString: String {
+        get {
+            guard let string = string else {
+                assertionFailure()
+                return ""
+            }
+            return string
+        }
+        set {
+            guard let newValue = URLComponents(autoPercentEncoding: newValue) else {
+                assertionFailure()
+                return
+            }
+            self = newValue
+        }
+    }
 }
 
 extension URLComponents: ExpressibleByStringLiteral {
