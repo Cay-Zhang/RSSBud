@@ -194,6 +194,8 @@ extension String {
     }
     
     public var isValidFilename: Bool {
+        guard !isEmpty else { return false }
+        
         let invalidCharacters = CharacterSet(charactersIn: ":/")
             .union(.newlines)
             .union(.illegalCharacters)

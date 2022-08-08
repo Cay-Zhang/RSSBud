@@ -59,6 +59,7 @@ class RuleManager: ObservableObject {
         set { _lastRemoteRulesFetchDate = newValue?.timeIntervalSinceReferenceDate }
     }
     
+    @discardableResult
     func updateRuleFilesInfo(_ newValue: [RuleFileInfo]) -> Bool {
         guard newValue.isValid else { return false }
         ruleFilesInfo = newValue
@@ -84,10 +85,13 @@ class RuleManager: ObservableObject {
         
         remoteRuleFiles()
             .sink { [weak self] completion in
-                if case .failure(_) = completion {
-                    task?.setTaskCompleted(success: false)
-                } else {
-                    DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    withAnimation {
+                        self?.isFetchingRemoteRules = false
+                    }
+                    print("Task completed.")
+                    task?.setTaskCompleted(success: completion == .finished)
+                    if completion == .finished {
                         self?.lastRemoteRulesFetchDate = Date()
                     }
                 }
@@ -97,13 +101,6 @@ class RuleManager: ObservableObject {
                         continue
                     }
                     self?.ruleFiles[index].content = content
-                }
-                DispatchQueue.main.async {
-                    withAnimation {
-                        self?.isFetchingRemoteRules = false
-                    }
-                    print("Task completed.")
-                    task?.setTaskCompleted(success: true)
                 }
             }.store(in: &self.cancelBag)
     }
