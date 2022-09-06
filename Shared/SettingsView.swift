@@ -209,10 +209,16 @@ extension Core {
         var body: some View {
             Form {
                 Section {
-                    Button("Save and update", systemImage: "arrow.clockwise", withAnimation: .default) {
+                    Button("Save and update", systemImage: "square.and.arrow.down.on.square.fill", withAnimation: .default) {
                         RuleManager.shared.updateRuleFilesInfo(ruleFilesInfo)
                         RuleManager.shared.fetchRemoteRules()
                     }.environment(\.isEnabled, ruleFilesInfo != RuleManager.shared.ruleFilesInfo && ruleFilesInfo.isValid)
+                    
+                    Button("Restore default", systemImage: "arrow.clockwise", withAnimation: .default) {
+                        ruleFilesInfo = RuleManager.bundledRuleFilesInfo
+                        RuleManager.shared.updateRuleFilesInfo(ruleFilesInfo)
+                        RuleManager.shared.fetchRemoteRules()
+                    }
                 }
                 
                 ForEach($ruleFilesInfo) { $info in
