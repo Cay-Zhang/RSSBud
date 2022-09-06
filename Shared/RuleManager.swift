@@ -30,8 +30,8 @@ class RuleManager: ObservableObject {
     static let shared: RuleManager = RuleManager()
     
     static let bundledRuleFilesInfo: [RuleFileInfo] = [
-        RuleFileInfo(filename: "radar-rules.js", remoteURL: "https://rsshub.js.org/build/radar-rules.js"),
-        RuleFileInfo(filename: "rssbud-rules.js", remoteURL: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rssbud-rules.js"),
+        RuleFileInfo(filename: "radar-rules.js", remoteURL: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rules/radar-rules.js"),
+        RuleFileInfo(filename: "rssbud-rules.js", remoteURL: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rules/rssbud-rules.js"),
     ]
     
     let remoteRulesFetchTaskIdentifier = "me.CayZhang.RSSBud.fetchRemoteRSSHubRadarRules"
