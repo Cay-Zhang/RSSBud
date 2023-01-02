@@ -39,7 +39,7 @@ class RuleManager: ObservableObject {
     @Published var isFetchingRemoteRules: Bool = false
     
     @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) var _lastRemoteRulesFetchDate: Double?
-    @AppStorage("rules", store: RSSBud.userDefaults) @CodableAdaptor private(set) var ruleFilesInfo: [RuleFileInfo] = RuleManager.bundledRuleFilesInfo
+    @AppStorage("rules", store: RSSBud.userDefaults) @CodableAdaptor private(set) var ruleFilesInfo: [RuleFileInfo] = RuleManager.defaultRuleFilesInfo()
    
     private(set) lazy var ruleFiles: [PersistentFile] = RuleManager.ruleFiles(from: ruleFilesInfo)
     
@@ -106,12 +106,26 @@ class RuleManager: ObservableObject {
             }.store(in: &self.cancelBag)
     }
     
+    func fetchRemoteRulesIfNeeded() {
+        if lastRemoteRulesFetchDate.map({ Date().timeIntervalSince($0) >= 5 * 60 * 60 }) ?? true {
+            fetchRemoteRules()
+        }
+    }
+    
     private static func defaultRuleFileContentURL(for remoteURL: URLComponents) -> URL {
         if let info = bundledRuleFilesInfo.first(where: { $0.remoteURL == remoteURL }), let bundledRuleFileURL = Bundle.main.url(forResource: info.filename, withExtension: nil) {
             return bundledRuleFileURL
         } else {
             return Bundle.main.url(forResource: "empty-rules", withExtension: "js")!
         }
+    }
+    
+    private static func defaultRuleFilesInfo() -> [RuleFileInfo] {
+        guard let language = Bundle.preferredLocalizations(from: ["zh", "en-US"]).first, language != "zh" else { return bundledRuleFilesInfo }
+        return [
+            RuleFileInfo(filename: "radar-rules.\(language).js", remoteURL: URLComponents(string: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rules/\(language)/radar-rules.js")!),
+            RuleFileInfo(filename: "rssbud-rules.\(language).js", remoteURL: URLComponents(string: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rules/\(language)/rssbud-rules.js")!),
+        ]
     }
     
     private static func ruleFiles(from ruleFilesInfo: [RuleFileInfo]) -> [PersistentFile] {

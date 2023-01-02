@@ -25,6 +25,8 @@ extension RSSBud {
             }
             RuleManager.shared.scheduleRemoteRulesFetchTask()
             
+            RuleManager.shared.fetchRemoteRulesIfNeeded()
+            
             // temp workaround for list background
             UITableView.appearance().backgroundColor = UIColor.clear
             
