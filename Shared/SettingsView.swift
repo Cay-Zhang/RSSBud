@@ -54,6 +54,17 @@ struct SettingsView: View {
                         destination: ShortcutWorkshopView()
                     )
                     
+                    NavigationLink(destination: Core.RuleManagerView()) {
+                        HStack {
+                            Text("Rules")
+                            Spacer()
+                            if let date = lastRemoteRulesFetchDate {
+                                Text("Updated \(date, style: .relative) ago")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    
                     Toggle("Prefer Opening URL In App", isOn: _isOpenURLInAppPreferred.animation(.default))
                 }
                 
@@ -83,33 +94,6 @@ struct SettingsView: View {
                                 .multilineTextAlignment(.trailing)
                         }
                     }
-                    
-                    NavigationLink(destination: Core.RuleManagerView()) {
-                        HStack {
-                            Text("Rules")
-                            Spacer()
-                            if let date = lastRemoteRulesFetchDate {
-                                Text("Updated \(date, style: .relative) ago")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                    
-                    HStack {
-                        Button(
-                            ruleManager.isFetchingRemoteRules ? "Updating Rules..." : "Update Rules Now",
-                            systemImage: "arrow.clockwise"
-                        ) {
-                            ruleManager.fetchRemoteRules()
-                            ruleManager.scheduleRemoteRulesFetchTask()
-                        }.environment(\.isEnabled, !ruleManager.isFetchingRemoteRules)
-                        
-                        Spacer()
-                        
-                        if ruleManager.isFetchingRemoteRules {
-                            ProgressView()
-                        }
-                    }
                 }
                 
                 Section(header: Text("Settings Section About")) {
@@ -135,6 +119,7 @@ struct SettingsView: View {
                         }
                     }
                 }
+                
             }.navigationTitle("Settings")
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
@@ -204,69 +189,193 @@ struct IntegrationSettingsView: View {
 
 extension Core {
     struct RuleManagerView: View {
-        @State var ruleFilesInfo: [RuleFileInfo] = RuleManager.shared.ruleFilesInfo
+        @AppStorage("isAdvancedRuleConfigurationEnabled", store: RSSBud.userDefaults) var isAdvancedRuleConfigurationEnabled: Bool = false
+        @Environment(\.customOpenURLAction) var openURL
         
         var body: some View {
             Form {
-                Section {
-                    Button("Save and update", systemImage: "square.and.arrow.down.on.square.fill", withAnimation: .default) {
-                        RuleManager.shared.updateRuleFilesInfo(ruleFilesInfo)
-                        RuleManager.shared.fetchRemoteRules()
-                    }.environment(\.isEnabled, ruleFilesInfo != RuleManager.shared.ruleFilesInfo && ruleFilesInfo.isValid)
-                    
-                    Button("Restore default", systemImage: "arrow.clockwise", withAnimation: .default) {
-                        ruleFilesInfo = RuleManager.bundledRuleFilesInfo
-                        RuleManager.shared.updateRuleFilesInfo(ruleFilesInfo)
-                        RuleManager.shared.fetchRemoteRules()
+                if !isAdvancedRuleConfigurationEnabled {
+                    Section {
+                        VStack(alignment: .leading, spacing: 8.0) {
+                            Image(systemName: "info.circle.fill")
+                                .font(Font.system(size: 24.0, weight: .medium, design: .default))
+                            
+                            Text("RSSBud’s functionality is largely powered by **open-source rules**. Please consider contributing to the appropriate rules if a particular feed can’t be discovered by RSSBud.")
+                                .fontWeight(.medium)
+                        }.padding(.vertical, 4)
+                        .foregroundColor(.secondary)
                     }
                 }
                 
-                ForEach($ruleFilesInfo) { $info in
+                Section {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Image("Icon")
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                            .font(Font.system(size: 24.0, weight: .medium, design: .default))
+                        
+                        Text("**RSSHub Radar rules** are created and maintained by the **RSSHub** community. They are used to discover **RSSHub feeds**.")
+                            .fontWeight(.medium)
+                    }.padding(.vertical, 4)
+                    .foregroundColor(.secondary)
+                    
+                    Button("Contribute to RSSHub Radar Rules", systemImage: "arrow.up.forward.app.fill") {
+                        openURL("https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze")
+                    }
+                }
+                
+                Section {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Image("Icon")
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                            .font(Font.system(size: 24.0, weight: .medium, design: .default))
+                        
+                        Text("**RSSBud rules** are a superset of RSSHub Radar rules. The extended schema allows **non-RSSHub feeds** to be discovered. Please consider contributing to RSSHub Radar rules first if the feed is an **RSSHub feed**.")
+                            .fontWeight(.medium)
+                    }.padding(.vertical, 4)
+                    .foregroundColor(.secondary)
+                    
+                    Button("GitHub Repo", systemImage: "arrow.up.forward.app.fill") {
+                        openURL("https://github.com/Cay-Zhang/RSSBudRules")
+                    }
+                }
+                
+                if !isAdvancedRuleConfigurationEnabled {
+                    BasicRuleConfigurationView()
+                } else {
+                    AdvancedRuleConfigurationView()
+                }
+                
+                if !isAdvancedRuleConfigurationEnabled {
                     Section {
-                        HStack {
-                            Text("Filename")
-                            Spacer()
-                            ValidatedTextField(
-                                "Filename",
-                                text: $info.filename,
-                                validation: \.isValidFilename
-                            ).foregroundColor(.secondary)
-                            .disableAutocorrection(true)
-                            .textInputAutocapitalization(.never)
-                            .multilineTextAlignment(.trailing)
-                        }
+                        VStack(alignment: .leading, spacing: 8.0) {
+                            Image(systemName: "hammer.circle.fill")
+                                .font(Font.system(size: 24.0, weight: .medium, design: .default))
+                            
+                            Text("Advanced mode allows you to specify any number of remote rules of your choosing. **Never use rules from untrusted sources.**")
+                                .fontWeight(.medium)
+                        }.padding(.vertical, 4)
+                            .foregroundColor(.secondary)
                         
-                        HStack {
-                            Text("Remote URL")
-                            Spacer()
-                            ValidatedTextField(
-                                "Remote URL",
-                                text: $info.remoteURL.validatedString,
-                                validation: { URLComponents(autoPercentEncoding: $0) != nil }
-                            ).foregroundColor(.secondary)
-                            .keyboardType(.URL)
-                            .disableAutocorrection(true)
-                            .multilineTextAlignment(.trailing)
-                        }
-                        
-                        Button("Delete", role: .destructive) {
-                            withAnimation {
-                                _ = ruleFilesInfo.firstIndex {
-                                    $0.id == info.id
-                                }.map {
-                                    ruleFilesInfo.remove(at: $0)
-                                }
+                        Button("Switch to Advanced Mode", systemImage: "exclamationmark.square.fill", withAnimation: .default) {
+                            isAdvancedRuleConfigurationEnabled = true
+                        }.foregroundColor(.red)
+                    }
+                }
+            }.navigationTitle("Rules")
+        }
+    }
+}
+
+extension Core.RuleManagerView {
+    private struct BasicRuleConfigurationView: View {
+        @AppStorage("rules", store: RSSBud.userDefaults) @CodableAdaptor private var _ruleFilesInfo: [RuleFileInfo] = RuleManager.defaultRuleFilesInfo  // subscribing to changes, do not set
+        @Environment(\.customOpenURLAction) private var openURL
+        
+        private var ruleLanguageBinding: Binding<String> {
+            .init {
+                RuleManager.defaultRuleFileLanguages.first { RuleManager.defaultRuleFilesInfo(for: $0).withStableID == RuleManager.shared.ruleFilesInfo.withStableID } ?? {
+                    assertionFailure()
+                    return RuleManager.defaultRuleFileLanguages[0]
+                }()
+            } set: { newValue in
+                RuleManager.shared.updateRuleFilesInfo(RuleManager.defaultRuleFilesInfo(for: newValue))
+                RuleManager.shared.fetchRemoteRules()
+            }
+        }
+        
+        var body: some View {
+            Section {
+                VStack(alignment: .leading, spacing: 8.0) {
+                    Image(systemName: "character.book.closed.fill")
+                        .font(Font.system(size: 24.0, weight: .medium, design: .default))
+                    
+                    Text("The original language of feed and website names in the above rules is **Chinese**. Versions in other languages are processed using automatic machine translations (powered by DeepL) aided by a dictionary that can be manually edited.")
+                        .fontWeight(.medium)
+                }.padding(.vertical, 4)
+                .foregroundColor(.secondary)
+                
+                Picker("Rule Language", selection: ruleLanguageBinding) {
+                    ForEach(RuleManager.defaultRuleFileLanguages, id: \.self) { language in
+                        Text(verbatim: Locale.current.localizedString(forLanguageCode: language) ?? language)
+                    }
+                }
+                
+                Button("Contribute to Rule Translations", systemImage: "arrow.up.forward.app.fill") {
+                    openURL("https://github.com/Cay-Zhang/RSSBudRules")
+                }
+            }
+        }
+    }
+    
+    private struct AdvancedRuleConfigurationView: View {
+        @State private var ruleFilesInfo: [RuleFileInfo] = RuleManager.shared.ruleFilesInfo
+        @AppStorage("isAdvancedRuleConfigurationEnabled", store: RSSBud.userDefaults) var isAdvancedRuleConfigurationEnabled: Bool = false
+        
+        var body: some View {
+            Section {
+                Button("Save and update", systemImage: "arrow.down.square.fill", withAnimation: .default) {
+                    RuleManager.shared.updateRuleFilesInfo(ruleFilesInfo)
+                    RuleManager.shared.fetchRemoteRules()
+                }.environment(\.isEnabled, ruleFilesInfo != RuleManager.shared.ruleFilesInfo && ruleFilesInfo.isValid)
+                
+                Button("Switch to Basic Mode", systemImage: "arrow.uturn.left.square.fill", withAnimation: .default) {
+                    RuleManager.shared.updateRuleFilesInfo(RuleManager.defaultRuleFilesInfo)
+                    RuleManager.shared.fetchRemoteRules()
+                    isAdvancedRuleConfigurationEnabled = false
+                }.foregroundColor(.red)
+            } footer: {
+                Text("Rules will be reset if you switch to basic mode.")
+            }
+            
+            ForEach($ruleFilesInfo) { $info in
+                Section {
+                    HStack {
+                        Text("Filename")
+                        Spacer()
+                        ValidatedTextField(
+                            "Filename",
+                            text: $info.filename,
+                            validation: \.isValidFilename
+                        ).foregroundColor(.secondary)
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
+                        .multilineTextAlignment(.trailing)
+                    }
+                    
+                    HStack {
+                        Text("Remote URL")
+                        Spacer()
+                        ValidatedTextField(
+                            "Remote URL",
+                            text: $info.remoteURL.validatedString,
+                            validation: { URLComponents(autoPercentEncoding: $0) != nil }
+                        ).foregroundColor(.secondary)
+                        .keyboardType(.URL)
+                        .disableAutocorrection(true)
+                        .multilineTextAlignment(.trailing)
+                    }
+                    
+                    Button("Delete", role: .destructive) {
+                        withAnimation {
+                            _ = ruleFilesInfo.firstIndex {
+                                $0.id == info.id
+                            }.map {
+                                ruleFilesInfo.remove(at: $0)
                             }
                         }
                     }
                 }
-                
-                Section {
-                    Button("Add new rule file", systemImage: "plus", withAnimation: .default) {
-                        ruleFilesInfo.append(.init(filename: "", remoteURL: ""))
-                    }
+            }
+            
+            Section {
+                Button("Add new rule file", systemImage: "plus.square.fill", withAnimation: .default) {
+                    ruleFilesInfo.append(.init(filename: "", remoteURL: ""))
                 }
-            }.navigationTitle("Rules")
+            }
         }
     }
 }
@@ -283,6 +392,6 @@ struct SettingsView_Previews: PreviewProvider {
             NavigationView {
                 Core.RuleManagerView()
             }
-        }
+        }.symbolRenderingMode(.hierarchical)
     }
 }

@@ -19,9 +19,23 @@ struct RuleFileInfo: Hashable, Codable, Identifiable {
     }
 }
 
+extension RuleFileInfo {
+    private static let _stableID: UUID = .init()
+    
+    var withStableID: Self {
+        var copy = self
+        copy.id = Self._stableID
+        return copy
+    }
+}
+
 extension Sequence where Element == RuleFileInfo {
     var isValid: Bool {
         map(\.filename).isUnique() && map(\.remoteURL).isUnique() && allSatisfy(\.isValid)
+    }
+    
+    var withStableID: [RuleFileInfo] {
+        map(\.withStableID)
     }
 }
 
@@ -29,17 +43,24 @@ class RuleManager: ObservableObject {
     
     static let shared: RuleManager = RuleManager()
     
-    static let bundledRuleFilesInfo: [RuleFileInfo] = [
+    private static let bundledRuleFilesInfo: [RuleFileInfo] = [
         RuleFileInfo(filename: "radar-rules.js", remoteURL: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rules/radar-rules.js"),
         RuleFileInfo(filename: "rssbud-rules.js", remoteURL: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rules/rssbud-rules.js"),
     ]
+    
+    static let defaultRuleFilesInfo: [RuleFileInfo] = {
+        guard let language = Bundle.preferredLocalizations(from: RuleManager.defaultRuleFileLanguages).first else { return bundledRuleFilesInfo }
+        return defaultRuleFilesInfo(for: language)
+    }()
+    
+    static let defaultRuleFileLanguages: [String] = ["zh", "en-US"]
     
     let remoteRulesFetchTaskIdentifier = "me.CayZhang.RSSBud.fetchRemoteRSSHubRadarRules"
     
     @Published var isFetchingRemoteRules: Bool = false
     
     @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) var _lastRemoteRulesFetchDate: Double?
-    @AppStorage("rules", store: RSSBud.userDefaults) @CodableAdaptor private(set) var ruleFilesInfo: [RuleFileInfo] = RuleManager.defaultRuleFilesInfo()
+    @AppStorage("rules", store: RSSBud.userDefaults) @CodableAdaptor private(set) var ruleFilesInfo: [RuleFileInfo] = RuleManager.defaultRuleFilesInfo
    
     private(set) lazy var ruleFiles: [PersistentFile] = RuleManager.ruleFiles(from: ruleFilesInfo)
     
@@ -112,20 +133,20 @@ class RuleManager: ObservableObject {
         }
     }
     
+    static func defaultRuleFilesInfo(for language: String) -> [RuleFileInfo] {
+        guard language != defaultRuleFileLanguages[0] else { return bundledRuleFilesInfo }
+        return [
+            RuleFileInfo(filename: "radar-rules.\(language).js", remoteURL: URLComponents(string: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rules/\(language)/radar-rules.js")!),
+            RuleFileInfo(filename: "rssbud-rules.\(language).js", remoteURL: URLComponents(string: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rules/\(language)/rssbud-rules.js")!),
+        ]
+    }
+    
     private static func defaultRuleFileContentURL(for remoteURL: URLComponents) -> URL {
         if let info = bundledRuleFilesInfo.first(where: { $0.remoteURL == remoteURL }), let bundledRuleFileURL = Bundle.main.url(forResource: info.filename, withExtension: nil) {
             return bundledRuleFileURL
         } else {
             return Bundle.main.url(forResource: "empty-rules", withExtension: "js")!
         }
-    }
-    
-    private static func defaultRuleFilesInfo() -> [RuleFileInfo] {
-        guard let language = Bundle.preferredLocalizations(from: ["zh", "en-US"]).first, language != "zh" else { return bundledRuleFilesInfo }
-        return [
-            RuleFileInfo(filename: "radar-rules.\(language).js", remoteURL: URLComponents(string: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rules/\(language)/radar-rules.js")!),
-            RuleFileInfo(filename: "rssbud-rules.\(language).js", remoteURL: URLComponents(string: "https://raw.githubusercontent.com/Cay-Zhang/RSSBudRules/main/rules/\(language)/rssbud-rules.js")!),
-        ]
     }
     
     private static func ruleFiles(from ruleFilesInfo: [RuleFileInfo]) -> [PersistentFile] {
