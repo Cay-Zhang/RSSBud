@@ -34,7 +34,8 @@
 "Settings Section RSSBud" = "RSSBud";
 "Settings Section RSSHub" = "RSSHub";
 "Settings Section About" = "关于";
-"Updated %@ ago" = "%@前更新";
+"Last Update" = "上次更新";
+"%@ ago" = "%@前";
 "Update Rules Now" = "立即更新";
 "Updating Rules..." = "正在更新...";
 "Rules" = "规则";

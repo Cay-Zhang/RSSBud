@@ -34,7 +34,8 @@
 "Settings Section RSSBud" = "RSSBud";
 "Settings Section RSSHub" = "RSSHub";
 "Settings Section About" = "About";
-"Updated %@ ago" = "Updated %@ ago";
+"Last Update" = "Last Update";
+"%@ ago" = "%@ ago";
 "Update Rules Now" = "Update Rules Now";
 "Updating Rules..." = "Updating Rules...";
 "Rules" = "Rules";
@@ -46,11 +47,11 @@
 "Telegram Channel" = "Telegram Channel";
 "Telegram Group" = "Telegram Group";
 
-"Save and update" = "Save";
+"Save and update" = "Save and Update";
 "Restore default" = "Restore default";
 "Filename" = "Filename";
 "Remote URL" = "Remote URL";
-"Add new rule file" = "Add new rule file";
+"Add new rule file" = "Add Rule File";
 
 "Nothing Found" = "Nothing Found";
 "Error Occurred" = "Oops...";

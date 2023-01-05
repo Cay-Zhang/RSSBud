@@ -14,7 +14,6 @@ struct SettingsView: View {
     @State var isAlertPresented = false
     
     @ObservedObject var ruleManager = RuleManager.shared
-    @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) var _lastRemoteRulesFetchDate: Double?
     @AppStorage("isOnboarding", store: RSSBud.userDefaults) var isOnboarding: Bool = true
     @Environment(\.presentationMode) var presentationMode
     var rssHubAccessControl = RSSHub.AccessControl()
@@ -28,11 +27,6 @@ struct SettingsView: View {
                 defaultOpenURLMode = newValue ? .inApp : .system
             }
         )
-    }
-    
-    var lastRemoteRulesFetchDate: Date? {
-        get { _lastRemoteRulesFetchDate.map(Date.init(timeIntervalSinceReferenceDate:)) }
-        set { _lastRemoteRulesFetchDate = newValue?.timeIntervalSinceReferenceDate }
     }
     
     init() {
@@ -55,14 +49,7 @@ struct SettingsView: View {
                     )
                     
                     NavigationLink(destination: Core.RuleManagerView()) {
-                        HStack {
-                            Text("Rules")
-                            Spacer()
-                            if let date = lastRemoteRulesFetchDate {
-                                Text("Updated \(date, style: .relative) ago")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
+                        Text("Rules")
                     }
                     
                     Toggle("Prefer Opening URL In App", isOn: _isOpenURLInAppPreferred.animation(.default))
@@ -119,7 +106,6 @@ struct SettingsView: View {
                         }
                     }
                 }
-                
             }.navigationTitle("Settings")
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
@@ -248,23 +234,6 @@ extension Core {
                 } else {
                     AdvancedRuleConfigurationView()
                 }
-                
-                if !isAdvancedRuleConfigurationEnabled {
-                    Section {
-                        VStack(alignment: .leading, spacing: 8.0) {
-                            Image(systemName: "hammer.circle.fill")
-                                .font(Font.system(size: 24.0, weight: .medium, design: .default))
-                            
-                            Text("Advanced mode allows you to specify any number of remote rules of your choosing. **Never use rules from untrusted sources.**")
-                                .fontWeight(.medium)
-                        }.padding(.vertical, 4)
-                            .foregroundColor(.secondary)
-                        
-                        Button("Switch to Advanced Mode", systemImage: "exclamationmark.square.fill", withAnimation: .default) {
-                            isAdvancedRuleConfigurationEnabled = true
-                        }.foregroundColor(.red)
-                    }
-                }
             }.navigationTitle("Rules")
         }
     }
@@ -272,8 +241,16 @@ extension Core {
 
 extension Core.RuleManagerView {
     private struct BasicRuleConfigurationView: View {
+        @ObservedObject var ruleManager = RuleManager.shared
+        @AppStorage("isAdvancedRuleConfigurationEnabled", store: RSSBud.userDefaults) var isAdvancedRuleConfigurationEnabled: Bool = false
         @AppStorage("rules", store: RSSBud.userDefaults) @CodableAdaptor private var _ruleFilesInfo: [RuleFileInfo] = RuleManager.defaultRuleFilesInfo  // subscribing to changes, do not set
+        @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) private var _lastRemoteRulesFetchDate: Double?
         @Environment(\.customOpenURLAction) private var openURL
+        
+        private var lastRemoteRulesFetchDate: Date? {
+            get { _lastRemoteRulesFetchDate.map(Date.init(timeIntervalSinceReferenceDate:)) }
+            set { _lastRemoteRulesFetchDate = newValue?.timeIntervalSinceReferenceDate }
+        }
         
         private var ruleLanguageBinding: Binding<String> {
             .init {
@@ -308,27 +285,106 @@ extension Core.RuleManagerView {
                     openURL("https://github.com/Cay-Zhang/RSSBudRules")
                 }
             }
+            
+            Section {
+                VStack(alignment: .leading, spacing: 8.0) {
+                    Image(systemName: "externaldrive.fill.badge.icloud")
+                        .font(Font.system(size: 24.0, weight: .medium, design: .default))
+                    
+                    Text("Rules are automatically kept up to date, even when the app is closed.")
+                        .fontWeight(.medium)
+                }.padding(.vertical, 4)
+                .foregroundColor(.secondary)
+                
+                if let date = lastRemoteRulesFetchDate {
+                    HStack {
+                        Text("Last Update")
+                        
+                        Spacer()
+                        
+                        Text("\(date, style: .relative) ago")
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                HStack {
+                    Button(
+                        ruleManager.isFetchingRemoteRules ? "Updating Rules..." : "Update Rules Now",
+                        systemImage: "arrow.down.square.fill"
+                    ) {
+                        ruleManager.fetchRemoteRules()
+                        ruleManager.scheduleRemoteRulesFetchTask()
+                    }.environment(\.isEnabled, !ruleManager.isFetchingRemoteRules)
+                    
+                    Spacer()
+                    
+                    if ruleManager.isFetchingRemoteRules {
+                        ProgressView()
+                    }
+                }
+            }
+            
+            Section {
+                VStack(alignment: .leading, spacing: 8.0) {
+                    Image(systemName: "hammer.fill")
+                        .font(Font.system(size: 24.0, weight: .medium, design: .default))
+                    
+                    Text("Advanced mode allows you to specify any number of remote rules of your choosing. **Never use rules from untrusted sources.**")
+                        .fontWeight(.medium)
+                }.padding(.vertical, 4)
+                .foregroundColor(.secondary)
+                
+                Button("Switch to Advanced Mode", systemImage: "exclamationmark.square.fill", withAnimation: .default) {
+                    isAdvancedRuleConfigurationEnabled = true
+                }.foregroundColor(.red)
+            }
         }
     }
     
     private struct AdvancedRuleConfigurationView: View {
+        @ObservedObject var ruleManager = RuleManager.shared
         @State private var ruleFilesInfo: [RuleFileInfo] = RuleManager.shared.ruleFilesInfo
         @AppStorage("isAdvancedRuleConfigurationEnabled", store: RSSBud.userDefaults) var isAdvancedRuleConfigurationEnabled: Bool = false
+        @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) private var _lastRemoteRulesFetchDate: Double?
+        
+        private var lastRemoteRulesFetchDate: Date? {
+            get { _lastRemoteRulesFetchDate.map(Date.init(timeIntervalSinceReferenceDate:)) }
+            set { _lastRemoteRulesFetchDate = newValue?.timeIntervalSinceReferenceDate }
+        }
         
         var body: some View {
             Section {
-                Button("Save and update", systemImage: "arrow.down.square.fill", withAnimation: .default) {
-                    RuleManager.shared.updateRuleFilesInfo(ruleFilesInfo)
-                    RuleManager.shared.fetchRemoteRules()
-                }.environment(\.isEnabled, ruleFilesInfo != RuleManager.shared.ruleFilesInfo && ruleFilesInfo.isValid)
+                if let date = lastRemoteRulesFetchDate {
+                    HStack {
+                        Text("Last Update")
+                        
+                        Spacer()
+                        
+                        Text("\(date, style: .relative) ago")
+                            .foregroundColor(.secondary)
+                    }
+                }
                 
-                Button("Switch to Basic Mode", systemImage: "arrow.uturn.left.square.fill", withAnimation: .default) {
-                    RuleManager.shared.updateRuleFilesInfo(RuleManager.defaultRuleFilesInfo)
-                    RuleManager.shared.fetchRemoteRules()
-                    isAdvancedRuleConfigurationEnabled = false
-                }.foregroundColor(.red)
-            } footer: {
-                Text("Rules will be reset if you switch to basic mode.")
+                HStack {
+                    Button(
+                        ruleManager.isFetchingRemoteRules ? "Updating Rules..." : "Save and update",
+                        systemImage: "arrow.down.square.fill"
+                    ) {
+                        ruleManager.updateRuleFilesInfo(ruleFilesInfo)
+                        ruleManager.fetchRemoteRules()
+                        ruleManager.scheduleRemoteRulesFetchTask()
+                    }.environment(\.isEnabled, ruleFilesInfo.isValid && !ruleManager.isFetchingRemoteRules)
+                    
+                    Spacer()
+                    
+                    if ruleManager.isFetchingRemoteRules {
+                        ProgressView()
+                    }
+                }
+                
+                Button("Add new rule file", systemImage: "plus.square.fill", withAnimation: .default) {
+                    ruleFilesInfo.insert(.init(filename: "", remoteURL: ""), at: 0)
+                }
             }
             
             ForEach($ruleFilesInfo) { $info in
@@ -372,9 +428,13 @@ extension Core.RuleManagerView {
             }
             
             Section {
-                Button("Add new rule file", systemImage: "plus.square.fill", withAnimation: .default) {
-                    ruleFilesInfo.append(.init(filename: "", remoteURL: ""))
-                }
+                Button("Switch to Basic Mode", systemImage: "arrow.uturn.left.square.fill", withAnimation: .default) {
+                    RuleManager.shared.updateRuleFilesInfo(RuleManager.defaultRuleFilesInfo)
+                    RuleManager.shared.fetchRemoteRules()
+                    isAdvancedRuleConfigurationEnabled = false
+                }.foregroundColor(.red)
+            } footer: {
+                Text("Rules will be reset if you switch to basic mode.")
             }
         }
     }
