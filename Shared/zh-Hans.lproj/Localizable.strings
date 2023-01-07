@@ -34,10 +34,6 @@
 "Settings Section RSSBud" = "RSSBud";
 "Settings Section RSSHub" = "RSSHub";
 "Settings Section About" = "关于";
-"Last Update" = "上次更新";
-"%@ ago" = "%@前";
-"Update Rules Now" = "立即更新";
-"Updating Rules..." = "正在更新...";
 "Rules" = "规则";
 "Quick Subscriptions" = "一键订阅";
 "Access Control" = "访问控制";
@@ -47,8 +43,23 @@
 "Telegram Channel" = "Telegram 更新频道";
 "Telegram Group" = "Telegram 群组";
 
+"Rules Overview" = "RSSBud 的功能主要来源于两个开源项目提供的**规则**。如果你发现一个无法被 RSSBud 识别的源，请考虑向合适的项目提交新的规则。";
+"RSSHub Radar Rules Overview" = "**RSSHub Radar 规则**来自 **RSSHub** 项目。它被用来识别 **RSSHub 源**。";
+"Submit New Rules" = "提交新的规则";
+"RSSBud Rules Overview" = "**RSSBud 规则**是 RSSHub Radar 规则的扩展。这使它能够被用来识别**非 RSSHub 源**，比如不包含在网站 HTML 中的官方 RSS 源。如果你要提交的规则是用来识别 **RSSHub 源**的，请优先向 RSSHub Radar 项目提交该规则。";
+"Rule Language Overview" = "**中文**是上述规则中网站名和源名的官方语言。其他语言的规则主要来源于 DeepL 自动机器翻译的词典。该词典可人工编辑。";
+"Rule Language" = "规则语言";
+"Contribute To Rule Translations" = "贡献规则翻译";
+"Rule Update Overview" = "规则将会自动保持更新，即使在 RSSBud 关闭的情况下。";
+"Last Update" = "上次更新";
+"%@ ago" = "%@前";
+"Update Rules Now" = "立即更新";
+"Updating Rules..." = "正在更新...";
+"Advanced Mode Overview" = "在高级模式中你可以指定任意的规则来源。**请切勿使用不受信任的规则。**";
+"Switch To Advanced Mode" = "切换至高级模式";
+"Switch To Basic Mode" = "切换至基础模式";
+"Switch To Basic Mode Warning" = "切换至基础模式会导致规则信息被重置。";
 "Save and update" = "保存并更新";
-"Restore default" = "恢复默认";
 "Filename" = "文件名";
 "Remote URL" = "远程 URL";
 "Add new rule file" = "添加规则文件";
@@ -57,7 +68,6 @@
 "Error Occurred" = "出错了...";
 "Edit Original URL" = "编辑分析网址";
 "See What's Supported" = "看看支持什么规则";
-"Submit New Rules" = "提交的新的规则";
 "Can be detected by RSSHub Radar?" = "与 RSSHub Radar 的结果不一致？";
 "Contact Developer" = "联系开发者";
 

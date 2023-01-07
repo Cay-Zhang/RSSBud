@@ -34,10 +34,6 @@
 "Settings Section RSSBud" = "RSSBud";
 "Settings Section RSSHub" = "RSSHub";
 "Settings Section About" = "About";
-"Last Update" = "Last Update";
-"%@ ago" = "%@ ago";
-"Update Rules Now" = "Update Rules Now";
-"Updating Rules..." = "Updating Rules...";
 "Rules" = "Rules";
 "Quick Subscriptions" = "Quick Subscriptions";
 "Access Control" = "Access Control";
@@ -47,8 +43,23 @@
 "Telegram Channel" = "Telegram Channel";
 "Telegram Group" = "Telegram Group";
 
+"Rules Overview" = "RSSBud’s functionality is largely powered by **rules** from two open-source projects. Please consider contributing to the appropriate rules if a particular feed can’t be discovered by RSSBud.";
+"RSSHub Radar Rules Overview" = "**RSSHub Radar rules** are created and maintained by the **RSSHub** community. They are used to discover **RSSHub feeds**.";
+"Submit New Rules" = "Submit New Rules";
+"RSSBud Rules Overview" = "**RSSBud rules** are a superset of RSSHub Radar rules. The extended schema allows **non-RSSHub feeds** (e.g. official RSS feeds that are not discoverable by parsing HTML) to be discovered. Please consider contributing to RSSHub Radar rules first if the feed is an **RSSHub feed**.";
+"Rule Language Overview" = "The official language of feed and website names in the above rules is **Chinese**. Versions in other languages are processed using automatic machine translations (powered by DeepL) aided by a dictionary that can be manually edited.";
+"Rule Language" = "Rule Language";
+"Contribute To Rule Translations" = "Contribute to Rule Translations";
+"Rule Update Overview" = "Rules are automatically kept up to date, even when the app is closed.";
+"Last Update" = "Last Update";
+"%@ ago" = "%@ ago";
+"Update Rules Now" = "Update Rules Now";
+"Updating Rules..." = "Updating Rules...";
+"Advanced Mode Overview" = "Advanced mode allows you to specify any number of remote rules of your choosing. **Never use rules from untrusted sources.**";
+"Switch To Advanced Mode" = "Switch to Advanced Mode";
+"Switch To Basic Mode" = "Switch to Basic Mode";
+"Switch To Basic Mode Warning" = "Rules will be reset if you switch to basic mode.";
 "Save and update" = "Save and Update";
-"Restore default" = "Restore default";
 "Filename" = "Filename";
 "Remote URL" = "Remote URL";
 "Add new rule file" = "Add Rule File";
@@ -57,7 +68,6 @@
 "Error Occurred" = "Oops...";
 "Edit Original URL" = "Edit Original URL";
 "See What's Supported" = "See What's Supported";
-"Submit New Rules" = "Submit New Rules";
 "Can be detected by RSSHub Radar?" = "Can be detected by RSSHub Radar?";
 "Contact Developer" = "Contact Developer";
 

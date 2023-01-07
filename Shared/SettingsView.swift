@@ -186,7 +186,7 @@ extension Core {
                             Image(systemName: "info.circle.fill")
                                 .font(Font.system(size: 24.0, weight: .medium, design: .default))
                             
-                            Text("RSSBud’s functionality is largely powered by **open-source rules**. Please consider contributing to the appropriate rules if a particular feed can’t be discovered by RSSBud.")
+                            Text("Rules Overview")
                                 .fontWeight(.medium)
                         }.padding(.vertical, 4)
                         .foregroundColor(.secondary)
@@ -201,12 +201,12 @@ extension Core {
                             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                             .font(Font.system(size: 24.0, weight: .medium, design: .default))
                         
-                        Text("**RSSHub Radar rules** are created and maintained by the **RSSHub** community. They are used to discover **RSSHub feeds**.")
+                        Text("RSSHub Radar Rules Overview")
                             .fontWeight(.medium)
                     }.padding(.vertical, 4)
                     .foregroundColor(.secondary)
                     
-                    Button("Contribute to RSSHub Radar Rules", systemImage: "arrow.up.forward.app.fill") {
+                    Button("Submit New Rules", systemImage: "arrow.up.forward.app.fill") {
                         openURL("https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze")
                     }
                 }
@@ -219,12 +219,12 @@ extension Core {
                             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                             .font(Font.system(size: 24.0, weight: .medium, design: .default))
                         
-                        Text("**RSSBud rules** are a superset of RSSHub Radar rules. The extended schema allows **non-RSSHub feeds** to be discovered. Please consider contributing to RSSHub Radar rules first if the feed is an **RSSHub feed**.")
+                        Text("RSSBud Rules Overview")
                             .fontWeight(.medium)
                     }.padding(.vertical, 4)
                     .foregroundColor(.secondary)
                     
-                    Button("GitHub Repo", systemImage: "arrow.up.forward.app.fill") {
+                    Button("Submit New Rules", systemImage: "arrow.up.forward.app.fill") {
                         openURL("https://github.com/Cay-Zhang/RSSBudRules")
                     }
                 }
@@ -270,7 +270,7 @@ extension Core.RuleManagerView {
                     Image(systemName: "character.book.closed.fill")
                         .font(Font.system(size: 24.0, weight: .medium, design: .default))
                     
-                    Text("The original language of feed and website names in the above rules is **Chinese**. Versions in other languages are processed using automatic machine translations (powered by DeepL) aided by a dictionary that can be manually edited.")
+                    Text("Rule Language Overview")
                         .fontWeight(.medium)
                 }.padding(.vertical, 4)
                 .foregroundColor(.secondary)
@@ -281,7 +281,7 @@ extension Core.RuleManagerView {
                     }
                 }
                 
-                Button("Contribute to Rule Translations", systemImage: "arrow.up.forward.app.fill") {
+                Button("Contribute To Rule Translations", systemImage: "arrow.up.forward.app.fill") {
                     openURL("https://github.com/Cay-Zhang/RSSBudRules")
                 }
             }
@@ -291,7 +291,7 @@ extension Core.RuleManagerView {
                     Image(systemName: "externaldrive.fill.badge.icloud")
                         .font(Font.system(size: 24.0, weight: .medium, design: .default))
                     
-                    Text("Rules are automatically kept up to date, even when the app is closed.")
+                    Text("Rule Update Overview")
                         .fontWeight(.medium)
                 }.padding(.vertical, 4)
                 .foregroundColor(.secondary)
@@ -329,12 +329,12 @@ extension Core.RuleManagerView {
                     Image(systemName: "hammer.fill")
                         .font(Font.system(size: 24.0, weight: .medium, design: .default))
                     
-                    Text("Advanced mode allows you to specify any number of remote rules of your choosing. **Never use rules from untrusted sources.**")
+                    Text("Advanced Mode Overview")
                         .fontWeight(.medium)
                 }.padding(.vertical, 4)
                 .foregroundColor(.secondary)
                 
-                Button("Switch to Advanced Mode", systemImage: "exclamationmark.square.fill", withAnimation: .default) {
+                Button("Switch To Advanced Mode", systemImage: "exclamationmark.square.fill", withAnimation: .default) {
                     isAdvancedRuleConfigurationEnabled = true
                 }.foregroundColor(.red)
             }
@@ -428,13 +428,13 @@ extension Core.RuleManagerView {
             }
             
             Section {
-                Button("Switch to Basic Mode", systemImage: "arrow.uturn.left.square.fill", withAnimation: .default) {
+                Button("Switch To Basic Mode", systemImage: "arrow.uturn.left.square.fill", withAnimation: .default) {
                     RuleManager.shared.updateRuleFilesInfo(RuleManager.defaultRuleFilesInfo)
                     RuleManager.shared.fetchRemoteRules()
                     isAdvancedRuleConfigurationEnabled = false
                 }.foregroundColor(.red)
             } footer: {
-                Text("Rules will be reset if you switch to basic mode.")
+                Text("Switch To Basic Mode Warning")
             }
         }
     }
