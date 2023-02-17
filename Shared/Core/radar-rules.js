@@ -830,6 +830,12 @@
         source:[ "/studio/releases/platform-tools",
           "/" ],
         target:"/android/platform-tools-releases" } ] },
+  "annualreviews.org":{ _name:"Annual Reviews",
+    ".":[ { title:"Journal",
+        docs:"https://docs.rsshub.app/journal.html#annual-reviews-journal",
+        source:[ "/journal/:id",
+          "/" ],
+        target:"/annualreviews/:id" } ] },
   "anquanke.com":{ _name:"安全客",
     ".":[ { title:"分类订阅",
         docs:"https://docs.rsshub.app/programming.html#an-quan-ke",
@@ -2408,6 +2414,30 @@
         docs:"https://docs.rsshub.app/bbs.html#dcard",
         source:"/f/:section",
         target:"/dcard/:section/popular" } ] },
+  "dcfever.com":{ _name:"DCFever",
+    ".":[ { title:"新聞中心",
+        docs:"https://docs.rsshub.app/new-media.html#dcfever",
+        source:[ "/news/index.php",
+          "/" ],
+        params:(_, url) => {
+                    const searchParams = new URL(url).searchParams;
+                    return `/dcfever/news${searchParams.has('type') ? `/${new URL(url).searchParams.get('type')}` : ''}`;
+                } },
+      { title:"測試報告",
+        docs:"https://docs.rsshub.app/new-media.html#dcfever",
+        source:[ "/:type/reviews.php" ],
+        params:"/dcfever/reviews/:type" },
+      { title:"二手市集",
+        docs:"https://docs.rsshub.app/new-media.html#dcfever",
+        source:[ "/trading/listing.php" ],
+        params:(_, url) => `/dcfever/trading/${new URL(url).searchParams.get('id')}` },
+      { title:"二手市集 - 物品搜尋",
+        docs:"https://docs.rsshub.app/new-media.html#dcfever",
+        source:[ "/trading/search.php" ],
+        params:(_, url) => {
+                    const searchParams = new URL(url).searchParams;
+                    return `/dcfever/trading/search/${searchParams.get('keyword')}${searchParams.has('main_cat') ? `/${searchParams.get('main_cat')}` : ''}`;
+                } } ] },
   "www.ddosi.org":{ _name:"🔰雨苁ℒ🔰",
     ".":[ { title:"首页",
         docs:"https://docs.rsshub.app/blog.html#yu-cong-bo-ke-shou-ye",
