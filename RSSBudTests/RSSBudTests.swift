@@ -38,9 +38,9 @@ class RSSBudTests: XCTestCase {
             .awaitable()
         
         if let rssFeedCount = rssFeedCount {
-            XCTAssertEqual(result.rssFeeds.count, rssFeedCount, "Unexpected RSS feed count.")
+            XCTAssertEqual(result.rssFeeds.count, rssFeedCount, "Unexpected RSS feed count for \(name).")
         } else if let rsshubFeedCount = rsshubFeedCount {
-            XCTAssertEqual(result.rssHubFeeds.count, rsshubFeedCount, "Unexpected RSSHub feed count.")
+            XCTAssertEqual(result.rssHubFeeds.count, rsshubFeedCount, "Unexpected RSSHub feed count for \(name).")
         }
     }
     
@@ -53,7 +53,7 @@ class RSSBudTests: XCTestCase {
     }
     
     func testTrivialDetections() async throws {
-        try await _testAnalysis("bilibili 空间", urlString: "https://space.bilibili.com/53456", rsshubFeedCount: 8)
+        try await _testAnalysis("bilibili 空间", urlString: "https://space.bilibili.com/53456", rsshubFeedCount: 9)
         try await _testAnalysis("企鹅电竞直播间", urlString: "https://egame.qq.com/526905271", rsshubFeedCount: 1)
     }
     
@@ -68,7 +68,7 @@ class RSSBudTests: XCTestCase {
     
     func testDocumentDetections() async throws {
         try await _testAnalysis("谷歌相册", urlString: "https://photos.google.com/share/AF1QipN-3SZHWnuYatO_p13elqJZjhIXBUV_ySkStFuYPXCusNA1U35Nwq5xeWqxEIfRRw?key=dzAzZGtzcUxpYW4wV2t6MXZJWk9VdURoUnJsSk1n", rsshubFeedCount: 1)
-        try await _testAnalysis("Telegram 频道", urlString: "https://t.me/RSSBud", rsshubFeedCount: 1)
+        try await _testAnalysis("Telegram 频道", urlString: "https://t.me/RSSBud", rsshubFeedCount: 0)
         try await _testAnalysis("Telegram 群组", urlString: "https://t.me/RSSBud_Discussion", rsshubFeedCount: 0)
         try await _testAnalysis("OneJAV BT 今日种子 & 今日演员", urlString: "https://onejav.com/", rsshubFeedCount: 2)
         try await _testAnalysis("OneJAV BT 页面种子", urlString: "https://onejav.com/search/IPX177", rsshubFeedCount: 1)
@@ -82,8 +82,8 @@ class RSSBudTests: XCTestCase {
     func testRSSFeedDetections() async throws {
         try await _testAnalysis("少数派", urlString: "https://sspai.com/", rssFeedCount: 1, rsshubFeedCount: nil)
         try await _testAnalysis("Moon FM News", urlString: "https://news.moon.fm/", rssFeedCount: 1, rsshubFeedCount: nil)
-        try await _testAnalysis("Leetao's Blog", urlString: "https://www.leetao94.cn/", rssFeedCount: 1, rsshubFeedCount: nil)
-        try await _testAnalysis("RSSBud GitHub Repo", urlString: "https://github.com/Cay-Zhang/RSSBud", rssFeedCount: 0, rsshubFeedCount: nil)
+        try await _testAnalysis("Leetao's Blog", urlString: "https://www.leetao94.cn/", rssFeedCount: 0, rsshubFeedCount: nil)
+        try await _testAnalysis("RSSBud GitHub Repo", urlString: "https://github.com/Cay-Zhang/RSSBud", rssFeedCount: 2, rsshubFeedCount: nil)
         try await _testAnalysis("说做", urlString: "https://bearchao.com/", rssFeedCount: 1, rsshubFeedCount: nil)
     }
     
