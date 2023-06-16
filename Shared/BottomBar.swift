@@ -52,41 +52,57 @@ struct BottomBar: View {
         }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.15), radius: 12, y: 3)
         .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
-        .gesture(
-            DragGesture(minimumDistance: 5, coordinateSpace: .global)
-                .onChanged { value in
-                    let offsetHeight = decay(value.translation.height, positiveThreshold: 0, negativeThreshold: 0)
-                    withAnimation(Self.transitionAnimation) {
-                        viewModel.offset.height = offsetHeight
-                        if value.translation.height < -50 {
-                            if !viewModel.isEditing {
-                                viewModel.isEditing = true
-                                Self.feedbackGenerator.selectionChanged()
-                            }
-                        } else if value.translation.height > 15 {
-                            if !viewModel.isEditing {
-                                viewModel._isEditing = true
-                                viewModel.editingText = ""
-                                Self.feedbackGenerator.selectionChanged()
-                            }
-                        } else if viewModel.isEditing && viewModel.linkURL != nil {
-                            viewModel.isEditing = false
-                            Self.feedbackGenerator.selectionChanged()
-                        }
-                    }
-                }.onEnded { value in
-                    withAnimation(.spring()) {
-                        if value.translation.height < -50 {
-                            isTextFieldFocused = true
-                        } else if value.translation.height > 15 {
-                            viewModel.dismiss()
-                        }
-                        viewModel.offset.height = 0
-                    }
-                }
-        ).offset(viewModel.offset)
+        .gesture(dragGesture, including: .all)
+        .offset(viewModel.offset)
         .animation(Self.transitionAnimation, value: viewModel.linkTitle)
         .animation(Self.transitionAnimation, value: viewModel.isEditing)
+    }
+    
+    var dragGesture: some Gesture {
+        DragGesture(minimumDistance: 5, coordinateSpace: .global)
+            .onChanged { value in
+                let translation = CGSize(width: value.translation.width, height: value.translation.height + viewModel.dragTranslationYDelta)
+                let offsetHeight = decay(translation.height, positiveThreshold: 0, negativeThreshold: 0)
+                withAnimation(Self.transitionAnimation) {
+                    viewModel.offset.height = offsetHeight
+                    if isTextFieldFocused {
+                        if translation.height > 30 {
+                            if viewModel.linkURL != nil {
+                                viewModel.isEditing = false
+                            }
+                            isTextFieldFocused = false
+                            assert(viewModel.dragTranslationYDelta == 0, "dragTranslationYDelta should not accumulate.")
+                            viewModel.dragTranslationYDelta = -value.translation.height - 45
+                            Self.feedbackGenerator.selectionChanged()
+                        }
+                    } else if translation.height < -50 {
+                        if !viewModel.isEditing {
+                            viewModel.isEditing = true
+                            Self.feedbackGenerator.selectionChanged()
+                        }
+                    } else if translation.height > 15 {
+                        if !viewModel.isEditing {
+                            viewModel._isEditing = true
+                            viewModel.editingText = ""
+                            Self.feedbackGenerator.selectionChanged()
+                        }
+                    } else if viewModel.isEditing && viewModel.linkURL != nil {
+                        viewModel.isEditing = false
+                        Self.feedbackGenerator.selectionChanged()
+                    }
+                }
+            }.onEnded { value in
+                let translation = CGSize(width: value.translation.width, height: value.translation.height + viewModel.dragTranslationYDelta)
+                withAnimation(.spring()) {
+                    if translation.height < -50 {
+                        isTextFieldFocused = true
+                    } else if translation.height > 15 {
+                        viewModel.dismiss()
+                    }
+                    viewModel.offset.height = 0
+                    viewModel.dragTranslationYDelta = 0
+                }
+            }
     }
     
     @ViewBuilder func linkViewContextMenuItems() -> some View {
@@ -151,6 +167,7 @@ extension BottomBar {
         let progressViewModel = AutoAdvancingProgressView.ViewModel()
         
         @Published var offset: CGSize = .zero
+        var dragTranslationYDelta: CGFloat = 0
         
         var dismiss: () -> Void = { }
         var onSubmit: (URLComponents) -> Void = { _ in }
