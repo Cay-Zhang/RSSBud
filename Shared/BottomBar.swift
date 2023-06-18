@@ -53,6 +53,7 @@ struct BottomBar: View {
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.15), radius: 12, y: 3)
         .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
         .gesture(dragGesture, including: .all)
+        .scaleEffect(x: viewModel.scale, y: viewModel.scale)
         .offset(viewModel.offset)
         .animation(Self.transitionAnimation, value: viewModel.linkTitle)
         .animation(Self.transitionAnimation, value: viewModel.isEditing)
@@ -65,6 +66,7 @@ struct BottomBar: View {
                 let offsetHeight = decay(translation.height, positiveThreshold: 0, negativeThreshold: 0)
                 withAnimation(Self.transitionAnimation) {
                     viewModel.offset.height = offsetHeight
+                    viewModel.scale = 1.01
                     if isTextFieldFocused {
                         if translation.height > 30 {
                             if viewModel.linkURL != nil {
@@ -100,6 +102,7 @@ struct BottomBar: View {
                         viewModel.dismiss()
                     }
                     viewModel.offset.height = 0
+                    viewModel.scale = 1
                     viewModel.dragTranslationYDelta = 0
                 }
             }
@@ -167,6 +170,7 @@ extension BottomBar {
         let progressViewModel = AutoAdvancingProgressView.ViewModel()
         
         @Published var offset: CGSize = .zero
+        @Published var scale: CGFloat = 1
         var dragTranslationYDelta: CGFloat = 0
         
         var dismiss: () -> Void = { }
