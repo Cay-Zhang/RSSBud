@@ -2124,6 +2124,14 @@
         source:[ "/yjsjy/zs/sszs",
           "/" ],
         target:"/cas/ia/yjs" } ],
+    "www.is":[ { title:"软件研究所",
+        docs:"https://docs.rsshub.app/university.html#zhong-guo-ke-xue-yuan",
+        source:[ "/" ],
+        target:(params, url, document) => {
+                    if (document.querySelector('.list-news')) {
+                        return `/cas/is/${url.split('/').slice(3, -1).join('/')}`;
+                    }
+                } } ],
     "www.sim":[ { title:"上海微系统与信息技术研究所 - 科技进展",
         docs:"https://docs.rsshub.app/university.html#zhong-guo-ke-xue-yuan",
         source:[ "/xwzx2016/kyjz",
@@ -4161,7 +4169,11 @@
       { title:"播客-分类",
         docs:"https://docs.rsshub.app/new-media.html#ji-he-wang-bo-ke",
         source:[ "/categories/:category" ],
-        target:"/gcores/radios/:category" } ] },
+        target:"/gcores/radios/:category" },
+      { title:"专题",
+        docs:"https://docs.rsshub.app/new-media.html#ji-he-wang-zhuan-ti",
+        source:[ "/collections/:collection" ],
+        target:"/gcores/collections/:collection" } ] },
   "gdut.edu.cn":{ _name:"广东工业大学",
     oas:[ { title:"通知公文网",
         docs:"https://docs.rsshub.app/university.html#guang-dong-gong-ye-da-xue-tong-zhi-gong-wen-wang",
