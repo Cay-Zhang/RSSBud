@@ -12,8 +12,10 @@
 "RSSHub Documentation" = "RSSHub Documentation";
 
 "Bottom Bar Start Prompt" = "Enter a URL or use a quick start option.";
+"Bottom Bar Hint Swipe Down" = "Swipe down to return home";
+"Bottom Bar Hint Swipe Up" = "Swipe up to edit";
 "Copy Link" = "Copy Link";
-"Dismiss Current Analysis" = "Dismiss";
+"Dismiss Current Analysis" = "Return Home";
 
 "Content Section RSS Feeds" = "RSS Feeds";
 "Content Section RSSHub Feeds" = "RSSHub Feeds";

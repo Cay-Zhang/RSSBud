@@ -59,14 +59,14 @@ struct BottomBar: View {
     
     var body: some View {
         bar.overlay(alignment: .top) {
-            Text("Swipe down to return home")
+            Text("Bottom Bar Hint Swipe Down")
                 .fontWeight(.semibold)
                 .shadow(color: Color(.sRGBLinear, white: 0, opacity: 1), radius: 25)
                 .opacity(viewModel.currentHint == .swipeDown ? 1 : 0)
                 .offset(y: viewModel.currentHint == .swipeDown ? 0 : -10)
                 .alignmentGuide(.top) { context in context[.bottom] + 8 }
         }.overlay(alignment: .bottom) {
-            Text("Swipe up to edit")
+            Text("Bottom Bar Hint Swipe Up")
                 .fontWeight(.semibold)
                 .shadow(color: Color(.sRGBLinear, white: 0, opacity: 1), radius: 25)
                 .opacity(viewModel.currentHint == .swipeUp ? 1 : 0)

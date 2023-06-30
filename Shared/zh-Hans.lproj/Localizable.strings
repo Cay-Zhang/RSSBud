@@ -12,8 +12,10 @@
 "RSSHub Documentation" = "RSSHub 文档";
 
 "Bottom Bar Start Prompt" = "输入网址或使用快速开始选项";
+"Bottom Bar Hint Swipe Down" = "向下轻扫以返回";
+"Bottom Bar Hint Swipe Up" = "向上轻扫以编辑";
 "Copy Link" = "复制链接";
-"Dismiss Current Analysis" = "取消本次分析";
+"Dismiss Current Analysis" = "返回";
 
 "Content Section RSS Feeds" = "RSS 源";
 "Content Section RSSHub Feeds" = "RSSHub 源";
