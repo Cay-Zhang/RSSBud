@@ -13,7 +13,7 @@ struct BottomBar: View {
     @ObservedObject var viewModel: Self.ViewModel
     @FocusState var isTextFieldFocused: Bool
     
-    var body: some View {
+    @ViewBuilder var bar: some View {
         let url = viewModel.linkURL ?? URLComponents()
         ZStack {
             viewModel.linkImage?
@@ -53,45 +53,34 @@ struct BottomBar: View {
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.15), radius: 12, y: 3)
         .transition(.offset(y: 50).combined(with: .scale(scale: 0.5)).combined(with: .opacity))
         .gesture(dragGesture, including: .all)
+        .gesture(tapGesture, including: !viewModel.isEditing ? .all : .subviews)
         .scaleEffect(x: viewModel.scale, y: viewModel.scale)
-        .offset(viewModel.offset)
-        .animation(Self.transitionAnimation, value: viewModel.linkTitle)
-        .animation(Self.transitionAnimation, value: viewModel.isEditing)
+    }
+    
+    var body: some View {
+        bar.overlay(alignment: .top) {
+            Text("Swipe down to return home")
+                .fontWeight(.semibold)
+                .shadow(color: Color(.sRGBLinear, white: 0, opacity: 1), radius: 25)
+                .opacity(viewModel.currentHint == .swipeDown ? 1 : 0)
+                .offset(y: viewModel.currentHint == .swipeDown ? 0 : -10)
+                .alignmentGuide(.top) { context in context[.bottom] + 8 }
+        }.overlay(alignment: .bottom) {
+            Text("Swipe up to edit")
+                .fontWeight(.semibold)
+                .shadow(color: Color(.sRGBLinear, white: 0, opacity: 1), radius: 25)
+                .opacity(viewModel.currentHint == .swipeUp ? 1 : 0)
+                .offset(y: viewModel.currentHint == .swipeUp ? 0 : 10)
+                .alignmentGuide(.bottom) { context in context[.top] - 5 }
+        }.offset(viewModel.offset)
     }
     
     var dragGesture: some Gesture {
         DragGesture(minimumDistance: 5, coordinateSpace: .global)
             .onChanged { value in
-                let translation = CGSize(width: value.translation.width, height: value.translation.height + viewModel.dragTranslationYDelta)
-                let offsetHeight = decay(translation.height, positiveThreshold: 0, negativeThreshold: 0)
                 withAnimation(Self.transitionAnimation) {
-                    viewModel.offset.height = offsetHeight
-                    viewModel.scale = 1.01
-                    if isTextFieldFocused {
-                        if translation.height > 30 {
-                            if viewModel.linkURL != nil {
-                                viewModel.isEditing = false
-                            }
-                            isTextFieldFocused = false
-                            assert(viewModel.dragTranslationYDelta == 0, "dragTranslationYDelta should not accumulate.")
-                            viewModel.dragTranslationYDelta = -value.translation.height - 45
-                            Self.feedbackGenerator.selectionChanged()
-                        }
-                    } else if translation.height < -50 {
-                        if !viewModel.isEditing {
-                            viewModel.isEditing = true
-                            Self.feedbackGenerator.selectionChanged()
-                        }
-                    } else if translation.height > 15 {
-                        if !viewModel.isEditing {
-                            viewModel._isEditing = true
-                            viewModel.editingText = ""
-                            Self.feedbackGenerator.selectionChanged()
-                        }
-                    } else if viewModel.isEditing && viewModel.linkURL != nil {
-                        viewModel.isEditing = false
-                        Self.feedbackGenerator.selectionChanged()
-                    }
+                    onDragChanged(rawTranslation: value.translation)
+                    viewModel.currentHint = nil
                 }
             }.onEnded { value in
                 let translation = CGSize(width: value.translation.width, height: value.translation.height + viewModel.dragTranslationYDelta)
@@ -106,6 +95,31 @@ struct BottomBar: View {
                     viewModel.dragTranslationYDelta = 0
                 }
             }
+    }
+    
+    var tapGesture: some Gesture {
+        TapGesture().onEnded {
+            Task {
+                withAnimation(.spring(response: 0.8, dampingFraction: 1.05)) {
+                    onDragChanged(rawTranslation: .init(width: 0, height: 120))
+                    viewModel.currentHint = .swipeDown
+                }
+                try await Task.sleep(nanoseconds: 1_500_000_000)
+                guard viewModel.currentHint == .swipeDown else { throw CancellationError() }
+                withAnimation(.spring(response: 0.8, dampingFraction: 1.05)) {
+                    onDragChanged(rawTranslation: .zero)
+                    onDragChanged(rawTranslation: .init(width: 0, height: -200))
+                    viewModel.currentHint = .swipeUp
+                }
+                try await Task.sleep(nanoseconds: 1_500_000_000)
+                guard viewModel.currentHint == .swipeUp else { throw CancellationError() }
+                withAnimation(.spring(response: 0.8, dampingFraction: 1.05)) {
+                    onDragChanged(rawTranslation: .zero)
+                    viewModel.scale = 1
+                    viewModel.currentHint = nil
+                }
+            }
+        }
     }
     
     @ViewBuilder func linkViewContextMenuItems() -> some View {
@@ -140,7 +154,14 @@ struct BottomBar: View {
                 .opacity(viewModel.isEditing ? 1 : 0)
                 .offset(x: viewModel.isEditing ? 0 : -30)
                 .focused($isTextFieldFocused)
-                .onSubmit {
+                .onChange(of: isTextFieldFocused) { focused in
+                    if focused {
+                        viewModel.offset = .zero
+                        viewModel.dragTranslationYDelta = 0
+                        viewModel.scale = 1
+                        viewModel.currentHint = nil
+                    }
+                }.onSubmit {
                     if !viewModel.editingText.isEmpty, let url = URLComponents(autoPercentEncoding: viewModel.editingText) {
                         viewModel.onSubmit(url)
                     }
@@ -150,6 +171,38 @@ struct BottomBar: View {
                 .animatableFont(size: (viewModel.linkTitle != nil && !viewModel.isEditing) ? 13 : 15, weight: (viewModel.linkTitle != nil && !viewModel.isEditing) ? .regular : .semibold)
                 .opacity(!viewModel.isEditing ? 1 : 0)
                 .offset(x: viewModel.isEditing ? 30 : 0)
+        }
+    }
+    
+    func onDragChanged(rawTranslation: CGSize) {
+        let translation = CGSize(width: rawTranslation.width, height: rawTranslation.height + viewModel.dragTranslationYDelta)
+        let offsetHeight = decay(translation.height, positiveThreshold: 0, negativeThreshold: 0)
+        viewModel.offset.height = offsetHeight
+        viewModel.scale = 1.01
+        if isTextFieldFocused {
+            if translation.height > 30 {
+                if viewModel.linkURL != nil {
+                    viewModel.isEditing = false
+                }
+                isTextFieldFocused = false
+                assert(viewModel.dragTranslationYDelta == 0, "dragTranslationYDelta should not accumulate.")
+                viewModel.dragTranslationYDelta = -rawTranslation.height - 45
+                Self.feedbackGenerator.selectionChanged()
+            }
+        } else if translation.height < -50 {
+            if !viewModel.isEditing {
+                viewModel.isEditing = true
+                Self.feedbackGenerator.selectionChanged()
+            }
+        } else if translation.height > 15 {
+            if !viewModel.isEditing {
+                viewModel._isEditing = true
+                viewModel.editingText = ""
+                Self.feedbackGenerator.selectionChanged()
+            }
+        } else if viewModel.isEditing && viewModel.linkURL != nil {
+            viewModel.isEditing = false
+            Self.feedbackGenerator.selectionChanged()
         }
     }
 }
@@ -172,6 +225,8 @@ extension BottomBar {
         @Published var offset: CGSize = .zero
         @Published var scale: CGFloat = 1
         var dragTranslationYDelta: CGFloat = 0
+        
+        @Published var currentHint: Hint? = nil
         
         var dismiss: () -> Void = { }
         var onSubmit: (URLComponents) -> Void = { _ in }
@@ -199,6 +254,10 @@ extension BottomBar {
 extension BottomBar {
     enum LinkIconSize {
         case small, large
+    }
+    
+    enum Hint {
+        case swipeDown, swipeUp
     }
     
     func conciseRepresentation(of url: URLComponents) -> AttributedString {
