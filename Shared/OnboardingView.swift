@@ -223,7 +223,7 @@ extension OnboardingView {
         
         var body: some View {
             VStack(spacing: 16) {
-                Image("Icon")
+                Image("RSSHub")
                     .resizable()
                     .frame(width: 100, height: 100, alignment: .center)
                     .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))

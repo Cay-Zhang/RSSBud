@@ -195,7 +195,7 @@ extension Core {
                 
                 Section {
                     VStack(alignment: .leading, spacing: 10) {
-                        Image("Icon")
+                        Image("RSSHub")
                             .resizable()
                             .frame(width: 32, height: 32)
                             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
