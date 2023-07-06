@@ -112,16 +112,14 @@ extension OnboardingView {
     }
     
     struct Discover: View {
-        
+        @State var isRuleManagerPresented: Bool = false
         @Binding var currentPage: Page
-        @Environment(\.customOpenURLAction) var openURL
         
+        @Environment(\.customOpenURLAction) var openURL
         @Environment(\.namespace) var namespace
         
         var body: some View {
             VStack(spacing: 16) {
-                
-                
                 HStack(spacing: -10) {
                     let sideLength: CGFloat = 70
                     Image(systemName: "square.and.arrow.up.fill")
@@ -130,7 +128,7 @@ extension OnboardingView {
                         .frame(width: sideLength, height: sideLength)
                         .background(Color(UIColor.tertiarySystemBackground))
                         .clipShape(Circle())
-                    Image(systemName: "doc.on.clipboard.fill")
+                    Image(systemName: "character.cursor.ibeam")
                         .font(.system(size: 24, weight: .semibold, design: .default))
                         .foregroundColor(.accentColor)
                         .frame(width: sideLength, height: sideLength)
@@ -138,21 +136,48 @@ extension OnboardingView {
                         .clipShape(Circle())
                 }
                 
-                Text("Onboarding Page 2 Title")
+                Text("Onboarding Page 2 Title 1")
                     .font(.system(size: 24, weight: .semibold, design: .default))
                 
                 Text("Onboarding Page 2 Body 1")
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
+                Divider()
+                
+                HStack(spacing: -10) {
+                    let sideLength: CGFloat = 70
+                    Image(systemName: "dot.radiowaves.up.forward")
+                        .font(.system(size: 24, weight: .semibold, design: .default))
+                        .foregroundColor(.accentColor)
+                        .frame(width: sideLength, height: sideLength)
+                        .background(Color(UIColor.tertiarySystemBackground))
+                        .clipShape(Circle())
+                }.padding(.top, 4)
+                
+                Text("Onboarding Page 2 Title 2")
+                    .font(.system(size: 24, weight: .semibold, design: .default))
+                
                 Text("Onboarding Page 2 Body 2")
-                    .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
                 VStack(spacing: 8) {
-                    Button("See What's Supported", systemImage: "text.book.closed.fill") {
-                        openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
+                    Button("Rules", systemImage: "info.circle.fill") {
+                        isRuleManagerPresented = true
+                    }.sheet(isPresented: $isRuleManagerPresented) {
+                        NavigationView {
+                            Core.RuleManagerView()
+                                .toolbar {
+                                    ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                                        Button {
+                                            isRuleManagerPresented = false
+                                        } label: {
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                }
+                        }.modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
                     }
                     
                     Button("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
@@ -195,7 +220,8 @@ extension OnboardingView {
                 IntegrationSettingsView(
                     rowBackgroundColor: Color(UIColor.tertiarySystemBackground),
                     backgroundColor: Color(UIColor.tertiarySystemBackground)
-                ).frame(height: 263)
+                ).listStyle(.plain)
+                .frame(height: 263)
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 .background(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
@@ -263,7 +289,7 @@ extension OnboardingView {
                 } else {
                     VStack(spacing: 8) {
                         Button("Learn More About Deployment", systemImage: "info.circle.fill") {
-                            openURL(URLComponents(string: "https://docs.rsshub.app/en/")!)
+                            openURL(URLComponents(string: "https://docs.rsshub.app/install/")!)
                         }
                         
                         Button("Use My Own Instance", systemImage: "lock.shield.fill", withAnimation: OnboardingView.transitionAnimation) {
@@ -322,13 +348,7 @@ extension OnboardingView {
                         openURL(URLComponents(string: "https://t.me/RSSBud_Discussion")!)
                     }
                     
-                    Button("Submit New Rules", systemImage: "link.badge.plus") {
-                        openURL(URLComponents(string: "https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
-                    }
-                    
-                    Button("Donate to RSSBud", systemImage: "yensign.circle.fill") {
-                        openURL(URLComponents(string: "https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
-                    }.environment(\.isEnabled, false)
+                    Button("Donate to RSSBud", systemImage: "yensign.circle.fill") { }.environment(\.isEnabled, false)
                     
                     HStack(spacing: 8) {
                         Button("Onboarding Start Over", systemImage: "arrow.left", withAnimation: OnboardingView.transitionAnimation) {
@@ -353,5 +373,6 @@ struct OnboardingView_Previews: PreviewProvider {
                 .previewLayout(.sizeThatFits)
         }.colorScheme(.dark)
         .environment(\.locale, Locale(identifier: "zh-CN"))
+        .symbolRenderingMode(.hierarchical)
     }
 }

@@ -109,9 +109,10 @@
 "Onboarding Page 1 Body" = "RSSBud 可以帮助你快速发现和订阅适用于网站或 App 内分享的 RSS 源和 RSSHub 源。";
 "Learn More About RSSHub" = "了解 RSSHub";
 
-"Onboarding Page 2 Title" = "发现";
-"Onboarding Page 2 Body 1" = "RSSBud 通过分析网站的链接与内容来发现订阅源。";
-"Onboarding Page 2 Body 2" = "你可以通过 RSSBud 提供的系统分享菜单插件来使用 RSSBud，也可以手动让他读取剪贴板中的链接。";
+"Onboarding Page 2 Title 1" = "分享";
+"Onboarding Page 2 Title 2" = "发现";
+"Onboarding Page 2 Body 1" = "通过系统分享菜单将网站分享给 RSSBud。也可在 App 中手动提供网站的链接。";
+"Onboarding Page 2 Body 2" = "RSSBud 将使用一系列的**规则**来找出合适的订阅源。此外，他也可以发现网页 HTML 中的 RSS 源。";
 
 "Onboarding Page 3 Title" = "订阅";
 "Onboarding Page 3 Body 1" = "RSSBud 可以帮你快速订阅到这些 RSS 阅读器和服务。";

@@ -109,9 +109,10 @@
 "Onboarding Page 1 Body" = "RSSBud can help you quickly discover and subscribe to RSS feeds from websites or apps, especially those provided by RSSHub.";
 "Learn More About RSSHub" = "Learn More About RSSHub";
 
-"Onboarding Page 2 Title" = "Discover";
-"Onboarding Page 2 Body 1" = "RSSBud discovers RSS feeds from a website by analyzing the website's link and content.";
-"Onboarding Page 2 Body 2" = "Preferably you would share the link to RSSBud using the system share sheet. But in case you only have the option to copy the link, you can also have him read your clipboard for it.";
+"Onboarding Page 2 Title 1" = "Share";
+"Onboarding Page 2 Title 2" = "Discover";
+"Onboarding Page 2 Body 1" = "Share a link to RSSBud using the system share sheet, or provide the link manually in the app.";
+"Onboarding Page 2 Body 2" = "RSSBud uses **rules** to discover feeds. RSSBud also finds RSS feeds from the content of a web page.";
 
 "Onboarding Page 3 Title" = "Subscribe";
 "Onboarding Page 3 Body 1" = "RSSBud offers one-tap subscription to these RSS readers and services.";
