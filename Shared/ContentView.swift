@@ -51,9 +51,11 @@ struct ContentView: View {
                 .environment(\.isEnabled, !viewModel.isFocusedOnBottomBar)
                 .overlay(Color.black.opacity(viewModel.isFocusedOnBottomBar ? 0.5: 0.0))
                 .safeAreaInset(edge: .bottom) {
-                    BottomBar(viewModel: viewModel.bottomBarViewModel)
-                        .padding(.bottom, 8)
-                        .padding(.horizontal, 8)
+                    if !isOnboarding {
+                        BottomBar(viewModel: viewModel.bottomBarViewModel)
+                            .padding(.bottom, 8)
+                            .padding(.horizontal, 8)
+                    }
                 }
             }
             
@@ -73,7 +75,8 @@ struct ContentView: View {
         .sheet(isPresented: $isSettingsViewPresented) {
             SettingsView()
                 .modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
-        }.symbolRenderingMode(.hierarchical)
+        }.animation(OnboardingView.transitionAnimation, value: isOnboarding)
+        .symbolRenderingMode(.hierarchical)
     }
     
     @ViewBuilder var pageFeeds: some View {
