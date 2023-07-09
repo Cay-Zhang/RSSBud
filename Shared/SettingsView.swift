@@ -206,6 +206,10 @@ extension Core {
                     }.padding(.vertical, 4)
                     .foregroundColor(.secondary)
                     
+                    Button("See What's Supported", systemImage: "arrow.up.forward.app.fill") {
+                        openURL("https://docs.rsshub.app/social-media.html")
+                    }
+                    
                     Button("Submit New Rules", systemImage: "arrow.up.forward.app.fill") {
                         openURL("https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze")
                     }
