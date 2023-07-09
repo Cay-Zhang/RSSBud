@@ -142,7 +142,7 @@ struct IntegrationSettingsView: View {
                 switch key {
                 case .tinyTinyRSS:
                     VStack(alignment: .leading, spacing: 2.0) {
-                        Text(key.rawValue)
+                        Text(LocalizedStringKey(key.rawValue))
                         ValidatedTextField("App URL", text: _integrations.$ttrssBaseURLString, validation: validate(urlString:))
                             .foregroundColor(.secondary)
                             .keyboardType(.URL)
@@ -150,7 +150,7 @@ struct IntegrationSettingsView: View {
                     }.tag(key)
                 case .miniflux:
                     VStack(alignment: .leading, spacing: 2.0) {
-                        Text(key.rawValue)
+                        Text(LocalizedStringKey(key.rawValue))
                         ValidatedTextField("App URL", text: _integrations.$minifluxBaseURLString, validation: validate(urlString:))
                             .foregroundColor(.secondary)
                             .keyboardType(.URL)
@@ -158,14 +158,14 @@ struct IntegrationSettingsView: View {
                     }.tag(key)
                 case .freshRSS:
                     VStack(alignment: .leading, spacing: 2.0) {
-                        Text(key.rawValue)
+                        Text(LocalizedStringKey(key.rawValue))
                         ValidatedTextField("App URL", text: _integrations.$freshRSSBaseURLString, validation: validate(urlString:))
                             .foregroundColor(.secondary)
                             .keyboardType(.URL)
                             .disableAutocorrection(true)
                     }.tag(key)
                 default:
-                    Text(key.rawValue).tag(key)
+                    Text(LocalizedStringKey(key.rawValue)).tag(key)
                 }
             }.listRowBackground(rowBackgroundColor)
         }.background(backgroundColor?.ignoresSafeArea())

@@ -106,14 +106,15 @@ extension FeedView {
     
     @ViewBuilder var integrationButton: some View {
         if integrations.count == 1, let url = integrationURL(for: integrations[0]) {
-            Button(integrations[0].rawValue, systemImage: "arrowshape.turn.up.right.fill") {
+            let label = LocalizedStringKey(integrations[0] == .systemDefaultReader ? "Subscribe" : integrations[0].rawValue)
+            Button(label, systemImage: "arrowshape.turn.up.right.fill") {
                 openURL(url)
             }
         } else {
             Menu {
                 ForEach(integrations) { key in
                     if let url = integrationURL(for: key) {
-                        Button(key.rawValue) {
+                        Button(LocalizedStringKey(key.rawValue)) {
                             openURL(url)
                         }
                     }
@@ -171,5 +172,25 @@ struct RSSHubFeedView: FeedView {
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView_Previews.previews
+        
+        VStack(spacing: 16) {
+            ForEach(Integration.Key.allCases.dropFirst()) { key in
+                HStack(spacing: 8) {
+                    Button(LocalizedStringKey(key.rawValue), systemImage: "arrowshape.turn.up.right.fill") { }
+                    
+                    Button(LocalizedStringKey(key.rawValue), systemImage: "arrowshape.turn.up.right.fill") { }
+                        .environment(\.locale, Locale(identifier: "zh-CN"))
+                }
+            }
+            
+            HStack(spacing: 8) {
+                Button("Subscribe", systemImage: "arrowshape.turn.up.right.fill") { }
+                
+                Button("Subscribe", systemImage: "arrowshape.turn.up.right.fill") { }
+                    .environment(\.locale, Locale(identifier: "zh-CN"))
+            }
+        }.padding(.horizontal, 25)
+        .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .secondarySystemBackground)))
+        .previewDisplayName("Subscribe Buttons")
     }
 }

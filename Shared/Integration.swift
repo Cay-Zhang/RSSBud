@@ -17,7 +17,7 @@ import SwiftUI
     
     var wrappedValue: [Key] {
         get {
-            integrationKeys.split(separator: "\n").compactMap { Key(rawValue: String($0)) }
+            integrationKeys.split(separator: "\n").compactMap { Key(String($0)) }
         }
         nonmutating set {
             integrationKeys = newValue.map(\.rawValue).joined(separator: "\n")
@@ -102,7 +102,7 @@ import SwiftUI
 
 extension Integration {
     enum Key: String, Identifiable, Hashable, CaseIterable {
-        case systemDefaultReader = "Default"
+        case systemDefaultReader = "System Default Reader"
         case egoReader = "Ego Reader"
         case reeder = "Reeder"
         case fieryFeeds = "Fiery Feeds"
@@ -118,6 +118,15 @@ extension Integration {
         case freshRSS = "Fresh RSS"
         
         var id: String { rawValue }
+        
+        init?(_ string: String) {
+            // previous versions used "Default" to represent the system default reader
+            if string == "Default" {
+                self = .systemDefaultReader
+                return
+            }
+            self.init(rawValue: string)
+        }
     }
 }
 
