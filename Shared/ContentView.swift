@@ -15,6 +15,7 @@ struct ContentView: View {
     var done: (() -> Void)? = nil
     @ObservedObject var viewModel = ViewModel()
     @State var isSettingsViewPresented = false
+    @State var isRuleManagerPresented: Bool = false
     
     @AppStorage("isOnboarding", store: RSSBud.userDefaults) var isOnboarding: Bool = true
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -25,12 +26,12 @@ struct ContentView: View {
                 ScrollView {
                     LazyVStack(spacing: 16) {
                         if isOnboarding {
-                            OnboardingView()
+                            OnboardingView(isRuleManagerPresented: $isRuleManagerPresented)
                         } else if let error = viewModel.error {
                             ErrorView(error: error, editOriginalURL: { withAnimation { viewModel.bottomBarViewModel.isEditing = true } })
                         } else if viewModel.originalURL == nil {
                             #if !ACTION_EXTENSION
-                            StartView()
+                            StartView(isRuleManagerPresented: $isRuleManagerPresented)
                             #endif
                         } else {
                             pageFeeds
@@ -38,7 +39,7 @@ struct ContentView: View {
                             rsshubFeeds
                             
                             if (viewModel.rssFeeds?.isEmpty ?? false) && (viewModel.rsshubFeeds?.isEmpty ?? false) && !viewModel.isProcessing {
-                                NothingFoundView(url: viewModel.originalURL)
+                                NothingFoundView(url: viewModel.originalURL, isRuleManagerPresented: $isRuleManagerPresented)
                             }
                             
                             if horizontalSizeClass != .regular {
@@ -75,6 +76,19 @@ struct ContentView: View {
         .sheet(isPresented: $isSettingsViewPresented) {
             SettingsView()
                 .modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
+        }.sheet(isPresented: $isRuleManagerPresented) {
+            NavigationView {
+                Core.RuleManagerView()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                isRuleManagerPresented = false
+                            } label: {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+            }.modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
         }.animation(OnboardingView.transitionAnimation, value: isOnboarding)
         .symbolRenderingMode(.hierarchical)
     }
@@ -324,8 +338,9 @@ extension ContentView {
 struct NothingFoundView: View {
     
     var url: URLComponents?
-    @Environment(\.customOpenURLAction) var openURL
+    @Binding var isRuleManagerPresented: Bool
     
+    @Environment(\.customOpenURLAction) var openURL
     @Environment(\.xCallbackContext) var xCallbackContext: Binding<XCallbackContext>
     
     func continueXCallbackText() -> LocalizedStringKey {
@@ -368,12 +383,8 @@ struct NothingFoundView: View {
             }
             
             VStack(spacing: 8) {
-                Button("See What's Supported", systemImage: "text.book.closed.fill") {
-                    openURL(URLComponents(string: "https://docs.rsshub.app/social-media.html")!)
-                }
-                
-                Button("Submit New Rules", systemImage: "link.badge.plus") {
-                    openURL(URLComponents(string: "https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze")!)
+                Button("Rules", systemImage: "info.circle.fill") {
+                    isRuleManagerPresented = true
                 }
                 
                 if xCallbackContext.wrappedValue.cancel != nil {
@@ -411,7 +422,7 @@ struct ContentView_Previews: PreviewProvider {
         Group {
             ContentView(viewModel: viewModel, isOnboarding: false)
             
-            NothingFoundView(url: URLComponents(autoPercentEncoding: "https://www.baidu.com/s?word=你好")!)
+            NothingFoundView(url: URLComponents(autoPercentEncoding: "https://www.baidu.com/s?word=你好")!, isRuleManagerPresented: .constant(false))
                 .padding(.horizontal, 20)
         }
     }

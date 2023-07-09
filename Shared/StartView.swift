@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct StartView: View {
+    @Binding var isRuleManagerPresented: Bool
+    
     @Environment(\.customOpenURLAction) var openURL
     @EnvironmentObject var viewModel: ContentView.ViewModel
     
@@ -22,7 +24,7 @@ struct StartView: View {
             
             ExpandableSection(viewModel: viewModel.startViewResourceSection) {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: .infinity), spacing: 10)], spacing: 10) {
-                    Button("GitHub Repo Homepage", systemImage: "house.fill") {
+                    Button("GitHub Repo Homepage", systemImage: "star.fill") {
                         openURL("https://github.com/Cay-Zhang/RSSBud")
                     }
                     
@@ -30,8 +32,8 @@ struct StartView: View {
                         openURL("https://t.me/RSSBud_Discussion")
                     }
                     
-                    Button("Submit New Rules", systemImage: "chevron.left.forwardslash.chevron.right") {
-                        openURL("https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze")
+                    Button("Rules", systemImage: "checklist") {
+                        isRuleManagerPresented = true
                     }
                     
                     

@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    @State var currentPage: Page = .welcome
+    @Binding var isRuleManagerPresented: Bool
     
     @Environment(\.customOpenURLAction) var openURL
-    @State var currentPage: Page = .welcome
-    
     @Namespace var namespace
     
     @ViewBuilder var currentPageView: some View {
@@ -21,7 +21,7 @@ struct OnboardingView: View {
                 .transition(OnboardingView.transition)
                 .zIndex(1)
         case .discover:
-            Discover(currentPage: $currentPage)
+            Discover(currentPage: $currentPage, isRuleManagerPresented: $isRuleManagerPresented)
                 .transition(OnboardingView.transition)
                 .zIndex(2)
         case .subscribe:
@@ -112,8 +112,8 @@ extension OnboardingView {
     }
     
     struct Discover: View {
-        @State var isRuleManagerPresented: Bool = false
         @Binding var currentPage: Page
+        @Binding var isRuleManagerPresented: Bool
         
         @Environment(\.customOpenURLAction) var openURL
         @Environment(\.namespace) var namespace
@@ -165,19 +165,6 @@ extension OnboardingView {
                 VStack(spacing: 8) {
                     Button("Rules", systemImage: "info.circle.fill") {
                         isRuleManagerPresented = true
-                    }.sheet(isPresented: $isRuleManagerPresented) {
-                        NavigationView {
-                            Core.RuleManagerView()
-                                .toolbar {
-                                    ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                                        Button {
-                                            isRuleManagerPresented = false
-                                        } label: {
-                                            Image(systemName: "checkmark")
-                                        }
-                                    }
-                                }
-                        }.modifier(CustomOpenURLModifier(openInSystem: openURL.openInSystem))
                     }
                     
                     Button("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
@@ -369,7 +356,7 @@ extension OnboardingView {
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(OnboardingView.Page.allCases, id: \.self) { page in
-            OnboardingView(currentPage: page)
+            OnboardingView(currentPage: page, isRuleManagerPresented: .constant(false))
                 .previewLayout(.sizeThatFits)
         }.colorScheme(.dark)
         .environment(\.locale, Locale(identifier: "zh-CN"))
