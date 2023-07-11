@@ -84,8 +84,15 @@ struct SettingsView: View {
                 }
                 
                 Section(header: Text("Settings Section About")) {
-                    Button("GitHub Repo Homepage", systemImage: "star.fill") {
-                        openURL(URLComponents(string: "https://github.com/Cay-Zhang/RSSBud")!)
+                    Button {
+                        openURL("https://github.com/Cay-Zhang/RSSBud")
+                    } label: {
+                        Label {
+                            Text("GitHub Repo Homepage")
+                        } icon: {
+                            Image("GitHub")
+                                .font(.system(size: 19))
+                        }
                     }
                     
                     Button("Telegram Channel", systemImage: "paperplane.fill") {
