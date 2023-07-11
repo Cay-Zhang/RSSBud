@@ -134,3 +134,4 @@
 
 "Shortcut Workshop" = "捷径工坊";
 "Shortcut Workshop Introduction" = "如果 RSSBud 不支持你想要的 RSS 阅读器/服务，或者你想将 RSSBud 整合进你的工作流中，你可以利用 RSSBud 对 x-callback-url 的支持，编写捷径来满足你的需求。就从下面这些开始吧！";
+"Template" = "模板";

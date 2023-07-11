@@ -1,51 +1,51 @@
 {
     "shortcuts": [
         {
-            "name": "用 RSSBud 分析并发送到 Telegram",
+            "name": "Analyze with RSSBud and Send with Telegram",
             "iconSystemName": "paperplane.fill",
             "isTemplate": false,
             "author": "cayZ",
-            "description": "将 RSSBud 分析结果发送到 Telegram，可以自定义消息模板和接受者用户名",
+            "description": "Send RSSBud analysis results to Telegram with customizable message template and recipient.",
             "url": {
                 "scheme": "https",
                 "host": "www.icloud.com",
-                "path": "/shortcuts/c18bd2d4ef71427ab2b25f397a920067"
+                "path": "/shortcuts/512b781474da4c868113aba21889ab56"
             }
         },
         {
-            "name": "用 RSSBud 分析并订阅到 Pocket Casts",
+            "name": "Analyze with RSSBud and Subscribe with Pocket Casts",
             "iconSystemName": "waveform.path",
             "isTemplate": false,
             "author": "cayZ",
-            "description": "将 RSSBud 分析结果发送到 Pocket Casts (仅限播客 RSS)",
+            "description": "Send RSSBud analysis results to Pocket Casts (podcast RSS only).",
             "url": {
                 "scheme": "https",
                 "host": "www.icloud.com",
-                "path": "/shortcuts/1eb2893bd14743f3a85db1a8f1aa43c3"
+                "path": "/shortcuts/3cf4b0660bfb441c9dabd21e6de523bf"
             }
         },
         {
-            "name": "扫描二维码并用 RSSBud 分析",
+            "name": "Scan QR and Analyze with RSSBud",
             "iconSystemName": "qrcode",
             "isTemplate": false,
             "author": "cayZ",
-            "description": "扫描二维码，获取 URL，跳转 RSSBud 分析",
+            "description": "Get URL from scanned QR code and analyze with RSSBud.",
             "url": {
                 "scheme": "https",
                 "host": "www.icloud.com",
-                "path": "/shortcuts/0f95219b79b14afb92f299a8a2889baf"
+                "path": "/shortcuts/997677502579494881f66d661bb2f773"
             }
         },
         {
-            "name": "RSSBud 捷径起手式",
+            "name": "RSSBud Starter Shortcut",
             "iconSystemName": "plus",
             "isTemplate": true,
             "author": "cayZ",
-            "description": "RSSBud 捷径的模板，支持从分享菜单启动，变量都已设置好",
+            "description": "A template for RSSBud related shortcuts that sets up the variables and supports share sheets.",
             "url": {
                 "scheme": "https",
                 "host": "www.icloud.com",
-                "path": "/shortcuts/55ca2d7e3ee748ceb27cb759bf23f622"
+                "path": "/shortcuts/0db563bf6ca24af296264ebb561e485a"
             }
         }
     ]

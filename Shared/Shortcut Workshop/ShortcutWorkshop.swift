@@ -144,7 +144,7 @@ struct ShortcutView: View {
                 .background(Color(UIColor.secondarySystemGroupedBackground))
                 .overlay(
                     shortcut.isTemplate ?
-                    Text("模板")
+                    Text("Template")
                         .font(Font.system(size: 15, weight: .medium, design: .default))
                         .foregroundColor(.secondary)
                         .padding()
@@ -173,6 +173,7 @@ struct ShortcutWorkshopView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ShortcutWorkshopView()
-        }.preferredColorScheme(.dark).navigationViewStyle(StackNavigationViewStyle())
+        }.preferredColorScheme(.dark)
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
