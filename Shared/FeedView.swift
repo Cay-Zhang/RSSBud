@@ -67,14 +67,30 @@ extension FeedView {
         }
     }
     
-    var pathComponentsView: some View {
-        HStack(spacing: 4) {
-            ForEach(pathComponents, id: \.self) { component in
-                Text(component)
-                    .foregroundStyle(.secondary)
-                    .font(Font.system(size: 13.0, weight: .regular, design: .rounded))
-                    .padding(4)
-                    .background(Color(uiColor: UIColor.tertiarySystemBackground), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+    @ViewBuilder var pathComponentsView: some View {
+        if #available(iOS 16.0, *) {
+            ScrollView(.horizontal) {
+                HStack(spacing: 4) {
+                    ForEach(pathComponents, id: \.self) { component in
+                        Text(component)
+                            .lineLimit(1)
+                            .foregroundStyle(.secondary)
+                            .font(Font.system(size: 13.0, weight: .regular, design: .rounded))
+                            .padding(4)
+                            .background(Color(uiColor: UIColor.tertiarySystemBackground), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                    }
+                }
+            }.scrollIndicators(.hidden)
+        } else {
+            HStack(spacing: 4) {
+                ForEach(pathComponents, id: \.self) { component in
+                    Text(component)
+                        .lineLimit(1)
+                        .foregroundStyle(.secondary)
+                        .font(Font.system(size: 13.0, weight: .regular, design: .rounded))
+                        .padding(4)
+                        .background(Color(uiColor: UIColor.tertiarySystemBackground), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                }
             }
         }
     }
