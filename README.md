@@ -1,23 +1,22 @@
+<div align=center>
+<img src="Readme Assets/Icon.png" width="125" height="125">
+</div>
 <h1 align=center>RSSBud</h1>
 
 <p align=center>
-<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/swift-5.5-fe562e?style=flat-square"></a>
+<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/swift-5.8-fe562e?style=flat-square"></a>
 <a href="https://developer.apple.com/ios"><img src="https://img.shields.io/badge/iOS-15%2B-blue?style=flat-square"></a>
+<a href="https://developer.apple.com/macos"><img src="https://img.shields.io/badge/macOS%20(Apple%20Silicon)-12%2B-blue?style=flat-square"></a>
 <a href="https://github.com/Cay-Zhang/SwiftSpeech/blob/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square"></a>
 </p>
 
-> RSSBud 是一个 [RSSHub](https://github.com/DIYgod/RSSHub) 的辅助 iOS App，和 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 类似，他可以帮助你快速发现和订阅网站的 RSS。此外，他还支持 RSSHub 的通用参数 (实现过滤、获取全文等功能)。
+> RSSBud 可以帮助你快速发现和订阅适用于网站或 App 内分享的 RSS 源和 [RSSHub](https://github.com/DIYgod/RSSHub) 源。他支持 RSSHub 的通用参数 (可实现过滤、获取全文等功能)。
 
 [Telegram 群](https://t.me/RSSBud_Discussion) | [Telegram 频道](https://t.me/RSSBud)
 
-<p align=center>
-<img src="Readme Assets/RSSBud.jpg" align=center width="375">
-</p>
+https://github.com/Cay-Zhang/RSSBud/assets/13341339/0b02c0a6-faf1-490c-b4d0-b03b84de5145
 
 ## 下载
-
-> [RSSBud v2 TestFlight 公测](https://testflight.apple.com/join/HxiUd6tx) 现已开启！
-
 <a href="https://apps.apple.com/cn/app/rssbud/id1531443645?itsct=apps_box&amp;itscg=30200"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/zh-CN?size=250x83&amp;releaseDate=1605052800&h=3dc9b44d4b825017f8746f19cec2b07f" alt="Download on the App Store" width="200"></a>
 
 <img src="https://tools-qr-production.s3.amazonaws.com/output/apple-toolbox/dace82ddc6942d582d27ad4d2ba31d58/c6e9f5d0-cee7-4523-ac64-ca89de19e8dc.png" width="200">
@@ -27,20 +26,15 @@
 ## 功能
 - [x] 检测网页中的 RSS 源
 - [x] 检测适用于网页 (或 App 内分享) 的 RSSHub 源 (几乎支持所有 RSSHub Radar 的规则)
+- [x] 检测其他适用于网页的 RSS 源 (由 [RSSBud 规则](#规则) 驱动)
 - [x] 移动端 URL 适配 (自动展开、常见移动子域名适配)
-- [x] 读取剪贴板 URL
 - [x] 分享菜单插件 (Action Extension)
 - [x] 快速订阅到 Reeder, Fiery Feeds, Ego Reader 和系统默认 RSS 阅读器
 - [x] 快速订阅到 Tiny Tiny RSS, Miniflux, Fresh RSS, Feedly, Inoreader, Feedbin, The Old Reader, Feeds Pub 网页端
-- [x] 自定义通用参数
-- [x] 自定义 RSSHub 域名
-- [x] 自动更新 RSSHub Radar 规则
+- [x] 自定义 RSSHub 通用参数
+- [x] 自动更新规则
 - [x] 访问控制 (自动生成 MD5 访问码)
 - [x] 支持 x-callback-url，可结合 "快捷指令" App 编写捷径实现各种强大功能 (详见 [捷径工坊](#捷径工坊) 和 [Scheme](#x-callback-url-scheme))
-- [ ] 检测适用于网站的 RSSHub 源
-
-## 参与 Beta 测试
-加入 [Telegram 群](https://t.me/RSSBud_Discussion) 以获得 Beta 测试详情。
 
 ## 捷径工坊
 如果 RSSBud 不支持你想要的 RSS 阅读器/服务，或者你想将 RSSBud 整合进你的工作流中，你可以编写捷径来满足你的需求。就从下面这些开始吧：
@@ -82,11 +76,19 @@ npm run build
 若要使用分享菜单插件 (Action Extension)，请在 iOS 和 Action Extension 这两个 Target 中设置你自己的 App Group 并修改 `RSSBud.appGroupIdentifier`。
 
 ## 规则
-RSSBud 和 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 使用同一份 [规则](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js)，且均支持自动更新。
+RSSBud 的功能主要来源于两个开源项目提供的**规则**。如果你发现一个无法被 RSSBud 识别的源，请考虑向合适的项目提交新的规则。
 
-[为 RSSHub Radar 和 RSSBud 提交新的规则](https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze)
+- [RSSHub Radar 规则](https://rsshub.js.org/build/radar-rules.js) 来自 RSSHub (Radar) 项目。它被用来识别 RSSHub 源。
 
-> 一些网站的移动端和电脑端页面 URL 不同。由于 RSSHub Radar 的规则是适配电脑端的，在你发现 RSSBud 无法识别 RSSHub Radar 可以识别的网站时，可以尝试使用电脑端的 URL 并在 Telegram 向作者反馈。
+    [提交新的 RSSHub Radar 规则](https://docs.rsshub.app/joinus/new-radar.html#bian-xie-gui-ze)
+
+- [RSSBud 规则](https://github.com/Cay-Zhang/RSSBudRules) 是 RSSHub Radar 规则的扩展。这使它能够被用来识别非 RSSHub 源，比如不包含在网站 HTML 中的官方 RSS 源。如果你要提交的规则是用来识别 RSSHub 源的，请优先向 RSSHub Radar 项目提交该规则。
+
+    [提交新的 RSSBud 规则](https://github.com/Cay-Zhang/RSSBudRules)
+
+## 同类项目
+- [RSSHub Radar by DIYgod (浏览器扩展)](https://github.com/DIYgod/RSSHub-Radar)
+- [RSSAid by Leetao (Flutter)](https://github.com/LeetaoGoooo/RSSAid)
 
 ## 作者
 RSSBud 由 cayZ 制作，在 **[MIT 协议](https://choosealicense.com/licenses/mit/)** 下开源。
