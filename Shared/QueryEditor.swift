@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct QueryEditor: View {
-    
     @Binding var queryItems: [URLQueryItem]
-    
+    var scrollViewProxy: ScrollViewProxy? = nil
+    @FocusState var focusedQueryItemName: String?
+
     @Environment(\.customOpenURLAction) var openURL
     
     var body: some View {
@@ -33,9 +34,19 @@ struct QueryEditor: View {
                         }
                     }
                 ) { groupBoxContent(forQueryItem: item) }
+                .id(item.name)
                 .contextMenu {
                     Button(action: removeQueryItemAction(name: item.name)) {
                         Label("Delete", systemImage: "trash.fill")
+                    }
+                }
+            }
+        }.onChange(of: focusedQueryItemName) { name in
+            if let name {
+                Task { @MainActor in
+                    try await Task.sleep(nanoseconds: 150_000_000)  // 0.15s
+                    withAnimation(BottomBar.transitionAnimation.speed(2)) {
+                        scrollViewProxy?.scrollTo(name)
                     }
                 }
             }
@@ -80,6 +91,7 @@ struct QueryEditor: View {
         case "filter_time":
             TextField("Time Interval", text: queryItemValueBinding)
                 .keyboardType(.decimalPad)
+                .focused($focusedQueryItemName, equals: item.name)
         case "mode":
             Toggle("Enabled", isOn: Binding(get: {
                 queryItemValueBinding.wrappedValue == "fulltext"
@@ -88,6 +100,7 @@ struct QueryEditor: View {
             }))
         case "opencc":
             TextField("OpenCC Configuration", text: queryItemValueBinding)
+                .focused($focusedQueryItemName, equals: item.name)
         case "filter_case_sensitive":
             Toggle("Sensitive", isOn: Binding(get: {
                 queryItemValueBinding.wrappedValue != "false"
@@ -97,10 +110,12 @@ struct QueryEditor: View {
         case "limit":
             TextField("Max Entry Count", text: queryItemValueBinding)
                 .keyboardType(.numberPad)
+                .focused($focusedQueryItemName, equals: item.name)
         case "tgiv":
             TextField("Template Hash", text: queryItemValueBinding)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
+                .focused($focusedQueryItemName, equals: item.name)
         case "scihub":
             Toggle("Enabled", isOn: Binding(get: {
                 !queryItemValueBinding.wrappedValue.isEmpty
@@ -109,8 +124,10 @@ struct QueryEditor: View {
             }))
         case _ where item.name.starts(with: "filter"):
             TextField("Regular Expression", text: queryItemValueBinding)
+                .focused($focusedQueryItemName, equals: item.name)
         default:
             TextField("Value", text: queryItemValueBinding)
+                .focused($focusedQueryItemName, equals: item.name)
         }
     }
     

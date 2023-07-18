@@ -23,30 +23,32 @@ struct ContentView: View {
     var body: some View {
         HStack(spacing: 0) {
             NavigationView {
-                ScrollView {
-                    LazyVStack(spacing: 16) {
-                        if isOnboarding {
-                            OnboardingView(isRuleManagerPresented: $isRuleManagerPresented)
-                        } else if let error = viewModel.error {
-                            ErrorView(error: error, editOriginalURL: { withAnimation { viewModel.bottomBarViewModel.isEditing = true } })
-                        } else if viewModel.originalURL == nil {
-                            #if !ACTION_EXTENSION
-                            StartView(isRuleManagerPresented: $isRuleManagerPresented)
-                            #endif
-                        } else {
-                            pageFeeds
-                            
-                            rsshubFeeds
-                            
-                            if (viewModel.rssFeeds?.isEmpty ?? false) && (viewModel.rsshubFeeds?.isEmpty ?? false) && !viewModel.isProcessing {
-                                NothingFoundView(url: viewModel.originalURL, isRuleManagerPresented: $isRuleManagerPresented)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        LazyVStack(spacing: 16) {
+                            if isOnboarding {
+                                OnboardingView(isRuleManagerPresented: $isRuleManagerPresented)
+                            } else if let error = viewModel.error {
+                                ErrorView(error: error, editOriginalURL: { withAnimation { viewModel.bottomBarViewModel.isEditing = true } })
+                            } else if viewModel.originalURL == nil {
+                                #if !ACTION_EXTENSION
+                                StartView(isRuleManagerPresented: $isRuleManagerPresented)
+                                #endif
+                            } else {
+                                pageFeeds
+                                
+                                rsshubFeeds
+                                
+                                if (viewModel.rssFeeds?.isEmpty ?? false) && (viewModel.rsshubFeeds?.isEmpty ?? false) && !viewModel.isProcessing {
+                                    NothingFoundView(url: viewModel.originalURL, isRuleManagerPresented: $isRuleManagerPresented)
+                                }
+                                
+                                if horizontalSizeClass != .regular {
+                                    rsshubParameters(scrollViewProxy: proxy)
+                                }
                             }
-                            
-                            if horizontalSizeClass != .regular {
-                                rsshubParameters
-                            }
-                        }
-                    }.padding(16)
+                        }.padding(16)
+                    }
                 }.navigationTitle("RSSBud")
                 .toolbar(content: toolbarContent)
                 .environment(\.isEnabled, !viewModel.isFocusedOnBottomBar)
@@ -64,10 +66,12 @@ struct ContentView: View {
                 Divider().ignoresSafeArea(.keyboard, edges: .vertical)
                 
                 NavigationView {
-                    ScrollView {
-                        rsshubParameters
-                            .padding(16)
-                            .navigationTitle(Text("Parameters"))
+                    ScrollViewReader { proxy in
+                        ScrollView {
+                            rsshubParameters(scrollViewProxy: proxy)
+                                .padding(16)
+                                .navigationTitle(Text("Parameters"))
+                        }
                     }
                 }
             }
@@ -121,10 +125,10 @@ struct ContentView: View {
         }
     }
     
-    @ViewBuilder var rsshubParameters: some View {
+    @ViewBuilder func rsshubParameters(scrollViewProxy: ScrollViewProxy) -> some View {
         if let feeds = viewModel.rsshubFeeds, !feeds.isEmpty {
             ExpandableSection(viewModel: viewModel.rsshubParameterSectionViewModel) {
-                QueryEditor(queryItems: $viewModel.queryItems)
+                QueryEditor(queryItems: $viewModel.queryItems, scrollViewProxy: scrollViewProxy)
             } label: {
                 Text("Content Section RSSHub Parameters")
             }
