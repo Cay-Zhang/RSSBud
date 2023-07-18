@@ -1,5 +1,5 @@
 <div align=center>
-<img src="Readme Assets/Icon.png" width="125" height="125">
+<img src="Readme Assets/Icon with Shadow.png" width="140" height="140">
 </div>
 <h1 align=center>RSSBud</h1>
 
