@@ -95,6 +95,10 @@ extension URLComponents {
             self = newValue
         }
     }
+    
+    var isEmpty: Bool {
+        string?.isEmpty ?? true
+    }
 }
 
 extension URLComponents: ExpressibleByStringLiteral {
@@ -469,5 +473,15 @@ extension Sequence where Element: Hashable {
             }
         }
         return true
+    }
+}
+
+extension Publisher {
+    /// Transform a publisher to a new publisher that wraps ``Output`` and ``Failure`` in ``Result``, and has ``Never`` for ``Failure`` type.
+    ///
+    /// - Returns: ``some Publisher<Result<Output, Failure>, Never>``
+    func mapToResult() -> Publishers.Catch<Publishers.Map<Self, Result<Output, Failure>>, Just<Result<Output, Failure>>> {
+        map(Result.success)
+            .catch { Just(.failure($0)) }
     }
 }

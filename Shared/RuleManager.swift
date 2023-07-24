@@ -106,23 +106,30 @@ class RuleManager: ObservableObject {
         }
         
         remoteRuleFiles()
-            .sink { [weak self] completion in
+            .sink { [weak self] results in
+                var isAllSuccess = true
+                for (filename, result) in results {
+                    switch result {
+                    case .success(let content):
+                        guard let index = self?.ruleFilesInfo.firstIndex(where: { $0.filename == filename }) else {
+                            continue
+                        }
+                        self?.ruleFiles[index].content = content
+                        print("Rule file \(filename) fetched.")
+                    case .failure(let error):
+                        isAllSuccess = false
+                        print("Rule file \(filename) fetching failed with \(error).")
+                    }
+                }
                 DispatchQueue.main.async {
                     withAnimation {
                         self?.isFetchingRemoteRules = false
                     }
                     print("Task completed.")
-                    task?.setTaskCompleted(success: completion == .finished)
-                    if completion == .finished {
+                    task?.setTaskCompleted(success: isAllSuccess)
+                    if isAllSuccess {
                         self?.lastRemoteRulesFetchDate = Date()
                     }
-                }
-            } receiveValue: { [weak self] ruleContents in
-                for (filename, content) in ruleContents {
-                    guard let index = self?.ruleFilesInfo.firstIndex(where: { $0.filename == filename }) else {
-                        continue
-                    }
-                    self?.ruleFiles[index].content = content
                 }
             }.store(in: &self.cancelBag)
     }
@@ -176,18 +183,18 @@ class RuleManager: ObservableObject {
         }
     }
     
-    func remoteRuleFiles() -> AnyPublisher<[String: String], URLError> {
+    func remoteRuleFiles() -> some Publisher<[String: Result<String, URLError>], Never> {
         ruleFilesInfo
             .publisher
-            .flatMap { info -> AnyPublisher<(String, String), URLError> in
-                return URLSession.shared.dataTaskPublisher(for: info.remoteURL.url!)
+            .filter { !$0.remoteURL.isEmpty }
+            .flatMap { info in
+                URLSession.shared.dataTaskPublisher(for: info.remoteURL.url!)
                     .compactMap { output in
                         String(data: output.data, encoding: .utf8)
-                    }.map { (content: String) -> (filename: String, content: String) in
-                        (info.filename,  content)
-                    }.eraseToAnyPublisher()
+                    }.mapToResult()
+                    .map { (info.filename, $0) }
+                    .eraseToAnyPublisher()
             }.collect()
             .map(Dictionary.init(uniqueKeysWithValues:))
-            .eraseToAnyPublisher()
     }
 }

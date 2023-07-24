@@ -417,7 +417,7 @@ extension Core.RuleManagerView {
                         Text("Remote URL")
                         Spacer()
                         ValidatedTextField(
-                            "Remote URL",
+                            "Leave Empty For Local Files",
                             text: $info.remoteURL.validatedString,
                             validation: { URLComponents(autoPercentEncoding: $0) != nil }
                         ).foregroundColor(.secondary)

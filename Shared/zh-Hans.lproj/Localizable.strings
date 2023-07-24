@@ -65,6 +65,7 @@
 "Save and update" = "保存并更新";
 "Filename" = "文件名";
 "Remote URL" = "远程 URL";
+"Leave Empty For Local Files" = "留空则为本地文件";
 "Add new rule file" = "添加规则文件";
 
 "Nothing Found" = "真的一滴也没有了 (/TДT)/";
