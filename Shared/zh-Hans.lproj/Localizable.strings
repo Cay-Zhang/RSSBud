@@ -67,6 +67,7 @@
 "Remote URL" = "远程 URL";
 "Leave Empty For Local Files" = "留空则为本地文件";
 "Add new rule file" = "添加规则文件";
+"Open Rules Folder" = "打开规则文件夹";
 
 "Nothing Found" = "真的一滴也没有了 (/TДT)/";
 "Error Occurred" = "出错了...";

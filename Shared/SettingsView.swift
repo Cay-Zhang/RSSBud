@@ -357,6 +357,7 @@ extension Core.RuleManagerView {
         @State private var ruleFilesInfo: [RuleFileInfo] = RuleManager.shared.ruleFilesInfo
         @AppStorage("isAdvancedRuleConfigurationEnabled", store: RSSBud.userDefaults) var isAdvancedRuleConfigurationEnabled: Bool = false
         @AppStorage("lastRSSHubRadarRemoteRulesFetchDate", store: RSSBud.userDefaults) private var _lastRemoteRulesFetchDate: Double?
+        @Environment(\.customOpenURLAction) private var openURL
         
         private var lastRemoteRulesFetchDate: Date? {
             get { _lastRemoteRulesFetchDate.map(Date.init(timeIntervalSinceReferenceDate:)) }
@@ -373,6 +374,12 @@ extension Core.RuleManagerView {
                         
                         Text("\(date, style: .relative) ago")
                             .foregroundColor(.secondary)
+                    }
+                }
+                
+                if ProcessInfo.processInfo.isiOSAppOnMac {
+                    Button("Open Rules Folder", systemImage: "arrow.up.forward.app.fill") {
+                        openURL(Core.ruleDirectoryURL.components!)
                     }
                 }
                 

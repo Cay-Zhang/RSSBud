@@ -67,6 +67,7 @@
 "Remote URL" = "Remote URL";
 "Leave Empty For Local Files" = "Leave empty for local files";
 "Add new rule file" = "Add Rule File";
+"Open Rules Folder" = "Open Rules Folder";
 
 "Nothing Found" = "Nothing Found";
 "Error Occurred" = "Oops...";

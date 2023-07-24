@@ -153,11 +153,16 @@ struct ContentView: View {
                 Button("Error") {
                     viewModel.process(url: URLComponents(string: "example.com")!)
                 }
-                Button("Nothing Found") {
+                Button("Nothing Found" as String) {
                     viewModel.process(url: URLComponents(string: "https://www.baidu.com/")!)
                 }
                 Button("Toggle Onboarding") {
                     withAnimation(OnboardingView.transitionAnimation) { isOnboarding.toggle() }
+                }
+                if ProcessInfo.processInfo.isiOSAppOnMac {
+                    Button("Open Rules Folder" as String) {
+                        openURL(Core.ruleDirectoryURL.components!)
+                    }
                 }
             } label: {
                 Image(systemName: "hammer.fill")
