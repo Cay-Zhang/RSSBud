@@ -26,7 +26,7 @@ class PromoAssetGeneration: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-promo-asset-generation", "1"]
         app.launch()
-        _ = app.wait(for: .unknown, timeout: 7)
+        _ = app.wait(for: .unknown, timeout: 2)
         takeScreenshot(name: "Page 1")
     }
     
@@ -34,8 +34,7 @@ class PromoAssetGeneration: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-promo-asset-generation", "2"]
         app.launch()
-        app.navigationBars["RSSBud"].children(matching: .button).firstMatch.tap()
-        _ = app.wait(for: .unknown, timeout: 2)
+        _ = app.wait(for: .unknown, timeout: 7)
         takeScreenshot(name: "Page 2")
     }
     
@@ -43,10 +42,28 @@ class PromoAssetGeneration: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-promo-asset-generation", "3"]
         app.launch()
-        app.navigationBars["RSSBud"].children(matching: .button).firstMatch.tap()
-        app.tables.buttons["捷径工坊"].tap()
-        _ = app.wait(for: .unknown, timeout: 1)
+        _ = app.wait(for: .unknown, timeout: 3)
         takeScreenshot(name: "Page 3")
+    }
+    
+    func testScreenshot4() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-promo-asset-generation", "4"]
+        app.launch()
+        _ = app.wait(for: .unknown, timeout: 2)
+        app.scrollViews.otherElements.buttons["Rules"].tap()
+        _ = app.wait(for: .unknown, timeout: 2)
+        takeScreenshot(name: "Page 4")
+    }
+    
+    func testScreenshot5() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-promo-asset-generation", "5"]
+        app.launch()
+        _ = app.wait(for: .unknown, timeout: 2)
+        app.scrollViews.otherElements.buttons["Shortcut Workshop"].tap()
+        _ = app.wait(for: .unknown, timeout: 2)
+        takeScreenshot(name: "Page 5")
     }
 }
 

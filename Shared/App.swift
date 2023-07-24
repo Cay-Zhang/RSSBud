@@ -68,23 +68,40 @@ extension RSSBud.App {
     mutating func prepareForPromoAssetGeneration(pageIndex: Int) {
         if pageIndex == 1 {
             AppStorage<Bool?>("isOnboarding", store: RSSBud.userDefaults).wrappedValue = false
-            Integration().wrappedValue = [.reeder, .inoreader]
+        } else if pageIndex == 2 {
+            AppStorage<Bool?>("isOnboarding", store: RSSBud.userDefaults).wrappedValue = false
+            Integration().wrappedValue = [.systemDefaultReader]
+            
+            let contentViewModel = ContentView.ViewModel()
+            contentViewModel.process(url: "https://github.com/Cay-Zhang/RSSBud")
+            
+            self._contentViewModel = StateObject(wrappedValue: contentViewModel)
+        } else if pageIndex == 3 {
+            AppStorage<Bool?>("isOnboarding", store: RSSBud.userDefaults).wrappedValue = false
+            Integration().wrappedValue = [.systemDefaultReader]
             
             let contentViewModel = ContentView.ViewModel(
                 originalURL: "https://github.com/Cay-Zhang/RSSBud",
                 rssFeeds: [
-                    RSSFeed(url: "https://github.com/Cay-Zhang/RSSBud/commits/main.atom", title: "Recent Commits to RSSBud:main", imageURL: "", isCertain: true)
+                    RSSFeed(url: "https://github.com/Cay-Zhang/RSSBud/releases.atom", title: "Repo Releases", imageURL: "", isCertain: true),
+                    RSSFeed(url: "https://github.com/Cay-Zhang/RSSBud/commits.atom", title: "Repo Commits", imageURL: "", isCertain: true),
                 ],
                 rsshubFeeds: [
-                    RSSHubFeed(title: "仓库 Issues", path: "/github/issue/Cay-Zhang/RSSBud", docsURL: ""),
-                    RSSHubFeed(title: "仓库 Pull Requests", path: "/github/pull/Cay-Zhang/RSSBud", docsURL: "")
-                ], queryItems: [
-                    URLQueryItem(name: "filter_title", value: "")
+                    RSSHubFeed(title: "Repo Issues", path: "/github/issue/Cay-Zhang/RSSBud", docsURL: ""),
+                    RSSHubFeed(title: "Repo Pull Requests", path: "/github/pull/Cay-Zhang/RSSBud", docsURL: "")
+                ],
+                queryItems: [
+                    URLQueryItem(name: "filter_title", value: ""),
+                    URLQueryItem(name: "mode", value: "fulltext"),
+                    URLQueryItem(name: "limit", value: "10"),
                 ]
             )
+            contentViewModel.process(url: "https://github.com/Cay-Zhang/RSSBud")
+            contentViewModel.pageFeedSectionViewModel.isExpanded = false
+            contentViewModel.rsshubFeedSectionViewModel.isExpanded = false
             
             self._contentViewModel = StateObject(wrappedValue: contentViewModel)
-        } else if pageIndex == 2 {
+        } else if pageIndex == 4 {
             AppStorage<Bool?>("isOnboarding", store: RSSBud.userDefaults).wrappedValue = false
             RSSHub.BaseURL().string = RSSHub.officialDemoBaseURLString
             @AppStorage<CustomOpenURLAction.Mode>("defaultOpenURLMode", store: RSSBud.userDefaults) var defaultMode = .inApp
