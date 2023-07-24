@@ -51,7 +51,7 @@ class PromoAssetGeneration: XCTestCase {
         app.launchArguments = ["-promo-asset-generation", "4"]
         app.launch()
         _ = app.wait(for: .unknown, timeout: 2)
-        app.scrollViews.otherElements.buttons["Rules"].tap()
+        app.scrollViews.otherElements.buttons["规则"].tap()
         _ = app.wait(for: .unknown, timeout: 2)
         takeScreenshot(name: "Page 4")
     }
@@ -61,7 +61,7 @@ class PromoAssetGeneration: XCTestCase {
         app.launchArguments = ["-promo-asset-generation", "5"]
         app.launch()
         _ = app.wait(for: .unknown, timeout: 2)
-        app.scrollViews.otherElements.buttons["Shortcut Workshop"].tap()
+        app.scrollViews.otherElements.buttons["捷径工坊"].tap()
         _ = app.wait(for: .unknown, timeout: 2)
         takeScreenshot(name: "Page 5")
     }

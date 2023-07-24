@@ -83,12 +83,12 @@ extension RSSBud.App {
             let contentViewModel = ContentView.ViewModel(
                 originalURL: "https://github.com/Cay-Zhang/RSSBud",
                 rssFeeds: [
-                    RSSFeed(url: "https://github.com/Cay-Zhang/RSSBud/releases.atom", title: "Repo Releases", imageURL: "", isCertain: true),
-                    RSSFeed(url: "https://github.com/Cay-Zhang/RSSBud/commits.atom", title: "Repo Commits", imageURL: "", isCertain: true),
+                    RSSFeed(url: "https://github.com/Cay-Zhang/RSSBud/releases.atom", title: "仓库 Releases", imageURL: "", isCertain: true),
+                    RSSFeed(url: "https://github.com/Cay-Zhang/RSSBud/commits.atom", title: "仓库 Commits", imageURL: "", isCertain: true),
                 ],
                 rsshubFeeds: [
-                    RSSHubFeed(title: "Repo Issues", path: "/github/issue/Cay-Zhang/RSSBud", docsURL: ""),
-                    RSSHubFeed(title: "Repo Pull Requests", path: "/github/pull/Cay-Zhang/RSSBud", docsURL: "")
+                    RSSHubFeed(title: "仓库 Issues", path: "/github/issue/Cay-Zhang/RSSBud", docsURL: ""),
+                    RSSHubFeed(title: "仓库 Pull Requests", path: "/github/pull/Cay-Zhang/RSSBud", docsURL: "")
                 ],
                 queryItems: [
                     URLQueryItem(name: "filter_title", value: ""),
