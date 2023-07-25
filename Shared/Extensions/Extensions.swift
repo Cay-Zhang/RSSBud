@@ -285,7 +285,7 @@ extension View {
 }
 
 @propertyWrapper
-struct URLString: Codable {
+struct URLString: Codable, CustomStringConvertible {
     var wrappedValue: URLComponents
     
     init(wrappedValue: URLComponents) {
@@ -304,6 +304,10 @@ struct URLString: Codable {
     
     func encode(to encoder: Encoder) throws {
         try wrappedValue.string.encode(to: encoder)
+    }
+    
+    var description: String {
+        wrappedValue.description
     }
 }
 
