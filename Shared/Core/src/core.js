@@ -44,6 +44,7 @@ function ruleHandler(rule, params, url, html, success, fail) {
                         url: resolvedTarget,
                         title: rule.title,
                         imageURL: "",
+                        docsURL: rule.docs,
                         isCertain: true,
                     }
                 };
@@ -55,6 +56,7 @@ function ruleHandler(rule, params, url, html, success, fail) {
                         url: new URL(resolvedTarget, (new URL(url)).origin).toString(),
                         title: rule.title,
                         imageURL: "",
+                        docsURL: rule.docs,
                         isCertain: true,
                     }
                 };

@@ -156,7 +156,7 @@ struct RSSFeedView: FeedView {
     var pathComponents: [Substring] {
         feed.url.path.split(separator: "/", omittingEmptySubsequences: true)
     }
-    var docsURL: URLComponents? { nil }
+    var docsURL: URLComponents? { feed.docsURL?.wrappedValue }
 }
 
 struct RSSHubFeedView: FeedView {

@@ -178,6 +178,7 @@ struct RSSFeed: Codable {
     @URLString var url: URLComponents
     var title: String
     @URLString var imageURL: URLComponents
+    var docsURL: URLString?
     var isCertain: Bool
     
     func validated() -> AnyPublisher<Self, Never> {
