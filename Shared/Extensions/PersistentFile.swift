@@ -22,7 +22,7 @@ final class PersistentFile: ObservableObject {
     }
     
     var contentPublisher: AnyPublisher<String, Never> {
-        $_content.eraseToAnyPublisher()
+        $_content.removeDuplicates().eraseToAnyPublisher()
     }
     
     @Published var _content: String = ""

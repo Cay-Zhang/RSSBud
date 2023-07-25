@@ -57,7 +57,7 @@ enum Core {
                   let line = value.objectForKeyedSubscript("line").toString(),
                   let column = value.objectForKeyedSubscript("column").toString()
             else { assertionFailure("Can't get error info."); return }
-            print("Radar JSContext Error [\(line):\(column)]: \(value)\nTraceback:\n\(stack)")
+            print("Core JSContext Error [\(line):\(column)]: \(value)\nTraceback:\n\(stack)")
         }
         
         // Load Rules
@@ -76,7 +76,7 @@ enum Core {
         _ = context.evaluateScript(fileNamed: "core.min")
         
         _ = context.evaluateScript("""
-            const { URL } = require('whatwg-url');
+            const { URL, URLSearchParams } = require('whatwg-url');
             const core = require('core');
             """)
         
