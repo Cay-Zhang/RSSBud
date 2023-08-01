@@ -14,13 +14,11 @@
 
 > RSSBud can help you quickly discover and subscribe to RSS feeds from websites or apps, especially those provided by [RSSHub](https://github.com/DIYgod/RSSHub). It supports the parameters feature of RSSHub which facilitates extra functionalities such as filtering by feed content and full text fetching.
 
+[Telegram Group](https://t.me/RSSBud_Discussion)
+
 https://github.com/Cay-Zhang/RSSBud/assets/13341339/f68fde0b-1e81-4cda-99af-f1b0deeb68f7
 
 ## Download
-[RSSBud v2 Public Beta](https://testflight.apple.com/join/HxiUd6tx) is now available on TestFlight!
-
-> **⚠️ Warning: Currently, only the TestFlight public beta version has full support for English.**
-
 <a href="https://apps.apple.com/us/app/rssbud/id1531443645?itsct=apps_box_link&itscg=30200"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1605052800&h=3dc9b44d4b825017f8746f19cec2b07f" alt="Download on the App Store" width="200"></a>
 
 <img src="https://tools-qr-production.s3.amazonaws.com/output/apple-toolbox/dace82ddc6942d582d27ad4d2ba31d58/c6e9f5d0-cee7-4523-ac64-ca89de19e8dc.png" width="200">
