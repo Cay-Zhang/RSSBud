@@ -399,7 +399,7 @@ struct NothingFoundView: View {
                 if xCallbackContext.wrappedValue.cancel != nil {
                     Button(continueXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: continueXCallback)
                 }
-            }.buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .tertiarySystemBackground)))
+            }.buttonStyle(CayButtonStyle(wideContainerWithFill: \.quaternary))
         }.padding(.horizontal, 8)
         .padding(.top, 20)
         .padding(.bottom, 8)

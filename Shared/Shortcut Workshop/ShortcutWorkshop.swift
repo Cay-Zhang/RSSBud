@@ -96,7 +96,8 @@ struct ShortcutWorkshopView: View {
     
     var introduction: some View {
         ZStack(alignment: .leading) {
-            Color(UIColor.secondarySystemGroupedBackground)
+            Rectangle()
+                .foregroundStyle(.fill.quaternary)
             
             VStack(alignment: .leading, spacing: 8.0) {
                 Image(systemName: "ellipsis.bubble.fill")
@@ -107,7 +108,6 @@ struct ShortcutWorkshopView: View {
             }.padding(.horizontal)
             .padding(.top, 12)
             .padding(.bottom, 15)
-            .background(Color(UIColor.secondarySystemGroupedBackground))
         }.foregroundColor(.secondary)
         .clipShape(RoundedRectangle(cornerRadius: 18.0, style: .continuous))
         .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0.0, y: 2.0)
@@ -121,7 +121,8 @@ struct ShortcutView: View {
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
-            Color(UIColor.secondarySystemGroupedBackground)
+            Rectangle()
+                .foregroundStyle(.fill.quaternary)
             
             HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
@@ -141,7 +142,6 @@ struct ShortcutView: View {
                 .padding(.top, 12)
                 .padding(.bottom, 15)
                 .frame(maxWidth: 175)
-                .background(Color(UIColor.secondarySystemGroupedBackground))
                 .overlay(
                     shortcut.isTemplate ?
                     Text("Template")

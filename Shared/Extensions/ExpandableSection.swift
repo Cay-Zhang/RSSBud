@@ -31,18 +31,22 @@ struct ExpandableSection<Content: View, Label: View>: View {
                 .padding(.top, 10)
                 .padding(.bottom, viewModel.isExpanded ? 0 : 10)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(
-                    Color(UIColor.secondarySystemBackground)
-                        .opacity(viewModel.isExpanded ? 0.0 : 1.0)
-                )
+                .background(.fill.tertiary.opacity(viewModel.isExpanded ? 0.0 : 1.0))
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                .contentShape(Rectangle())
-            }.buttonStyle(CayButtonStyle(containerModifier: EmptyModifier()).labelOpacityWhenPressed(0.75))
+                .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                .hoverEffect()
+            }
+            .buttonStyle(CayButtonStyle(containerModifier: EmptyModifier()).labelOpacityWhenPressed(0.75))
             .animatableFont(
                 size: viewModel.isExpanded ? 24 : 18,
                 weight: .semibold,
                 design: .default
-            ).foregroundColor(.accentColor)
+            )
+#if os(xrOS)
+            .foregroundStyle(.secondary)
+#else
+            .foregroundStyle(.tint)
+#endif
             .zIndex(1)
             
             if viewModel.isExpanded {

@@ -21,7 +21,7 @@ struct QueryEditor: View {
                     openURL(URLComponents(string: "https://docs.rsshub.app/parameter.html")!)
                 }
                 addParameterMenu
-            }.buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .secondarySystemBackground)))
+            }.buttonStyle(CayButtonStyle(wideContainerWithFill: \.quaternary))
             .menuStyle(CayMenuStyle())
             
             ForEach(queryItems, id: \.name) { item in
@@ -80,7 +80,8 @@ struct QueryEditor: View {
             }
         } label: {
             Label("RSSHub Parameters Add", systemImage: "plus")
-                .modifier(WideButtonContainerModifier(backgroundColor: Color(uiColor: .secondarySystemBackground)))
+                .modifier(WideButtonContainerModifier())
+                .backgroundStyle(.fill.tertiary)
         }
     }
     

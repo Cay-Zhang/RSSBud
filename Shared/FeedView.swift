@@ -39,7 +39,11 @@ extension FeedView {
                     } label: {
                         Image(systemName: "text.book.closed.fill")
                             .font(Font.system(size: 20.0, weight: .semibold, design: .default))
+#if os(xrOS)
+                            .foregroundStyle(.secondary)
+#else
                             .foregroundStyle(.tint)
+#endif
                     }.buttonStyle(CayButtonStyle(containerModifier: EmptyModifier()))
                 }
             }
@@ -59,11 +63,11 @@ extension FeedView {
         .padding(.bottom, 9)
         .padding(.horizontal, 9)
         .frame(maxWidth: .infinity)
-        .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .tertiarySystemBackground)))
+        .buttonStyle(CayButtonStyle(wideContainerWithFill: \.tertiary))
         .menuStyle(CayMenuStyle())
         .background {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color(uiColor: .secondarySystemBackground))
+                .foregroundStyle(.fill.quaternary)
         }
     }
     
@@ -77,7 +81,7 @@ extension FeedView {
                             .foregroundStyle(.secondary)
                             .font(Font.system(size: 13.0, weight: .regular, design: .rounded))
                             .padding(4)
-                            .background(Color(uiColor: UIColor.tertiarySystemBackground), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                            .background(.fill.tertiary, in: RoundedRectangle(cornerRadius: 6, style: .continuous))
                     }
                 }
             }.scrollIndicators(.hidden)
@@ -89,7 +93,7 @@ extension FeedView {
                         .foregroundStyle(.secondary)
                         .font(Font.system(size: 13.0, weight: .regular, design: .rounded))
                         .padding(4)
-                        .background(Color(uiColor: UIColor.tertiarySystemBackground), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                        .background(.fill.tertiary, in: RoundedRectangle(cornerRadius: 6, style: .continuous))
                 }
             }
         }
@@ -137,7 +141,8 @@ extension FeedView {
                 }
             } label: {
                 Label("Subscribe", systemImage: "arrowshape.turn.up.right.fill")
-                    .modifier(WideButtonContainerModifier(backgroundColor: Color(uiColor: .tertiarySystemBackground)))
+                    .modifier(WideButtonContainerModifier())
+                    .backgroundStyle(.fill.tertiary)
             }
         }
     }
@@ -206,7 +211,7 @@ struct FeedView_Previews: PreviewProvider {
                     .environment(\.locale, Locale(identifier: "zh-CN"))
             }
         }.padding(.horizontal, 25)
-        .buttonStyle(CayButtonStyle(wideContainerWithBackgroundColor: Color(uiColor: .secondarySystemBackground)))
+        .buttonStyle(CayButtonStyle(wideContainerWithFill: \.quaternary))
         .previewDisplayName("Subscribe Buttons")
     }
 }
