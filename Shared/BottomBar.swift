@@ -187,22 +187,22 @@ struct BottomBar: View {
                 isTextFieldFocused = false
                 assert(viewModel.dragTranslationYDelta == 0, "dragTranslationYDelta should not accumulate.")
                 viewModel.dragTranslationYDelta = -rawTranslation.height - 45
-                Self.feedbackGenerator.selectionChanged()
+//                Self.feedbackGenerator.selectionChanged()
             }
         } else if translation.height < -50 {
             if !viewModel.isEditing {
                 viewModel.isEditing = true
-                Self.feedbackGenerator.selectionChanged()
+//                Self.feedbackGenerator.selectionChanged()
             }
         } else if translation.height > 15 {
             if !viewModel.isEditing {
                 viewModel._isEditing = true
                 viewModel.editingText = ""
-                Self.feedbackGenerator.selectionChanged()
+//                Self.feedbackGenerator.selectionChanged()
             }
         } else if viewModel.isEditing && viewModel.linkURL != nil {
             viewModel.isEditing = false
-            Self.feedbackGenerator.selectionChanged()
+//            Self.feedbackGenerator.selectionChanged()
         }
     }
 }
@@ -294,7 +294,7 @@ extension BottomBar {
 }
 
 extension BottomBar {
-    static let feedbackGenerator: UISelectionFeedbackGenerator = UISelectionFeedbackGenerator()
+//    static let feedbackGenerator: UISelectionFeedbackGenerator = UISelectionFeedbackGenerator()
     static var transitionAnimation: Animation { Animation.interpolatingSpring(mass: 3, stiffness: 1000, damping: 500, initialVelocity: 0) }
     static var contentTransition: AnyTransition {
         AnyTransition.offset(y: 25).combined(with: AnyTransition.opacity)

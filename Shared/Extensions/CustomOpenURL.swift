@@ -7,7 +7,9 @@
 
 import SwiftUI
 import SafariServices
+#if canImport(BetterSafariView)
 import BetterSafariView
+#endif
 
 struct CustomOpenURLAction {
     
@@ -68,22 +70,34 @@ struct CustomOpenURLModifier: ViewModifier {
     @AppStorage("defaultOpenURLMode", store: RSSBud.userDefaults) var defaultMode: CustomOpenURLAction.Mode = .inApp
     
     var action: CustomOpenURLAction {
+#if canImport(BetterSafariView)
         CustomOpenURLAction(
             defaultMode: defaultMode,
             openInApp: { url in
                 urlForSafariView = url
-            }, openInSystem: openInSystem
+            },
+            openInSystem: openInSystem
         )
+#else
+        CustomOpenURLAction(
+            defaultMode: defaultMode,
+            openInApp: openInSystem,
+            openInSystem: openInSystem
+        )
+#endif
     }
     
     func body(content: Content) -> some View {
         content
+#if canImport(BetterSafariView)
             .safariView(item: $urlForSafariView) { url in
                 SafariView(
                     url: url,
                     configuration: SFSafariViewController.Configuration(entersReaderIfAvailable: false, barCollapsingEnabled: true)
                 ).dismissButtonStyle(.close)
                 .preferredControlAccentColor(.orange)
-            }.environment(\.customOpenURLAction, action)
+            }
+#endif
+            .environment(\.customOpenURLAction, action)
     }
 }

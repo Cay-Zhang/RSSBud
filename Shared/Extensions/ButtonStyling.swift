@@ -35,7 +35,7 @@ struct CayButtonStyle<ContainerModifier: ViewModifier>: PrimitiveButtonStyle {
                     isPressed = newValue
                 }
                 if newValue {
-                    UIImpactFeedbackGenerator.light.impactOccurred(intensity: 0.5)
+                    playButtonSensoryFeedback()
                 }
             } perform: {
                 configuration.trigger()
@@ -60,7 +60,7 @@ struct CayMenuStyle: MenuStyle {
                 isPressed = newValue
             }
             if newValue {
-                UIImpactFeedbackGenerator.light.impactOccurred(intensity: 0.5)
+                playButtonSensoryFeedback()
             }
         }
     }
@@ -78,8 +78,12 @@ struct CayMenuStyle: MenuStyle {
     }
 }
 
-extension UIImpactFeedbackGenerator {
-    static let light: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+//extension UIImpactFeedbackGenerator {
+//    static let light: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+//}
+
+fileprivate func playButtonSensoryFeedback() {
+//    UIImpactFeedbackGenerator.light.impactOccurred(intensity: 0.5)
 }
 
 struct WideButtonContainerModifier: ViewModifier {
