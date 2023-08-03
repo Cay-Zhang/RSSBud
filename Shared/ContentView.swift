@@ -53,6 +53,14 @@ struct ContentView: View {
                 .toolbar(content: toolbarContent)
                 .environment(\.isEnabled, !viewModel.isFocusedOnBottomBar)
                 .overlay(Color.black.opacity(viewModel.isFocusedOnBottomBar ? 0.5: 0.0))
+#if os(xrOS)
+                .ornament(attachmentAnchor: .scene(alignment: .bottom)) {
+                    if !isOnboarding {
+                        BottomBar(viewModel: viewModel.bottomBarViewModel)
+                            .frame(width: 450, height: 125)
+                    }
+                }
+#else
                 .safeAreaInset(edge: .bottom) {
                     if !isOnboarding {
                         BottomBar(viewModel: viewModel.bottomBarViewModel)
@@ -60,6 +68,7 @@ struct ContentView: View {
                             .padding(.horizontal, 8)
                     }
                 }
+#endif
             }
             
             if horizontalSizeClass == .regular {

@@ -50,7 +50,11 @@ struct BottomBar: View {
             .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .contextMenu(menuItems: linkViewContextMenuItems)
         }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+#if os(xrOS)
+        .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+#else
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.15), radius: 12, y: 3)
+#endif
         .transition(.offset(y: 100).combined(with: .opacity))
         .gesture(dragGesture, including: .all)
         .gesture(tapGesture, including: !viewModel.isEditing ? .all : .subviews)
