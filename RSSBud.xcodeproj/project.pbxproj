@@ -82,6 +82,9 @@
 		EE1ABF1024E182E200996C06 /* ButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1ABF0E24E182E200996C06 /* ButtonStyling.swift */; };
 		EE3EEAB624E152D20006ED53 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EEAB524E152D20006ED53 /* SettingsView.swift */; };
 		EE3EEAB724E152D20006ED53 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EEAB524E152D20006ED53 /* SettingsView.swift */; };
+		EE65AE3E2A90A50200E204E5 /* Backports.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE65AE3D2A90A50200E204E5 /* Backports.swift */; };
+		EE65AE3F2A90A50200E204E5 /* Backports.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE65AE3D2A90A50200E204E5 /* Backports.swift */; };
+		EE65AE402A90A50200E204E5 /* Backports.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE65AE3D2A90A50200E204E5 /* Backports.swift */; };
 		EE7CD90924DD541100FAA837 /* RSSBudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7CD90824DD541100FAA837 /* RSSBudTests.swift */; };
 		EE7CD91224DD547200FAA837 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000A9524B41E9600979B1A /* Core.swift */; };
 		EE7CD91524DD547200FAA837 /* radar-rules.js in Resources */ = {isa = PBXBuildFile; fileRef = EE000A8624B41E1000979B1A /* radar-rules.js */; };
@@ -192,6 +195,7 @@
 		EE000A9524B41E9600979B1A /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		EE1ABF0E24E182E200996C06 /* ButtonStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyling.swift; sourceTree = "<group>"; };
 		EE3EEAB524E152D20006ED53 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		EE65AE3D2A90A50200E204E5 /* Backports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backports.swift; sourceTree = "<group>"; };
 		EE7CD90624DD541100FAA837 /* RSSBudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSBudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE7CD90824DD541100FAA837 /* RSSBudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSBudTests.swift; sourceTree = "<group>"; };
 		EE7CD90A24DD541100FAA837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -292,6 +296,7 @@
 				1C614E992605EEA800C634C1 /* ExpandableSection.swift */,
 				1C007AFA2675DC3B008B7B4C /* Combine+Async.swift */,
 				1CDA93FD269B0A3D001A4F4C /* AutoAdvancingProgressView.swift */,
+				EE65AE3D2A90A50200E204E5 /* Backports.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -706,6 +711,7 @@
 				1C8221A424EAA73900E139F3 /* FeedView.swift in Sources */,
 				1CA2078D24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */,
 				1C99BE3E259B26AA0073609C /* CustomOpenURL.swift in Sources */,
+				EE65AE3E2A90A50200E204E5 /* Backports.swift in Sources */,
 				1C6EE76A258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */,
 				EEB7579424B2B7C600F26CF7 /* Extensions.swift in Sources */,
 				EEB7578724B2B6E700F26CF7 /* ContentView.swift in Sources */,
@@ -737,6 +743,7 @@
 				1C8221A524EAA73900E139F3 /* FeedView.swift in Sources */,
 				1CA2078E24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */,
 				1C99BE3F259B26AA0073609C /* CustomOpenURL.swift in Sources */,
+				EE65AE3F2A90A50200E204E5 /* Backports.swift in Sources */,
 				1C6EE76B258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */,
 				EEB7579524B2B7C600F26CF7 /* Extensions.swift in Sources */,
 				EEB7578824B2B6E700F26CF7 /* ContentView.swift in Sources */,
@@ -768,6 +775,7 @@
 				1C8221A624EAA73900E139F3 /* FeedView.swift in Sources */,
 				1CA2078F24EFCD7600C6EDD5 /* QueryEditor.swift in Sources */,
 				1C99BE40259B26AA0073609C /* CustomOpenURL.swift in Sources */,
+				EE65AE402A90A50200E204E5 /* Backports.swift in Sources */,
 				1C6EE76C258CA97300C645F0 /* ShortcutWorkshop.swift in Sources */,
 				EEC4A51024E3E26D005041CA /* Core.swift in Sources */,
 				EEC4A51424E3E29A005041CA /* Extensions.swift in Sources */,

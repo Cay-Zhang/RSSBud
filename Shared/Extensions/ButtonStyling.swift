@@ -19,10 +19,14 @@ struct CayButtonStyle<ContainerModifier: ViewModifier, BackgroundStyle: ShapeSty
         self.backgroundStyle = backgroundStyle
     }
     
-    init(wideContainerWithFill keyPath: KeyPath<FillShapeStyle, BackgroundStyle>) where ContainerModifier == WideButtonContainerModifier {
-        self.init(containerModifier: WideButtonContainerModifier(), backgroundStyle: FillShapeStyle()[keyPath: keyPath])
+    init(wideContainerWithBackgroundStyle backgroundStyle: BackgroundStyle) where ContainerModifier == WideButtonContainerModifier {
+        self.init(containerModifier: WideButtonContainerModifier(), backgroundStyle: backgroundStyle)
     }
     
+    init(wideContainerWithFill keyPath: KeyPath<FillShapeStyle, BackgroundStyle>) where ContainerModifier == WideButtonContainerModifier {
+        self.init(wideContainerWithBackgroundStyle: FillShapeStyle()[keyPath: keyPath])
+    }
+
     init(blockContainerWithFill keyPath: KeyPath<FillShapeStyle, BackgroundStyle>) where ContainerModifier == BlockButtonContainerModifier {
         self.init(containerModifier: BlockButtonContainerModifier(), backgroundStyle: FillShapeStyle()[keyPath: keyPath])
     }
@@ -91,6 +95,7 @@ fileprivate func playButtonSensoryFeedback() {
 
 struct WideButtonContainerModifier: ViewModifier {
     @ScaledMetric var height: CGFloat = 42
+    @Environment(\.backgroundStyle) var backgroundStyle
     
     func body(content: Content) -> some View {
         content
@@ -101,7 +106,7 @@ struct WideButtonContainerModifier: ViewModifier {
             .foregroundStyle(.tint)
 #endif
             .frame(maxWidth: .infinity, minHeight: height, idealHeight: height, maxHeight: height)
-            .background(.background)
+            .background(backgroundStyle ?? AnyShapeStyle(.background))
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
             .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
             .hoverEffect()
@@ -125,6 +130,7 @@ struct BlockLabelStyle: LabelStyle {
 
 struct BlockButtonContainerModifier: ViewModifier {
     @ScaledMetric(relativeTo: Font.TextStyle.body) var height: CGFloat = 120
+    @Environment(\.backgroundStyle) var backgroundStyle
     
     func body(content: Content) -> some View {
         content
@@ -138,7 +144,7 @@ struct BlockButtonContainerModifier: ViewModifier {
             .padding(.trailing, 16)
             .padding(.vertical, 12)
             .frame(maxWidth: .infinity, idealHeight: height, alignment: .leading)
-            .background(.background)
+            .background(backgroundStyle ?? AnyShapeStyle(.background))
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
             .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
             .hoverEffect()
