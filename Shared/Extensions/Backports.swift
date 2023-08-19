@@ -27,9 +27,9 @@ struct FillShapeStyle: ShapeStyle {
         let uiColor: UIColor = switch level {
         case 0: .systemFill
         case 1: .secondarySystemFill
-        case 2: .tertiarySystemFill
-        case 3: .quaternarySystemFill
-        case 4: .quaternarySystemFill
+        case 2: .tertiarySystemBackground
+        case 3: .secondarySystemBackground
+        case 4: .systemBackground
         default: .red
         }
         return Color(uiColor: uiColor)
