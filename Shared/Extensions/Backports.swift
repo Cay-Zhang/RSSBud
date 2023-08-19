@@ -69,7 +69,11 @@ struct HierarchicalShapeStyleModifier<Base>: ShapeStyle where Base: ShapeStyle {
     }
     
     static func _apply(to type: inout _ShapeStyle_ShapeType) {
-        Base.Resolved._apply(to: &type)
+        if let fill = Base.self as? FillShapeStyle.Type {
+            fill.Resolved._apply(to: &type)
+        } else {
+            Base._apply(to: &type)
+        }
     }
 }
 
