@@ -383,7 +383,7 @@ struct NothingFoundView: View {
                 .font(.system(size: 24, weight: .semibold, design: .default))
                 .foregroundColor(.accentColor)
                 .frame(width: 70, height: 70)
-                .background(Color(UIColor.tertiarySystemBackground))
+                .background(.fill.tertiary)
                 .clipShape(Circle())
             
             Text("Nothing Found")
@@ -413,7 +413,7 @@ struct NothingFoundView: View {
         .padding(.top, 20)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
-        .background(Color(UIColor.secondarySystemBackground))
+        .background(.fill.quaternary)
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 }

@@ -51,7 +51,7 @@ struct OnboardingView: View {
         }.clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         .environment(\.namespace, namespace)
         .transition(OnboardingView.transition)
-        .buttonStyle(CayButtonStyle(wideContainerWithFill: \.quaternary))
+        .buttonStyle(CayButtonStyle(wideContainerWithFill: \.tertiary))
     }
 }
 
@@ -127,13 +127,13 @@ extension OnboardingView {
                         .font(.system(size: 24, weight: .semibold, design: .default))
                         .foregroundColor(.accentColor)
                         .frame(width: sideLength, height: sideLength)
-                        .background(Color(UIColor.tertiarySystemBackground))
+                        .background(.fill.tertiary)
                         .clipShape(Circle())
                     Image(systemName: "character.cursor.ibeam")
                         .font(.system(size: 24, weight: .semibold, design: .default))
                         .foregroundColor(.accentColor)
                         .frame(width: sideLength, height: sideLength)
-                        .background(Color(UIColor.tertiarySystemBackground))
+                        .background(.fill.tertiary)
                         .clipShape(Circle())
                 }
                 
@@ -152,7 +152,7 @@ extension OnboardingView {
                         .font(.system(size: 24, weight: .semibold, design: .default))
                         .foregroundColor(.accentColor)
                         .frame(width: sideLength, height: sideLength)
-                        .background(Color(UIColor.tertiarySystemBackground))
+                        .background(.fill.tertiary)
                         .clipShape(Circle())
                 }.padding(.top, 4)
                 
@@ -190,7 +190,7 @@ extension OnboardingView {
                     .font(.system(size: 24, weight: .semibold, design: .default))
                     .foregroundColor(.accentColor)
                     .frame(width: 70, height: 70)
-                    .background(Color(UIColor.tertiarySystemBackground))
+                    .background(.fill.tertiary)
                     .clipShape(Circle())
                 
                 Text("Onboarding Page 3 Title")
@@ -205,16 +205,15 @@ extension OnboardingView {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
-                IntegrationSettingsView(
-                    rowBackgroundColor: Color(UIColor.tertiarySystemBackground),
-                    backgroundColor: Color(UIColor.tertiarySystemBackground)
-                ).listStyle(.plain)
-                .frame(height: 263)
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .stroke(Color.gray.opacity(0.5), lineWidth: 3)
-                ).padding(.horizontal, 1.5)
+                IntegrationSettingsView(listRowBackgroundStyle: AnyShapeStyle(.fill.tertiary))
+                    .listStyle(.plain)
+                    .backgroundStyle(.fill.tertiary)
+                    .frame(height: 263)
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    .background(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 3)
+                    ).padding(.horizontal, 1.5)
                 
                 VStack(spacing: 8) {
                     Button("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {
@@ -267,7 +266,7 @@ extension OnboardingView {
                         .disableAutocorrection(true)
                         .padding(10)
                         .frame(maxWidth: .infinity)
-                        .background(Color(uiColor: .tertiarySystemBackground))
+                        .background(.fill.tertiary)
                         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                         
                         Button("Onboarding Next", systemImage: "arrow.right", withAnimation: OnboardingView.transitionAnimation) {

@@ -81,7 +81,7 @@ struct QueryEditor: View {
         } label: {
             Label("RSSHub Parameters Add", systemImage: "plus")
                 .modifier(WideButtonContainerModifier())
-                .backgroundStyle(.fill.tertiary)
+                .backgroundStyle(.fill.quaternary)
         }
     }
     

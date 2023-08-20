@@ -31,7 +31,7 @@ struct ExpandableSection<Content: View, Label: View>: View {
                 .padding(.top, 10)
                 .padding(.bottom, viewModel.isExpanded ? 0 : 10)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(.fill.tertiary.opacity(viewModel.isExpanded ? 0.0 : 1.0))
+                .background(.fill.quaternary.opacity(viewModel.isExpanded ? 0.0 : 1.0))
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 .hoverEffect()
@@ -93,7 +93,7 @@ struct DisclosureList_Previews: PreviewProvider {
                             .font(.system(size: 27, weight: Font.Weight.semibold, design: Font.Design.default))
                             .padding(.vertical, 8)
                             .frame(maxWidth: .infinity)
-                            .background(Color(UIColor.secondarySystemBackground))
+                            .background(.fill.quaternary)
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     }
                 } label: {

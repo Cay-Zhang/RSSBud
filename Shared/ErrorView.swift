@@ -36,7 +36,7 @@ struct ErrorView: View {
                 .font(.system(size: 24, weight: .semibold, design: .default))
                 .foregroundColor(.red)
                 .frame(width: 70, height: 70)
-                .background(Color(UIColor.tertiarySystemBackground))
+                .background(.fill.tertiary)
                 .clipShape(Circle())
             
             Text("Error Occurred")
@@ -56,7 +56,7 @@ struct ErrorView: View {
         .padding(.top, 20)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
-        .background(Color(UIColor.secondarySystemBackground))
+        .background(.fill.quaternary)
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 }

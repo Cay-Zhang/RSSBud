@@ -39,7 +39,8 @@ struct SettingsView: View {
                 Section(header: Text("Settings Section RSSBud")) {
                     NavigationLink(
                         "Quick Subscriptions",
-                        destination: IntegrationSettingsView(backgroundColor: Color(UIColor.systemGroupedBackground))
+                        destination: IntegrationSettingsView()
+                            .backgroundStyle(Color(uiColor: .systemGroupedBackground))
                             .navigationTitle("Quick Subscriptions")
                     )
                     
@@ -134,8 +135,8 @@ struct SettingsView: View {
 }
 
 struct IntegrationSettingsView: View {
-    var rowBackgroundColor: Color? = nil
-    var backgroundColor: Color? = nil
+    var listRowBackgroundStyle: AnyShapeStyle? = nil
+    @Environment(\.backgroundStyle) var backgroundStyle
     
     @Integration var integrations
     
@@ -174,8 +175,8 @@ struct IntegrationSettingsView: View {
                 default:
                     Text(LocalizedStringKey(key.rawValue)).tag(key)
                 }
-            }.listRowBackground(rowBackgroundColor)
-        }.background(backgroundColor?.ignoresSafeArea())
+            }.listRowBackground(listRowBackgroundStyle.map { _ShapeView(shape: Rectangle(), style: $0) })
+        }.background(backgroundStyle ?? AnyShapeStyle(.clear))
         .environment(\.editMode, .constant(.active))
     }
 }
