@@ -18,7 +18,7 @@ struct StartView: View {
         VStack(spacing: 16) {
             ExpandableSection(viewModel: viewModel.startViewStartSection) {
                 Button("Read From Clipboard", systemImage: "arrow.up.doc.on.clipboard", action: viewModel.analyzeClipboardContent)
-                    .buttonStyle(CayButtonStyle(wideContainerWithFill: \.tertiary))
+                    .buttonStyle(CayButtonStyle(wideContainerWithFill: \.quaternary))
             } label: {
                 Text("Start")
             }
@@ -69,7 +69,7 @@ struct StartView: View {
                     Button("RSSHub Documentation", systemImage: "text.book.closed.fill") {
                         openURL("https://docs.rsshub.app/")
                     }
-                }.buttonStyle(CayButtonStyle(blockContainerWithFill: \.tertiary))
+                }.buttonStyle(CayButtonStyle(blockContainerWithFill: \.quaternary))
             } label: {
                 Text("Resources")
             }

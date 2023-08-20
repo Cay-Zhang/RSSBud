@@ -96,8 +96,7 @@ struct ShortcutWorkshopView: View {
     
     var introduction: some View {
         ZStack(alignment: .leading) {
-            Rectangle()
-                .foregroundStyle(.fill.quaternary)
+            Color(uiColor: .secondarySystemGroupedBackground)
             
             VStack(alignment: .leading, spacing: 8.0) {
                 Image(systemName: "ellipsis.bubble.fill")
@@ -121,8 +120,7 @@ struct ShortcutView: View {
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
-            Rectangle()
-                .foregroundStyle(.fill.quaternary)
+            Color(uiColor: .secondarySystemGroupedBackground)
             
             HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
