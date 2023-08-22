@@ -275,14 +275,23 @@ extension ContentView {
         }
         
         func process(url: URLComponents, html: String? = nil) {
-            if baseURL.host == url.host {
+            if (url.string?.hasPrefix(baseURL.validatedString) ?? false) && url.path.hasPrefix(baseURL.path) {
                 let items = url.queryItems?.map { item in
                     URLQueryItem(name: item.name, value: item.value?.removingPercentEncoding)
                 }
+                let feedPath: String = {
+                    let path = url.path.dropFirst(baseURL.path.count)
+                    return path.hasPrefix("/") ? String(path) : "/" + path
+                }()
                 withAnimation {
                     error = nil
+                    originalURL = url
+                    isProcessing = false
                     bottomBarViewModel.isEditing = false
-                    rsshubFeeds = [RSSHubFeed(title: "Current URL", path: url.path, docsURL: "")]
+                    bottomBarViewModel.progress = 1.0
+                    
+                    rssFeeds = []
+                    rsshubFeeds = [RSSHubFeed(title: String(localized: "Current RSSHub Feed"), path: feedPath, docsURL: "")]
                     queryItems = items ?? []
                 }
             } else {
