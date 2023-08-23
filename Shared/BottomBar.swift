@@ -173,6 +173,7 @@ struct BottomBar: View {
             Text((viewModel.linkTitle != nil) ? conciseRepresentation(of: url) : detailedRepresentation(of: url))
                 .foregroundStyle(.secondary)
                 .animatableFont(size: (viewModel.linkTitle != nil && !viewModel.isEditing) ? 13 : 15, weight: (viewModel.linkTitle != nil && !viewModel.isEditing) ? .regular : .semibold)
+                .lineLimit(1)
                 .opacity(!viewModel.isEditing ? 1 : 0)
                 .offset(x: viewModel.isEditing ? 30 : 0)
         }
