@@ -60,6 +60,11 @@ struct HierarchicalShapeStyleModifier<Base>: ShapeStyle where Base: ShapeStyle {
         (self.base, self.level) = (base, level)
     }
     
+    /// Making Resolved = Never would cause the app to crash on macOS 13.4 (built with Xcode 15 beta 7).
+    typealias Resolved = Base
+    
+    func resolve(in environment: EnvironmentValues) -> Resolved { base }
+    
     func _apply(to shape: inout _ShapeStyle_Shape) {
         if let fill = base as? FillShapeStyle {
             fill.resolve(at: level)._apply(to: &shape)
