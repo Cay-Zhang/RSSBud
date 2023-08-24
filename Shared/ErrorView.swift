@@ -51,7 +51,7 @@ struct ErrorView: View {
                 } else {
                     Button(cancelXCallbackText(), systemImage: "arrowtriangle.backward.fill", withAnimation: .default, action: cancelXCallback)
                 }
-            }.buttonStyle(CayButtonStyle(wideContainerWithFill: \.quaternary))
+            }.buttonStyle(CayButtonStyle(wideContainerWithFill: \.tertiary))
         }.padding(.horizontal, 8)
         .padding(.top, 20)
         .padding(.bottom, 8)

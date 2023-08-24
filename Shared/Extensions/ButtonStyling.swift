@@ -155,6 +155,6 @@ struct ButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
         Button("Test") { }
             .padding(20)
-            .buttonStyle(CayButtonStyle(wideContainerWithFill: \.quaternary))
+            .buttonStyle(CayButtonStyle(wideContainerWithFill: \.tertiary))
     }
 }
