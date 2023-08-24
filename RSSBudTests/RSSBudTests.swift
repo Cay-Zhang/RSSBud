@@ -68,7 +68,7 @@ class RSSBudTests: XCTestCase {
     
     func testDocumentDetections() async throws {
         try await _testAnalysis("谷歌相册", urlString: "https://photos.google.com/share/AF1QipN-3SZHWnuYatO_p13elqJZjhIXBUV_ySkStFuYPXCusNA1U35Nwq5xeWqxEIfRRw?key=dzAzZGtzcUxpYW4wV2t6MXZJWk9VdURoUnJsSk1n", rsshubFeedCount: 1)
-        try await _testAnalysis("Telegram 频道", urlString: "https://t.me/RSSBud", rsshubFeedCount: 0)
+        try await _testAnalysis("Telegram 频道", urlString: "https://t.me/RSSBud", rsshubFeedCount: 1)
         try await _testAnalysis("Telegram 群组", urlString: "https://t.me/RSSBud_Discussion", rsshubFeedCount: 0)
         try await _testAnalysis("OneJAV BT 今日种子 & 今日演员", urlString: "https://onejav.com/", rsshubFeedCount: 2)
         try await _testAnalysis("OneJAV BT 页面种子", urlString: "https://onejav.com/search/IPX177", rsshubFeedCount: 1)
