@@ -65,6 +65,16 @@ rssbud://x-callback-url/analyze?url[&x-callback-parameters...]
 - **feed_title** The name of the RSS feed chosen by the user
 - **feed_url** The URL of the RSS feed chosen by the user
 
+## PopClip Extension
+If you happen use both RSSBud and [PopClip](https://pilotmoon.com/popclip/) on macOS, here's a handy  extension that can be used to analyze selected URLs with RSSBud. Simply select everything in the code block below and you will see an option to install the extension in PopClip.
+
+```yaml
+#popclip
+name: RSSBud
+icon: iconify:ph:rss-bold
+url: rssbud:///analyze?url=***
+```
+
 ## Notes for Building from Source
 The core functionality of RSSBud comes from [RSSBud Core](https://github.com/Cay-Zhang/RSSBud/tree/main/Shared/Core), a sub-project written in JavaScript. The code is mainly referenced from [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar).
 

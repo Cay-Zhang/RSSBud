@@ -65,6 +65,16 @@ rssbud://x-callback-url/analyze?url[&x-callback-parameters...]
 - **feed_title** 用户选择的 RSS 源的名称
 - **feed_url** 用户选择的 RSS 源的 URL
 
+## PopClip 插件
+如果你在 macOS 上同时使用 RSSBud 和 [PopClip](https://pilotmoon.com/popclip/)，这个插件可以让你在 PopClip 中分析选中的 URL。只需选中下面代码块中的所有内容，你就会在 PopClip 中看到安装该插件的选项。
+
+```yaml
+#popclip
+name: RSSBud
+icon: iconify:ph:rss-bold
+url: rssbud:///analyze?url=***
+```
+
 ## 自行编译须知
 RSSBud 的核心功能来自 [RSSBud Core](https://github.com/Cay-Zhang/RSSBud/tree/main/Shared/Core)，一个用 JavaScript 编写的子项目。代码主要参考 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar)。
 
