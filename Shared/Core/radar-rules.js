@@ -1373,6 +1373,15 @@
         source:[ "/",
           "/html/:category?/:topic?" ],
         target:"/ally/rail/:category?/:topic?" } ] },
+  "alternativeto.net":{ _name:"AlternativeTo",
+    www:[ { title:"Software Alternatives",
+        docs:"https://docs.rsshub.app/routes/programming#alternativeto-software-alternatives",
+        source:"/software/:name",
+        target:"/software/:name" },
+      { title:"Platform Software",
+        docs:"https://docs.rsshub.app/routes/programming#alternativeto-platform-software",
+        source:"/platform/:name",
+        target:"/platform/:name" } ] },
   "altervista.org":{ _name:"Altervista",
     hyp3rlinx:[ { title:"hyp3rlinx blog",
         docs:"https://docs.rsshub.app/",
@@ -11660,6 +11669,38 @@
         docs:"https://docs.rsshub.app/routes/university#hua-nan-li-gong-da-xue",
         source:[ "/ee/16285/list.htm" ],
         target:"/scut/seie/news_center" },
+      { title:"机械与汽车工程学院 - 通知公告",
+        docs:"https://docs.rsshub.app/routes/university#hua-nan-li-gong-da-xue",
+        source:[ "/smae/:category/list.htm" ],
+        target:(params) => {
+                    let tid;
+                    switch (params.category) {
+                        case '20616':
+                            tid = 'gwxx';
+                            break;
+                        case '20617':
+                            tid = 'djgz';
+                            break;
+                        case '20622':
+                            tid = 'rsgz';
+                            break;
+                        case 'xsgz':
+                            tid = 'xsgz';
+                            break;
+                        case '20618':
+                            tid = 'kysys';
+                            break;
+                        case '20619':
+                            tid = 'bksjw';
+                            break;
+                        case '20620':
+                            tid = 'yjsjw';
+                            break;
+                        default:
+                            return false;
+                    }
+                    return `/scut/smae/${tid}`;
+                } },
       { title:"研究生院通知公告",
         docs:"https://docs.rsshub.app/routes/university#hua-nan-li-gong-da-xue",
         source:[ "/graduate/14562/list.htm" ],
@@ -12693,6 +12734,11 @@
         source:[ "/:category",
           "/" ],
         target:"/sputniknews/:category/:language" } ] },
+  "sqmc.edu.cn":{ _name:"新乡医学院三全学院",
+    ".":[ { title:"官网信息",
+        docs:"https://docs.rsshub.app/university.html#xin-xiang-yi-xue-yuan-san-quan-xue-yuan",
+        source:[ "/:category/list.htm" ],
+        target:"/sqmc/www/:category?" } ] },
   "sse.com.cn":{ _name:"上海证券交易所",
     bond:[ { title:"可转换公司债券公告",
         docs:"https://docs.rsshub.app/routes/finance#shang-hai-zheng-quan-jiao-yi-suo",
