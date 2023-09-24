@@ -5727,7 +5727,15 @@
       { title:"重庆事业单位公开招聘",
         docs:"https://docs.rsshub.app/routes/government#chong-qing-shi-ren-min-zheng-fu",
         source:[ "/" ],
-        target:"/gov/chongqing/sydwgkzp" } ] },
+        target:"/gov/chongqing/sydwgkzp" } ],
+    gzw:[ { title:"国有资产监督管理委员会",
+        docs:"https://docs.rsshub.app/routes/government#chong-qing-shi-ren-min-zheng-fu-guo-you-zi-chan-jian-du-guan-li-wei-yuan-hui",
+        source:[ "/:category*" ],
+        target:(params) => {
+                    const category = params.category;
+
+                    return `/gov/chongqing/gzw${category ? `/${category}` : ''}`;
+                } } ] },
   "csrc.gov.cn":{ _name:"中国证券监督管理委员会",
     neris:[ { title:"申请事项进度",
         docs:"https://docs.rsshub.app/routes/government#zhong-guo-zheng-quan-jian-du-guan-li-wei-yuan-hui",
@@ -6296,6 +6304,11 @@
         docs:"https://docs.rsshub.app/routes/programming#hackmd",
         source:[ "/:profile" ],
         target:(params) => `/hackmd/profile/${params.replace('@', '')}` } ] },
+  "hackyournews.com":{ _name:"HackYourNews",
+    ".":[ { title:"Index",
+        docs:"https://docs.rsshub.app/routes/programming#hack-your-news",
+        source:[ "/" ],
+        target:"/hackyournews" } ] },
   "hafu.edu.cn":{ _name:"河南财政金融学院",
     www:[ { title:"河南财政金融学院 - 通知公告",
         docs:"https://docs.rsshub.app/routes/university#he-nan-cai-zheng-jin-rong-xue-yuan",
