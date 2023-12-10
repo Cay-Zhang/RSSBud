@@ -9176,6 +9176,11 @@
         source:[ "/blogs.html",
           "/" ],
         target:"/lianxh/:category?" } ] },
+  "lightNovel.us":{ _name:"轻之国度",
+    ".":[ { title:"文章更新阅读",
+        docs:"https://docs.rsshub.app/routes/anime#qing-zhi-guo-du",
+        source:"/",
+        target:"/lightnovel/:keywords/:security_key" } ] },
   "line.me":{ _name:"LINE",
     today:[ { title:"Today",
         docs:"https://docs.rsshub.app/routes/new-media#line-today",
@@ -16281,7 +16286,15 @@
                     if (res) {
                         return `/xsijishe/forum/${res[1]}`;
                     }
-                } } ] },
+                } },
+      { title:"周排行榜",
+        docs:"https://docs.rsshub.app/routes/bbs#si-ji-she",
+        source:[ "/*" ],
+        target:"/xsijishe/rank/weekly" },
+      { title:"月排行榜",
+        docs:"https://docs.rsshub.app/routes/bbs#si-ji-she",
+        source:[ "/*" ],
+        target:"/xsijishe/rank/monthly" } ] },
   "danjuanapp.com":{ _name:"雪球",
     ".":[ { title:"蛋卷基金净值更新",
         docs:"https://docs.rsshub.app/routes/finance#xue-qiu",
