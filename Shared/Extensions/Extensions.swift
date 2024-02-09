@@ -384,8 +384,11 @@ extension LPLinkMetadata {
             if let provider = self.iconProvider {
                 var data = try? await provider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier)
                 if data == nil { data = try? await provider.loadDataRepresentation(forTypeIdentifier: "dyn.agq80w5pbq7ww88brrfv085u") }
-//                let scale = await UIScreen.main.scale
+#if os(visionOS)
                 let scale = 3.0
+#else
+                let scale = await UIScreen.main.scale
+#endif
                 return data
                     .flatMap { UIImage(data: $0, scale: scale) }
             } else {

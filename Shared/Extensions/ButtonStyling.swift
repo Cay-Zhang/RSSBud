@@ -85,13 +85,15 @@ struct CayMenuStyle: MenuStyle {
     }
 }
 
-//extension UIImpactFeedbackGenerator {
-//    static let light: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-//}
+#if os(visionOS)
+fileprivate func playButtonSensoryFeedback() { }
+#else
+fileprivate let buttonSensoryFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
 
 fileprivate func playButtonSensoryFeedback() {
-//    UIImpactFeedbackGenerator.light.impactOccurred(intensity: 0.5)
+    buttonSensoryFeedbackGenerator.impactOccurred(intensity: 0.5)
 }
+#endif
 
 struct WideButtonContainerModifier: ViewModifier {
     @ScaledMetric var height: CGFloat = 42
