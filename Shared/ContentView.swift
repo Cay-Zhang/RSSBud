@@ -53,8 +53,8 @@ struct ContentView: View {
                 .toolbar(content: toolbarContent)
                 .environment(\.isEnabled, !viewModel.isFocusedOnBottomBar)
                 .overlay(Color.black.opacity(viewModel.isFocusedOnBottomBar ? 0.5: 0.0))
-#if os(xrOS)
-                .ornament(attachmentAnchor: .scene(alignment: .bottom)) {
+#if os(visionOS)
+                .ornament(attachmentAnchor: .scene(.bottom)) {
                     if !isOnboarding {
                         BottomBar(viewModel: viewModel.bottomBarViewModel)
                             .frame(width: 450, height: 125)

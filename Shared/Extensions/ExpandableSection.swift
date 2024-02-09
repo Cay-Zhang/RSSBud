@@ -42,7 +42,7 @@ struct ExpandableSection<Content: View, Label: View>: View {
                 weight: .semibold,
                 design: .default
             )
-#if os(xrOS)
+#if os(visionOS)
             .foregroundStyle(.secondary)
 #else
             .foregroundStyle(.tint)

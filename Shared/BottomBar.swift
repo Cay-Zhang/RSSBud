@@ -50,7 +50,7 @@ struct BottomBar: View {
             .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .contextMenu(menuItems: linkViewContextMenuItems)
         }.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-#if os(xrOS)
+#if os(visionOS)
         .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: 16, style: .continuous))
 #else
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.15), radius: 12, y: 3)

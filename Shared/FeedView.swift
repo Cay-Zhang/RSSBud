@@ -39,7 +39,7 @@ extension FeedView {
                     } label: {
                         Image(systemName: "text.book.closed.fill")
                             .font(Font.system(size: 20.0, weight: .semibold, design: .default))
-#if os(xrOS)
+#if os(visionOS)
                             .foregroundStyle(.secondary)
 #else
                             .foregroundStyle(.tint)

@@ -100,7 +100,7 @@ struct WideButtonContainerModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(Font.body.weight(.semibold))
-#if os(xrOS)
+#if os(visionOS)
             .foregroundStyle(.secondary)
 #else
             .foregroundStyle(.tint)
@@ -135,7 +135,7 @@ struct BlockButtonContainerModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .labelStyle(BlockLabelStyle())
-#if os(xrOS)
+#if os(visionOS)
             .foregroundStyle(.secondary)
 #else
             .foregroundStyle(.tint)
