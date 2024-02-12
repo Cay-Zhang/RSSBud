@@ -67,7 +67,11 @@ extension FeedView {
         .menuStyle(CayMenuStyle())
         .background {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
+#if os(visionOS)
+                .foregroundStyle(.regularMaterial)
+#else
                 .foregroundStyle(.fill.quaternary)
+#endif
         }
     }
     

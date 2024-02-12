@@ -31,9 +31,12 @@ struct QueryEditor: View {
                         Spacer()
                         Button(action: removeQueryItemAction(name: item.name)) {
                             Image(systemName: "trash.fill")
-                        }
+                        }.buttonStyle(CayButtonStyle(containerModifier: EmptyModifier()))
                     }
                 ) { groupBoxContent(forQueryItem: item) }
+#if os(visionOS)
+                .backgroundStyle(.regularMaterial)
+#endif
                 .id(item.name)
                 .contextMenu {
                     Button(action: removeQueryItemAction(name: item.name)) {
