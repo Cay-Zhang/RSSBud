@@ -90,14 +90,27 @@ struct CustomOpenURLModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
 #if canImport(BetterSafariView)
-            .safariView(item: $urlForSafariView) { url in
-                SafariView(
-                    url: url,
-                    configuration: SFSafariViewController.Configuration(entersReaderIfAvailable: false, barCollapsingEnabled: true)
-                ).dismissButtonStyle(.close)
-                .preferredControlAccentColor(.orange)
+            .sheet(item: $urlForSafariView) { url in
+                CustomSafariView(url: url) { safariViewController in
+                    safariViewController.configuration.barCollapsingEnabled = true
+                    safariViewController.dismissButtonStyle = .close
+                    safariViewController.preferredControlTintColor = .orange
+                }
             }
 #endif
             .environment(\.customOpenURLAction, action)
     }
+}
+
+struct CustomSafariView: UIViewControllerRepresentable {
+    var url: URL
+    var configuration: (SFSafariViewController) -> () = { _ in }
+
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        let controller = SFSafariViewController(url: url)
+        configuration(controller)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) { }
 }
