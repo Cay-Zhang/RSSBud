@@ -16,5 +16,8 @@
         "jsdom": "16.2.0",
         "route-recognizer": "^0.3.4",
         "whatwg-url": "8.0.0"
+    },
+    "overrides": {
+        "form-data": "2.5.4"
     }
 }
